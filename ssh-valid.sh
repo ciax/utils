@@ -1,7 +1,8 @@
 #!/bin/bash
+# Required script: set.usage.sh
 # Required command: ssh,ping,sort
 # Show list of the user@host which will accept ssh connection
-# Usage: ssh-valid [(user@)host ..]
+[ "$1" ] || . set.usage "[(user@)host ..]"
 ahost=''
 auser=''
 chkcom(){
