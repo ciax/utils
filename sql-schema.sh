@@ -6,7 +6,7 @@
 #So the refered table must be shown above those field of line.
 [ -e "$1" ] || { echo "Usage: ${0##*/} [schema tsv file]"; exit; }
 . set.tempfile drop create rstr
-egrep -v '^([#!].*|$)' $1|while read tbl fld; do
+db-expand $1|while read tbl fld; do
 if [ "$table" != "$tbl" ]; then
     cat $rstr >> $create
     [ -s $create ] && echo ");" >> $create
