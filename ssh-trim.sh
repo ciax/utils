@@ -1,15 +1,7 @@
 #!/bin/bash
-# Required script: set.tempfile, ssh-setup.sh
-# Required command: cmp,cp,ssh,cut,grep,cut,sort,cp
+# Required script: set.tempfile, file-move.sh, ssh-perm.sh
+# Required command: cp,cut,grep,sort
 # Remove dup key from authorized_keys
-# No change, no rewrite
-update(){
-    cmp -s $1 $2 && return
-    cp $1 $2
-    chmod 600 $2
-    echo "$2 is cleaned"
-}
-ssh-setup
 auth=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys
 pub=~/.ssh/id_rsa.pub
@@ -26,6 +18,7 @@ if [ -f "$inv" ] ; then
         cp $tath2 $tath1
         echo "$key" >> $tinv2
     done < <(grep '.' $inv $tinv|cut -d' ' -f2|sort -u)
-    update $tinv2 $inv
+    file-move $tinv2 $inv
 fi
-update $tath1 $auth
+file-move $tath1 $auth
+ssh-perm
