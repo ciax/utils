@@ -1,9 +1,9 @@
 #!/bin/bash
-# Required script: set.tempfile.sh
+# Required script: usage.sh, set.tempfile.sh
 # Required command: sort,cat,cp,cmp
 # Merge files with sorting and without duplicated lines
 # If no changes, then no rewrite
-[ "$2" ] || { echo "Usage: ${0##*/} [src_file|-] [dst_file]"; exit; }
+[ "$2" ] || . set.usage "[src_file|-] [dst_file]"
 . set.tempfile tmd tms
 src="$1";shift
 dst="$1";shift
