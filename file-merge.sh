@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required script: set.tempfile.sh
 # Required command: sort,cat,cp,cmp
-# Merge files without duplicated lines
+# Merge files with sorting and without duplicated lines
 # If no changes, then no rewrite
 [ "$2" ] || { echo "Usage: ${0##*/} [src_file|-] [dst_file]"; exit; }
 . set.tempfile tmd tms
