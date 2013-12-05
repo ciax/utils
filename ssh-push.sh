@@ -2,7 +2,7 @@
 # Required script: ssh-setup.sh, set.tempfile.sh, edit-merge.sh
 # Required command: scp,grep,cut,sort,cmp
 # Impose own trust to the object host (push pub-key anonymously)
-[ "$1" ] || { echo "Usage: ${0##*/} [(user@)host]"; exit; }
+[ "$1" ] || . set.usage "[(user@)host]"
 rhost=$1
 ssh-setup
 if [ "$LOGNAME" = ${rhost%@*} ]; then

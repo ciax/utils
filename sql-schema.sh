@@ -1,10 +1,12 @@
 #!/bin/bash
+# Required script: set.usage.sh, set.tempfile.sh, db-expand.pl
+# Required command: cat
 #schema file (sc-*.tsv) contains 'table' and 'field' separated by <tab>
 #The primary key 'id' is automatically added to each tables.
 #If a 'field' content matches with a name of another 'table',
 #it is treated as a "foreign key" refering to the 'id' field of the table.
 #So the refered table must be shown above those field of line.
-[ -e "$1" ] || { echo "Usage: ${0##*/} [schema tsv file]"; exit; }
+[ -e "$1" ] || . set.usage "[schema tsv file]"
 . set.tempfile drop create rstr
 db-expand $1|while read tbl fld; do
 if [ "$table" != "$tbl" ]; then
