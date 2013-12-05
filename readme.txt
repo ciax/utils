@@ -2,3 +2,4 @@
 bash
 find
 perl
+od
