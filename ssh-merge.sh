@@ -1,11 +1,11 @@
 #!/bin/bash
-# Required script: edit-merge.sh, ssh-clean.sh, ssh-valid
+# Required script: edit-merge.sh, ssh-trim.sh, ssh-valid
 # Required command: ssh,scp,cut,cmp,grep
 # Join to the group which opject host is involved
 # Usage: ssh-merge (user@host) ..
 # If no args, then hosts are picked up from authorized_keys
 arg=$*
-ssh-clean
+ssh-trim
 rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
@@ -38,7 +38,7 @@ for i in $src $arg; do
     fi
     echo " is taken from $i"
 done
-ssh-clean
+ssh-trim
 # Distribute
 echo "-- Distribute"
 shopt -s nullglob
