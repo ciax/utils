@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: file-merge.sh, ssh-clean.sh, ssh-valid
+# Required script: edit-merge.sh, ssh-clean.sh, ssh-valid
 # Required command: ssh,scp,cut,cmp,grep
 # Join to the group which opject host is involved
 # Usage: ssh-merge (user@host) ..
@@ -22,17 +22,17 @@ trap "/bin/rm -f -- ~/.ssh/dst*" EXIT
 for i in $src $arg; do
     if scp -pq $i:$rath $tath$i; then
         echo -n "authorized_keys"
-        file-merge $tath$i $lath
+        edit-merge $tath$i $lath
     elif scp -pq $i:$rpub $tath$i; then
         echo -n "id_rsa.pub"
-        file-merge $tath$i $lath
+        edit-merge $tath$i $lath
     else
         touch $tath$i
         continue
     fi
     if scp -pq $i:$rinv $tinv$i; then
         echo -n " and invalid_keys"
-        file-merge $tinv$i $linv
+        edit-merge $tinv$i $linv
     else
         touch $tinv$i
     fi

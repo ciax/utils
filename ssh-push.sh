@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: ssh-setup.sh, set.tempfile.sh, file-merge.sh
+# Required script: ssh-setup.sh, set.tempfile.sh, edit-merge.sh
 # Required command: scp,grep,cut,sort,cmp
 # Impose own trust to the object host (push pub-key anonymously)
 [ "$1" ] || { echo "Usage: ${0##*/} [(user@)host]"; exit; }
@@ -21,7 +21,7 @@ if ! cmp -s $trem $trath; then
     echo "authorized_keys is updated at $rhost"
 fi
 scp -pq $rhost:$rinv $trem
-file-merge $trem $linv
+edit-merge $trem $linv
 if ! cmp -s $trem $linv ; then
     scp -pq $linv $rhost:$rinv
     echo "invalid_keys is updated at $rhost"
