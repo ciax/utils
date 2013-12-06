@@ -1,4 +1,6 @@
 #!/bin/bash
+# Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, file-move.sh, register-files.sh
+# Required command: tty,cat,tail,grep
 [ "$2" ] || . set.usage "[oldstr] [newstr] (ext)" "ENV[files] for target" "ENV[ex] for exclude line" "(ext) includes [mv old.ext new.ext]"
 . set.color
 hl(){ echo -en "$C2${*}$C0"; }
@@ -7,7 +9,6 @@ al(){ echo -en "$C1${*}$C0"; }
 oldstr="$1"
 newstr="$2"
 ext="$3"
-tty=`tty`
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
     hl "#### File:[$orgfile] ####\n"
