@@ -4,15 +4,15 @@
 # model
 brand	description
 category	description
-model	description;brand;category
+model	brand;category;description
 
 # location
 facility	description
-room	description;facility
-location	description;room
+room	facility;description
+location	room;description
 
 # device
-device	description;model;location
+device	model;location;description
 interface	description
 mac	device;interface
 
@@ -21,9 +21,9 @@ user	description
 dev_user:	device;user
 
 # network
-domain	description
-subnet	description;domain
-segment description;subnet;room
+domain	name;description
+subnet	domain;description
+segment subnet;room;description
 ip	subnet;mac
 
 # project

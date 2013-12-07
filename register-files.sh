@@ -43,6 +43,7 @@ shopt -s nullglob
 for i in ${*:-.}; do
     cd $i
     mklink -x bin *.sh *.pl *.py *.rb *.exp *.js
+    mklink lib lib*
     mklink db *.tsv *.csv
     mklink .emacs.d *.el
 done
