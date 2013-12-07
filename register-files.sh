@@ -13,41 +13,35 @@ chklink(){
     echo "Warning: link of $2 is different from $src"
 }
 
-shopt -s nullglob
-bd="$HOME/bin"
-dd="$HOME/db"
-for i in $bd $dd; do
-    [ -d "$i" ] || mkdir "$i"
-done
+mklink(){
+    [ "$1" = "-x" ] && { local xopt=$1;shift; }
+    local objdir="$HOME/$1";shift
+    [ -d "$objdir" ] || mkdir "$objdir"
+    local list=''
+    for i ; do
+        [ -d "$i" -o ! -e "$i" ] && continue
+        [ -h "$i" ] && { echo "$i is link and skip"; continue; }
+        local base="${i##*/}"
+        local real="$(pwd -P)/$base"
+        if [ "$xopt" ] ; then
+            local link="$objdir/${base%.*}"
+            [ -x "$real" ] || continue
+        else
+            local link="$objdir/$base"
+        fi
+        chklink "$real" "$link" || continue
+        ln -sf "$real" "$link"
+        list="$list$base "
+    done
+    [ "$list" ] && echo "[ $list] -> $objdir"
+    for i ; do
+        [ -f $i ] || { rm $i; echo "link of [${i##*/}] was removed"; }
+    done
+}
 
+shopt -s nullglob
 for i in ${*:-.}; do
-    [ -e "$i" ] || continue
-    [ -h "$i" ] && { echo "$i is link and skip"; continue; }
-    if [ -d "$i" ] ; then
-        dir=`cd $i;pwd -P`
-        for j in $dir/*; do
-            [ -d $j ] && continue
-            base=${j##*/}
-            case $base in
-                *~) continue;;
-                *.csv|*.tsv)
-                    ln=$base
-                    lp="$dd/$ln"
-                    chklink "$j" "$lp" || continue
-                    ll="$ll$ln ";;
-                *)
-                    [ -x "$j" ] || continue
-                    ln=${base%.*}
-                    lp="$bd/$ln"
-                    chklink "$j" "$lp" || continue
-                    bl="$bl$ln ";;
-            esac
-            ln -sf "$j" "$lp"
-        done
-    fi
-done
-[ "$bl" ] && echo "[ $bl] -> $HOME/bin"
-[ "$ll" ] && echo "[ $ll] -> $HOME/db"
-for i in $bd/* $dd/*; do
-    [ -f $i ] || { rm $i; echo "link of [${i##*/}] was removed"; }
+    cd $i
+    mklink -x bin *.sh *.pl *.py *.rb *.exp *.js
+    mklink db *.tsv *.csv
 done
