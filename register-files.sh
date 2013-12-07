@@ -44,4 +44,5 @@ for i in ${*:-.}; do
     cd $i
     mklink -x bin *.sh *.pl *.py *.rb *.exp *.js
     mklink db *.tsv *.csv
+    mklink .emacs.d *.el
 done
