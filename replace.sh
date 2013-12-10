@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, file-move.sh, register-files.sh
+# Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, register-files.sh
 # Required command: coreutils(tty,cat,tail,grep)
 [ "$2" ] || . set.usage "[oldstr] [newstr] (ext)" "ENV[files] for target" "ENV[ex] for exclude line" "(ext) includes [mv old.ext new.ext]"
 . set.color
@@ -32,7 +32,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
         fi
         echo "$line" >> "$outtmp"
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
-    file-move "$outtmp" "$orgfile"
+    overwrite "$outtmp" "$orgfile" -w
 done
 [ "$ext" ] || exit
 oldfn="$oldstr.$ext"
