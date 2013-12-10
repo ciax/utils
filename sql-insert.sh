@@ -9,9 +9,8 @@ table=${core%-*}
 dlm=$'\t'
 key=${idx%%$dlm*}
 fld=
-echo "begin;"
 pfx="insert or ignore into $table values ('"
 while read i ; do
     echo "$pfx${i//$'\t'/','}');"
 done < <(egrep -v '^([#!].*|[	 ]*)$' $*)
-echo "commit;"
+

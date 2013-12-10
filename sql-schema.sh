@@ -12,7 +12,6 @@
 [ -e "$1" ] || . set.usage "[schema tsv file]"
 tsfx=':'
 fsfx='!'
-echo "begin;"
 echo "pragma foreign_keys=on;"
 while read key val; do
     tbase=${key%"$tsfx"}
@@ -40,4 +39,3 @@ done < <(db-expand $1)
 # Process Substitution makes the internal(while do) var effective at outside of that
 echo -en $create
 echo ");"
-echo "commit;"
