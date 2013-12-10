@@ -13,5 +13,5 @@ echo "begin;"
 pfx="insert or ignore into $table values ('"
 while read i ; do
     echo "$pfx${i//$'\t'/','}');"
-done < <(grep -h '.' $*|grep -v '^[#!]')
+done < <(egrep -v '^([#!].*|[	 ]*)$' $*)
 echo "commit;"
