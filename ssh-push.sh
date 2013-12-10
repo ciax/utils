@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: ssh-setup.sh, set.tempfile.sh, edit-merge.sh
-# Required command: scp,grep,cut,sort,cmp
+# Required command: coreutils(grep,cut,sort),diffutils(cmp),scp
 # Impose own trust to the object host (push pub-key anonymously)
 [ "$1" ] || . set.usage "[(user@)host]"
 rhost=$1

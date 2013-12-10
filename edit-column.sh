@@ -1,4 +1,6 @@
 #!/bin/bash
+# Required script: set.usage, file-move
+# Require command: coreutils(cat), awk
 # Reorder columns except key
 [ "$2" ] || . set.usage "[order(1,2,3..)] [file] (-w)"
 order="\$${1//,/,\$}"

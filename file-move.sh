@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.usage.sh
-# Required command: cmp
+# Required command: diffutils(cmp)
 # Override dst_file with src_file.
 # No change is no override
 [ "$2" ] || . set.usage "[src_file] [dst_file]"

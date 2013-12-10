@@ -1,6 +1,6 @@
 #!/bin/bash
 # Require script: set.color.sh, set.usage.sh
-# Required: od
+# Required command: coreutils(od)
 # option (-n): no folding by return code but show (0a)
 . set.color
 [ "$1" = "-n" ] && shift || nl='0a'

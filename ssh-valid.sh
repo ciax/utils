@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.usage.sh
-# Required command: ssh,ping,sort
+# Required command: coreutils(sort),ssh,ping
 # Show list of the user@host which will accept ssh connection
 [ "$1" ] || . set.usage "[(user@)host ..]"
 ahost=''

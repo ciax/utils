@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: edit-merge.sh, ssh-trim.sh, ssh-valid
-# Required command: ssh,scp,cut,cmp,grep
+# Required command: coreutils(cut,grep),diffutils(cmp),ssh,scp
 # Join to the group which opject host is involved
 # Usage: ssh-merge (user@host) ..
 # If no args, then hosts are picked up from authorized_keys

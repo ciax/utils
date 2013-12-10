@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required: set.color.sh
+# Required script: set.color.sh
 . set.color
 [ "$1" ] || set - "(option)" "lists.."
 CMD=${0##*/}
