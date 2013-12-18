@@ -23,6 +23,6 @@ key=`cut -d' ' -f2 $pub`
 { egrep "$me" $ath|grep -v "$key"|cut -d' ' -f2;cat $inv; }|sort -u > $tinv
 { grep -v "$me" $ath;cat $pub; }|sort -u > $tath
 # No change, no rewrite
-overwrite $tath $ath -w && echo "added new key to authorized_keys"
-overwrite $tinv $inv -w && echo "added new key to invalid_keys"
+overwrite $tath $ath && echo "added new key to authorized_keys"
+overwrite $tinv $inv && echo "added new key to invalid_keys"
 ssh-trim

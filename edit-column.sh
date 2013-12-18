@@ -7,4 +7,8 @@ order="\$${1//,/,\$}"
 file=$2
 . set.tempfile tmp1
 <$file awk -F "\t" "BEGIN{ OFS=FS; }{ print $order; }" > $tmp1
-overwrite $tmp1 $file $3
+if [ "$3" = "-w" ] ; then
+    overwrite $tmp1 $file
+else
+    cat $tmp1
+fi

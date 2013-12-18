@@ -17,7 +17,7 @@ if [ -f "$inv" ] ; then
         cp $tath2 $tath1
         echo "$key" >> $tinv2
     done < <(grep '.' $inv $tinv|cut -d' ' -f2|sort -u)
-    overwrite $tinv2 $inv -w
+    overwrite $tinv2 $inv
 fi
-overwrite $tath1 $ath -w
+overwrite $tath1 $ath
 ssh-perm
