@@ -33,7 +33,7 @@ while read key val; do
     create="$create,'$fbase'"
     [ "$val" = "$fbase" ] || create="$create unique"
     if [[ "$tables" == *$fbase* ]] ; then
-        rstr="$rstr,foreign key('$fbase') references $val('id')"
+        rstr="$rstr,foreign key('$fbase') references $fbase('id')"
     fi
 done < <(db-expand $1)
 # Process Substitution makes the internal(while do) var effective at outside of that
