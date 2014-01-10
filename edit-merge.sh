@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: usage.sh, set.tempfile.sh
-# Required command: coreutils(sort,cat,cp,cmp)
+# Required command: coreutils(sort,nkf,cp,cmp)
 # Merge files with sorting and without duplicated lines
 # If no changes, then no rewrite
 [ "$2" ] || . set.usage "[src_file|-] [dst_file]"
@@ -8,7 +8,7 @@
 src="$1";shift
 dst="$1";shift
 if [ "$src" = "-" ] ; then
-    cat > $tms
+    nkf -d > $tms
 elif [ -f "$src" ] ; then
     cp "$src" $tms
 else
@@ -16,7 +16,7 @@ else
     exit 1
 fi
 [ -f "$dst" ] || touch $dst
-cat "$dst" >> $tms
+nkf -d "$dst" >> $tms
 <$tms sort -u > $tmd
 if ! cmp -s $tmd $dst ; then
     [ -w "$dst" ] || { echo "Permission denied $dst"; exit; }
