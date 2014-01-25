@@ -12,6 +12,7 @@ sub expand(@){
         }else{ # Regulate
             /.*[,\t]/;
             my $m=$&;
+            $m =~ tr/,/\t/;
             foreach(split(/;/,"$'")){
                 print "$m$_\n" unless(/^(!.*|)$/);
             }
