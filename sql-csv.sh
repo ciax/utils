@@ -33,7 +33,7 @@ insert(){
     pfx="insert or ignore into $1 values ('"
     while read line ;do
         echo "$pfx${line//,/','}');"
-    done < <(egrep -v '^([#!].*|[	 ]*)$' $1.csv)
+    done < <(egrep -v '^([#!].*|[ \t]*)$' $1.csv)
 }
 echo "begin;"
 echo "pragma foreign_keys=on;"
