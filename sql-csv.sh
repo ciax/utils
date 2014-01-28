@@ -32,14 +32,9 @@ schema(){
 insert(){
     pfx="insert or ignore into $1 values ('"
     while read line ;do
-<<<<<<< HEAD
-        echo "$pfx${line//,/','}');"
-    done < <(egrep -v '^([#!].*|[ \t]*)$' $1.csv)
-=======
         list="${line//,/','}'"
         echo "$pfx${list//\'\'/null});"
-    done < <(egrep -v '^([#!].*|[	 ]*)$' $1.csv)
->>>>>>> 9ae05baa7ed0d76dfd14497236ebc0780664627c
+    done < <(egrep -v '^([#!].*|[ \t]*)$' $1.csv)
 }
 echo "begin;"
 echo "pragma foreign_keys=on;"
