@@ -32,7 +32,8 @@ schema(){
 insert(){
     pfx="insert or ignore into $1 values ('"
     while read line ;do
-        echo "$pfx${line//,/','}');"
+        list="${line//,/','}'"
+        echo "$pfx${list//\'\'/null});"
     done < <(egrep -v '^([#!].*|[	 ]*)$' $1.csv)
 }
 echo "begin;"
