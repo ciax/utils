@@ -6,7 +6,8 @@
 ## it is treated as a "foreign key" refering to the 'id' field of the corresponding table.
 ## So the refered table must be shown above those field of line.
 
-[ -e "$1" ] || . set.usage "[csv file]"
+[ "$1" = "-i" ] && { shift; sch=1; }
+[ -e "$1" ] || . set.usage "(-i) [csv file]"
 schema(){
     local tbl="${1%.csv}"
     [[ "$tables" == *$tbl* ]] && return
@@ -23,6 +24,7 @@ schema(){
             schema $db
         fi
     done < <(egrep "^!" $1|head -1|tr ',' $'\n')
+    [ "$sch" ] || return
     for i in $fkeys; do
         create="$create,foreign key('$i') references $i('id')"
     done
@@ -36,6 +38,7 @@ insert(){
         echo "$pfx${list//\'\'/null});"
     done < <(egrep -v '^([#!].*|[ \t]*)$' $1.csv)
 }
+
 echo "begin;"
 echo "pragma foreign_keys=on;"
 schema $1
