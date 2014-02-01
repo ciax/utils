@@ -12,18 +12,16 @@ schema(){
     tables="$tables $tbl"
     local drop="drop table if exists $tbl;"
     local create="create table $tbl ('id' primary key"
-    local fkeys
-    local col
-    local db
-    while read col other; do
+    local fgnkeys=''
+    while read col; do
         [ $col = '!id' ] && continue
+        create="$create,'$col'"
         for db in *$col.$ext; do
-            create="$create,'$col'"
-            fkeys="$fkeys $col"
+            fgnkeys="$fgnkeys $col"
             schema $db
         done
-    done < <(egrep "^!" $1|head -1|tr ',\t' $'\n')
-    for i in $fkeys; do
+    done < <(egrep "^!" $1|head -1|tr ",\t" "\n")
+    for i in $fgnkeys; do
         create="$create,foreign key('$i') references $i('id')"
     done
     echo "$drop"
@@ -33,5 +31,6 @@ schema(){
 shopt -s nullglob
 [ -e "$1" ] || . set.usage "[csv|tsv file]"
 ext=${1##*.}
+tables=''
 echo "pragma foreign_keys=on;"
 schema $1
