@@ -1,16 +1,14 @@
 #!/bin/bash
 # Required script: set.usage.sh
 # Require command: head,grep,tr
-# make insert sentence for sql from db-*.tsv file
+# make insert sentence for sql from *.csv or db-*.tsv file
 [ -e "$1" ] || . set.usage "[file]"
 body=${1%.*}
 core=${body#*db-}
 table=${core%-*}
-dlm=$'\t'
-key=${idx%%$dlm*}
-fld=
-pfx="insert or ignore into $table values ('"
-while read i ; do
-    echo "$pfx${i//$'\t'/','}');"
-done < <(egrep -v '^([#!].*|[	 ]*)$' $*)
-
+pfx="insert or ignore into $table values ("
+while read line; do
+    list="'${line//,/','}'"
+    null="${list//\'\'/null}"
+    echo "$pfx$null);"
+done < <(egrep -v '^([#!].*|[[:blank:]]*)$' $*|tr $'\t' ',')
