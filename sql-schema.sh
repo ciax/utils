@@ -20,7 +20,7 @@ schema(){
             fgnkeys="$fgnkeys $col"
             schema $db
         done
-    done < <(egrep "^!" $1|head -1|tr ",\t" "\n")
+    done < <(egrep "^!" $1|head -1|nkf -Lu|tr ",\t" "\n")
     for i in $fgnkeys; do
         create="$create,foreign key('$i') references $i('id')"
     done

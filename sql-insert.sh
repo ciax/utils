@@ -11,4 +11,4 @@ while read line; do
     list="'${line//,/','}'"
     null="${list//\'\'/null}"
     echo "$pfx$null);"
-done < <(egrep -v '^([#!].*|[[:blank:]]*)$' $*|tr $'\t' ',')
+done < <(egrep -v '^([#!].*|[[:blank:]]*)$' $*|nkf -Lu|tr $'\t' ',')
