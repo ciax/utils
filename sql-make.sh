@@ -1,10 +1,15 @@
 #!/bin/bash
-[ "$1" ] && exec 1> >(sqlite3 $1)
-cd ~/db
+[ "$1" = "-s" ] && { shift; show=1; }
+[ -e "$1" ] || . set.usage "(-s) [csv|tsv file]"
+db=~/.var/db-device.sq3
+[ "$show" ] || exec 1> >(sqlite3 $db)
+ext=${1##*.}
+. set.tempfile sch
 echo "begin;"
-sql-schema sch-device.tsv
-while read name other; do
-    file="db-$name.tsv"
-    [ -e "$file" ] && sql-insert $file
-done < <(grep '^[a-z]' sch-device.tsv)
+sql-schema $1|tee $sch
+while read a b c d name; do
+    for i in *${name%;}.$ext; do
+        sql-insert $i
+    done
+done < <(grep '^drop' $sch)
 echo "commit;"
