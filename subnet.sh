@@ -1,4 +1,4 @@
 #!/bin/bash
 shopt -s nullglob
-set - `netstat -nr|grep -v tun|egrep '^0.0.0.0'`
-echo ${2%.*}
+eth=`netstat -i|cut -d' ' -f1|egrep '^eth'|sort|head -1`
+netstat -nr|egrep -o "^([12].+) +0.0.0.0.*$eth"|cut -d'.' -f1-3
