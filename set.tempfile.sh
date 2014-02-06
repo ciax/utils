@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required command: coreutils(cat),diffutils(cmp)
+# Required packages: coreutils(cat),diffutils(cmp)
 # Usage: create_tempfile [varname1] [varname2] ..
 create_tempfile(){
     local trp="rm -f -- "

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, register-files.sh
-# Required command: coreutils(tty,cat,tail,grep)
+# Required packages: coreutils(tty,cat,tail),grep
 [ "$2" ] || . set.usage "[oldstr] [newstr] (ext)" "ENV[files] for target" "ENV[ex] for exclude line" "(ext) includes [mv old.ext new.ext]"
 . set.color
 hl(){ echo -en "$C2${*}$C0"; }

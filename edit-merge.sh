@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: usage.sh, set.tempfile.sh
-# Required command: coreutils(sort,nkf,cp,cmp)
+# Required packages: coreutils(sort,nkf,cp,cmp)
 # Merge files with sorting and without duplicated lines
 # If no changes, then no rewrite
 [ "$2" ] || . set.usage "[src_file|-] [dst_file]"

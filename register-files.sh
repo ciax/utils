@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required command: coreutils(readlink)
+# Required packages: coreutils(readlink)
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 

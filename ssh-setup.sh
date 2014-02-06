@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.tempfile.sh, ssh-trim.sh
-# Required command: coreutils(grep,cut,cat,sort),diffutils(cmp),ssh,ssh-keygen
+# Required packages: coreutils(grep,cut,cat,sort),diffutils(cmp),openssh-client(ssh,ssh-keygen)
 # Usage: ${0##*/} (-r:remove keys)
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys

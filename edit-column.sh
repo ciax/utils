@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.usage, set.tempfile
-# Require command: coreutils(cat), awk
+# Required packages: coreutils(cat),mawk
 # Reorder columns except key
 [ "$2" ] || . set.usage "[order(1,2,3..)] [file] (-w)"
 order="\$${1//,/,\$}"

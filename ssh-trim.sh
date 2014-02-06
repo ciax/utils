@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.tempfile, ssh-perm.sh
-# Required command: coreutils(cp,cut,grep,sort)
+# Required packages: coreutils(cp,cut,grep,sort)
 # Remove dup key from authorized_keys
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys

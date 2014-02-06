@@ -1,4 +1,4 @@
-#required commands
+#Required commands
 bash
 find
 perl

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.color.sh
-# Required command: coreutils(tty)
+# Required packages: coreutils(tty)
 . set.color
 [ "$ALL" ] && exit
 [ "$tty" ] || tty=`tty`
