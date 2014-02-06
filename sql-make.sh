@@ -1,6 +1,6 @@
 #!/bin/bash
 [ "$1" = "-s" ] && { shift; show=1; }
-[ -e "$1" ] || . set.usage "(-s) [csv|tsv file]"
+[ -e "$1" ] || . set.usage "(-s:show) [csv|tsv file]"
 db=~/.var/db-device.sq3
 [ "$show" ] || exec 1> >(sqlite3 $db)
 ext=${1##*.}
