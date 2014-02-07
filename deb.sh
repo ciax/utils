@@ -5,7 +5,7 @@ which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
 ichk(){ for i ;do which $i >/dev/null || sudo apt-get install $i;done; }
 case "$1" in
     init)
-        icnk grep sed
+        ichk grep sed
         apps=`grep -h '^#' *.sh|grep -i 'req.* packages'|tr -d ' '|sed -re 's/\([^)]+\)//g' -e 's/.*://'| tr ',' '\n' | sort -u`
         sudo apt-get install $apps
         exit;;
