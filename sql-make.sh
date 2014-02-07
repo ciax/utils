@@ -6,7 +6,7 @@ ext=${1##*.}
 echo "begin;"
 sql-schema $1|tee $sch
 while read a b c d name; do
-    for i in *${name%;}.$ext; do
+    for i in ~/cfg.*/db/*${name%;}.$ext; do
         sql-insert $i
     done
 done < <(grep '^drop' $sch)

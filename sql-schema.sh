@@ -6,7 +6,9 @@
 ## it is treated as a "foreign key" refering to the 'id' field of the corresponding table.
 
 schema(){
-    local body="${1#db-}"
+    local dir=$(dirname $1)
+    local base=$(basename $1)
+    local body="${base#db-}"
     local tbl="${body%.$ext}"
     [[ "$tables" == *$tbl* ]] && return
     tables="$tables $tbl"
@@ -16,7 +18,7 @@ schema(){
     while read col; do
         [ $col = '!id' ] && continue
         create="$create,'$col'"
-        for db in *$col.$ext; do
+        for db in $dir/*$col.$ext; do
             fgnkeys="$fgnkeys $col"
             schema $db
         done
