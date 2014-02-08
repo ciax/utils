@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.usage.sh
-# Required packages: coreutils(head,tr),grep
+# Required packages: coreutils(basename,head,tr),grep
 # make insert sentence for sql from *.csv or db-*.tsv file
 [ -e "$1" ] || . set.usage "[file]"
 base=$(basename $1)

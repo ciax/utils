@@ -3,7 +3,8 @@
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
 ichk(){ for i ;do which $i >/dev/null || sudo apt-get install $i;done; }
-case "$1" in
+cmd="$1";shift
+case "$cmd" in
     init)
         ichk grep sed
         apps=`grep -h '^#' *.sh|grep -i 'req.* packages'|tr -d ' '|sed -re 's/\([^)]+\)//g' -e 's/.*://'| tr ',' '\n' | sort -u`
@@ -29,13 +30,11 @@ case "$1" in
         exit;;
     *);;
 esac
-shift
 [ "$1" ] || . set.usage "[option]" "init" "which (file)" "search (pattern)" \
             "install,remove,config (package)" "files,stat,info (package)" \
             "gpg (key)" "list; spy; clean; upd; upg"
-case $1 in
+case "$cmd" in
     install)
-        shift
         sudo apt-get $* || { echo "Error $?"; exit; }
         echo Install success. $?
         ;;
@@ -47,8 +46,8 @@ case $1 in
         gpg --keyserver pgpkeys.mit.edu --recv-keys $1 &&\
     gpg --armor --export $1 | sudo apt-key add -;;
     which)
-        cmd=`which "$1"` && cmd=`readlink -f $cmd` || cmd=$1
-        dpkg -S $cmd;;
+        par=`which "$1"` && par=`readlink -f $par` || par=$1
+        dpkg -S $par;;
     search)
         apt-cache search $1;;
     files)

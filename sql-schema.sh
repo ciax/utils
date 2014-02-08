@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required script: set.usage.sh
-#
+# Required packages: coreutils(dirname,basename,head,tr),grep,nkf
 ## The 'id' field is automatically added to the table as 'primary key'.
 ## If the following 'field' content matches with a name of another 'table',
 ## it is treated as a "foreign key" refering to the 'id' field of the corresponding table.
