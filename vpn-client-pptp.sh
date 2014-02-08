@@ -15,6 +15,7 @@ user="--username $user"
 opt="--encrypt"
 sudo pptpsetup $id $remote $user $pw $opt --start
 exit
+
 #ip-up params: interface-name tty-device speed local-IP-address remote-IP-address ipparam
 #!/bin/sh
 ifname=$1
