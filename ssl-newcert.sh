@@ -17,21 +17,25 @@ key2csr(){
     ca=${2:-$req}
     title "Create Server Private Key"
     [ -e $req.key ] || openssl genrsa 2048 > $req.key
-    echo
-    title "Show $req.key"
-    openssl rsa -text < $req.key
-    echo;echo;echo
-    title "Create Certificate Request (csr)"
-    title "(Need Site Information Input)"
+    if [ "$ver" ] ; then
+        echo
+        title "Show $req.key"
+        openssl rsa -text < $req.key
+        echo;echo;echo
+    fi
+    title "Create Certificate Request $C3(Need Site Information Input)"
     openssl req -new -key $req.key > $req.csr
-    echo;echo;echo
-    title "Show $req.csr"
-    openssl req -text < $req.csr
-    echo;echo;echo
+    if [ "$ver" ] ; then
+        echo
+        title "Show $req.csr"
+        openssl req -text < $req.csr
+        echo;echo;echo
+    fi
     title "Send Certificate Reqest (csr) to CA"
     openssl x509 -days 9999 -req -signkey $ca.key < $req.csr > $req.crt
-    echo
     title "Get CertiCreate file (crt)"
 }
+[ "$1" = "-v" ] && { shift; ver=1; }
+[ "$1" ] || . set.usage "[child] (parent)"
 cd ~/.var
-key2csr `hostname`
+key2csr $*
