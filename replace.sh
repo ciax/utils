@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, register-files.sh
+# Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, reg-files.sh
 # Required packages: coreutils(tty,cat,tail),grep
 [ "$2" ] || . set.usage "[oldstr] [newstr] (ext)" "ENV[files] for target" "ENV[ex] for exclude line" "(ext) includes [mv old.ext new.ext]"
 . set.color
@@ -46,4 +46,4 @@ if [ -e "$oldfn" ] ; then
         . set.query && mv $oldfn $newfn
     fi
 fi
-register-files
+reg-files
