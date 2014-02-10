@@ -1,5 +1,6 @@
 #!/bin/bash
 [ "$1" = "-i" ] && { shift; exec 1> >(db-device); }
+set - ~/cfg.*/db/*${1%;}.?sv
 [ -e "$1" ] || . set.usage "(-i:input) [csv|tsv file]"
 ext=${1##*.}
 . set.tempfile sch
