@@ -7,7 +7,7 @@
 [ "$1" ] || . set.usage "[ca name] [site name]"
 cd ~/.var
 cakey=$1.key;shift
-[ -e "$cakey" ] || { echo "No ca key file"; exit; }
+[ -s "$cakey" ] || { echo "No ca key file"; exit; }
 site=$1;shift
-[ -e "$site.csr" ] || { echo "No csr file" ; exit; }
+[ -s "$site.csr" ] || { echo "No csr file" ; exit; }
 openssl x509 -days 9999 -req -signkey $cakey < $site.csr > $site.crt
