@@ -12,4 +12,3 @@ site=$1;shift
 . ssl-mkcsr "$site"
 [ -s $ca.srl ] || opt="-CAcreateserial"
 openssl x509 -CA $ca.crt -CAkey $ca.key -req -in $site.csr -out $site.crt $opt
-#openssl x509 -days 9999 -req -signkey $cakey < $site.csr > $site.crt

@@ -1,9 +1,5 @@
 #!/bin/bash
-## SSL files (Server vs CA vs Client)
-##@ Server Site
-##  csr(Signning Request file) -> Submit to CA
-##@ CA
-## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
+## Vefiry the relationship
 [ "$1" ] || . set.usage "[ca name] [site name]"
 cd ~/.var
 cacrt="$1.crt";shift

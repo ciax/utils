@@ -1,5 +1,5 @@
 #!/bin/bash
-## SSL files (Server vs CA vs Client)
+## Check the consistency of SSL files
 [ "$1" ] || . set.usage "[site]"
 cd ~/.var
 site="$1"
