@@ -10,7 +10,7 @@ fi
 remote=$1
 vardir=$HOME/.var
 host=`hostname`
-net=$(echo "select network,netmask from route where vpn = '$remote';"|db-device|tr ',' ' ')
+net=$(echo "select network,netmask from route where vpn = '$remote';"|db-device ' ')
 [ "$net" ] || { echo "No such host in DB"; exit; }
 cat > $cfgfile <<EOF
 script-security 2
