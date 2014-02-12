@@ -2,13 +2,15 @@
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-. ssl-newkey $1
-. set.tempfile input
-echo "select * from ssl where id = '$1';"|db-device|cut -d, -f2-|tr , '\n' > $input
-if [ -s $input ] ; then
-    openssl req -new -key $site.key <$input > $site.csr
-else
-    openssl req -new -key $site.key > $site.csr
-fi
-echo
+site=$1
+. ssl-newkey $site
+for i in $(echo "select * from ssl where id = '$site';"|db-device ' '); do
+    if [ "$1" = "$site" ]; then
+        set C= ST= L= O= OU= CN= emailAddress=
+    else
+        input="$input/$1$i"
+        shift
+    fi
+done
+openssl req -new -key $site.key ${input:+-subj "$input"} > $site.csr
 [ -s "$site.csr" ] || { rm "$site.csr";echo "Generate CSR failed"; }
