@@ -1,18 +1,12 @@
 #!/bin/bash
 # Client for dd-wrt openvpn server
-if [ "$1" = "-i" ]; then
-    shift
-    cfgfile=~/.var/openvpn-$1.conf
-else
-    cfgfile=/dev/stdout
-fi
-[ "$1" ] || . set.usage "(-i:make file) [remote host]"
+[ "$1" ] || . set.usage "[remote host] (outputfile)"
 remote=$1
 vardir=$HOME/.var
 host=`hostname`
-net=$(echo "select network,netmask from route where vpn = '$remote';"|db-device ' ')
-[ "$net" ] || { echo "No such host in DB"; exit; }
-cat > $cfgfile <<EOF
+server=$(echo "select host from vpn where id = '$remote';"|db-device)
+[ "$server" ] || { echo "No such host in DB"; exit; }
+cat > ${2:-/dev/stdout} <<EOF
 script-security 2
 verb 3
 comp-lzo
@@ -26,12 +20,12 @@ cert $vardir/$host.crt
 key $vardir/$host.key
 client
 tls-client
-remote $remote 1194
+remote $server 1194
 resolv-retry infinite
 nobind
 persist-key
 persist-tun
 ns-cert-type server
-route $net
+$(vpn-route $remote|cut -d' ' -f1,4,6)
 status /var/log/openvpn-status.log
 EOF

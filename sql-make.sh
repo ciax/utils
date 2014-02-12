@@ -1,7 +1,7 @@
 #!/bin/bash
-[ "$1" = "-i" ] && { shift; exec 1> >(db-device); }
+[ "$1" ] || . set.usage "[csv|tsv file]"
 set - ~/cfg.*/db/*${1%;}.?sv
-[ -e "$1" ] || . set.usage "(-i:input) [csv|tsv file]"
+[ -s "$1" ] || exit;
 ext=${1##*.}
 . set.tempfile sch
 echo "begin;"
