@@ -6,4 +6,4 @@ cfgfile=~/.var/openvpn-$1.cfg
 ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }
 sudo openvpn --config $cfgfile
 nat set # Need NAT setup (naoj can't look up 172 address)
-sudo grep openvpn /var/log/syslog
+show-syslog openvpn

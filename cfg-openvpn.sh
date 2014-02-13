@@ -15,7 +15,7 @@ management localhost 7505
 proto udp
 dev tun
 daemon
-ca $vardir/ca.crt
+ca $vardir/rootca.crt
 cert $vardir/$host.crt
 key $vardir/$host.key
 client
@@ -27,5 +27,5 @@ persist-key
 persist-tun
 ns-cert-type server
 $(vpn-route $remote|cut -d' ' -f1,4,6)
-status /var/log/openvpn-status.log
+status $vardir/openvpn-status.log
 EOF
