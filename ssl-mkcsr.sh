@@ -2,6 +2,7 @@
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
+input=
 site=$1
 . ssl-newkey $site
 for i in $(echo "select * from ssl where id = '$site';"|db-device ' '); do
