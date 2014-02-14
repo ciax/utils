@@ -10,4 +10,5 @@ if [ -s "$site.key" ] ;then
 else
     openssl genrsa 2048 > $site.key
 fi
+chmod 600 $site.key
 [ -s "$site.key" ] || { echo "Generate KEY file failed"; rm "$site.key"; exit 1; }
