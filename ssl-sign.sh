@@ -8,8 +8,8 @@ cd ~/.var
 case "$1" in
     '') . set.usage "(-s:server,-c:client) [ca] [site] ..."
         ;;
-    -s) shift;role=server
-    -c) shift;role=client
+    -s) shift;role=server;;
+    -c) shift;role=client;;
     *);;
 esac
 ca=$1;shift
