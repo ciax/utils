@@ -26,6 +26,24 @@ key $vardir/$host.key
 remote $server 1194
 $(vpn-route $remote|cut -d' ' -f1,4,6)
 status $vardir/openvpn-status.log
-auth MD5
 ns-cert-type server
 EOF
+## Server Setting on DD-WRT v24-sp2
+# OpenVPN: Enable
+# Start Type: WAN Up
+# Config as: Server
+# Server mode: Router(TUN)
+# Network: 10.0.0.0
+# Netmask: 255.255.255.0
+# Port: 1194
+# Tunnel Protocol: UDP
+# Encryption Cipher: Blowfish CBC
+# Hash Algorithm: SHA1
+# Advanced Options: Disable
+# Public Server Cert: --BEGIN CERTIFICATE --
+# CA Cert: -- BEGIN CERTIFICATE --
+# DH PEM: -- BEGIN DH PARAMETERS --
+# Additional Config: blank
+# TLS Auth Key: blank
+# Certificate Revoke List: blank
+
