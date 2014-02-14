@@ -5,20 +5,19 @@
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 cd ~/.var
+. set.tempfile v3
 case "$1" in
-    '') . set.usage "(-s:server,-c:client) [ca] [site] ..."
+    '') . set.usage "(-s:server,-c:client,-a:ca) [ca] [site] ..."
         ;;
-    -s) shift;role=server;;
-    -c) shift;role=client;;
+    -s) shift;echo "nsCertType=server" > $v3;;
+    -c) shift;echo "nsCertType=client" > $v3;;
+    -a) shift;echo "basicConstraints=CA:true" > $v3;;
     *);;
 esac
 ca=$1;shift
 [ -s "$ca.key" ] || { echo "No ca key file"; exit; }
 [ -s $ca.srl ] || opt="-CAcreateserial"
-if [ "$role" ]; then
-    echo "nsCertType=$role" > v3.ext
-    ext="-extfile v3.ext"
-fi
+[ -s $v3 ] && ext="-extfile $v3"
 for ss; do
     . ssl-mkcsr "$ss"
     openssl x509 -CA $ca.crt -CAkey $ca.key -req -in $ss.csr -out $ss.crt $opt $ext
