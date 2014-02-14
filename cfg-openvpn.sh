@@ -6,8 +6,9 @@ vardir=$HOME/.var
 host=`hostname`
 server=$(echo "select host from vpn where id = '$remote';"|db-device)
 [ "$server" ] || { echo "No such host in DB"; exit; }
-cat > ${2:-/dev/stdout} <<EOF
-#verb 3
+out=${2:-/dev/stdout}
+cat > $out <<EOF
+verb 3
 script-security 2
 client
 comp-lzo
@@ -24,10 +25,10 @@ ca $vardir/rootca.crt
 cert $vardir/$host.crt
 key $vardir/$host.key
 remote $server 1194
-$(vpn-route $remote|cut -d' ' -f1,4,6)
 status $vardir/openvpn-status.log
 ns-cert-type server
 EOF
+vpn-route $remote|cut -d' ' -f1,4,6 >> $out
 ## Server Setting on DD-WRT v24-sp2
 # OpenVPN: Enable
 # Start Type: WAN Up
