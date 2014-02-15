@@ -15,7 +15,7 @@ esac
 [ "$1" ] || . set.usage "(-r:revert,-l:list) [file] (host)"
 name="$1"
 if [ -s "$name" ] ; then
-    file-stash $name
+    file-stash $name >/dev/null
     cfid=$(md5sum $name|head -c10)
     uniq=" and list.fid != '$cfid'"
 fi
@@ -29,7 +29,7 @@ sub_fid="select id from content where date == ($sub_date)"
 fid=$(echo "$sub_fid;"|db-files)
 if [ "$fid" ] ; then
     echo "select base64 from content where id == '$fid';"|db-files|base64 -d > $name
-    echo "Switch to last file"
+    echo "Recall OK"
 else
     echo "No such id stored for $host"
     exit 1
