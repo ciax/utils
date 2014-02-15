@@ -11,7 +11,7 @@ create table content (id primary key,name,mode,date,base64);
 create table list (fid,host,dist,owner,dir,primary key(fid,host,dist));
 EOF
 fi
-[ -s "$1" ] ||  { echo "No such file"; exit 1; }
+[ -s "$1" ] ||  . set.error "No such file"
 host=$(hostname)
 fid=$(md5sum $1|head -c10)
 dir=$(dirname `realpath $1`)

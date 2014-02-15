@@ -1,8 +1,6 @@
 #!/bin/bash
 # -r means pick the original one (first stashed)
 # otherwise pick last one
-
-
 case "$1" in
     -l)
         echo "select distinct name from content;"|db-files
@@ -31,6 +29,5 @@ if [ "$fid" ] ; then
     echo "select base64 from content where id == '$fid';"|db-files|base64 -d > $name
     echo "Recall OK"
 else
-    echo "No such id stored for $host"
-    exit 1
+    . set.error "No such id stored for $host"
 fi
