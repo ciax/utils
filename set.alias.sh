@@ -1,4 +1,5 @@
 #!/bin/bash
-while read pth cmd name; do
-    $cmd $name=$(realpath $pth)
-done < <(grep '^#alias' ~/utils/*.sh|tr '#:' ' ')
+while read head name par; do
+    file=$(realpath ${head%:*})
+    alias $name="$file${par:+ $par}"
+done < <(grep '^# *alias' ~/utils/*.sh)
