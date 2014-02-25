@@ -5,3 +5,4 @@
 # Merely invoked
 #  .bashrc
 for i in ~/utils/rc.*; do . $i;done
+set.alias
