@@ -6,11 +6,11 @@ case "$1" in
         echo "select distinct name from content;"|db-files
         exit
         ;;
-    -r)
+    -f)
         shift;sel="min";;
     *) sel="max";;
 esac
-[ "$1" ] || . set.usage "(-r:revert,-l:list) [file] (host)"
+[ "$1" ] || . set.usage "(-f:first,-l:list) [file] (host)"
 name="$1"
 if [ -s "$name" ] ; then
     file-stash $name >/dev/null
