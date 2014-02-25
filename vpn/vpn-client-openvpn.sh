@@ -1,5 +1,6 @@
 #!/bin/bash
 # Client for dd-wrt openvpn server
+#alias ovpn
 cfgfile=~/.var/openvpn-$1.cfg
 . cfg-openvpn $1 $cfgfile
 . set.link vpn-client

@@ -1,4 +1,5 @@
 #!/bin/bash
+#alias pptp
 [ "$1" = "-r" ] && { sudo kill $(< /var/run/ppp0.pid); exit; }
 [ "$1" ] || . set.usage "(-r:remove) [vpnhost]"
 res=`echo "select host,user from vpn where id = '$1';"|db-device`

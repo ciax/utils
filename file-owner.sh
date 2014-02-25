@@ -1,6 +1,7 @@
 #!/bin/bash
 # File owner will be uniformed under the current or specified dir tree
 # Usage file-owner [dir..]
+#alias chx
 _chx(){
     local dir=${1:-.} SU=
     [ -d "$dir" ] || return 1

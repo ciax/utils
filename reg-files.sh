@@ -2,6 +2,7 @@
 # Required packages: coreutils(readlink)
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
+#alias rf
 
 chklink(){
     # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
