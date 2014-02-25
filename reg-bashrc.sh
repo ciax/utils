@@ -1,6 +1,7 @@
 #!/bin/bash
 # "Usage: ${0##*/} (-r)"
 # Register bashrc
+# No dependent files
 cd
 src="source $HOME/bin/setup"
 tmp=".$(date +%s).tmp"
