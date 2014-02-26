@@ -3,7 +3,7 @@
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
 #alias lo
 getstr(){
-    db-device ' ' <<< "select command,user,host from login where id = '$1';"|sed -e 's/ssh/ssh -o StrictHostKeyChecking=no/g'
+    db-device ' ' <<< "select command,user,host from login where id = '$1';"|sed -e 's/ssh/ssh -o StrictHostKeyChecking=no -t -l/g'
 }
 list(){
     db-device <<< 'select id from login;'|sort|column -c60
