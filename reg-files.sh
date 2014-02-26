@@ -41,10 +41,11 @@ mklink(){
 }
 
 shopt -s nullglob
-for i in ${*:-.}; do
-    cd $i
-    mklink -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js 
+for i in ${*:-. */}; do
+    pushd $i >/dev/null
+    mklink -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
     mklink lib lib*
     mklink db *.tsv *.csv
     mklink .emacs.d *.el
+    popd >/dev/null
 done
