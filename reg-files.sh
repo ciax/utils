@@ -35,9 +35,6 @@ mklink(){
         list="$list$base "
     done
     [ "$list" ] && echo "[ $list] -> $objdir"
-    for i ; do
-        [ -f $i ] || { rm $i; echo "link of [${i##*/}] was removed"; }
-    done
 }
 
 shopt -s nullglob
@@ -49,3 +46,4 @@ for i in ${*:-. */}; do
     mklink .emacs.d *.el
     popd >/dev/null
 done
+file-clean ~/bin

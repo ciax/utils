@@ -12,5 +12,6 @@ nolink(){
         echo "[${i##*/}] is not linked"
     done
 }
+cd ${1:-.}
 nouse \#* *~ .*~ *.orig
 nolink * .*
