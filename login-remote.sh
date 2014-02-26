@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required Packages: expect,bsdmaintutils(column)
+# Required Packages: expect,bsdmainutils(column)
 #alias lo
 getstr(){
     db-device ' ' <<< "select command,user,host from login where id = '$1';"
