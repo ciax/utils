@@ -36,7 +36,7 @@ esac
             "gpg (key)" "init,list; spy; clean; upd; upg"
 case "$cmd" in
     install)
-        sudo apt-get $* || { echo "Error $?"; exit; }
+        sudo apt-get install $* || { echo "Error $?"; exit; }
         echo Install success. $?
         ;;
     remove)
