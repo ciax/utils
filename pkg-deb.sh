@@ -1,5 +1,6 @@
 #!/bin/bash
 #Debian utils
+# Required Packages: apt-spy,debconf
 #alias deb
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
