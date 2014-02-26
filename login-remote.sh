@@ -1,10 +1,13 @@
 #!/bin/bash
-# Required Packages: expect
+# Required Packages: expect,bsdmaintutils(column)
 #alias lo
 getstr(){
     db-device ' ' <<< "select command,user,host from login where id = '$1';"
 }
-[ "$1" ] || . set.usage "[host]" $(db-device <<< "select id from login;")
+list(){
+    db-device <<< 'select id from login;'|sort|column -c60
+}
+[ "$1" ] || . set.usage "[host]" < <(list)
 id=$1;shift
 str="$(getstr $id) $*"
 tun=$(db-device <<< "select tunnel from login where id == '$id';")
