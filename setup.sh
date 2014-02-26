@@ -7,7 +7,7 @@
 cd
 ba=.bash_aliases
 if [ -f .bashrc ] ; then
-    grep -q $ba .bashrc || { echo "Can't make setup"; exit 1; }
+    grep -q $ba .bashrc || echo "Can't linked rc file"
 else
     ba=.bashrc
 fi
