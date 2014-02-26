@@ -1,8 +1,3 @@
 #!/bin/bash
-# rcfile priority (bash executes just one of them)
-# As Login shell
-#  .bash_profile > .bash_login > .profile(calls .bashrc)
-# Merely invoked
-#  .bashrc
 for i in ~/utils/rc.*; do . $i;done
 . set.alias

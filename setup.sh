@@ -1,4 +1,9 @@
 #!/bin/bash
+# rcfile priority (bash executes just one of them)
+# Invoked bash as a Login shell
+#  .bash_profile > .bash_login > .profile (calls .bashrc)
+# Merely invoked
+#  .bashrc (calls .bash_aliases)
 cd
 ba=.bash_aliases
 if [ -f .bashrc ] ; then

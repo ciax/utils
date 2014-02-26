@@ -1,5 +1,6 @@
 #!/bin/bash
 #Debian utils
+#alias deb
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
 ichk(){ for i ;do which $i >/dev/null || sudo apt-get install $i;done; }
