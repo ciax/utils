@@ -5,7 +5,6 @@
 res=`echo "select host,user from vpn where id = '$1';"|db-device`
 remote=${res%,*}
 user=${res#*,}
-. set.link vpn-client
 . set.tempfile temp
 tail -4 $0 > $temp
 sudo install $temp /etc/ppp/ip-up.d/route
