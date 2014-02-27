@@ -15,9 +15,12 @@ cd
 git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
 ~/utils/setup.sh
 
-### App Dirs
-~/utils(.*) ~/cfg.*
+### Relevant Dirs
+# App Dirs
+~/utils(.*)
 
-### Work Dirs
+# Config Dirs
+ ~/cfg.*
+
+# Work Dirs
 ~/bin ~/db ~/.var
-
