@@ -12,6 +12,10 @@ nolink(){
         echo "[${i##*/}] is not linked"
     done
 }
-cd ${1:-.}
-nouse \#* *~ .*~ *.orig
-nolink * .*
+[ "$1" ] || set - .
+for i;do
+    pushd $i >/dev/null
+    nouse \#* *~ .*~ *.orig
+    nolink * .*
+    popd >/dev/null
+done

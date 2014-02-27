@@ -46,4 +46,4 @@ for i in ${*:-. */}; do
     mklink .emacs.d *.el
     popd >/dev/null
 done
-file-clean ~/bin
+file-clean ~/bin ~/db
