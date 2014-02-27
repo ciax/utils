@@ -1,15 +1,13 @@
 #!/bin/bash
 # Required script: set.usage.sh
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
+## CSV files: ~/db/db-*.csv
 ## The 'id' field is automatically added to the table as 'primary key'.
 ## If the following 'field' content matches with a name of another 'table',
 ## it is treated as a "foreign key" refering to the 'id' field of the corresponding table.
-
 schema(){
     local dir=$(dirname $1)
-    local base=$(basename $1)
-    local body="${base#db-}"
-    local tbl="${body%.$ext}"
+    local tbl=$(db-table $1)
     [[ "$tables" == *$tbl* ]] && return
     tables="$tables $tbl"
     local drop="drop table if exists $tbl;"
@@ -18,7 +16,7 @@ schema(){
     while read col; do
         [ $col = '!id' ] && continue
         create="$create,'$col'"
-        for db in $dir/*$col.$ext; do
+        for db in $dir/db-$col*.$ext; do
             fgnkeys="$fgnkeys $col"
             schema $db
         done
