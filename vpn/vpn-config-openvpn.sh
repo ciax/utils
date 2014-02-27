@@ -4,7 +4,7 @@
 remote=$1
 vardir=$HOME/.var
 host=`hostname`
-server=$(echo "select host from vpn where id = '$remote';"|db-device)
+server=$(echo "select host from vpn where id = '$remote';"|db-register)
 [ "$server" ] || { echo "No such host in DB"; exit; }
 out=${2:-/dev/stdout}
 cat > $out <<EOF

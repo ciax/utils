@@ -2,7 +2,7 @@
 # Set variables corresponding field names of table;
 [ "$2" ] || . set.usage "[table] [id]"
 tbl=$1;val=$2
-db=~/.var/db-device.sq3
+db=~/.var/db-register.sq3
 case $0 in
     *set.field*) cmd='echo';;
     *) cmd='eval';;

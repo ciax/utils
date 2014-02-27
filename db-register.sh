@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage: db-device (separator)
-db=~/.var/db-device.sq3
+# Usage: db-register (separator)
+db=~/.var/db-register.sq3
 sep=${1:-,}
 sqlite3 -list -separator "$sep" $db

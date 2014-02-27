@@ -9,6 +9,6 @@ for i in ~/utils/ ~/cfg.*/;do
 done
 # db
 for i in mac login;do
-    sql-make $i|db-device
+    sql-make $i|db-register
     echo "${C3}Database update for $i"
 done

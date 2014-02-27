@@ -5,7 +5,7 @@
 input=
 site=$1
 . ssl-newkey $site
-for i in $(echo "select * from ssl where id = '$site';"|db-device ' '); do
+for i in $(echo "select * from ssl where id = '$site';"|db-register ' '); do
     if [ "$1" = "$site" ]; then
         set C= ST= L= O= OU= CN= emailAddress=
     else
