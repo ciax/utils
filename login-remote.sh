@@ -6,10 +6,7 @@ getstr(){
     . set.field login $1;shift
     str="${command//ssh/ssh $sshopt} $user $host $*"
 }
-list(){
-    db-device <<< 'select id from login;'|sort|column -c60
-}
-[ "$1" ] || . set.usage "[host]" < <(list)
+[ "$1" ] || . set.usage "[host]" < <(db-list login)
 sshopt="-o StrictHostKeyChecking=no -t -l"
 getstr $1
 
