@@ -15,4 +15,4 @@ ln -sf ~/utils/.bash_local $ba
 cd ~/utils
 ./file-register.sh
 pkg-deb init
-. .bash_local
+update

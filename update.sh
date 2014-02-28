@@ -8,7 +8,7 @@ for i in ~/utils/ ~/cfg.*/;do
     file-register
 done
 # db
-for i in mac login;do
+for i in mac login vpn;do
     sql-make $i|db-register
     echo "${C3}Database update for $i"
 done
