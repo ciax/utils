@@ -33,10 +33,11 @@ status $vardir/openvpn-status.log
 ns-cert-type server
 EOF
 vpn-route $vpn|cut -d' ' -f1,4,6 >> $out
-# Require SSL files for Server:
+# Required SSL files for Server:
 # rootca.crt (Root Certificate)
 # server.crt (Server Certificate)
 # dh.pem (DH pem file)
+
 ## Server Setting on DD-WRT v24-sp2
 # OpenVPN: Enable
 # Start Type: WAN Up

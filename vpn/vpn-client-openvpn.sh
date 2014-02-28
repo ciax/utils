@@ -1,6 +1,6 @@
 #!/bin/bash
 # Client for dd-wrt openvpn server
-#alias ovpn
+#alias vpno
 cfgfile=~/.var/openvpn-$1.cfg
 . cfg-openvpn $1 $cfgfile
 ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }
