@@ -1,10 +1,14 @@
 #!/bin/bash
 # Client for dd-wrt openvpn server
+# Required SSL files for Client:
+# rootca.crt (Root Certificate)
+# (host).crt (Client Certificate)
+# (host).key (Client Secret Key)
 [ "$1" ] || . set.usage "[remote host] (outputfile)"
 remote=$1
 vardir=$HOME/.var
 host=`hostname`
-server=$(echo "select host from vpn where id = '$remote';"|db-register)
+server=$(db-register "select host from vpn where id = '$remote';")
 [ "$server" ] || { echo "No such host in DB"; exit; }
 out=${2:-/dev/stdout}
 cat > $out <<EOF
@@ -29,6 +33,10 @@ status $vardir/openvpn-status.log
 ns-cert-type server
 EOF
 vpn-route $remote|cut -d' ' -f1,4,6 >> $out
+# Require SSL files for Server:
+# rootca.crt (Root Certificate)
+# server.crt (Server Certificate)
+# dh.pem (DH pem file)
 ## Server Setting on DD-WRT v24-sp2
 # OpenVPN: Enable
 # Start Type: WAN Up
@@ -41,9 +49,9 @@ vpn-route $remote|cut -d' ' -f1,4,6 >> $out
 # Encryption Cipher: Blowfish CBC
 # Hash Algorithm: SHA1
 # Advanced Options: Disable
-# Public Server Cert: --BEGIN CERTIFICATE --
-# CA Cert: -- BEGIN CERTIFICATE --
-# DH PEM: -- BEGIN DH PARAMETERS --
+# Public Server Cert: --BEGIN CERTIFICATE -- (server.crt)
+# CA Cert: -- BEGIN CERTIFICATE -- (rootca.crt)
+# DH PEM: -- BEGIN DH PARAMETERS -- (dh.pem)
 # Additional Config: blank
 # TLS Auth Key: blank
 # Certificate Revoke List: blank

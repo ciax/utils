@@ -2,7 +2,7 @@
 #alias pptp
 [ "$1" = "-r" ] && { sudo kill $(< /var/run/ppp0.pid); exit; }
 [ "$1" ] || . set.usage "(-r:remove) [vpnhost]"
-res=`echo "select host,user from vpn where id = '$1';"|db-register`
+res=$(db-register "select host,user from vpn where id = '$1';")
 remote=${res%,*}
 user=${res#*,}
 . set.tempfile temp
