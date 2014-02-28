@@ -5,11 +5,11 @@
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
 [ "$1" ] || . set.usage "[remote host] (outputfile)"
-remote=$1
+vpn=$1
 vardir=$HOME/.var
 host=`hostname`
-server=$(db-register "select host from vpn where id = '$remote';")
-[ "$server" ] || { echo "No such host in DB"; exit; }
+. set.field vpn $vpn
+[ "$remote" ] || { echo "No such host in DB"; exit; }
 out=${2:-/dev/stdout}
 cat > $out <<EOF
 verb 3
@@ -28,11 +28,11 @@ keepalive 15 60
 ca $vardir/rootca.crt
 cert $vardir/$host.crt
 key $vardir/$host.key
-remote $server 1194
+remote $remote 1194
 status $vardir/openvpn-status.log
 ns-cert-type server
 EOF
-vpn-route $remote|cut -d' ' -f1,4,6 >> $out
+vpn-route $vpn|cut -d' ' -f1,4,6 >> $out
 # Require SSL files for Server:
 # rootca.crt (Root Certificate)
 # server.crt (Server Certificate)
