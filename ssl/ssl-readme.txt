@@ -7,7 +7,7 @@ These script are configured by looking up the database associated with the site 
  
 Basic manipulate scripts
  a. ssl-newkey (makes private key which is universal for any certificates)
- b. ssl-mkcsr (makes certificate request file)
+ b. ssl-request (makes certificate request file)
  c. ssl-sign (sign with CA key upon the request to the certificate file)
 
 Basic informative scripts
@@ -19,6 +19,6 @@ Procedure
  1.Make root CA certificate (Just one time)
   ssl-rootca.sh [root site] -> rootca files
  2.Make server key and request
-  ssl-mkcsr [server site]  -> server csr file
+  ssl-request [server site]  -> server csr file
  3.Make server certificate
   ssl-sign [rootca] [server site] -> server crt file
