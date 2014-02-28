@@ -25,10 +25,11 @@ persist-tun
 float
 daemon
 keepalive 15 60
+remote $remote 1194
 ca $vardir/rootca.crt
 cert $vardir/$host.crt
 key $vardir/$host.key
-remote $remote 1194
+writepid $vardir/openvpn.pid
 status $vardir/openvpn-status.log
 ns-cert-type server
 EOF
