@@ -1,19 +1,17 @@
 #!/bin/bash
 #alias pptp
 [ "$1" = "-r" ] && { sudo kill $(< /var/run/ppp0.pid); exit; }
-[ "$1" ] || . set.usage "(-r:remove) [vpnhost]"
-res=$(db-register "select host,user from vpn where id = '$1';")
-remote=${res%,*}
-user=${res#*,}
+[ "$1" ] || . set.usage "(-r:remove) [vpnhost]" < <(db-list vpn)
+. set.field vpn $1
 . set.tempfile temp
 tail -4 $0 > $temp
 sudo install $temp /etc/ppp/ip-up.d/route
 id="--create $1"
-remote="--server $remote"
+host="--server $host"
 user="--username $user"
 [ "$password" ] && pw="--password $password"
 opt="--encrypt"
-sudo pptpsetup $id $remote $user $pw $opt --start
+sudo pptpsetup $id $host $user $pw $opt --start
 exit
 
 #ip-up params: interface-name tty-device speed local-IP-address remote-IP-address ipparam
