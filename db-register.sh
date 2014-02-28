@@ -5,8 +5,7 @@
 db=~/.var/db-register.sq3
 case "$1" in
     -s) shift;opt="-separator ' '";;
-    -i) shift;opt="-list";;
+    -i) shift;opt="-line";;
     *) opt="-separator ,";;
 esac
-echo "sqlite3 $opt $db ${1:+\"$1\"}"
 sqlite3 $opt $db ${1:+"$1"}
