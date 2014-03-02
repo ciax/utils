@@ -7,9 +7,9 @@
 [ "$1" ] || . set.usage "[remote host] (outputfile)"
 vpn=$1
 vardir=$HOME/.var
-host=`hostname`
-. set.field vpn $vpn
-[ "$remote" ] || { echo "No such host in DB"; exit; }
+myhost=`hostname`
+. set.field $vpn vpn login
+[ "$host" ] || { echo "No such host in DB"; exit; }
 out=${2:-/dev/stdout}
 cat > $out <<EOF
 verb 3
@@ -25,10 +25,10 @@ persist-tun
 float
 daemon
 keepalive 15 60
-remote $remote 1194
+remote $host 1194
 ca $vardir/rootca.crt
-cert $vardir/$host.crt
-key $vardir/$host.key
+cert $vardir/$myhost.crt
+key $vardir/$myhost.key
 writepid $vardir/openvpn.pid
 status $vardir/openvpn-status.log
 ns-cert-type server

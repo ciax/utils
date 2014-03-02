@@ -2,7 +2,7 @@
 #alias vpnp
 [ "$1" = "-r" ] && { sudo kill $(< /var/run/ppp0.pid); exit; }
 [ "$1" ] || . set.usage "(-r:remove) [vpnhost]" < <(db-list vpn)
-. set.field vpn $1
+. set.field $1 vpn
 id="--create $1"
 host="--server $remote"
 user="--username $user"

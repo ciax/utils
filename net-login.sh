@@ -3,7 +3,7 @@
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
 #alias lo
 getstr(){
-    . set.field login $1;shift
+    . set.field $1 login;shift
     str="${command//ssh/ssh $sshopt} $user $host $*"
 }
 [ "$1" ] || . set.usage "[host]" < <(db-list login)

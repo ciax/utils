@@ -8,7 +8,7 @@ for i in ~/utils/ ~/cfg.*/;do
     file-register
 done
 # db
-for i in mac login ssl;do
+for i in mac ssl;do
     sql-make $i|db-register
     echo "${C3}Database update for $i"
 done
