@@ -2,15 +2,11 @@
 # Required Packages: expect,bsdmainutils(column),sed
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
 #alias lo
-getstr(){
-    . set.field $1 login;shift
-    str="${command//ssh/ssh $sshopt} $user $host $*"
-}
 [ "$1" ] || . set.usage "[host]" < <(db-list login)
 sshopt="-o StrictHostKeyChecking=no -t -l"
-getstr $1
+. set.field $1 login;shift
+str="${command//ssh/ssh $sshopt} $user $host $*"
 
-[ "$tunnel" ] && str="$(getstr $tunnel;echo $str) $str"
 if [ "$password" ] ; then
     . set.tempfile expfile
     echo "set timeout 10" > $expfile
