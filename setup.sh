@@ -17,3 +17,4 @@ ln -sf ~/utils/.bash_local $ba
 pkg-deb init
 upd-git
 upd-db
+ssh-init
