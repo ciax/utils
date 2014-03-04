@@ -12,7 +12,9 @@ else
     ba=.bashrc
 fi
 ln -sf ~/utils/.bash_local $ba
+. $ba
 cd ~/utils
 ./file-register.sh
 pkg-deb init
-update
+upd-git
+upd-db
