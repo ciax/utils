@@ -23,4 +23,4 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
  ~/cfg.*
 
 # Work Dirs
-~/bin ~/db ~/.var
+~/bin ~/db ~/.var ~/.trash

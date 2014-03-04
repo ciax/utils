@@ -16,7 +16,7 @@ if [ -f "$inv" ] ; then
         grep -v "$key" $tath1 > $tath2
         cp $tath2 $tath1
         echo "$key" >> $tinv2
-    done < <(grep '.' $inv $tinv|cut -d' ' -f2|sort -u)
+    done < <(grep -h '.' $inv $tinv|grep -v ':'|cut -d' ' -f2|sort -u)
     overwrite $tinv2 $inv
 fi
 overwrite $tath1 $ath
