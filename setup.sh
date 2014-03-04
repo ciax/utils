@@ -13,8 +13,11 @@ else
 fi
 ln -sf ~/utils/.bash_local $ba
 . $ba
+echo "Registering Files"
 ~/utils/file-register.sh ~/utils
+echo "Installing Install"
 pkg-deb init
-upd-git
+echo "Updating Database"
 upd-db
-ssh-init
+echo "Initializing SSH"
+ssh-setup
