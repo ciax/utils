@@ -29,8 +29,11 @@ schema(){
 }
 
 shopt -s nullglob
-[ -e "$1" ] || . set.usage "[csv|tsv file]"
-ext=${1##*.}
+[ -e "$1" ] || . set.usage "[csv|tsv file] .."
 tables=''
 echo "pragma foreign_keys=on;"
-schema $1
+for i; do
+    ext=${i##*.}
+    schema $i
+done
+
