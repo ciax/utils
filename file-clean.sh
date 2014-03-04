@@ -7,7 +7,7 @@ chkdir(){
 }
 nouse(){
         [ "$1" ] || return
-	chkdir ~/.trash || exit 1
+        chkdir ~/.trash || exit 1
         /bin/mv -fb $* ~/.trash
         /bin/ls -aF --color
 }

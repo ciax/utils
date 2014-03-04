@@ -1,5 +1,6 @@
 #!/bin/bash
 # Required packages: coreutils(readlink)
+# Required scripts: file-clean
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 #alias fr
@@ -47,5 +48,5 @@ dirreg(){
     done
 }
 shopt -s nullglob
-dirreg ${*:-.}
-file-clean ~/bin ~/db ~/lib ~/.var
+dirreg ~/utils $*
+~/bin/file-clean ~/bin ~/db ~/lib ~/.var
