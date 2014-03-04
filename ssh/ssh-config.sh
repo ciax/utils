@@ -1,9 +1,11 @@
 #!/bin/bash
+# generate ~/.ssh/config
 net=${1:-$(net-name)}
-for lid in $(db-register "select id from login where command == 'ssh' and password is null;");do
+for lid in $(db-register "select id from login where command == 'ssh';");do
     . set.field "$lid" login
     num=$(db-register "select id from ssh where subnet == '$net' and login == '$id';")
     . set.field "${num:-0}" ssh
+    [ ! "$password" ] || [ "$proxy" ] || continue
     echo "Host $lid"
     echo -e "\tHostName ${alias:-$host}"
     echo -e "\tUser $user"
