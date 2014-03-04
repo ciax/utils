@@ -13,8 +13,7 @@ else
 fi
 ln -sf ~/utils/.bash_local $ba
 . $ba
-cd ~/utils
-./file-register.sh
+~/utils/file-register.sh ~/utils
 pkg-deb init
 upd-git
 upd-db

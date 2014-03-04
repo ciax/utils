@@ -3,7 +3,6 @@
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 #alias fr
-
 chklink(){
     # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
     src=$1
@@ -36,14 +35,17 @@ mklink(){
     done
     [ "$list" ] && echo "[ $list] -> $objdir"
 }
-
+dirreg(){
+    for i ; do
+        pushd $i >/dev/null
+        mklink -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
+        mklink lib lib*
+        mklink db *.tsv *.csv
+        mklink .emacs.d *.el
+        dirreg */
+        popd >/dev/null
+    done
+}
 shopt -s nullglob
-for i in ${*:-. */}; do
-    pushd $i >/dev/null
-    mklink -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
-    mklink lib lib*
-    mklink db *.tsv *.csv
-    mklink .emacs.d *.el
-    popd >/dev/null
-done
+dirreg ${*:-.}
 file-clean ~/bin ~/db ~/lib ~/.var

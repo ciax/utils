@@ -24,3 +24,9 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
 
 # Work Dirs
 ~/bin ~/db ~/.var ~/.trash
+
+### Required Package
+ Should be put in comment line as "# Required Package: app1,app2,app3(cmd)..."
+
+### Alias
+ Should be put in comment line as "#alias str"
