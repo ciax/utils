@@ -15,7 +15,7 @@ ln -sf ~/utils/.bash_local $ba
 . $ba
 echo "Registering Files"
 ~/utils/file-register.sh ~/utils
-echo "Installing Install"
+echo "Installing Packages"
 pkg-deb init
 echo "Updating Database"
 upd-db
