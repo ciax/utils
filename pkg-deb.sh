@@ -2,15 +2,21 @@
 #Debian utils
 # Required Packages: apt-spy,debconf
 #alias deb
+shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
 ichk(){ for i ;do which $i >/dev/null || sudo apt-get install $i;done; }
+ipkgs(){
+    [ "$1" ] || return
+    grep -ih '^# *req.* packages' $*|tr -d ' '|\
+    sed -re 's/\([^\)]+\)//g' -e 's/.*://'|\
+    tr ',' '\n'|sort -u
+}
 cmd="$1";shift
 case "$cmd" in
     init)
         ichk grep sed
-        apps=`grep -h '^#' *.sh|grep -i 'req.* packages'|tr -d ' '|sed -re 's/\([^)]+\)//g' -e 's/.*://'| tr ',' '\n' | sort -u`
-        sudo apt-get install $apps
+        sudo apt-get install $(ipkgs *.sh)
         exit;;
     clean)
         ichk deborphan
