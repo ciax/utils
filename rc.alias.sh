@@ -1,7 +1,7 @@
 #!/bin/bash
 alias update='upd-git;upd-db'
 alias mo='more'
-alias em='emacs -nw'
+alias e='emacs -nw'
 
 # For GIT
 alias gia='git commit --amend'
