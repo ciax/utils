@@ -1,4 +1,5 @@
 #!/bin/bash
+# Requied Packages: emacs,most
 addenv(){
     name=$1;shift
     list=$(IFS=: eval echo \$$name)
@@ -18,4 +19,6 @@ addenv PATH "$HOME/bin" "$HOME/lib"
 addenv RUBYLIB "$HOME/lib"
 export XMLPATH="$HOME/ciax-xml"
 export EDITOR='emacs'
-
+export PAGER='most'
+export MOST_EDITOR='emacs %s -g %d'
+export GREP_OPTIONS='--color=auto'
