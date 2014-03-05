@@ -1,6 +1,6 @@
 #!/bin/bash
 #Debian utils
-# Required Packages: apt-spy,debconf
+# Required Packages: apt-spy,debconf,findutils
 #alias deb
 shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
