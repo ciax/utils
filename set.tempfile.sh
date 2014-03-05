@@ -17,7 +17,7 @@ overwrite(){
     if cmp -s $1 $2 ; then
         /bin/rm $1;return 1
     else
-        mv $1 $2
+        /bin/mv -b $1 $2
     fi
 }
 create_tempfile $*
