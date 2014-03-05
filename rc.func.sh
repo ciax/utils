@@ -20,3 +20,7 @@ e-func(){
     unset file
     popd >/dev/null
 }
+reg(){
+    file-register
+    source set.alias
+}
