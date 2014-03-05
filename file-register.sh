@@ -48,5 +48,5 @@ dirreg(){
     done
 }
 shopt -s nullglob
-dirreg ~/utils $*
+dirreg ~/utils ~/cfg.* $*
 ~/bin/file-clean ~/bin ~/db ~/lib ~/.var

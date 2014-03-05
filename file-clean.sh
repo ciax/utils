@@ -1,4 +1,5 @@
 #!/bin/bash
+#alias clr
 shopt -s nullglob
 chkdir(){
     [ -d $1 ] && return
