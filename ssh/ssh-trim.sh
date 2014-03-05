@@ -7,7 +7,7 @@ inv=~/.ssh/invalid_keys
 pub=~/.ssh/id_rsa.pub
 . set.tempfile tath1 tath2 tinv1 tinv2
 #
-# Split file into #headed line(invalid keys) and others
+# Split file into invalid_keys by #headed line and others
 #
 egrep -v '[#*]' $ath|grep '.' > $tath1
 egrep '^#' $ath > $tinv1
