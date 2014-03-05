@@ -25,4 +25,4 @@ done
 sql="select * $sql;"
 . set.tempfile db
 setvar "$sql"
-unset sub sql cmd
+unset sub sql cmd setvar
