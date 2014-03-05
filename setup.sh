@@ -11,7 +11,7 @@ if [ -f .bashrc ] ; then
 else
     ba=.bashrc
 fi
-ln -sf ~/utils/set.init.sh $ba
+ln -sf ~/utils/set.initrc.sh $ba
 . $ba
 . ~/utils/set.color.sh
 echo "${C5}Registering Files$C0"
