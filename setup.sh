@@ -13,11 +13,12 @@ else
 fi
 ln -sf ~/utils/.bash_local $ba
 . $ba
-echo "Registering Files"
+. ~/utils/set.color.sh
+echo "${C5}Registering Files$C0"
 ~/utils/file-register.sh ~/utils
-echo "Installing Packages"
+echo "${C5}Installing Packages$C0"
 pkg-deb init
-echo "Updating Database"
+echo "${C5}Updating Database$C0"
 upd-db
-echo "Initializing SSH"
+echo "${C5}Initializing SSH$C0"
 ssh-setup

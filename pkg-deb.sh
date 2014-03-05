@@ -8,7 +8,7 @@ which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
 ichk(){ for i ;do which $i >/dev/null || sudo apt-get install $i;done; }
 ipkgs(){
     [ "$1" ] || return
-    grep -ih '^# *req.* packages' $*|tr -d ' '|\
+    grep -ihr '^# *req.* packages' $*|tr -d ' '|\
     sed -re 's/\([^\)]+\)//g' -e 's/.*://'|\
     tr ',' '\n'|sort -u
 }
@@ -16,7 +16,7 @@ cmd="$1";shift
 case "$cmd" in
     init)
         ichk grep sed
-        sudo apt-get install $(ipkgs *.sh)
+        sudo apt-get install $(ipkgs ~/utils/*.sh)
         exit;;
     clean)
         ichk deborphan
