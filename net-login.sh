@@ -3,11 +3,12 @@
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
 #alias l
 [ "$1" ] || . set.usage "[host]" < <(db-list login)
-sshopt="-o StrictHostKeyChecking=no -t -l"
-. set.field "'$1' and command == 'ssh'" login
+sshopt="-o StrictHostKeyChecking=no -t"
+. set.field "'$1' and command in ('ssh','telnet')" login
+[ "$(db-sshid)" ] && host=
 if [ "$host" ]; then
     shift
-    str="${command//ssh/ssh $sshopt} $user $host $*"
+    str="${command//ssh/ssh $sshopt} -l $user $host $*"
 else
     str="ssh $sshopt $*"
 fi
@@ -21,5 +22,5 @@ if [ "$password" ] ; then
     echo "interact" >> $expfile
     expect $expfile
 else
-echo    $str $rcmd
+    $str $rcmd
 fi
