@@ -17,3 +17,5 @@ export LANG="C"
 addenv PATH "$HOME/bin" "$HOME/lib"
 addenv RUBYLIB "$HOME/lib"
 export XMLPATH="$HOME/ciax-xml"
+export EDITOR='emacs'
+
