@@ -5,7 +5,7 @@
 # Merely invoked
 #  .bashrc (calls .bash_aliases)
 cd
-ba=.bash_aliases
+ba=set.init.sh
 if [ -f .bashrc ] ; then
     grep -q $ba .bashrc || echo "Can't linked rc file"
 else
