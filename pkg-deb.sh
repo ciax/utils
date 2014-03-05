@@ -5,7 +5,7 @@
 shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
-ichk(){ for i ;do which $i >/dev/null || sudo apt-get install $i;done; }
+ichk(){ for i ;do which $i >/dev/null || sudo -i apt-get install $i;done; }
 ipkgs(){
     [ "$1" ] || return
     grep -ihr '^# *req.* packages' $*|tr -d ' '|\
@@ -16,22 +16,22 @@ cmd="$1";shift
 case "$cmd" in
     init)
         ichk grep sed
-        sudo apt-get install $(ipkgs ~/utils/*.sh)
+        sudo -i apt-get install $(ipkgs ~/utils/*.sh)
         exit;;
     clean)
         ichk deborphan
-        sudo apt-get autoremove
-        sudo apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
+        sudo -i apt-get autoremove
+        sudo -i apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         exit;;
     spy)
         ichk apt-spy
-        sudo apt-spy -d stable -a North-America
+        sudo -i apt-spy -d stable -a North-America
         exit;;
     upd)
-        sudo apt-get update
+        sudo -i apt-get update
         exit;;
     upg)
-        sudo apt-get upgrade
+        sudo -i apt-get upgrade
         exit;;
     list)
         dpkg --get-selections '*'
@@ -43,16 +43,16 @@ esac
             "gpg (key)" "init,list; spy; clean; upd; upg"
 case "$cmd" in
     install)
-        sudo apt-get install $* || { echo "Error $?"; exit; }
+        sudo -i apt-get install $* || { echo "Error $?"; exit; }
         echo Install success. $?
         ;;
     remove)
-        sudo apt-get remove --purge $1;;
+        sudo -i apt-get remove --purge $1;;
     config)
-        sudo dpkg-reconfigure $1;;
+        sudo -i dpkg-reconfigure $1;;
     gpg)
         gpg --keyserver pgpkeys.mit.edu --recv-keys $1 &&\
-    gpg --armor --export $1 | sudo apt-key add -;;
+    gpg --armor --export $1 | sudo -i apt-key add -;;
     which)
         par=`which "$1"` && par=`readlink -f $par` || par=$1
         dpkg -S $par;;
