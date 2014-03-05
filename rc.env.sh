@@ -21,4 +21,4 @@ export XMLPATH="$HOME/ciax-xml"
 export EDITOR='emacs'
 export PAGER='most'
 export MOST_EDITOR='emacs %s -g %d'
-export GREP_OPTIONS='--color=auto'
+export GREP_OPTIONS='-r --color=auto'

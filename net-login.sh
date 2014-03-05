@@ -1,11 +1,16 @@
 #!/bin/bash
 # Required Packages: expect,bsdmainutils(column),sed
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
-#alias lo
+#alias l
 [ "$1" ] || . set.usage "[host]" < <(db-list login)
 sshopt="-o StrictHostKeyChecking=no -t -l"
-. set.field $1 login;shift
-str="${command//ssh/ssh $sshopt} $user $host $*"
+. set.field "'$1' and command == 'ssh'" login
+if [ "$host" ]; then
+    shift
+    str="${command//ssh/ssh $sshopt} $user $host $*"
+else
+    str="ssh $sshopt $*"
+fi
 
 if [ "$password" ] ; then
     . set.tempfile expfile
@@ -16,5 +21,5 @@ if [ "$password" ] ; then
     echo "interact" >> $expfile
     expect $expfile
 else
-    $str $rcmd
+echo    $str $rcmd
 fi

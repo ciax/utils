@@ -2,8 +2,8 @@
 #ln -s $0 /etc/vpnc/default.conf
 [ "$1" ] || . set.usage "[vpn] [id] [pw]"
 vid=$1
-. set.field $vid vpn
-. set.field $login login
+. set.field "'$vid'" vpn
+. set.field "'$login'" login
 [ "$command" = vpn ] || exit
 echo "IPSec gateway $host"
 echo "IPSec ID $user"

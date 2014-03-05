@@ -17,7 +17,7 @@ case $0 in
     *set.field*) cmd='echo';;
     *) cmd='eval';;
 esac
-sub="'$1'";shift
+sub="$1";shift
 for tbl; do
     [ "$sql" ] && sub="(select $tbl $sql)"
     sql="from $tbl where id == $sub"
@@ -25,4 +25,5 @@ done
 sql="select * $sql;"
 . set.tempfile db
 setvar "$sql"
-unset sub sql cmd setvar
+unset sub sql cmd
+unset -f setvar
