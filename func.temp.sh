@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required packages: coreutils(cat),diffutils(cmp)
-# Usage: create_tempfile [varname1] [varname2] ..
-create_tempfile(){
+# Usage: temp [varname1] [varname2] ..
+temp(){
     local trp="/bin/rm -f -- "
     local i=
     for i ; do
@@ -20,4 +20,4 @@ overwrite(){
         /bin/mv -b $1 $2
     fi
 }
-create_tempfile $*
+temp $*
