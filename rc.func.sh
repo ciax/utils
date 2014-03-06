@@ -22,5 +22,5 @@ e-func(){
 }
 reg(){
     file-register
-    source set.alias
+    source rc.alias
 }
