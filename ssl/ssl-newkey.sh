@@ -2,7 +2,7 @@
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-[ "$1" ] || . set.usage "[site name]"
+. set.usage "[site name]" $1
 cd ~/.var
 site="$1"
 if [ -s "$site.key" ] ;then

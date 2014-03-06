@@ -1,7 +1,7 @@
 #!/bin/bash
 #CONTENT: fid(md5),name,mode,date,base64
 #LIST: id(date),host,dist,owner,dir,fid
-[ "$1" ] ||  . set.usage "(-i:init db) [file]"
+. set.usage "(-i:init db) [file]" $1
 if [ "$1" = -i ] ; then
     shift
     db-files <<EOF

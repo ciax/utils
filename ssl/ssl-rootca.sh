@@ -5,7 +5,7 @@
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 shopt -s nullglob
-[ "$1" ] || . set.usage "[site]"
+. set.usage "[site]" $1
 cd ~/.var
 site=$1
 . ssl-request $site

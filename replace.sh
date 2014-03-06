@@ -1,10 +1,12 @@
 #!/bin/bash
 # Required script: set.usage, func.color, set.tempfile, set.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
-[ "$2" ] || . set.usage "[oldstr] [newstr] (ext)" "ENV[files] for target" "ENV[ex] for exclude line" "(ext) includes [mv old.ext new.ext]"
+. set.usage "[oldstr] [newstr] (ext)" $2 <<EOF
+ENV[files] for target
+ENV[ex] for exclude line
+(ext) includes [mv old.ext new.ext]
+EOF
 . func.color
-hl(){ echo -en "$C2${*}$C0"; }
-al(){ echo -en "$C1${*}$C0"; }
 . set.tempfile outtmp
 oldstr="$1"
 newstr="$2"

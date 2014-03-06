@@ -1,14 +1,11 @@
 #!/bin/bash
-# Required script: func.color.sh
+# Required script: func.color
 . func.color
-[ "$1" ] || set - "(option) (lists..) < (lists..)"
-CMD=${0##*/}
-OPT=$1;shift
-echo -e "Usage: $C3$CMD$C0 $OPT"
-for i ; do
-    echo -e "\t$i"
-done
-[ -t 0 ] || while read i; do
-    echo -e "\t$i"
-done
-exit 2
+opt=${1:-"[option] \$n(requred arg)"}
+if [ ! "$2" ]; then
+    echo "Usage: $C3${0##*/}$C0 $opt"
+    [ -t 0 ] || while read i; do
+	echo -e "\t$i"
+    done
+    exit 2
+fi

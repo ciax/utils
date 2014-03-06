@@ -12,7 +12,7 @@ setvar(){
     fi
 }
 set -f
-[ "$2" ] || . set.usage "[id] [table1] (table2..)"
+. set.usage "[id] [table1] (table2..)" $2
 case $0 in
     *set.field*) cmd='echo';;
     *) cmd='eval';;

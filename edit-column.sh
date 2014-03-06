@@ -2,7 +2,7 @@
 # Required script: set.usage, set.tempfile
 # Required packages: coreutils(cat),mawk
 # Reorder columns except key
-[ "$2" ] || . set.usage "[order(1,2,3..)] [file] (-w)"
+. set.usage "[order(1,2,3..)] [file] (-w)" $2
 order="\$${1//,/,\$}"
 file=$2
 . set.tempfile tmp1

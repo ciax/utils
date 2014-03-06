@@ -38,9 +38,14 @@ case "$cmd" in
         exit;;
     *);;
 esac
-[ "$1" ] || . set.usage "[option]" "which (file)" "search (pattern)" \
-            "install,remove,config (package)" "files,stat,info (package)" \
-            "gpg (key)" "init,list; spy; clean; upd; upg"
+. set.usage "[option]" $1 <<EOF
+install,remove,config (package)
+files,stat,info (package)
+which (file)
+search (pattern)
+gpg (key)
+init,list; spy; clean; upd; upg
+EOF
 case "$cmd" in
     install)
         sudo -i apt-get install $* || { echo "Error $?"; exit; }

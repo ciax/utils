@@ -4,7 +4,7 @@
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
-[ "$1" ] || . set.usage "[remote host] (outputfile)"
+. set.usage "[remote host] (outputfile)" $1
 vpn=$1
 vardir=$HOME/.var
 myhost=`hostname`

@@ -3,7 +3,7 @@
 # Required packages: coreutils(grep)
 # Cutout matched line from file
 #alias cutout
-[ "$2" ] || . set.usage "[expression] [file]"
+. set.usage "[expression] [file]" $2
 exp=$1;shift
 file=$1;shift
 . set.tempfile remain

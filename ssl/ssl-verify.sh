@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Vefiry the relationship
-[ "$1" ] || . set.usage "[ca name] [site name]"
+. set.usage "[ca name] [site name]" $1
 cd ~/.var
 cacrt="$1.crt";shift
 [ -s "$cacrt" ] || { echo "No ca crt file"; exit; }
