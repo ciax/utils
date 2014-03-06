@@ -5,7 +5,6 @@
 # Usage: ssh-merge (user@host) ..
 # If no args, then hosts are picked up from authorized_keys
 arg=$*
-ssh-trim
 rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
