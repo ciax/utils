@@ -11,7 +11,7 @@ alias mo='more'
 alias e='emacs -nw'
 
 # For GIT
-alias gia='git commit --amend'
+alias gia='git add . */'
 alias gib='git branch'
 alias gic='git commit -v'
 alias gid='git diff --color=always'
