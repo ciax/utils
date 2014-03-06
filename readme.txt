@@ -30,3 +30,6 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
 
 ### Alias
  Should be put in comment line as "#alias str"
+
+### Link
+ Should be put in comment line as "#link str"

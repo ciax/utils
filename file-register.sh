@@ -24,14 +24,18 @@ mklink(){
         local base="${i##*/}"
         local real="$(pwd -P)/$base"
         if [ "$xopt" ] ; then
-            local link="$objdir/${base%.*}"
+            local link="${base%.*}"
             [ -x "$real" ] || continue
         else
-            local link="$objdir/$base"
+            local link="$base"
         fi
-        chklink "$real" "$link" || continue
-        ln -sf "$real" "$link"
-        list="$list$base "
+	# extra link should be described as #link head
+	for j in "$link" $(grep '^#link' "$real"|cut -d' ' -f2-);do
+            chklink "$real" "$objdir/$j" || continue
+            ln -sf "$real" "$objdir/$j"
+	    local org="$base "
+	done
+        list="$list$org"
     done
     [ "$list" ] && echo "[ $list] -> $objdir"
 }
