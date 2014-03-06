@@ -21,7 +21,7 @@ if ! cmp -s $trem $trath; then
     echo "authorized_keys is updated at $rhost"
 fi
 scp -pq $rhost:$rinv $trem
-edit-merge $trem $linv
+edit-merge $linv $trem
 if ! cmp -s $trem $linv ; then
     scp -pq $linv $rhost:$rinv
     echo "invalid_keys is updated at $rhost"

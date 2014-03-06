@@ -1,25 +1,12 @@
 #!/bin/bash
-# Required script: usage.sh, func.temp.sh
+# Required script: func.usage, func.temp
 # Required packages: coreutils(sort,nkf,cp,cmp)
 # Merge files with sorting and remove duplicated lines
 # If no changes, then no rewrite
-. func.usage "[src_file|-] [dst_file]" $2
-. func.temp tmd tms
-src="$1";shift
-dst="$1";shift
-if [ "$src" = "-" ] ; then
-    nkf -d > $tms
-elif [ -f "$src" ] ; then
-    cp "$src" $tms
-else
-    echo "No such file $src"
-    exit 1
-fi
-[ -f "$dst" ] || touch $dst
-nkf -d "$dst" >> $tms
-<$tms sort -u > $tmd
-if ! cmp -s $tmd $dst ; then
-    [ -w "$dst" ] || { echo "Permission denied $dst"; exit; }
-    cat $tmd > $dst
-    echo "$dst is updated"
-fi
+. func.usage "[file] (input)" $1
+file=$1;shift
+[ -f "$file" ] || touch $file
+[ -w "$file" ] || abort "Permission denied [$file]"
+. func.temp temp
+{ nkf -d "$file";cat $1; } | sort -u > $temp
+overwrite $temp $file && echo "$file is updated"
