@@ -22,7 +22,7 @@ done|cut -d' ' -f1|sort -u > $tinv
 overwrite $tinv $inv
 while read line; do
     set - $line
-    grep -q $(echo $2|md5sum|cut -d' ' -f1) $inv || echo "$line"
+    grep -q $(md5sum <<< $2 |cut -d' ' -f1) $inv || echo "$line"
 done < $ath > $tath
 edit-merge $pub $tath
 overwrite $tath $ath
