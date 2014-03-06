@@ -1,5 +1,6 @@
 #Required packages: coreutils,bash,sudo,perl,findutils(find),perl
 # command usage by prefix
+func.*.sh: source for loading functions;
 set.*.sh: use by source (i.e. source 'command')
 
 ### Git Tips

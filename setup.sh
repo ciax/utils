@@ -14,11 +14,11 @@ fi
 ln -sf ~/utils/set.initrc.sh $ba
 . $ba
 . ~/utils/func.color.sh
-echo "${C5}Registering Files$C0"
+color5 "Registering Files"
 ~/utils/file-register.sh ~/utils
-echo "${C5}Installing Packages$C0"
+color5 "Installing Packages"
 pkg-deb init
-echo "${C5}Updating Database$C0"
+color5 "Updating Database"
 upd-db
-echo "${C5}Initializing SSH$C0"
+color5 "Initializing SSH"
 ssh-setup

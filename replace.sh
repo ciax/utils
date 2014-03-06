@@ -11,11 +11,11 @@ newstr="$2"
 ext="$3"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
-    echo2 "#### File:[$orgfile] ####\n"
+    color2 "#### File:[$orgfile] ####"
     if grep "$newstr" "$orgfile" ; then
-        echo1 "\tmight conflict with ($oldstr -> $newstr)!\n"
+        color1 "\tmight conflict with ($oldstr -> $newstr)!"
     else
-        echo1 "\tmake this file change?\n"
+        color1 "\tmake this file change?"
     fi
     . set.query || continue
     IFS=$'\n\r'
@@ -26,7 +26,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
             before="${line//$oldstr/$C1$oldstr$C0}"
             after="${line//$oldstr/$C1$newstr$C0}"
             echo -n "${before}"
-            echo2 "\t====>\n"
+            color2 "\t====>"
             echo "${after}"
             . set.query && line="$conv"
         fi
@@ -38,11 +38,11 @@ done
 oldfn="$oldstr.$ext"
 newfn="$newstr.$ext"
 if [ -e "$oldfn" ] ; then
-    echo2 "#### Rename:[$oldfn] ####\n"
+    color2 "#### Rename:[$oldfn] ####"
     if [ -e "$newfn" ] ; then
-        echo1 "\tnewfn aleady exists\n"
+        color1 "\tnewfn aleady exists"
     else
-        echo1 "\trename $oldfn -> $newfn?\n"
+        color1 "\trename $oldfn -> $newfn?"
         . set.query && mv $oldfn $newfn
     fi
 fi
