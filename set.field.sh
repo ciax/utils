@@ -23,7 +23,7 @@ for tbl; do
     sql="from $tbl where id == $sub"
 done
 sql="select * $sql;"
-. set.tempfile db
+. func.temp db
 setvar "$sql"
 unset sub sql cmd
 unset -f setvar

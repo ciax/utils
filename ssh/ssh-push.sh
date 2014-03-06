@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: ssh-setup, set.tempfile, edit-merge
+# Required script: ssh-setup, func.temp, edit-merge
 # Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
 # Impose own trust to the object host (push pub-key anonymously)
 . func.usage "[(user@)host]" $1
@@ -13,7 +13,7 @@ rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
 linv=~/$rinv
-. set.tempfile trem trath
+. func.temp trem trath
 scp -pq $rhost:$rath $trem
 { grep @ $trem;cut -d' ' -f1-2 $lath; }|sort -u > $trath
 if ! cmp -s $trem $trath; then

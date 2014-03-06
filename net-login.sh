@@ -14,7 +14,7 @@ else
 fi
 
 if [ "$password" ] ; then
-    . set.tempfile expfile
+    . func.temp expfile
     echo "set timeout 10" > $expfile
     echo "spawn -noecho $str" >> $expfile
     echo "expect word: { send $password\n };" >> $expfile

@@ -1,11 +1,11 @@
 #!/bin/bash
-# Required script: set.tempfile, ssh-perm.sh
+# Required script: func.temp, ssh-perm.sh
 # Required packages: coreutils(cp,cut,grep,sort)
 # Remove dup key from authorized_keys
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys
 pub=~/.ssh/id_rsa.pub
-. set.tempfile tath1 tath2 tinv1 tinv2
+. func.temp tath1 tath2 tinv1 tinv2
 #
 # Split file into invalid_keys by #headed line and others
 #

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage, func.color, set.tempfile, set.query, file-register
+# Required script: func.usage, func.color, func.temp, set.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
 . func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
 ENV[files] for target
@@ -7,7 +7,7 @@ ENV[ex] for exclude line
 (ext) includes [mv old.ext new.ext]
 EOF
 . func.color
-. set.tempfile outtmp
+. func.temp outtmp
 oldstr="$1"
 newstr="$2"
 ext="$3"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: set.tempfile.sh, ssh-trim.sh
+# Required script: func.temp.sh, ssh-trim.sh
 # Required packages: coreutils(grep,cut,cat,sort),diffutils(cmp),openssh-client(ssh,ssh-keygen)
 # Usage: ${0##*/} (-r:remove keys)
 ath=~/.ssh/authorized_keys
@@ -19,7 +19,7 @@ type ssh > /dev/null || apt-get install ssh
 me=`cut -d' ' -f3 $pub`
 key=`cut -d' ' -f2 $pub`
 # Make temp
-. set.tempfile tinv tath
+. func.temp tinv tath
 { egrep "$me" $ath|grep -v "$key"|cut -d' ' -f2;cat $inv; }|sort -u > $tinv
 { grep -v "$me" $ath;cat $pub; }|sort -u > $tath
 # No change, no rewrite

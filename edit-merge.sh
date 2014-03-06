@@ -1,10 +1,10 @@
 #!/bin/bash
-# Required script: usage.sh, set.tempfile.sh
+# Required script: usage.sh, func.temp.sh
 # Required packages: coreutils(sort,nkf,cp,cmp)
 # Merge files with sorting and remove duplicated lines
 # If no changes, then no rewrite
 . func.usage "[src_file|-] [dst_file]" $2
-. set.tempfile tmd tms
+. func.temp tmd tms
 src="$1";shift
 dst="$1";shift
 if [ "$src" = "-" ] ; then

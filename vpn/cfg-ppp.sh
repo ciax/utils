@@ -11,7 +11,7 @@ rtstr(){
 }
 case "$1" in
     -i)
-        . set.tempfile temp
+        . func.temp temp
         rtstr > $temp
         sudo install $temp /etc/ppp/ip-up.d/route
         ;;
