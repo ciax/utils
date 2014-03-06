@@ -29,5 +29,6 @@ if [ "$fid" ] ; then
     echo "select base64 from content where id == '$fid';"|db-files|base64 -d > $name
     echo "Recall OK"
 else
-    . set.error "No such id stored for $host"
+    echo1 "No such id stored for $host"
+    exit 1
 fi
