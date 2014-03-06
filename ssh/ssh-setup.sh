@@ -8,21 +8,8 @@ sec=~/.ssh/id_rsa
 pub=~/.ssh/id_rsa.pub
 [ "$1" = -r ] && rm $sec $pub
 type ssh > /dev/null || apt-get install ssh
-[ -e $sec -a -e $pub ] || ssh-keygen
+[ -e $sec ] || ssh-keygen
+[ -e $pub ] || ssh-keygen -y -f $sec > $pub
 [ -e $ath ] || touch $ath
 [ -e $inv ] || touch $inv
-#
-# Add my id_rsa.pub to authorized_keys (if not exist)
-#
-# If the line with own name is found in authorized_keys,
-# maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
-me=`cut -d' ' -f3 $pub`
-key=`cut -d' ' -f2 $pub`
-# Make temp
-. func.temp tinv tath
-cp $ath $tath
-edit-cutout "$me" $tath|grep -v "$key"|cut -d' ' -f2 > $tinv
-cat $pub >> $tath
-# No change, no rewrite
-edit-merge $tinv $inv
-edit-merge $tath $ath
+set-trim
