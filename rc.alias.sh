@@ -2,6 +2,8 @@
 alias update='upd-git;upd-db'
 alias mo='more'
 alias e='emacs -nw'
+alias ag='alias|grep -i'
+alias eg='env|grep -i'
 
 # For GIT
 alias gia='git commit --amend'
