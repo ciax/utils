@@ -23,7 +23,7 @@ lath=~/$rath
 rinv=.ssh/invalid_keys
 linv=~/$rinv
 . func.temp rtemp pushkeys
-cut -d' ' -f1-2 $lath > pushkeys
+cut -d' ' -f1-2 $lath > $pushkeys
 # Add to authorized_keys
 addrem $rhost:$rath $pushkeys
 # Add to invalid_keys
