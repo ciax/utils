@@ -1,5 +1,5 @@
 #!/bin/bash
 # Required packages: wakeonlan
 #alias wol
-[ "$1" ] || . set.usage "[host]"
+. func.usage "[host]" $1
 wakeonlan $(db-register "select id from mac where host == '$1';")

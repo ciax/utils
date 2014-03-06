@@ -3,7 +3,6 @@
 # Required scripts: file-clean
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
-#alias fr
 chklink(){
     # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
     src=$1

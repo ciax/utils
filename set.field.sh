@@ -12,7 +12,7 @@ setvar(){
     fi
 }
 set -f
-[ "$2" ] || . set.usage "[id] [table1] (table2..)"
+. func.usage "[id] [table1] (table2..)" $2
 case $0 in
     *set.field*) cmd='echo';;
     *) cmd='eval';;
@@ -23,7 +23,7 @@ for tbl; do
     sql="from $tbl where id == $sub"
 done
 sql="select * $sql;"
-. set.tempfile db
+. func.temp db
 setvar "$sql"
 unset sub sql cmd
 unset -f setvar

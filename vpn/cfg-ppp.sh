@@ -11,7 +11,7 @@ rtstr(){
 }
 case "$1" in
     -i)
-        . set.tempfile temp
+        . func.temp temp
         rtstr > $temp
         sudo install $temp /etc/ppp/ip-up.d/route
         ;;
@@ -19,7 +19,7 @@ case "$1" in
         rtstr $0
         ;;
     *)
-        . set.usage "(-i:install)"
+        . func.usage "(-i:install)"
         ;;
 esac
 

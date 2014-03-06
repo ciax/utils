@@ -1,21 +1,23 @@
 #!/bin/bash
-# Required script: set.usage.sh, set.color.sh, set.tempfile.sh, set.query.sh, file-register.sh
+# Required script: func.usage, func.color, func.temp, set.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
-[ "$2" ] || . set.usage "[oldstr] [newstr] (ext)" "ENV[files] for target" "ENV[ex] for exclude line" "(ext) includes [mv old.ext new.ext]"
-. set.color
-hl(){ echo -en "$C2${*}$C0"; }
-al(){ echo -en "$C1${*}$C0"; }
-. set.tempfile outtmp
+. func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
+ENV[files] for target
+ENV[ex] for exclude line
+(ext) includes [mv old.ext new.ext]
+EOF
+. func.color
+. func.temp outtmp
 oldstr="$1"
 newstr="$2"
 ext="$3"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
-    hl "#### File:[$orgfile] ####\n"
+    color2 "#### File:[$orgfile] ####"
     if grep "$newstr" "$orgfile" ; then
-        al "\tmight conflict with ($oldstr -> $newstr)!\n"
+        color1 "\tmight conflict with ($oldstr -> $newstr)!"
     else
-        al "\tmake this file change?\n"
+        color1 "\tmake this file change?"
     fi
     . set.query || continue
     IFS=$'\n\r'
@@ -23,10 +25,10 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
         conv="${line//$oldstr/$newstr}"
         if [ "$conv" != "$line" ] && ! { [ "$ex" ] && [[ "$line" == *$ex* ]]; }
         then
-            before="${line//$oldstr/`al $oldstr`}"
-            after="${line//$oldstr/`al $newstr`}"
+            before="${line//$oldstr/$C1$oldstr$C0}"
+            after="${line//$oldstr/$C1$newstr$C0}"
             echo -n "${before}"
-            hl "\t====>\n"
+            color2 "\t====>"
             echo "${after}"
             . set.query && line="$conv"
         fi
@@ -38,11 +40,11 @@ done
 oldfn="$oldstr.$ext"
 newfn="$newstr.$ext"
 if [ -e "$oldfn" ] ; then
-    hl "#### Rename:[$oldfn] ####\n"
+    color2 "#### Rename:[$oldfn] ####"
     if [ -e "$newfn" ] ; then
-        al "\tnewfn aleady exists\n"
+        color1 "\tnewfn aleady exists"
     else
-        al "\trename $oldfn -> $newfn?\n"
+        color1 "\trename $oldfn -> $newfn?"
         . set.query && mv $oldfn $newfn
     fi
 fi

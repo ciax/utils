@@ -1,6 +1,6 @@
 #!/bin/bash
 #ln -s $0 /etc/vpnc/default.conf
-[ "$1" ] || . set.usage "[vpn] [id] [pw]"
+. func.usage "[vpn] [id] [pw]" $1
 vid=$1
 . set.field "'$vid'" vpn
 . set.field "'$login'" login

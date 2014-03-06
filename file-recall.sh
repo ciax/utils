@@ -10,7 +10,7 @@ case "$1" in
         shift;sel="min";;
     *) sel="max";;
 esac
-[ "$1" ] || . set.usage "(-f:first,-l:list) [file] (host)"
+. func.usage "(-f:first,-l:list) [file] (host)" $1
 name="$1"
 if [ -s "$name" ] ; then
     file-stash $name >/dev/null
@@ -29,5 +29,6 @@ if [ "$fid" ] ; then
     echo "select base64 from content where id == '$fid';"|db-files|base64 -d > $name
     echo "Recall OK"
 else
-    . set.error "No such id stored for $host"
+    echo1 "No such id stored for $host"
+    exit 1
 fi

@@ -5,10 +5,9 @@
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 cd ~/.var
-. set.tempfile v3
+. func.temp v3
 case "$1" in
-    '') . set.usage "(-s:server,-c:client,-a:ca) [ca] [site] ..."
-        ;;
+    '') . func.usage "(-s:server,-c:client,-a:ca) [ca] [site] ...";;
     -s) shift;echo "nsCertType=server" > $v3;;
     -c) shift;echo "nsCertType=client" > $v3;;
     -a) shift;echo "basicConstraints=CA:true" > $v3;;

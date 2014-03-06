@@ -2,7 +2,7 @@
 # Client for dd-wrt openvpn server
 #alias vpno
 [ "$1" = "-r" ] && { sudo kill $(< ~/.var/openvpn.pid); exit; }
-[ "$1" ] || . set.usage "(-r:remove) [vpnhost]" < <(db-list vpn)
+. func.usage "(-r:remove) [vpnhost]" $1 < <(db-list vpn)
 cfgfile=~/.var/openvpn-$1.cfg
 . cfg-openvpn $1 $cfgfile
 ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }
