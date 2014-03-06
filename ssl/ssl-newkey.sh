@@ -2,7 +2,7 @@
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-. set.usage "[site name]" $1
+. func.usage "[site name]" $1
 cd ~/.var
 site="$1"
 if [ -s "$site.key" ] ;then

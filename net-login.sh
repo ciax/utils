@@ -2,7 +2,7 @@
 # Required Packages: expect,bsdmainutils(column),sed
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
 #alias l
-. set.usage "[host]" < <(db-list login) $1
+. func.usage "[host]" < <(db-list login) $1
 sshopt="-o StrictHostKeyChecking=no -t"
 . set.field "'$1' and command in ('ssh','telnet')" login
 [ "$(db-sshid)" ] && host=

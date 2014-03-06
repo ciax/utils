@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required script: set.usage, set.tempfile
+# Required script: func.usage, set.tempfile
 # Required packages: coreutils(cat),mawk
 # Reorder columns except key
-. set.usage "[order(1,2,3..)] [file] (-w)" $2
+. func.usage "[order(1,2,3..)] [file] (-w)" $2
 order="\$${1//,/,\$}"
 file=$2
 . set.tempfile tmp1

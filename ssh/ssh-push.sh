@@ -2,7 +2,7 @@
 # Required script: ssh-setup, set.tempfile, edit-merge
 # Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
 # Impose own trust to the object host (push pub-key anonymously)
-. set.usage "[(user@)host]" $1
+. func.usage "[(user@)host]" $1
 rhost=$1
 ssh-setup
 if [ "$LOGNAME" = ${rhost%@*} ]; then

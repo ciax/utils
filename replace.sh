@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required script: set.usage, func.color, set.tempfile, set.query, file-register
+# Required script: func.usage, func.color, set.tempfile, set.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
-. set.usage "[oldstr] [newstr] (ext)" $2 <<EOF
+. func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
 ENV[files] for target
 ENV[ex] for exclude line
 (ext) includes [mv old.ext new.ext]

@@ -1,5 +1,5 @@
 #!/bin/bash
-. set.usage "[tables]" $1
+. func.usage "[tables]" $1
 files=''
 for tbl;do
     set - ~/db/db-$tbl.?sv

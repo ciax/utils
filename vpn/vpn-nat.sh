@@ -39,6 +39,6 @@ case "$1" in
     stat)
         natstat;;
     *)
-        . set.usage "[clr|set|stat]"
+        . func.usage "[clr|set|stat]"
         ;;
 esac

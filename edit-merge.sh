@@ -3,7 +3,7 @@
 # Required packages: coreutils(sort,nkf,cp,cmp)
 # Merge files with sorting and remove duplicated lines
 # If no changes, then no rewrite
-. set.usage "[src_file|-] [dst_file]" $2
+. func.usage "[src_file|-] [dst_file]" $2
 . set.tempfile tmd tms
 src="$1";shift
 dst="$1";shift

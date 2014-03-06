@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required script: set.usage
+# Required script: func.usage
 # Required packages: coreutils(sort),openssh-client(ssh),iputils-ping(ping)
 # Show list of the user@host which will accept ssh connection
-. set.usage "[(user@)host ..]" $1
+. func.usage "[(user@)host ..]" $1
 ahost=''
 auser=''
 chkcom(){

@@ -38,7 +38,7 @@ case "$cmd" in
         exit;;
     *);;
 esac
-. set.usage "[option]" $1 <<EOF
+. func.usage "[option]" $1 <<EOF
 install,remove,config (package)
 files,stat,info (package)
 which (file)

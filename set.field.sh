@@ -12,7 +12,7 @@ setvar(){
     fi
 }
 set -f
-. set.usage "[id] [table1] (table2..)" $2
+. func.usage "[id] [table1] (table2..)" $2
 case $0 in
     *set.field*) cmd='echo';;
     *) cmd='eval';;

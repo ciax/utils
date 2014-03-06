@@ -1,4 +1,4 @@
 #!/bin/bash
-. set.usage "[site]" $1
+. func.usage "[site]" $1
 cd ~/.var
 openssl x509 -text -noout -in $1.crt

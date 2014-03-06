@@ -19,7 +19,7 @@ case "$1" in
         rtstr $0
         ;;
     *)
-        . set.usage "(-i:install)"
+        . func.usage "(-i:install)"
         ;;
 esac
 

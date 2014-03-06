@@ -3,5 +3,5 @@
 # Required packages: coreutils(sort,nkf)
 # Remove duplicated lines
 #alias unq
-[ -t 0 ] && . set.usage " < [files]"
+[ -t 0 ] && . func.usage " < [files]"
 nkf -d|sort -u

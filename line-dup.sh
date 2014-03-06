@@ -3,7 +3,7 @@
 # Required packages: coreutils(sort,nkf,uniq)
 # Pick up duplicated lines
 #alias dup
-[ -t 0 ] && . set.usage " < [files]"
+[ -t 0 ] && . func.usage " < [files]"
 prev=''
 while read line;do
     [ "$line" = "$prev" ] && echo $line

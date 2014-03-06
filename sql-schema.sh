@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: set.usage
+# Required script: func.usage
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
 ## CSV files: ~/db/db-*.csv
 ## The 'id' field is automatically added to the table as 'primary key'.
@@ -28,7 +28,7 @@ schema(){
     echo "$create);"
 }
 shopt -s nullglob
-. set.usage "[csv|tsv file] .." $1
+. func.usage "[csv|tsv file] .." $1
 tables=''
 echo "pragma foreign_keys=on;"
 for i; do

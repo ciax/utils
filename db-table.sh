@@ -1,5 +1,5 @@
 #!/bin/bash
-. set.usage "[file]" $1
+. func.usage "[file]" $1
 base=$(basename $1)
 body="${base%.*}"
 core="${body#db-}"
