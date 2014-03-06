@@ -3,7 +3,7 @@
 # otherwise pick last one
 case "$1" in
     -l)
-        echo "select distinct name from content;"|db-files
+        db-files <<< "select distinct name from content;"
         exit
         ;;
     -f)
@@ -24,9 +24,9 @@ dist=$(info-dist)
 dstr="list.dist=='$dist'"
 sub_date="select $sel(date) from content,list where content.id == list.fid and $nstr and $hstr and $dstr $uniq"
 sub_fid="select id from content where date == ($sub_date)"
-fid=$(echo "$sub_fid;"|db-files)
+fid=$(db-files <<< "$sub_fid;")
 if [ "$fid" ] ; then
-    echo "select base64 from content where id == '$fid';"|db-files|base64 -d > $name
+    db-files <<< "select base64 from content where id == '$fid';"|base64 -d > $name
     echo "Recall OK"
 else
     echo1 "No such id stored for $host"
