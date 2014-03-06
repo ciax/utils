@@ -20,9 +20,9 @@ me=`cut -d' ' -f3 $pub`
 key=`cut -d' ' -f2 $pub`
 # Make temp
 . func.temp tinv tath
-{ egrep "$me" $ath|grep -v "$key"|cut -d' ' -f2;cat $inv; }|sort -u > $tinv
-{ grep -v "$me" $ath;cat $pub; }|sort -u > $tath
+cp $ath $tath
+edit-cutout "$me" $tath|grep -v "$key"|cut -d' ' -f2 > $tinv
+cat $pub >> $tath
 # No change, no rewrite
-overwrite $tath $ath && echo "added new key to authorized_keys"
-overwrite $tinv $inv && echo "added new key to invalid_keys"
-ssh-trim
+edit-merge $tinv $inv
+edit-merge $tath $ath

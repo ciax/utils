@@ -12,11 +12,12 @@ pub=~/.ssh/id_rsa.pub
 egrep -v '[#*]' $ath|grep '.' > $tath1
 egrep '^#' $ath > $tinv1
 if [ -f "$inv" ] ; then
+    mykey=$(cut -d ' ' -f2 $pub)
     while read key; do
         grep -v "$key" $tath1 > $tath2
         cp $tath2 $tath1
         echo "$key" >> $tinv2
-    done < <(grep -h '.' $inv $tinv|grep -v ':'|cut -d' ' -f2|sort -u)
+    done < <(grep -h '.' $inv $tinv|grep -v -e ':' -e "$mykey"|cut -d' ' -f2|sort -u)
     overwrite $tinv2 $inv
 fi
 overwrite $tath1 $ath
