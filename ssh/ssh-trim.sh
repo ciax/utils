@@ -2,7 +2,7 @@
 # Required script: func.temp, edit-merge, ssh-perm
 # Required packages: coreutils(cp,cut,grep,sort,md5sum)
 # Remove dup key from authorized_keys
-getmd5(){ md5sum <<< $2 | cut -c32; }
+getmd5(){ md5sum <<< $2 | cut -c-32; }
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys
 pub=~/.ssh/id_rsa.pub
@@ -17,7 +17,7 @@ read rsa mykey me < $pub
 grep -v $mykey $ath > $tath
 while read line;do
     getmd5 $line
-done < <(edit-cutout '^#|$me' $tath) | edit-merge $inv
+done < <(edit-cutout "^#|$me" $tath) | edit-merge $inv
 # For authorized_keys
 while read line;do
     grep -q $(getmd5 $line) $inv || echo "$line"
