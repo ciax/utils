@@ -11,3 +11,4 @@ if [ ! "$2" ]; then
     done
     exit 2
 fi
+abort(){ color1 $1;exit 1; }
