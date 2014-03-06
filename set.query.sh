@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required script: set.color.sh
+# Required script: func.color.sh
 # Required packages: coreutils(tty)
-. set.color
+. func.color
 [ "$ALL" ] && exit
 [ "$tty" ] || tty=`tty`
 echo -en "\tOK? $C3[A/Y/N/Q]$C0"

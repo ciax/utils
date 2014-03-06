@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required script: set.color.sh
-. set.color
+# Required script: func.color.sh
+. func.color
 [ "$1" ] || set - "(option) (lists..) < (lists..)"
 CMD=${0##*/}
 OPT=$1;shift

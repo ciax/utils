@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required script: set.color.sh
+# Required script: func.color.sh
 # std input makes list
-. set.color
+. func.color
 [ "$1" ] || set - "No input"
 echo -e "${C1} ERROR:$C3 $1$C0"
 shift

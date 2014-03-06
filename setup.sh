@@ -13,7 +13,7 @@ else
 fi
 ln -sf ~/utils/set.initrc.sh $ba
 . $ba
-. ~/utils/set.color.sh
+. ~/utils/func.color.sh
 echo "${C5}Registering Files$C0"
 ~/utils/file-register.sh ~/utils
 echo "${C5}Installing Packages$C0"
