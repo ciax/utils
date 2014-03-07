@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required Packages: expect,bsdmainutils(column),sed
+# Required packages: expect,bsdmainutils(column),sed
 # Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
 #alias l
 . func.usage "[host]" < <(db-list login) $1

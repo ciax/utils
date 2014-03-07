@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required Packages: bsdmainutils(column)
+# Required packages: bsdmainutils(column)
 list(){
     db-register "$1"|sort|column -c${2:-50}
 }

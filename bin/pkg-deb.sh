@@ -1,6 +1,7 @@
 #!/bin/bash
 #Debian utils
-# Required Packages: apt-spy,debconf,findutils
+# Required packages: sudo,apt-spy,debconf,findutils
+# Required scripts: func.usage
 #alias deb
 #alias wf which
 shopt -s nullglob
