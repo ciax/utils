@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.usage, func.color, func.temp, set.query, file-register
+# Required scripts: func.usage, func.color, func.temp, func.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
 . func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
 ENV[files] for target
@@ -19,7 +19,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     else
         color1 "\tmake this file change?"
     fi
-    . set.query || continue
+    . func.query || continue
     IFS=$'\n\r'
     while read -r line ; do
         conv="${line//$oldstr/$newstr}"
@@ -30,7 +30,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
             echo -n "${before}"
             color2 "\t====>"
             echo "${after}"
-            . set.query && line="$conv"
+            . func.query && line="$conv"
         fi
         echo "$line" >> "$outtmp"
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
@@ -45,7 +45,7 @@ if [ -e "$oldfn" ] ; then
         color1 "\tnewfn aleady exists"
     else
         color1 "\trename $oldfn -> $newfn?"
-        . set.query && mv $oldfn $newfn
+        . func.query && mv $oldfn $newfn
     fi
 fi
 file-register
