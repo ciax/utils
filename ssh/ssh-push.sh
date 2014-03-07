@@ -1,16 +1,16 @@
 #!/bin/bash
-# Required script: ssh-setup, func.temp, edit-merge
+# Required script: ssh-setup, ssh-trim, func.temp, edit-merge
 # Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
 # Impose own trust to the object host (push pub-key anonymously)
 #link ssh-join
-addrem(){
-    local rfile=$1;shift
-    local ltemp=$1;shift
-    scp -pq $rfile $rtemp
-    edit-merge $ltemp $rtemp >/dev/null
-    cmp -s $rtemp $ltemp && return
-    scp -pq $ltemp $rfile
-    echo "${rfile##*/} is updated at $rhost"
+getrem(){
+    scp -pq $rhost:$1 $2
+    cp $2 $3
+}
+putrem(){
+    cmp -s $1 $2 && return
+    scp -pq $1 $rhost:$3
+    echo "${3##*/} is updated at $rhost"
 }
 . func.usage "[(user@)host]" $1
 rhost=$1
@@ -20,16 +20,27 @@ rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
 linv=~/$rinv
-. func.temp rtemp
+. func.temp trath trinv tath tinv
+# Get files from remote
+getrem $rath $trath $tath
+getrem $rinv $trinv $tinv
+# Trimming
 case $0 in
-    *ssh-push) 
-	temp akeys
-	cut -d' ' -f1-2 $lath > $akeys
+    *ssh-push)
+	cut -d' ' -f1-2 $lath >> $tath
 	;;
-    *ssh-join) akeys=$lath;;
-    *) exit;;
+    *ssh-join)
+	cat $lath >> $tath $lath; join=1
+	;;
+    *)
+	exit
+	;;
 esac
-# Add to authorized_keys
-addrem $rhost:$rath $akeys
-# Add to invalid_keys
-addrem $rhost:$rinv $linv
+edit-merge $tinv $linv
+ssh-trim $tath $tinv >/dev/null
+# Put files back to remote
+putrem $tath $trath $rath
+putrem $tinv $trinv $rinv
+# Renew local files
+[ "$join" ] && overwrite $tath $lath
+overwrite $tinv $linv
