@@ -37,6 +37,7 @@ case $0 in
 	;;
 esac
 cat $linv >> $tinv
+ssh-mark
 ssh-trim $tath $tinv >/dev/null
 # Put files back to remote
 putrem $tath $trath $rath
