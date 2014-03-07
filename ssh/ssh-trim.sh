@@ -10,15 +10,20 @@ pub=~/.ssh/id_rsa.pub
 #
 # Split file into invalid_keys by #headed line, old key and others
 #
-. func.temp tath tath2
+. func.temp tath tath2 tinv
 read rsa mykey me < $pub
 #  If the line with own name is found in authorized_keys,
 #  maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
 # For invalid_keys (increase only -> merge)
 grep -v $mykey $ath > $tath
 while read line;do
-    getmd5 $line
-done < <(edit-cutout "^#|$me" $tath) | edit-merge $inv
+    if [ ${#line} -gt 32 ]; then 
+	getmd5 $line
+    else
+	echo $line
+    fi
+done < <(edit-cutout "^#|$me" $tath;cat $inv) > $tinv
+edit-merge $inv $tinv
 # For authorized_keys (can be reduced -> overwrite)
 while read line;do
     grep -q $(getmd5 $line) $inv || echo "$line"

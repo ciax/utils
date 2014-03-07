@@ -9,4 +9,4 @@ file=$1;shift
 [ -w "$file" ] || abort "Permission denied [$file]"
 . func.temp temp
 { nkf -d "$file";cat $1; } | sort -u > $temp
-overwrite $temp $file && echo "$file is updated"
+overwrite $temp $file && echo "$file was updated"
