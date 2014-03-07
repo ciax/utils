@@ -2,6 +2,7 @@
 #Debian utils
 # Required Packages: apt-spy,debconf,findutils
 #alias deb
+#alias wf which
 shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
