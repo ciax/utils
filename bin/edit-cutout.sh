@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage, func.temp
+# Required scripts: func.usage, func.temp
 # Required packages: coreutils(grep)
 # Cutout matched line from file
 #alias cutout

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage, func.color, func.temp, set.query, file-register
+# Required scripts: func.usage, func.color, func.temp, set.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
 . func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
 ENV[files] for target

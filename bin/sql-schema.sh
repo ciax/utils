@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage
+# Required scripts: func.usage
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
 ## CSV files: ~/db/db-*.csv
 ## The 'id' field is automatically added to the table as 'primary key'.

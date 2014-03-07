@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.color.sh
+# Required scripts: func.color.sh
 # Required packages: coreutils(tty)
 . func.color
 [ "$ALL" ] && exit

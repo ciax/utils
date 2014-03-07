@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.color
+# Required scripts: func.color
 # Show usage if second arg is null.
 # (option and lists (input from file) are available.)
 . func.color

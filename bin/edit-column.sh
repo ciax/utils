@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage, func.temp
+# Required scripts: func.usage, func.temp
 # Required packages: coreutils(cat),mawk
 # Reorder columns except key
 . func.usage "[order(1,2,3..)] [file] (-w)" $2

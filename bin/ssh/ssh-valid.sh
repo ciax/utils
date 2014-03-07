@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage
+# Required scripts: func.usage
 # Required packages: coreutils(sort),openssh-client(ssh),iputils-ping(ping)
 # Show list of the user@host which will accept ssh connection
 . func.usage "[(user@)host ..]" $1

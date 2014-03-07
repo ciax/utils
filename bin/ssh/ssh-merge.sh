@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: edit-merge, ssh-trim, ssh-valid
+# Required scripts: edit-merge, ssh-trim, ssh-valid
 # Required packages: coreutils(cut,grep),diffutils(cmp),openssh-client(ssh,scp)
 # Join to the group which opject host is involved
 # Usage: ssh-merge (user@host) ..

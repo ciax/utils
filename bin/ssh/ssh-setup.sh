@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.temp.sh, ssh-trim.sh
+# Required scripts: func.temp.sh, ssh-trim.sh
 # Required packages: coreutils(grep,cut,cat,sort),diffutils(cmp),openssh-client(ssh,ssh-keygen)
 # Usage: ${0##*/} (-r:remove keys)
 ath=~/.ssh/authorized_keys

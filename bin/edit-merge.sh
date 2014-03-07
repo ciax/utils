@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.usage, func.temp
+# Required scripts: func.usage, func.temp
 # Required packages: coreutils(sort,nkf,cp,cmp)
 # Merge files with sorting and remove duplicated lines
 # If no changes, then no rewrite

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.temp, edit-merge, ssh-perm
+# Required scripts: func.temp, edit-merge, ssh-perm
 # Required packages: coreutils(cp,cut,grep,sort,md5sum)
 # Remove dup key from authorized_keys
 # Usage: ssh-trim (authorized_keys) (invalid_keys)

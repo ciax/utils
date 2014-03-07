@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required script: func.color, func.usage
+# Required scripts: func.color, func.usage
 # Required packages: coreutils(od)
 # option (-n): no folding by return code but show (0a)
 . func.color
