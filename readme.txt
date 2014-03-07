@@ -25,11 +25,8 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
 # Work Dirs
 ~/bin ~/db ~/.var ~/.trash
 
-### Required Package
- Should be put in comment line as "# Required Package: app1,app2,app3(cmd)..."
-
-### Alias
- Should be put in comment line as "#alias str"
-
-### Link
- Should be put in comment line as "#link str"
+############### Comment in the script examples ################
+# Required packages: *   <------- Package list that wants to be installed
+# Required scripts: *    <------- Script list for dependency check
+#alias *                 <------- Alias name that itself wants to be
+#link  *                 <------- Symbolic link name that itself wants to be
