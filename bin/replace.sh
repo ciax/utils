@@ -6,7 +6,7 @@ ENV[files] for target
 ENV[ex] for exclude line
 (ext) includes [mv old.ext new.ext]
 EOF
-. func.color
+. func.query
 . func.temp outtmp
 oldstr="$1"
 newstr="$2"
@@ -19,7 +19,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     else
         color1 "\tmake this file change?"
     fi
-    . func.query || continue
+    query || continue
     IFS=$'\n\r'
     while read -r line ; do
         conv="${line//$oldstr/$newstr}"
@@ -30,7 +30,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
             echo -n "${before}"
             color2 "\t====>"
             echo "${after}"
-            . func.query && line="$conv"
+            query && line="$conv"
         fi
         echo "$line" >> "$outtmp"
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
@@ -45,7 +45,7 @@ if [ -e "$oldfn" ] ; then
         color1 "\tnewfn aleady exists"
     else
         color1 "\trename $oldfn -> $newfn?"
-        . func.query && mv $oldfn $newfn
+        query && mv $oldfn $newfn
     fi
 fi
 file-register
