@@ -5,11 +5,11 @@ temp(){
     local trp="/bin/rm -f -- "
     local i=
     for i ; do
-    local tmp=$(tempfile) || { echo "Can't make mktemp"; exit 1; }
-    local trp="$trp $tmp"
-    eval "$i=$tmp"
+	local tmp=$(tempfile) || { echo "Can't make mktemp"; exit 1; }
+	tmplist="$tmplist $tmp"
+	eval "$i=$tmp"
     done
-    trap "$trp" EXIT
+    trap "$trp$tmplist" EXIT
 }
 # Usage: overwrite [src_file] [dst_file]
 # Overwrite if these are different.
