@@ -10,7 +10,7 @@ getrem(){
 putrem(){
     cmp -s $1 $2 && return
     scp -pq $1 $rhost:$3
-    echo "${3##*/} is updated at $rhost"
+    echo "${3##*/}($(stat -c%s $1)) is updated at $rhost"
 }
 . func.usage "[(user@)host]" $1
 rhost=$1
@@ -30,13 +30,13 @@ case $0 in
 	cut -d' ' -f1-2 $lath >> $tath
 	;;
     *ssh-join)
-	cat $lath >> $tath $lath; join=1
+	cat $lath >> $tath; join=1
 	;;
     *)
 	exit
 	;;
 esac
-edit-merge $tinv $linv
+cat $linv >> $tinv
 ssh-trim $tath $tinv >/dev/null
 # Put files back to remote
 putrem $tath $trath $rath
