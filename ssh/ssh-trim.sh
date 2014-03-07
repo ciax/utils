@@ -10,6 +10,7 @@ inv=${2:-~/.ssh/invalid_keys}
 # Split file into invalid_keys by #headed line
 #
 . func.temp tath tinv tdup
+cp $ath $tath
 ## For invalid_keys (increase only -> merge)
 while read line;do
     if [ ${#line} -gt 32 ]; then 
@@ -17,15 +18,16 @@ while read line;do
     else
 	echo $line
     fi
-done < <(edit-cutout "^#" $ath;cat $inv) |sort -u > $tinv
+done < <(edit-cutout "^#" $tath;cat $inv) |sort -u > $tinv
 overwrite $tinv $inv
 ## For authorized_keys (can be reduced -> overwrite)
 #  exclude duplicated keys
-cut -d' ' -f1-2 $ath|line-dup > $tdup
+sort -u $tath> $tinv
+cut -d' ' -f1-2 $tinv|line-dup > $tdup
 #  exculde invalid keys
 while read line;do
     grep -q "$line" $tdup && continue
     grep -q $(getmd5 $line) $inv && continue
     echo "$line"
-done < $ath |sort -u > $tath
-overwrite $tath $ath && echo "authorized_key was updated"
+done < $tinv > $tath
+edit-write $ath $tath && echo "authorized_key was updated"
