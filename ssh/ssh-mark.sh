@@ -7,11 +7,10 @@ ath=~/.ssh/authorized_keys
 pub=~/.ssh/id_rsa.pub
 [ -f $ath -a -f $pub ] || { echo "No ssh files"; exit 1; }
 read rsa mykey me < $pub
-. func.temp tath tath2
+. func.temp tath
 while read line; do
     set - $line
     [ "$3" = "$me" ] && echo -n '#'
     echo "$line"
 done < <(grep -v $mykey $ath) > $tath
-sort -u $pub $tath > $tath2
-overwrite $tath2 $ath && echo "Invalid keys are marked"
+sort -u $pub $tath | edit-write $ath && echo "Invalid keys are marked"
