@@ -12,36 +12,34 @@ putrem(){
     scp -pq $1 $rhost:$3
     echo "${3##*/}($(stat -c%s $1)) is updated at $rhost"
 }
-. func.usage "[(user@)host]" $1
-rhost=$1
+. func.usage "[(user@)host] .." $1
 ssh-setup
-[[ ${rhost#*@} =~ "`hostname`|localhost" ]] && abort "Self push"
+case $0 in
+    *ssh-push) cmd(){ cut -d' ' -f1-2; };;
+    *ssh-join) cmd(){ cat; }; join=1 ;;
+    *) exit ;;
+esac
 rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
 linv=~/$rinv
 . func.temp trath trinv tath tinv
+for rhost;do
+    [[ ${rhost#*@} =~ "`hostname`|localhost" ]] && abort "Self push"
+    echo "Host:$rhost"
 # Get files from remote
-getrem $rath $trath $tath
-getrem $rinv $trinv $tinv
+    getrem $rath $trath $tath
+    getrem $rinv $trinv $tinv
+# Join with local file
+    cmd < $lath >> $tath
+    cat $linv >> $tinv
 # Trimming
-case $0 in
-    *ssh-push)
-	cut -d' ' -f1-2 $lath >> $tath
-	;;
-    *ssh-join)
-	cat $lath >> $tath; join=1
-	;;
-    *)
-	exit
-	;;
-esac
-cat $linv >> $tinv
-ssh-mark
-ssh-trim $tath $tinv >/dev/null
+    ssh-mark
+    ssh-trim $tath $tinv >/dev/null
 # Put files back to remote
-putrem $tath $trath $rath
-putrem $tinv $trinv $rinv
+    putrem $tath $trath $rath
+    putrem $tinv $trinv $rinv
 # Renew local files
-[ "$join" ] && overwrite $tath $lath
-overwrite $tinv $linv
+    [ "$join" ] && overwrite $tath $lath
+    overwrite $tinv $linv
+done
