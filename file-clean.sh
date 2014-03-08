@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: File clean up (remove backup,unlinked files)
 #alias clr
 shopt -s nullglob
 chkdir(){

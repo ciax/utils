@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: set environment for login
 # Requied Packages: emacs,most
 addenv(){
     local name=$1;shift

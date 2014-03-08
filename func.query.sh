@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: provides query function
 # Required packages: coreutils(tty)
 query(){
     [ "$ALL" ] && return

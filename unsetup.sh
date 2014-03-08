@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: uninstall utils environment
 cd
 ba=.bash_completion
 for i in bin lib db .var .trash;do

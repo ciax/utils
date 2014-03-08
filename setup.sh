@@ -1,5 +1,7 @@
 #!/bin/bash
-# rcfile priority (bash executes just one of them)
+# Description: install utils (need to re-login for environment effective)
+#
+#* rcfile priority (bash executes just one of them)
 # Invoked bash as a Login shell
 #  .bash_profile > .bash_login > .profile (calls .bashrc)
 # Merely invoked
