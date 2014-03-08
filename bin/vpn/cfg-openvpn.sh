@@ -1,5 +1,5 @@
 #!/bin/bash
-# Client for dd-wrt openvpn server
+# Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)

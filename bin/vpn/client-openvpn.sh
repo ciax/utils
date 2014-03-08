@@ -1,5 +1,5 @@
 #!/bin/bash
-# Description: Client for dd-wrt openvpn server
+# Description: client for dd-wrt openvpn server
 # packages: openvpn
 # Required scripts: func.usage, db-list, cfg-openvpn, vpn-nat, show-syslog
 #alias vpno

@@ -1,5 +1,6 @@
 #!/bin/bash
-# Set ssh related file permission
+# Description: set ssh related file permission
+# Required packages: coreutils(chmod)
 filemod(){
     mod="$1";shift
     for i ; do [ -f "$i" ] && chmod $mod $i; done

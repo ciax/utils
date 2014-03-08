@@ -1,9 +1,9 @@
 #!/bin/bash
+# Description: join to the group which opject host is involved
 # Required scripts: edit-merge, ssh-trim, ssh-valid
 # Required packages: coreutils(cut,grep),diffutils(cmp),openssh-client(ssh,scp)
-# Join to the group which opject host is involved
 # Usage: ssh-merge (user@host) ..
-# If no args, then hosts are picked up from authorized_keys
+#   If no args, then hosts are picked up from authorized_keys
 ath=~/.ssh/authorized_keys
 pub=~/.ssh/id_rsa.pub
 read rs mykey me < $pub

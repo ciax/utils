@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: func.temp, edit-merge, ssh-perm
+# Description: remove dup key from authorized_keys
 # Required packages: coreutils(cp,cut,grep,sort,md5sum)
-# Remove dup key from authorized_keys
+# Required scripts: func.temp, edit-cutout, line-dup, edit-write
 # Usage: ssh-trim (authorized_keys) (invalid_keys)
 getmd5(){ md5sum <<< $2 | cut -c-32; }
 ath=${1:-~/.ssh/authorized_keys}

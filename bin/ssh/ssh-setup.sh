@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.temp.sh, ssh-trim.sh
+# Desctiption: setup ssh files 
 # Required packages: coreutils(grep,cut,cat,sort),diffutils(cmp),openssh-client(ssh,ssh-keygen)
 # Usage: ${0##*/} (-r:remove keys)
 ath=~/.ssh/authorized_keys
@@ -14,4 +14,3 @@ type ssh > /dev/null || apt-get install ssh
 [ -e $ath ] || touch $ath
 [ -e $inv ] || touch $inv
 [ -e $cfg ] || ssh-config > $cfg
-ssh-trim

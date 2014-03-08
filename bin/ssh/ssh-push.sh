@@ -1,7 +1,7 @@
 #!/bin/bash
+# Desctiption: impose own trust to the object host (push pub-key anonymously)
 # Required scripts: ssh-setup, ssh-trim, func.temp, edit-merge
 # Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
-# Impose own trust to the object host (push pub-key anonymously)
 #link ssh-join
 getrem(){
     scp -pq $rhost:$1 $2

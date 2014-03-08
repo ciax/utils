@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: func.temp, edit-merge, ssh-perm
+# Description: mark '#' if the line with own name is found in authorized_keys,
+#   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
+# Required scripts: func.temp, edit-write, ssh-perm
 # Required packages: coreutils(cp,cut,grep,sort,md5sum)
-#  Mark '#' if the line with own name is found in authorized_keys,
-#  maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
 ath=~/.ssh/authorized_keys
 pub=~/.ssh/id_rsa.pub
 [ -f $ath -a -f $pub ] || { echo "No ssh files"; exit 1; }
