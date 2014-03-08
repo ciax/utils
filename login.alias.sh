@@ -11,8 +11,9 @@ alias mo='more'
 alias e='emacs -nw'
 alias ls='ls -AF --color'
 alias v='ls -l'
-alias ag='alias|grep -i'
-alias eg='env|grep -i'
+alias alg='alias|grep -i'
+alias eng='env|grep -i'
+alias seg='set|grep "^[a-zA-Z]"'
 
 # For GIT
 alias gia='git add . */'

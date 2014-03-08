@@ -24,3 +24,6 @@ reg(){
     file-register
     source login.alias
 }
+gr(){
+    grep -r $1 *
+}
