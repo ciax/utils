@@ -5,7 +5,7 @@
 # Merely invoked
 #  .bashrc (calls .bash_aliases)
 hl(){ echo "$C5$*$C0"; }
-. ~/utils/initrc.sh
+PATH=$PATH:~/bin
 hl "Registering Files"
 ~/utils/file-register.sh
 hl "Installing Packages"

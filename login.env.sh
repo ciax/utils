@@ -21,3 +21,6 @@ export PAGER='most'
 export MOST_EDITOR='emacs %s -g %d'
 export GREP_OPTIONS='-r --color=auto'
 unset -f addenv
+
+# ETC
+PS1="[$SHLVL]$PS1"
