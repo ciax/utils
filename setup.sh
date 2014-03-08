@@ -4,13 +4,13 @@
 #  .bash_profile > .bash_login > .profile (calls .bashrc)
 # Merely invoked
 #  .bashrc (calls .bash_aliases)
-. ~/utils/func.color.sh
-color5 "Registering Files"
-~/utils/file-register.sh
+hl(){ echo "$C5$*$C0"; }
 . ~/utils/initrc.sh
-color5 "Installing Packages"
+hl "Registering Files"
+~/utils/file-register.sh
+hl "Installing Packages"
 pkg-deb init
-color5 "Updating Database"
+hl "Updating Database"
 upd-db
-color5 "Initializing SSH"
+hl "Initializing SSH"
 ssh-setup

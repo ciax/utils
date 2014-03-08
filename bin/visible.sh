@@ -1,8 +1,7 @@
 #!/bin/bash
-# Required scripts: func.color, func.usage
+# Required scripts: func.usage
 # Required packages: coreutils(od)
 # option (-n): no folding by return code but show (0a)
-. func.color
 [ "$1" = "-n" ] && shift || nl='0a'
 [ -t 0 -a ! -e "$1" ] && . func.usage "(-n) [file]"
 for c in `od -v -A n -t x1 $1` ; do

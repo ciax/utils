@@ -1,9 +1,7 @@
 #!/bin/bash
-# Required scripts: func.color.sh
 # Required packages: coreutils(tty)
-. ~/utils/func.color.sh
 query(){
-    [ "$ALL" ] && exit
+    [ "$ALL" ] && return
     [ "$tty" ] || tty=`tty`
     echo -en "\tOK? $C3[A/Y/N/Q]$C0"
     read -e ans < $tty

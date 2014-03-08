@@ -1,5 +1,4 @@
 #!/bin/bash
-. func.color
 for i in ~/utils/ ~/cfg.*/;do
     echo "${C3}Git update for$C0 $i"
     cd $i
