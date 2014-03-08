@@ -1,6 +1,6 @@
 #!/bin/bash
-# Description: Debian package utils
-# Required packages: sudo,apt-spy,debconf,findutils
+# Description: show required something in comments
+# Required packages: coreutils(grep,tr,sort),sed
 # Required scripts: func.usage
 . func.usage "[type]" $1
 cd ~/utils
