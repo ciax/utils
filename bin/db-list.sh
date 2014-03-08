@@ -1,4 +1,5 @@
 #!/bin/bash
+# Desctiption: show table list or table entry
 # Required packages: coreutils(sort),bsdmainutils(column)
 # Required scripts: func.usage db-register
 # Required tables: *
