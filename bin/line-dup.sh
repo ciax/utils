@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: usage.sh
+# Required scripts: func.usage
 # Required packages: coreutils(sort,nkf,uniq)
 # Pick up duplicated lines
 #alias dup
