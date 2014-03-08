@@ -1,5 +1,7 @@
 #!/bin/bash
-#ln -s $0 /etc/vpnc/default.conf
+# Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
+# Required scripts: func.usage, set.field, db-register
+# Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 . func.usage "[vpn] [id] [pw]" $1
 vid=$1
 . set.field "'$vid'" vpn

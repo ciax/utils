@@ -1,5 +1,7 @@
 #!/bin/bash
-# Client for dd-wrt openvpn server
+# Description: Client for dd-wrt openvpn server
+# packages: openvpn
+# Required scripts: func.usage, db-list, cfg-openvpn, vpn-nat, show-syslog
 #alias vpno
 [ "$1" = "-r" ] && { sudo kill $(< ~/.var/openvpn.pid); exit; }
 . func.usage "(-r:remove) [vpnhost]" $1 < <(db-list vpn)

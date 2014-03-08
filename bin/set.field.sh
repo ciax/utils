@@ -1,5 +1,7 @@
 #!/bin/bash
-# Set variables corresponding field names of table;
+# Description: Set variables corresponding field names of table;
+# Required scripts: func.usage, func.temp, db-register
+# Required tables: *
 setvar(){
     db-register -i "$1" > $db
     if [ -s $db ] ; then

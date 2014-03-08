@@ -1,4 +1,7 @@
 #!/bin/bash
+# Description: Generate routing commands
+# Required scripts: func.usage, db-register
+# Required tables: subnet(network,netmask,vpn)
 mode="add"
 [ "$1" = "-r" ] && { shift; mode="del"; }
 . func.usage "(-r:remove) [vpnhost]" $1

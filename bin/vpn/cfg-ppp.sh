@@ -1,11 +1,14 @@
 #!/bin/bash
-#ip-up params:
-#  interface-name
-#  tty-device
-#  speed
-#  local-IP-address
-#  remote-IP-address
-#  ipparam
+# Description: generate routing file for ppp
+# Required scripts: func.temp, func.usage
+#
+#*Config files take the following parameters at start up
+#   interface-name
+#   tty-device
+#   speed
+#   local-IP-address
+#   remote-IP-address
+#   ipparam
 rtstr(){
     echo 'route add -net ${5%.*}.0 netmask 255.255.255.0 $1'
 }

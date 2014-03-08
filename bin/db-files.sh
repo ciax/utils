@@ -1,4 +1,5 @@
 #!/bin/bash
+# Required packages: sqlite3
 # Usage: db-files (separator)
 db=~/.var/db-files.sq3
 sep=${1:-,}

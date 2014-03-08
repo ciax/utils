@@ -1,5 +1,7 @@
 #!/bin/bash
-# generate ~/.ssh/config
+# Description: generate ~/.ssh/config
+# Required scripts: db-register, db-sshid, set.field
+# Required tables: login(command,user,password,host),ssh(alias,port,proxy)
 net=$1
 for lid in $(db-register "select id from login where command == 'ssh';");do
     . set.field "'$lid'" login

@@ -1,5 +1,7 @@
 #!/bin/bash
-# Required packages: bsdmainutils(column)
+# Required packages: coreutils(sort),bsdmainutils(column)
+# Required scripts: func.usage db-register
+# Required tables: *
 list(){
     db-register "$1"|sort|column -c${2:-50}
 }
