@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: commands manupulating shell variables
-# Requied Packages: emacs,most
+# Required Packages: emacs,most
 e-alias(){
     file=login.alias.sh
     pushd ~/utils >/dev/null

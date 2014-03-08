@@ -1,24 +1,18 @@
 #!/bin/bash
 # Description: Debian package utils
 # Required packages: sudo,apt-spy,debconf,findutils
-# Required scripts: func.usage
+# Required scripts: func.usage, show-required
 #alias deb
 #alias wf which
 shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
 ichk(){ for i ;do which $i >/dev/null || sudo -i apt-get install $i;done; }
-ipkgs(){
-    [ "$1" ] || return
-    grep -ihr '^# *req.* packages' $*|tr -d ' '|\
-    sed -re 's/\([^\)]+\)//g' -e 's/.*://'|\
-    tr ',' '\n'|sort -u
-}
 cmd="$1";shift
 case "$cmd" in
     init)
         ichk grep sed
-        sudo -i apt-get install $(ipkgs ~/utils/*.sh)
+        sudo -i apt-get install $(show-required packages)
         exit;;
     clean)
         ichk deborphan

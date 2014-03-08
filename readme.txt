@@ -1,4 +1,3 @@
-#Required packages: coreutils,bash,sudo,perl,findutils(find),perl
 # command usage by prefix
 func.*.sh: should be source for loading functions;
 
@@ -26,7 +25,7 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
 ~/bin ~/db ~/.var ~/.trash
 
 ############### Comment in the script examples ################
-# Required packages: *   <------- Package list that wants to be installed
-# Required scripts: *    <------- Script list for dependency check
-#alias *                 <------- Alias name that itself wants to be
-#link  *                 <------- Symbolic link name that itself wants to be
+ # Required packages: *   <------- Package list that wants to be installed
+ # Required scripts: *    <------- Script list for dependency check
+ #alias *                 <------- Alias name that itself wants to be
+ #link  *                 <------- Symbolic link name that itself wants to be

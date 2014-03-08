@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: set environment for login
-# Requied Packages: emacs,most
+# Required Packages: emacs,most
 addenv(){
     local name=$1;shift
     local list=$(IFS=: eval echo \$$name)
