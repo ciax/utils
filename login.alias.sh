@@ -3,7 +3,7 @@
 while read head name par; do
     alias "$name=${head%:*}${par:+ $par}"
 done < <(cd ~/bin;grep '^#alias' *)
-[[ $0 == *rc.alias* ]] && alias
+[[ $0 == *login.alias* ]] && alias
 
 # General Commands
 alias update='upd-git;upd-db'
