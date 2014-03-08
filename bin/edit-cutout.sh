@@ -1,7 +1,7 @@
 #!/bin/bash
+# Description: cutoutt matched lines from file and display
 # Required scripts: func.usage, func.temp
 # Required packages: coreutils(grep)
-# Cutout matched line from file
 #alias cutout
 . func.usage "[expression] [file]" $2
 exp=$1;shift

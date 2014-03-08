@@ -1,6 +1,8 @@
 #!/bin/bash
+# Description: replace string in files
 # Required scripts: func.usage, func.temp, func.query, file-register
 # Required packages: coreutils(tty,cat,tail),grep
+#alias rep
 . func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
 ENV[files] for target
 ENV[ex] for exclude line

@@ -1,6 +1,8 @@
 #!/bin/bash
+# Description: login command
 # Required packages: expect,bsdmainutils(column),sed
-# Required DB:db-debice/login (!id,command,tunnel,user,password,host,rcmd)
+# Required scripts: func.usage, db-list, set.field, db-sshid, func.temp
+# Required tables: login (user,password,host,rcmd)
 #alias l
 . func.usage "[host]" < <(db-list login) $1
 sshopt="-o StrictHostKeyChecking=no -t"

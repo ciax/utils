@@ -1,7 +1,7 @@
 #!/bin/bash
+# Description: reorder columns of the file
 # Required scripts: func.usage, func.temp
 # Required packages: coreutils(cat),mawk
-# Reorder columns except key
 . func.usage "[order(1,2,3..)] [file] (-w)" $2
 order="\$${1//,/,\$}"
 file=$2

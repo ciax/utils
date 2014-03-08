@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: make network devices wake up
 # Required packages: wakeonlan
 # Required scripts: func.usage, db-register
 # Required tables: mac(host)

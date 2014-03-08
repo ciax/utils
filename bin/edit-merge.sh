@@ -1,8 +1,8 @@
 #!/bin/bash
+# Description: merge files with sorting and remove duplicated lines
+#   If no changes, then no rewrite
 # Required scripts: func.usage, func.temp
 # Required packages: coreutils(sort,nkf,cp,cmp)
-# Merge files with sorting and remove duplicated lines
-# If no changes, then no rewrite
 . func.usage "[file] (input)" $1
 file=$1;shift
 [ -f "$file" ] || touch $file

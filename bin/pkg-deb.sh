@@ -1,5 +1,5 @@
 #!/bin/bash
-#Debian utils
+# Description: Debian package utils
 # Required packages: sudo,apt-spy,debconf,findutils
 # Required scripts: func.usage
 #alias deb

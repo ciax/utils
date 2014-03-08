@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: generate sql statement for insert data
 # Required scripts: func.usage
 # Required packages: coreutils(basename,head,tr),grep
 # make insert sentence for sql from *.csv or db-*.tsv file

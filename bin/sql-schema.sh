@@ -1,4 +1,5 @@
 #!/bin/bash
+# Description: generate sql statement for create table
 # Required scripts: func.usage
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
 ## CSV files: ~/db/db-*.csv

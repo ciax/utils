@@ -1,5 +1,5 @@
 #!/bin/bash
-# File owner will be uniformed under the current or specified dir tree
+# Description: file owner will be uniformed under the current or specified dir tree
 # Usage file-owner [dir..]
 #alias chx
 _chx(){
