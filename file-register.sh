@@ -21,9 +21,9 @@ makelink(){
     # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
     # Create or Overwrite unexist link
     if [ -e $dst ] ; then 
-	[ -h $dst ] || { echo "${C1}Error: $dst is regular file$C0"; return 1; }
+	[ -h $dst ] || { echo $C1"Error: $dst is regular file"$C0; return 1; }
 	[ "$src" = `readlink $dst` ] && return
-	echo "${C3}Warning: link of $dst is different from $src$C0"
+	echo $C3"Warning: link of $dst is different from $src"$C0
     fi
     ln -sf $src $dst || return 1
     addlist $dst
@@ -35,7 +35,7 @@ link2dir(){
     local list=''
     for i ; do
         [ -d "$i" -o ! -e "$i" ] && continue
-        [ -h "$i" ] && { echo "$C3$i is link and skip$C0"; continue; }
+        [ -h "$i" ] && { echo $C3"$i is link and skip"$C0; continue; }
         local base="${i##*/}"
         local real="$(pwd -P)/$base"
         if [ "$xopt" ] ; then

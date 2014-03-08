@@ -3,7 +3,7 @@
 shopt -s nullglob
 chkdir(){
     [ -d $1 ] && return
-    [ -e $1 ] && { echo "${C1}Not a directory $1$C0";return 1; }
+    [ -e $1 ] && { echo $C1"Not a directory $1"$C0;return 1; }
     /bin/mkdir $1
 }
 nouse(){
@@ -16,7 +16,7 @@ nolink(){
     for i ; do
         [ -L $i -a ! -e $i ] || continue
         /bin/rm $i
-        echo "$C3[${i##*/}] is not linked$C0"
+        echo $C3"[${i##*/}] is not linked"$C0
     done
 }
 [ "$1" ] || set - .
