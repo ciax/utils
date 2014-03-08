@@ -1,6 +1,6 @@
 #!/bin/bash
 cd
-ba=.bash_aliases
+ba=.bash_completion
 for i in bin lib db .var .trash;do
     [ -d $i ] && rm -r $i
 done

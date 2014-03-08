@@ -7,6 +7,7 @@
 . ~/utils/func.color.sh
 color5 "Registering Files"
 ~/utils/file-register.sh
+. ~/utils/initrc.sh
 color5 "Installing Packages"
 pkg-deb init
 color5 "Updating Database"
