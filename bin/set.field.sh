@@ -2,30 +2,29 @@
 # Description: Set variables corresponding field names of table;
 # Required scripts: func.usage, func.temp, db-register
 # Required tables: *
-setvar(){
+trackdb(){
     db-register -i "$1" > $db
     if [ -s $db ] ; then
         while read var eq str;do
             [ "$2" ] && str=''
-            $cmd "$var='$str'"
+            eval "$var='$str'"
         done < $db
     else
-        setvar "select * from $tbl where id == (select min(id) from $tbl)" unset
+        trackdb "select * from $tbl where id == (select min(id) from $tbl)" unset
     fi
+}
+getvar(){
+    local sql="from $2 where id == '$1'"
+    shift;shift
+    for tbl; do
+        sql="from $tbl where id == (select $tbl $sql)"
+    done
+    sql="select * $sql;"
+    . func.temp db
+    trackdb "$sql"
+    rm $db
 }
 set -f
 . func.usage "[id] [table1] (table2..)" $2
-case $0 in
-    *set.field*) cmd='echo';;
-    *) cmd='eval';;
-esac
-sub="$1";shift
-for tbl; do
-    [ "$sql" ] && sub="(select $tbl $sql)"
-    sql="from $tbl where id == $sub"
-done
-sql="select * $sql;"
-. func.temp db
-setvar "$sql"
-unset sub sql cmd
-unset -f setvar
+getvar $*
+[[ $0 =~ set.field ]] && {  set|egrep '^[a-z]+='; }
