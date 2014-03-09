@@ -5,26 +5,23 @@
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 addlist(){
-    if [[ "$1" =~ / ]]; then
-	local dir=${1%/*}
-    else
-	local dir=$(pwd -P)
-    fi
+    local dir="${1%/*}"
     dirlist[$dir]="${dirlist[$dir]} ${1##*/}"
 }
 showlist(){
     for i in ${!dirlist[*]};do
-	echo "[${dirlist[$i]} ] -> $C1$i$C0"
+        echo "[${dirlist[$i]} ] -> $C1$i$C0"
     done
 }
 makelink(){
-    src=$1;dst=$2
+    local src=$1
+    local dst=$2
     # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
     # Create or Overwrite unexist link
     if [ -e $dst ] ; then 
-	[ -h $dst ] || { echo $C1"Error: $dst is regular file"$C0; return 1; }
-	[ "$src" = `readlink $dst` ] && return
-	echo $C3"Warning: link of $dst is different from $src"$C0
+        [ -h $dst ] || { echo $C1"Error: $dst is regular file"$C0; return 1; }
+        [ "$src" = `readlink $dst` ] && return
+        echo $C3"Warning: link of $dst is different from $src"$C0
     fi
     ln -sf $src $dst || return 1
     addlist $dst
@@ -40,18 +37,19 @@ link2dir(){
         local base="${i##*/}"
         local real="$(pwd -P)/$base"
         if [ "$xopt" ] ; then
-            local link="${base%.*}"
+            base="${base%.*}"
             [ -x "$real" ] || continue
-        else
-            local link="$base"
         fi
-	# extra link should be described as #link head
-	pushd $objdir > /dev/null
-	for j in "$link" $(grep '^#link' "$real"|cut -d' ' -f2-);do
-	    eval "k=$j" # Fop tilde expansion
-            makelink "$real" "$k"
-	done
-	popd > /dev/null
+        # extra link should be described as #link head
+        for j in "$base" $(grep '^#link' "$real"|cut -d' ' -f2-);do
+            if [[ "$1" =~ / ]] ; then
+            # eval: for tilde expansion
+                eval "dstdir=${j%/*}"
+            else
+                dstdir=$objdir
+            fi
+            makelink "$real" "$dstdir/$base"
+        done
     done
 }
 dirreg(){
