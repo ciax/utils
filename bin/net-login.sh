@@ -6,7 +6,7 @@
 #alias l
 . func.usage "[host]" < <(db-list login) $1
 sshopt="-o StrictHostKeyChecking=no -t"
-. set.field "'$1' and command in ('ssh','telnet')" login
+. set.field $1 login
 [ "$(db-sshid)" ] && host=
 if [ "$host" ]; then
     shift

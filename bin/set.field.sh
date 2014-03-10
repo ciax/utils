@@ -3,11 +3,12 @@
 # Required scripts: func.usage, func.temp, db-register
 # Required tables: *
 trackdb(){
+echo "$1"
     db-register -i "$1" > $db
     if [ -s $db ] ; then
         while read var eq str;do
             [ "$2" ] && str=''
-            eval "$var='$str'"
+            echo "$var='$str'" >> $list
         done < $db
     else
         trackdb "select * from $tbl where id == (select min(id) from $tbl)" unset
@@ -20,11 +21,11 @@ getvar(){
         sql="from $tbl where id == (select $tbl $sql)"
     done
     sql="select * $sql;"
-    . func.temp db
     trackdb "$sql"
-    rm $db
+    source $list
 }
 set -f
 . func.usage "[id] [table1] (table2..)" $2
+. func.temp db list
 getvar $*
-[[ $0 =~ set.field ]] && {  set|egrep '^[a-z]+='; }
+[[ $0 =~ set.field ]] && {  cat $list; }
