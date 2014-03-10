@@ -1,11 +1,11 @@
 #!/bin/bash
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
-# Required scripts: func.usage, set.field, db-register
+# Required scripts: func.usage, db-setfield, db-register
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 . func.usage "[vpn] [id] [pw]" $1
 vid=$1
-. set.field "'$vid'" vpn
-. set.field "'$login'" login
+. db-setfield "'$vid'" vpn
+. db-setfield "'$login'" login
 [ "$command" = vpn ] || exit
 echo "IPSec gateway $host"
 echo "IPSec ID $user"

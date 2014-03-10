@@ -1,12 +1,12 @@
 #!/bin/bash
 # Description: generate ~/.ssh/config
-# Required scripts: db-register, db-sshid, set.field
+# Required scripts: db-register, db-sshid, db-setfield
 # Required tables: login(command,user,password,host),ssh(alias,port,proxy)
 net=$1
 for lid in $(db-register "select id from login where command == 'ssh';");do
-    . set.field "'$lid'" login
+    . db-setfield $lid login
     num=$(db-sshid $id)
-    . set.field "'${num:-0}'" ssh
+    . db-setfield "'${num:-0}'" ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
     echo "Host $lid"
     echo -e "\tHostName ${alias:-$host}"

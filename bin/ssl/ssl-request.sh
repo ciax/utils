@@ -5,7 +5,7 @@
 input=
 site=$1
 . ssl-newkey $site
-. set.field "'$site'" ssl
+. db-setfield "'$site'" ssl
 [ "$country" ] && input="$input/C=$country"
 [ "$state" ] && input="$input/ST=$state"
 [ "$city" ] && input="$input/L=$city"

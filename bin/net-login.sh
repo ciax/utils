@@ -1,12 +1,12 @@
 #!/bin/bash
 # Description: login command
 # Required packages: expect,bsdmainutils(column),sed
-# Required scripts: func.usage, db-list, set.field, db-sshid, func.temp
+# Required scripts: func.usage, db-list, db-setfield, db-sshid, func.temp
 # Required tables: login (user,password,host,rcmd)
 #alias l
 . func.usage "[host]" < <(db-list login) $1
 sshopt="-o StrictHostKeyChecking=no -t"
-. set.field $1 login
+. db-setfield $1 login
 [ "$(db-sshid)" ] && host=
 if [ "$host" ]; then
     shift

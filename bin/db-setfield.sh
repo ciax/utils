@@ -3,7 +3,6 @@
 # Required scripts: func.usage, func.temp, db-register
 # Required tables: *
 trackdb(){
-echo "$1"
     db-register -i "$1" > $db
     if [ -s $db ] ; then
         while read var eq str;do
@@ -28,4 +27,4 @@ set -f
 . func.usage "[id] [table1] (table2..)" $2
 . func.temp db list
 getvar $*
-[[ $0 =~ set.field ]] && {  cat $list; }
+[[ $0 =~ db-setfield ]] && {  cat $list; }

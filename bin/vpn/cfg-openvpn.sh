@@ -8,7 +8,7 @@
 vpn=$1
 vardir=$HOME/.var
 myhost=`hostname`
-. set.field "'$vpn'" vpn login
+. db-setfield "'$vpn'" vpn login
 [ "$host" ] || { echo "No such host in DB"; exit; }
 out=${2:-/dev/stdout}
 cat > $out <<EOF
