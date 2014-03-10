@@ -2,11 +2,14 @@
 # Description: generate ~/.ssh/config
 # Required scripts: db-register, db-sshid, db-setfield
 # Required tables: login(command,user,password,host),ssh(alias,port,proxy)
+. db-setfield
 net=$1
 for lid in $(db-register "select id from login where command == 'ssh';");do
-    . db-setfield $lid login
+    setfield $lid login
+    [ "$id" ] || continue
     num=$(db-sshid $id)
-    . db-setfield ${num:-0} ssh
+    [ "$num" ] || continue
+    setfield ${num:-0} ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
     echo "Host $lid"
     echo -e "\tHostName ${alias:-$host}"
