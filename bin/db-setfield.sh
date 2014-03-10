@@ -3,24 +3,25 @@
 # Required scripts: func.usage, func.temp, db-register(' ')
 # Required tables: *
 setfield(){
-    local id=$1;shift
-    local tbl=$1;shift
-    local sql="from $tbl where id == '$id'"
+    local _list
+    local _id=$1;shift
+    local _tbl=$1;shift
+    local _sql="from $_tbl where id == '$_id'"
     for tbl; do
-        sql="from $tbl where id == (select $tbl $sql)"
+        _sql="from $_tbl where id == (select $_tbl $_sql)"
     done
-    sql='select * '$sql';'
-    . func.temp list
-    for i in $(db-register "pragma table_info($tbl);"|cut -d'|' -f2);do
+    _sql='select * '$_sql';'
+    . func.temp _list
+    for i in $(db-register "pragma table_info($_tbl);"|cut -d'|' -f2);do
         read line
-        echo "$i='$line'" >> $list
-    done < <(db-register "$sql"|tr '|' '\n')
+        echo "$i='$line'" >> $_list
+    done < <(db-register "$_sql"|tr '|' '\n')
     if [[ $0 =~ db-setfield ]]; then
-        cat $list
+        cat $_list
     else
-        source $list
+        source $_list
     fi
-    rm $list;unset list
+    rm $_list
 }
 set -f
 if [[ $0 =~ db-setfield ]]; then
