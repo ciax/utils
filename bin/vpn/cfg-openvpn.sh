@@ -4,11 +4,11 @@
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
-. func.usage "[remote host] (outputfile)" $1
+. func.usage "[remote host] (outputfile)" $1 < <(db-list vpn)
 vpn=$1
 vardir=$HOME/.var
 myhost=`hostname`
-. db-setfield "'$vpn'" vpn login
+. db-setfield $vpn vpn login
 [ "$host" ] || { echo "No such host in DB"; exit; }
 out=${2:-/dev/stdout}
 cat > $out <<EOF

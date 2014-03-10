@@ -6,7 +6,7 @@ net=$1
 for lid in $(db-register "select id from login where command == 'ssh';");do
     . db-setfield $lid login
     num=$(db-sshid $id)
-    . db-setfield "'${num:-0}'" ssh
+    . db-setfield ${num:-0} ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
     echo "Host $lid"
     echo -e "\tHostName ${alias:-$host}"
