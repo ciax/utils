@@ -42,7 +42,7 @@ link2dir(){
         fi
         # extra link should be described as #link head
         for j in "$base" $(grep '^#link' "$real"|cut -d' ' -f2-);do
-            if [[ "$1" =~ / ]] ; then
+            if [[ "$j" =~ / ]] ; then
             # eval: for tilde expansion
                 eval "dstdir=${j%/*}"
             else
