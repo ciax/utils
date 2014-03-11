@@ -7,7 +7,7 @@ setfield(){
     local _id=$1;shift
     local _tbl=$1;shift
     local _sql="from $_tbl where id == '$_id'"
-    for tbl; do
+    for _tbl; do
         _sql="from $_tbl where id == (select $_tbl $_sql)"
     done
     _sql='select * '$_sql';'
@@ -17,6 +17,7 @@ setfield(){
         echo "$i='$line'" >> $_list
     done < <(db-register "$_sql"|tr '|' '\n')
     if [[ $0 =~ db-setfield ]]; then
+        echo $_sql
         cat $_list
     else
         source $_list
