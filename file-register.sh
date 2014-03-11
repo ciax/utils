@@ -18,7 +18,7 @@ makelink(){
     local dst=$2
     # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
     # Create or Overwrite unexist link
-    if [ -e $dst ] ; then 
+    if [ -e $dst ] ; then
         [ -h $dst ] || { echo $C1"Error: $dst is regular file"$C0; return 1; }
         [ "$src" = `readlink $dst` ] && return
         echo $C3"Warning: link of $dst is different from $src"$C0
@@ -43,12 +43,12 @@ link2dir(){
         # extra link should be described as #link head
         for j in "$base" $(grep '^#link' "$real"|cut -d' ' -f2-);do
             if [[ "$j" =~ / ]] ; then
-            # eval: for tilde expansion
-                eval "dstdir=${j%/*}"
+                # eval: for tilde expansion
+                eval "dst=$j"
             else
-                dstdir=$objdir
+                local dst="$objdir/$j"
             fi
-            makelink "$real" "$dstdir/$base"
+            makelink "$real" "$dst"
         done
     done
 }
