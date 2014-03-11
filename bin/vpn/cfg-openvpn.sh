@@ -1,5 +1,7 @@
 #!/bin/bash
 # Description: client for dd-wrt openvpn server
+# Required packages: coreutils
+# Required scripts: func.usage, db-list, db-setfield, vpn-route
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)
