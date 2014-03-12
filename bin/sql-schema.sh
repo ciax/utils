@@ -7,33 +7,34 @@
 ## If the following 'field' content matches with a name of another 'table',
 ## it is treated as a "foreign key" refering to the 'id' field of the corresponding table.
 schema(){
-    local dir=$(dirname $1)
-    local tbl=$(db-table $1)
-    [[ "$tables" == *$tbl* ]] && return
+    local tbl=$(show-tables $1) || return 1
+    [[ "$tables" =~ $tbl ]] && return
     tables="$tables $tbl"
     local drop="drop table if exists $tbl;"
-    local create="create table $tbl ('id' primary key"
-    local fgnkeys=''
+    local create="create table $tbl ("
+    local pkeys=''
+    local fkeys=''
     while read col; do
-        [ $col = '!id' ] && continue
-        create="$create,'$col'"
-        for db in $dir/db-$col*.$ext; do
-            fgnkeys="$fgnkeys $col"
-            schema $db
+        if [[ $col =~ '!' ]] ; then
+            col=${col#!}
+            pkeys="${pkeys:+$pkeys,}$col"
+        fi
+        create="$create'$col',"
+        for ref in $(show-tables $col); do
+            fkeys="$fkeys,foreign key('$ref') references $ref('id')"
+            reftbl="$reftbl $ref"
+            schema $ref
         done
-    done < <(egrep "^!" $1|head -1|nkf -Lu|tr ",\t" "\n")
-    for i in $fgnkeys; do
-        create="$create,foreign key('$i') references $i('id')"
-    done
+    done < <(egrep "^!" db-$tbl.csv|head -1|nkf -Lu|tr ",\t" "\n")
     echo "$drop"
-    echo "$create);"
+    echo $create"primary key($pkeys)$fkeys);"
 }
 shopt -s nullglob
-. func.usage "[csv|tsv file] .." $1
+. func.usage "[table] .." $1
 tables=''
 echo "pragma foreign_keys=on;"
+cd ~/db
 for i; do
-    ext=${i##*.}
     schema $i
 done
 

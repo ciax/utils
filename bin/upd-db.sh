@@ -2,6 +2,6 @@
 # Description: update databases
 # Required sckipts: sql-make, db-register
 # Required tables: mac,ssl,ssh
-dbs="mac ssl ssh"
-echo $C3"Database update for $dbs"$C0
-sql-make $dbs|db-register
+set - $(show-tables -i|tr '\n' ' ')
+echo $C3"Database update for $*"$C0
+sql-make $*|db-register
