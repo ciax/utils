@@ -26,7 +26,7 @@ setfield(){
 }
 set -f
 if [[ $0 =~ db-setfield ]]; then
-    . func.usage "[id] [table1] (table2..)" $2
+    . func.usage "[id | key=a,key=b..] [table1] (table2..)" $2
     setfield $*
 elif [ "$2" ]; then
     setfield $*
