@@ -5,16 +5,13 @@
 # Required tables: login (user,password,host,rcmd)
 #alias l
 . func.usage "[host]" < <(db-list login) $1
+host=$1;shift
 sshopt="-o StrictHostKeyChecking=no -t"
-. db-setfield $1 login
-[ "$(db-sshid)" ] && host=
-if [ "$host" ]; then
-    shift
-    str="${command//ssh/ssh $sshopt} -l $user $host $*"
-else
-    str="ssh $sshopt $*"
-fi
-
+. db-setfield $host login
+setfield $host host
+host=${static_ip:-${alias:-$host}}
+str="ssh $sshopt ${user:+$user@}$host $*"
+echo $str
 if [ "$password" ] ; then
     . func.temp expfile
     echo "set timeout 10" > $expfile
