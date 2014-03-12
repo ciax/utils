@@ -8,7 +8,6 @@ tblcore(){
     echo ${r%%[-.]*}
 }
 . func.usage "(-i:independent tables) [table]" $1
-cd ~/db/
 if [ "$1" = "-i" ] ; then
     . func.temp fields
     grep -h "^!" db-*.csv|tr ',' '\n'|grep -v '^!'|sort -u > $fields
