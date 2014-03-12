@@ -24,7 +24,7 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/utils
 # Work Dirs
 ~/bin ~/db ~/.var ~/.trash
 
-############### Comment in the script examples ################
+############### Comment in scripts ################
  # Required packages: *   <------- Package list that wants to be installed
  # Required scripts: *    <------- Script list for dependency check
  #alias *                 <------- Alias name that itself wants to be

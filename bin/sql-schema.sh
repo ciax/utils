@@ -2,10 +2,14 @@
 # Description: generate sql statement for create table
 # Required scripts: func.usage
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
-## CSV files: ~/db/db-*.csv
-## The 'id' field is automatically added to the table as 'primary key'.
-## If the following 'field' content matches with a name of another 'table',
-## it is treated as a "foreign key" refering to the 'id' field of the corresponding table.
+
+# CSV file rule:
+#  The file location:  ~/utils/db/db-(table name).csv
+#  The 'field name' having '!' will be 'primary key'.
+#  If the 'field name' matches with 'table name' of another file,
+#  it is treated as a 'foreign key' refering to the 'id' field of the corresponding table.
+#  The 'field name' has to contain [a-zA-Z0-9] and '_'
+
 schema(){
     local tbl=$(show-tables $1) || return 1
     [[ "$tables" =~ $tbl ]] && return
