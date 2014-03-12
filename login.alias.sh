@@ -15,6 +15,7 @@ alias v='ls -l'
 alias alg='alias|grep -i'
 alias eng='env|grep -i'
 alias seg='set|grep "^[a-zA-Z]"'
+alias psg='ps|grep -i'
 
 # For GIT
 alias gia='git add . */'
