@@ -16,7 +16,12 @@ if [ "$1" = "-i" ] ; then
         table=$(tblcore $i)
         grep  -q "$table" $fields || echo $table
     done|sort -u
-elif [ "$1" ]; then
-    [ -s db-$1.csv ] || exit 1
-    echo $1
+else
+    for i;do
+        if [ -s "$i" ]; then
+            tblcore $i
+        elif [ -s db-$i.csv ]; then
+            echo $i
+        fi
+    done
 fi
