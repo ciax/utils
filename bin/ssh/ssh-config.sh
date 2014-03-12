@@ -8,9 +8,7 @@ for lid in $(db-register "select id from login where command == 'ssh';");do
     setfield $lid login
     [ "$id" ] || continue
     sub=$(net-name)
-    db-register "select"
-    [ "$num" ] || continue
-    setfield ${num:-0} ssh
+    setfield subnet=$sub,login=$id ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
     echo "Host $lid"
     echo -e "\tHostName ${alias:-$host}"
