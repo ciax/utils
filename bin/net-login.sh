@@ -1,15 +1,14 @@
 #!/bin/bash
-# Description: login command
+#alias l
 # Required packages: expect,bsdmainutils(column),sed
 # Required scripts: func.usage, db-list, db-setfield, db-sshid, func.temp
 # Required tables: login (user,password,host,rcmd)
-#alias l
+# Description: login command
 . func.usage "[host]" < <(db-list login) $1
 host=$1;shift
 sshopt="-o StrictHostKeyChecking=no -t"
 . db-setfield $host login
 setfield $host host
-host=${static_ip:-${alias:-$host}}
 str="ssh $sshopt ${user:+$user@}$host $*"
 echo $str
 if [ "$password" ] ; then

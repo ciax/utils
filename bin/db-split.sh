@@ -18,3 +18,4 @@ for src;do
     egrep -h "^%" $src | cut -d, -f2- > $dbfile
     overwrite $dbfile ~/utils/db/db-$tbl.csv && echo "Update db-$tbl.csv"
 done
+file-register
