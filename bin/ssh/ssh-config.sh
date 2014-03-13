@@ -4,9 +4,9 @@
 # Required tables: login(command,user,password,host),ssh(subnet,login,alias,port,proxy)
 . db-setfield
 net=$1;shift
-for lid in $(db-register "select id from login where command == 'ssh';");do
+for lid in $(db-list login);do
     setfield $lid login
-    [ "$id" ] || continue
+    [ "$command" = ssh ] || continue
     sub=$(net-name)
     setfield subnet=$sub,login=$id ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
