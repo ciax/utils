@@ -4,9 +4,10 @@
 #alias vpnp
 [ "$1" = "-d" ] && { sudo kill $(< /var/run/ppp0.pid); exit; }
 . func.usage "(-d:disconnect) [vpnhost]" $1 < <(db-list vpn)
-. db-setfield $1 vpn login
+. db-setfield $1 vpn
+setfield $host host
 id="--create $1"
-host="--server $host"
+host="--server $fdqn"
 user="--username $user"
 [ "$password" ] && pw="--password $password"
 opt="--encrypt"
