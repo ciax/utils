@@ -5,10 +5,9 @@
 # Required tables: login (user,password,host,rcmd)
 # Description: login command
 . func.usage "[host]" < <(db-list login) $1
-host=$1;shift
 sshopt="-o StrictHostKeyChecking=no -t"
-. db-setfield $host login
-setfield $host host
+. db-setfield $1 login
+setfield ${host:-$1} host
 str="ssh $sshopt ${user:+$user@}$host $*"
 echo $str
 if [ "$password" ] ; then
