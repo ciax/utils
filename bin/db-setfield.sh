@@ -1,8 +1,16 @@
 #!/bin/bash
-# Required scripts: func.usage, func.temp, db-register(' ')
+# Required scripts: func.usage, func.temp, db-register, db-fields
 # Required tables: *
 # Description: Set variables corresponding field names of last table of param;
 #  default reference key(search key) name is 'id'
+#  if key is specified, null value is also matched as default key;
+resetfield(){
+    for j;do
+        for i in $(db-fields $j); do
+            unset $i
+        done
+    done
+}
 setfield(){
     local _wh
     local _key=$1;shift
@@ -12,11 +20,13 @@ setfield(){
         if [[ $_i =~ = ]]; then
             local _fld=${_i%=*}
             local _val=${_i#*=}
+            local _exp="($_fld is null or $_fld == '$_val')"
         else
             local _fld='id'
             local _val=$_i
+            local _exp="$_fld == '$_val'"
         fi
-        _wh="${_wh:+$_wh and} $_fld == '$_val'"
+        _wh="${_wh:+$_wh and} $_exp"
     done
     unset IFS
     local _sql="from $_tbl where$_wh"
@@ -28,12 +38,11 @@ setfield(){
     while read _key _eq _val;do
         [ "$_val" ] && echo "$_key='$_val'" >> $_list
     done < <(db-register -i "$_sql")
-    if [[ $0 =~ db-setfield ]]; then
+    if [ "$VER" ] || [[ $0 =~ db-setfield ]]; then
         echo $_sql
         cat $_list
-    else
-        source $_list
     fi
+    source $_list
     [ -s $_list ]
 }
 set -f
