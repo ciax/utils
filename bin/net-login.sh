@@ -6,8 +6,9 @@
 # Description: login command
 . func.usage "[host] (command)" < <(db-list login) $1
 sshopt="-o StrictHostKeyChecking=no -t"
-. db-setfield $1 login
-setfield ${host:-$1} host;shift
+host=$1;shift
+. db-setfield $host login
+setfield $host host;shift
 [ "$1" ] && rcmd="$*"
 if [ "$command" = telnet ]; then
     telnet $host
