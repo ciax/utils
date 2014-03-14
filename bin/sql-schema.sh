@@ -5,10 +5,13 @@
 
 # CSV file rule:
 #  The file location:  ~/utils/db/db-(table name).csv
-#  The 'field name' having '!' will be 'primary key'.
-#  If the 'field name' matches with 'table name' of another file,
-#  it is treated as a 'foreign key' refering to the 'id' field of the corresponding table.
-#  The 'field name' has to contain [a-zA-Z0-9] and '_'
+#  Field string format: !name(table:key)
+#    ! : if the field string has '!', it is 'primary key'.
+#    name : treated as field name, if this matches with 'table name' of another file,
+#           it is treated as a refarence table name of the 'foreign key'
+#    table : you can specify the refarence table instead of the 'name'.
+#    key : reference key can be specified, otherwise 'id' will be used.
+#    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
 
 schema(){
     local tbl=$(show-tables $1) || return 1
@@ -19,15 +22,23 @@ schema(){
     local pkeys=''
     local fkeys=''
     while read col; do
-        if [[ $col =~ '!' ]] ; then
-            col=${col#!}
-            pkeys="${pkeys:+$pkeys,}$col"
+	local field="${col%(*}"
+        if [[ $field =~ '!' ]] ; then
+            field=${field#!}
+            pkeys="${pkeys:+$pkeys,}$field"
         fi
-        create="$create'$col',"
-        for ref in $(show-tables $col); do
-            fkeys="$fkeys,foreign key('$ref') references $ref('id')"
-            reftbl="$reftbl $ref"
-            schema $ref
+	local ref="${col#*(}";ref="${ref%)*}"
+	local rtable="${ref%:*}";rtable=${rtable:-$field}
+	if [[ $ref =~ ':' ]]; then
+	    local rkey="${ref#*:}"
+	else
+	    local rkey="id"
+	fi
+        create="$create'$field',"
+        for rfile in $(show-tables $rtable); do
+            fkeys="$fkeys,foreign key('$field') references $rfile('$rkey')"
+            reftbl="$reftbl $rfile"
+            schema $rfile
         done
     done < <(egrep "^!" db-$tbl.csv|head -1|nkf -Lu|tr ",\t" "\n")
     echo "$drop"
