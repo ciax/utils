@@ -5,13 +5,17 @@
 . db-setfield
 net=$1;shift
 for lid in $(db-list login);do
+    resetfield login ssh host
     setfield $lid login
     [ "$command" = ssh ] || continue
+    search="dst=$id"
     sub=$(net-name)
-    setfield subnet=$sub,login=$id ssh
+    [ "$sub" ] && search="src=$sub,$search"
+    setfield $search ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
+    setfield $host host
     echo "Host $lid"
-    echo -e "\tHostName ${alias:-$host}"
+    echo -e "\tHostName ${alias:-${fdqn:-$host}}"
     echo -e "\tUser $user"
     [ "$port" ] && echo -e "\tPort $port"
     [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $proxy"

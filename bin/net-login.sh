@@ -16,14 +16,14 @@ else
     str="ssh $sshopt ${user:+$user@}$host"
     [ "$VER" ] && echo $str
     if [ "$password" ] ; then
-	. func.temp expfile
-	echo "set timeout 10" > $expfile
-	echo "spawn -noecho $str" >> $expfile
-	echo "expect word: { send $password\n };" >> $expfile
-	[ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
-	echo "interact" >> $expfile
-	expect $expfile
+        . func.temp expfile
+        echo "set timeout 10" > $expfile
+        echo "spawn -noecho $str" >> $expfile
+        echo "expect word: { send $password\n };" >> $expfile
+        [ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
+        echo "interact" >> $expfile
+        expect $expfile
     else
-	$str $rcmd
+        $str $rcmd
     fi
 fi
