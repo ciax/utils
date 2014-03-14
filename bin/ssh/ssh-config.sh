@@ -8,10 +8,8 @@ for lid in $(db-list login);do
     resetfield login ssh host
     setfield $lid login
     [ "$command" = ssh ] || continue
-    search="dst=$id"
     sub=$(net-name)
-    [ "$sub" ] && search="src=$sub,$search"
-    setfield $search ssh
+    setfield src=$sub,dst=$id ssh
     [ ! "$password" ] || [ "$proxy" ] || continue
     setfield $host host
     echo "Host $lid"
