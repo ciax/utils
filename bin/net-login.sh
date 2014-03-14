@@ -9,7 +9,7 @@ sshopt="-o StrictHostKeyChecking=no -t"
 . db-setfield $1 login
 setfield ${host:-$1} host;shift
 [ "$1" ] && rcmd="$*"
-if [ $command = telnet ]; then
+if [ "$command" = telnet ]; then
     telnet $host
 else
     str="ssh $sshopt ${user:+$user@}$host"
