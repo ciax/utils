@@ -1,5 +1,6 @@
 #!/bin/bash
 ## Check the consistency of SSL files
+. rc.app
 show(){
     [ -s "$site.$1" ] || return
     echo -n "$1:"

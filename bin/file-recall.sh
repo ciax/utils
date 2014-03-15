@@ -1,6 +1,7 @@
 #!/bin/bash
 # -r means pick the original one (first stashed)
 # otherwise pick last one
+. rc.app
 case "$1" in
     -l)
         db-files <<< "select distinct name from content;"

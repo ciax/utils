@@ -1,5 +1,6 @@
 #!/bin/bash
 ## Vefiry the relationship
+. rc.app
 _usage "[ca name] [site name]" $1
 cd ~/.var
 cacrt="$1.crt";shift

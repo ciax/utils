@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: setting nat table
+. rc.app
 #
 clrtbl(){
 # Filtering Clear Tables
