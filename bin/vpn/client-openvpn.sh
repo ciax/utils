@@ -1,10 +1,11 @@
 #!/bin/bash
-# Description: client for dd-wrt openvpn server
-# packages: openvpn
-# Required scripts: func.usage, db-list, cfg-openvpn, vpn-nat, show-syslog
 #alias vpno
+# Required packages: openvpn
+# Required scripts: rc.app, db-list, cfg-openvpn, vpn-nat, show-syslog
+# Description: client for dd-wrt openvpn server
+. rc.app
 [ "$1" = "-r" ] && { sudo kill $(< ~/.var/openvpn.pid); exit; }
-. func.usage "(-r:remove) [vpnhost]" $1 < <(db-list vpn)
+_usage "(-r:remove) [vpnhost]" $1 < <(db-list vpn)
 cfgfile=~/.var/openvpn-$1.cfg
 . cfg-openvpn $1 $cfgfile
 ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }

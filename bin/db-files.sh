@@ -1,6 +1,6 @@
 #!/bin/bash
-# Description: transaction for file history
 # Required packages: sqlite3
+# Description: transaction for file history
 # Usage: db-files (separator)
 db=~/.var/db-files.sq3
 sep=${1:-,}

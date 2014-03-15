@@ -1,9 +1,10 @@
 #!/bin/bash
-# Description: Debian package utils
-# Required packages: sudo,apt-spy,debconf,findutils
-# Required scripts: func.usage, show-required
 #alias pkg
 #alias wf which
+# Required packages: sudo,apt-spy,debconf,findutils
+# Required scripts: rc.app, show-required
+# Description: Debian package utils
+. rc.app
 shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
@@ -34,7 +35,7 @@ case "$cmd" in
         exit;;
     *);;
 esac
-. func.usage "[option]" $1 <<EOF
+_usage "[option]" $1 <<EOF
 install,remove,config (package)
 files,stat,info (package)
 which (file)

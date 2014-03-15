@@ -1,9 +1,10 @@
 #!/bin/bash
-# Required scripts: func.usage, func.temp, db-register, db-fields
+# Required scripts: rc.app, db-register, db-fields
 # Required tables: *
 # Description: Set variables corresponding field names of last table of param;
-#  default reference key(search key) name is 'id'
-#  if key is specified, null value is also matched as default key;
+#     default reference key(search key) name is 'id'
+#     if key is specified, null value is also matched as default key;
+. rc.app
 resetfield(){
     for j;do
         for i in $(db-fields $j); do
@@ -46,6 +47,6 @@ setfield(){
     [ -s $_list ]
 }
 set -f
-[[ $0 =~ db-setfield ]] && . func.usage "[id | key=a,key=b..] [table1] (table2..)" $2
-. func.temp _list
+[[ $0 =~ db-setfield ]] && _usage "[id | key=a,key=b..] [table1] (table2..)" $2
+_temp _list
 [ "$2" ] && setfield $*

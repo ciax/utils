@@ -1,11 +1,12 @@
 #!/bin/bash
-# Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
-# Required scripts: func.usage, db-setfield, db-register
+# Required scripts: rc.app, db-setfield, db-register
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
-. func.usage "[vpn] (id) (pw)" $1 < <(db-list vpn)
+# Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
+. rc.app
+_usage "[vpn] (id) (pw)" $1 < <(db-list vpn)
 vid=$1
 . db-setfield  $vid vpn
-[ "$id" ] || abort "No such id"
+[ "$id" ] || _abort "No such id"
 setfield $host host
 echo "IPSec gateway $static_ip"
 echo "IPSec ID $user"

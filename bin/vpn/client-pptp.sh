@@ -1,9 +1,10 @@
 #!/bin/bash
-# Description: client for dd-wrt pptp server
-# Required scripts: func.usage, db-list, db-setfield, cfg-ppp
 #alias vpnp
+# Required scripts: rc.app, db-list, db-setfield, cfg-ppp
+# Description: client for dd-wrt pptp server
+. rc.app
 [ "$1" = "-d" ] && { sudo kill $(< /var/run/ppp0.pid); exit; }
-. func.usage "(-d:disconnect) [vpnhost]" $1 < <(db-list vpn)
+_usage "(-d:disconnect) [vpnhost]" $1 < <(db-list vpn)
 . db-setfield $1 vpn
 setfield $host host
 id="--create $1"

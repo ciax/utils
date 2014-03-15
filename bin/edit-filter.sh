@@ -1,10 +1,11 @@
 #!/bin/bash
-# Required scripts: func.usage,func.temp
-# Required packages: coreutils(cat),diffutils(cmp)
-# Overwrite if these are different.
 #alias wri
-. func.usage "[file] [filter] (par)" $2
+# Required scripts: rc.app
+# Required packages: coreutils(cat),diffutils(cmp)
+# Description: Overwrite if these are different.
+. rc.app
+_usage "[file] [filter] (par)" $2
 file=$1;shift
-. func.temp temp
+_temp temp
 $* $file > $temp
-overwrite $temp $file
+_overwrite $temp $file

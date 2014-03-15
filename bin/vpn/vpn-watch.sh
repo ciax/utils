@@ -1,10 +1,11 @@
 #!/bin/bash
+# Required scripts: rc.app, db-setfield
 # Description: parsistent connection to vpn
-# Required scripts: func.usage, db-setfield
+. rc.app
 client=vpn
 pidfile=~/.var/vpn.pid
 [ "$1" = "-r" ] && { kill $(< $pid); $client -r; exit; }
-. func.usage "(-r:remove) [vpnhost]" $1
+_usage "(-r:remove) [vpnhost]" $1
 host="$1"
 . db-setfield $host vpn route
 [ "$watch" ] || { echo "No such host"; exit 1; }

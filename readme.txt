@@ -1,5 +1,5 @@
 # command usage by prefix
-func.*.sh: should be source for loading functions;
+rc.app.sh: should be source for loading functions;
 
 ### Git Tips
 #To make new repository

@@ -10,7 +10,7 @@ case "$1" in
         shift;sel="min";;
     *) sel="max";;
 esac
-. func.usage "(-f:first,-l:list) [file] (host)" $1
+_usage "(-f:first,-l:list) [file] (host)" $1
 name="$1"
 if [ -s "$name" ] ; then
     file-stash $name >/dev/null

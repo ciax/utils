@@ -1,9 +1,10 @@
 #!/bin/bash
 # Description: make sqlite3 database from csv file
 # Required packages: coreutils(grep,tr,cut,tee)
-# Required scripts: func.usage, func.temp, sql-schema, sql-insert
-. func.usage "[tables]" $1
-. func.temp sch
+# Required scripts: rc.app, sql-schema, sql-insert
+. rc.app
+_usage "[tables]" $1
+_temp sch
 echo "begin;"
 sql-schema $*|tee $sch
 for tbl in $(grep '^drop' $sch|tr -d ';'|cut -d' ' -f5);do

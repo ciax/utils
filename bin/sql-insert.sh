@@ -1,8 +1,9 @@
 #!/bin/bash
 # Description: generate sql statement of insert from db-*.csv file
-# Required scripts: func.usage
+# Required scripts: rc.app
 # Required packages: coreutils(basename,head,tr),grep
-. func.usage "[tables]" $1
+. rc.app
+_usage "[tables]" $1
 cd ~/db
 for i;do
     table=$(show-tables $i) || { echo "No file for $1"; continue; }

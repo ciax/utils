@@ -5,7 +5,7 @@
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 shopt -s nullglob
-. func.usage "[site]" $1
+_usage "[site]" $1
 cd ~/.var
 site=$1
 . ssl-request $site

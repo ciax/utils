@@ -1,7 +1,7 @@
 #!/bin/bash
-# Description: generate sql statement for create table
-# Required scripts: func.usage
+# Required scripts: rc.app
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
+# Description: generate sql statement for create table
 
 # CSV file rule:
 #  The file location:  ~/utils/db/db-(table name).csv
@@ -12,7 +12,7 @@
 #    table : you can specify the refarence table instead of the 'name'.
 #    key : reference key can be specified, otherwise 'id' will be used.
 #    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
-
+. rc.app
 schema(){
     local tbl=$(show-tables $1) || return 1
     [[ "$tables" =~ $tbl ]] && return
@@ -45,7 +45,7 @@ schema(){
     echo $create"primary key($pkeys)$fkeys);"
 }
 shopt -s nullglob
-. func.usage "[table] .." $1
+_usage "[table] .." $1
 tables=''
 echo "pragma foreign_keys=on;"
 cd ~/db

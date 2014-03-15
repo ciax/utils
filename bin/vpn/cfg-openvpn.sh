@@ -1,12 +1,13 @@
 #!/bin/bash
-# Description: client for dd-wrt openvpn server
 # Required packages: coreutils
-# Required scripts: func.usage, db-list, db-setfield, vpn-route
+# Required scripts: rc.app, db-list, db-setfield, vpn-route
+# Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
-. func.usage "[vpnhost] (outputfile)" $1 < <(db-list vpn)
+. rc.app
+_usage "[vpnhost] (outputfile)" $1 < <(db-list vpn)
 vardir=$HOME/.var
 myhost=`hostname`
 . db-setfield $1 vpn host

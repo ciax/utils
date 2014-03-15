@@ -1,10 +1,11 @@
 #!/bin/bash
-# Desctiption: show table list or table entry
 # Required packages: coreutils(sort),bsdmainutils(column)
-# Required scripts: func.usage db-register
+# Required scripts: rc.app db-register
 # Required tables: *
+# Desctiption: show table list or table entry
+. rc.app
 list(){
     db-register "$1"|sort|column -c${2:-50}
 }
-. func.usage "[table]" $1 < <(list '.tables')
+_usage "[table]" $1 < <(list '.tables')
 list "select id from $1;" $2

@@ -1,12 +1,13 @@
 #!/bin/bash
-# Description: cutoutt matched lines from file and display
-# Required scripts: func.usage, func.temp
-# Required packages: coreutils(grep)
 #alias cutout
-. func.usage "[expression] [file]" $2
+# Required scripts: rc.app
+# Required packages: coreutils(grep)
+# Description: cutoutt matched lines from file and display
+. rc.app
+_usage "[expression] [file]" $2
 exp=$1;shift
 file=$1;shift
-. func.temp remain
+_temp remain
 egrep -v "$exp" $file > $remain 
 egrep "$exp" $file
-overwrite $remain $file
+_overwrite $remain $file

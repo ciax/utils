@@ -1,8 +1,9 @@
 #!/bin/bash
-# Desctiption: impose own trust to the object host (push pub-key anonymously)
-# Required scripts: ssh-setup, ssh-trim, func.temp, edit-merge
-# Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
 #link ssh-join
+# Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
+# Required scripts: rc.app, ssh-setup, ssh-trim, edit-merge
+# Desctiption: impose own trust to the object host (push pub-key anonymously)
+. rc.app
 getrem(){
     scp -pq $rhost:$1 $2
     cp $2 $3
@@ -12,7 +13,7 @@ putrem(){
     scp -pq $1 $rhost:$3
     echo "${3##*/}($(stat -c%s $1)) is updated at $rhost"
 }
-. func.usage "[(user@)host] .." $1
+_usage "[(user@)host] .." $1
 ssh-setup
 case $0 in
     *ssh-push) cmd(){ cut -d' ' -f1-2; };;
@@ -23,9 +24,9 @@ rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
 linv=~/$rinv
-. func.temp trath trinv tath tinv
+_temp trath trinv tath tinv
 for rhost;do
-    [[ ${rhost#*@} =~ "`hostname`|localhost" ]] && abort "Self push"
+    [[ ${rhost#*@} =~ "`hostname`|localhost" ]] && _abort "Self push"
     echo "Host:$rhost"
 # Get files from remote
     getrem $rath $trath $tath
@@ -40,6 +41,6 @@ for rhost;do
     putrem $tath $trath $rath
     putrem $tinv $trinv $rinv
 # Renew local files
-    [ "$join" ] && overwrite $tath $lath
-    overwrite $tinv $linv
+    [ "$join" ] && _overwrite $tath $lath
+    _overwrite $tinv $linv
 done

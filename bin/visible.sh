@@ -1,10 +1,11 @@
 #!/bin/bash
-# Description: display invisible chars in files
-# Required scripts: func.usage
+# Required scripts: rc.app
 # Required packages: coreutils(od)
+# Description: display invisible chars in files
 #  option (-n): no folding by return code but show (0a)
+. rc.app
 [ "$1" = "-n" ] && shift || nl='0a'
-[ -t 0 -a ! -e "$1" ] && . func.usage "(-n) [file]"
+[ -t 0 -a ! -e "$1" ] && _usage "(-n:no fold) [file]"
 for c in `od -v -A n -t x1 $1` ; do
     if [ "$c" = '0a' -a "$nl" ] ; then
         echo

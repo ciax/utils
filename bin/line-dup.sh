@@ -1,9 +1,10 @@
 #!/bin/bash
-# Required scripts: func.usage
-# Required packages: coreutils(sort,nkf,uniq)
-# Pick up duplicated lines
 #alias dup
-[ -t 0 ] && . func.usage " < [files]"
+# Required scripts: rc.app
+# Required packages: coreutils(sort,nkf,uniq)
+# Description: Pick up duplicated lines
+. rc.app
+[ -t 0 ] && _usage " < [files]"
 prev=''
 while read line;do
     [ "$line" = "$prev" ] && echo $line
