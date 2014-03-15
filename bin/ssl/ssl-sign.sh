@@ -20,5 +20,5 @@ ca=$1;shift
 [ -s $v3 ] && ext="-extfile $v3"
 for ss; do
     . ssl-request "$ss"
-    openssl x509 -CA $ca.crt -CAkey $ca.key -req -in $ss.csr -out $ss.crt $opt $ext
+    openssl x509 -CA $ca.crt -CAkey $ca.key -req -days 3650 -in $ss.csr -out $ss.crt $opt $ext
 done
