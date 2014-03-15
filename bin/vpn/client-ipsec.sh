@@ -1,7 +1,9 @@
 #!/bin/bash
 #alias vpni
 # Required packages: vpnc
+# Required scripts: rc.app
 # Description: vpn client of ipsec
+. rc.app
 _usage "(-d:disconnect) [vpnhost]" $1 < <(db-list vpn)
 _temp config
 cfg-ipsec $* > $config
