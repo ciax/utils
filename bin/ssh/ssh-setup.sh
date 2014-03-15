@@ -2,6 +2,7 @@
 # Desctiption: setup ssh files 
 # Required packages: coreutils(grep,cut,cat,sort),diffutils(cmp),openssh-client(ssh,ssh-keygen)
 # Usage: ${0##*/} (-r:remove keys)
+echo $C5"Initializing SSH"$C0
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys
 sec=~/.ssh/id_rsa
@@ -13,4 +14,4 @@ type ssh > /dev/null || apt-get install ssh
 [ -e $pub ] || ssh-keygen -y -f $sec > $pub
 [ -e $ath ] || touch $ath
 [ -e $inv ] || touch $inv
-[ -e $cfg ] || ssh-config > $cfg
+ssh-config > $cfg

@@ -2,7 +2,7 @@
 # Description: Debian package utils
 # Required packages: sudo,apt-spy,debconf,findutils
 # Required scripts: func.usage, show-required
-#alias deb
+#alias pkg
 #alias wf which
 shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }

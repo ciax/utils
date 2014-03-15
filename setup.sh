@@ -14,5 +14,3 @@ hl "Installing Packages"
 pkg-deb init
 hl "Updating Database"
 upd-db
-hl "Initializing SSH"
-ssh-setup

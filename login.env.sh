@@ -24,4 +24,4 @@ export GREP_OPTIONS='-r --color=auto'
 unset -f addenv
 
 # ETC
-PS1="[$SHLVL]$PS1"
+PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
