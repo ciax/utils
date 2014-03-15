@@ -16,7 +16,7 @@ alias alg='alias|grep -i'
 alias eng='env|grep -i'
 alias seg='set|grep "^[a-zA-Z]"'
 alias psg='ps -ef|grep -i'
-alias kilg='sudo killall -iI'
+alias kilg='sudo killall -i -I -r'
 
 # For GIT
 alias gia='git add . */'
