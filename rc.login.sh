@@ -72,7 +72,7 @@ alias giu='git checkout'
 
 # Commands manupulating shell variables
 e-rc(){
-    file=rc.login.alias.sh
+    file=rc.login.sh
     pushd ~/utils >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
@@ -84,7 +84,7 @@ e-rc(){
 }
 reg(){
     file-register
-    source login.alias
+    source rc.login
 }
 gr(){
     grep -r $1 *
