@@ -20,11 +20,15 @@ nolink(){
         echo $C3"[${i##*/}] is not linked"$C0
     done
 }
+clrdir(){
+    for i;do
+	chkdir $i || continue
+	pushd $i >/dev/null
+	nouse \#* *~ .*~ *.orig
+	nolink * .*
+	clrdir */
+	popd >/dev/null
+    done
+}
 [ "$1" ] || set - .
-for i;do
-    chkdir $i || continue
-    pushd $i >/dev/null
-    nouse \#* *~ .*~ *.orig
-    nolink * .*
-    popd >/dev/null
-done
+clrdir $*
