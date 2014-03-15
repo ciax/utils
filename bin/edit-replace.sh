@@ -1,44 +1,45 @@
 #!/bin/bash
-# Description: replace string in files
-# Required scripts: func.usage, func.temp, func.query, file-register
-# Required packages: coreutils(tty,cat,tail),grep
 #alias rep
-. func.usage "[oldstr] [newstr] (ext)" $2 <<EOF
+# Required scripts: rc.app, file-register
+# Required packages: coreutils(tty,cat,tail),grep
+# Description: replace string in files
+. rc.app
+_al(){ echo -e "\t"$C1"$*"$C0; }
+_hl(){ echo -e "\t"$C2"$*"$C0; }
+_usage "(-d) [oldstr] [newstr] (ext)" $2 <<EOF
 ENV[files] for target
 ENV[ex] for exclude line
 (ext) includes [mv old.ext new.ext]
 EOF
-al(){ echo -e "\t"$C1"$*"$C0; }
-hl(){ echo -e "\t"$C2"$*"$C0; }
-. func.query
-. func.temp outtmp
+_temp outtmp
+[ "$1" = -d ] && set - "$2"
 oldstr="$1"
 newstr="$2"
 ext="$3"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
     echo $C2"#### File:[$orgfile] ####"$C0
-    if grep "$newstr" "$orgfile" ; then
-        al "might conflict with ($oldstr -> $newstr)!"
+    if [ "$newstr" ] && grep "$newstr" "$orgfile" ; then
+        _al "might conflict with ($oldstr -> $newstr)!"
     else
-        al "make this file change?"
+        _al "make this file change?"
     fi
-    query || continue
+    _query || continue
     IFS=$'\n\r'
     while read -r line ; do
         conv="${line//$oldstr/$newstr}"
         if [ "$conv" != "$line" ] && ! { [ "$ex" ] && [[ "$line" == *$ex* ]]; }
         then
-            before="${line//$oldstr/$C1$oldstr$C0}"
-            after="${line//$oldstr/$C1$newstr$C0}"
-            echo -n "${before}"
-            hl "====>"
-            echo "${after}"
-            query && line="$conv"
+	    before="${line//$oldstr/$C1$oldstr$C0}"
+	    after="${line//$oldstr/$C1$newstr$C0}"
+	    echo -n "${before}"
+	    _hl "====>"
+	    echo "${after}"
+	    _query && line="$conv"
         fi
         echo "$line" >> "$outtmp"
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
-    overwrite "$outtmp" "$orgfile"
+    _overwrite "$outtmp" "$orgfile"
 done
 [ "$ext" ] || exit
 oldfn="$oldstr.$ext"
@@ -46,10 +47,10 @@ newfn="$newstr.$ext"
 if [ -e "$oldfn" ] ; then
     echo $C2"#### Rename:[$oldfn] ####"$C0
     if [ -e "$newfn" ] ; then
-        al "newfn aleady exists"
+        _al "newfn aleady exists"
     else
-        al "rename $oldfn -> $newfn?"
-        query && mv $oldfn $newfn
+        _al "rename $oldfn -> $newfn?"
+        _query && mv $oldfn $newfn
     fi
 fi
 file-register
