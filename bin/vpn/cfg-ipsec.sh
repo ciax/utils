@@ -17,6 +17,6 @@ echo "Vendor netscreen"
 echo "Xauth username $LOGNAME"
 echo "Xauth password $1"
 #Xauth password <password>
-set - $(db-register "select network||'/'||netmask from subnet where route == '$route';")
+set - $(route-ipsec $route)
 echo "Target Networks $*"
 echo "Nat Traversal Mode natt"
