@@ -7,13 +7,12 @@
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
 . rc.app
-_usage "[vpnhost] (outputfile)" $1 < <(db-list vpn)
+_usage "[vpnhost]" $1 < <(db-list vpn)
 vardir=$HOME/.var
 myhost=`hostname`
 . db-setfield $1 vpn host
 [ "$fdqn" ] || { echo "No such host in DB"; exit; }
-out=${2:-/dev/stdout}
-cat > $out <<EOF
+cat <<EOF
 verb 3
 script-security 2
 client
@@ -34,8 +33,9 @@ key $vardir/$myhost.key
 writepid $vardir/openvpn.pid
 status $vardir/openvpn-status.log
 ns-cert-type server
+tun-mtu 1400
 EOF
-vpn-route $1|cut -d' ' -f1,4,6 >> $out
+route-openvpn $1
 # Required SSL files for Server:
 # rootca.crt (Root Certificate)
 # server.crt (Server Certificate)
