@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias vpni
+#alias ivpn
 # Required packages: vpnc
 # Required scripts: rc.app
 # Description: vpn client of ipsec

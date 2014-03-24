@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias vpno
+#alias ovpn
 # Required packages: openvpn
 # Required scripts: rc.app, db-list, cfg-openvpn, vpn-nat, show-syslog
 # Description: client for dd-wrt openvpn server

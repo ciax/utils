@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias vpnp
+#alias pvpn
 # Required scripts: rc.app, db-list, db-setfield, cfg-ppp
 # Description: client for dd-wrt pptp server
 . rc.app
