@@ -4,7 +4,7 @@
 . rc.app
 case "$1" in
     -l)
-        db-files <<< "select distinct name from content;"
+        bkup-sqlite <<< "select distinct name from content;"
         exit
         ;;
     -f)
@@ -14,7 +14,7 @@ esac
 _usage "(-f:first,-l:list) [file] (host)" $1
 name="$1"
 if [ -s "$name" ] ; then
-    file-stash $name >/dev/null
+    bkup-stash $name >/dev/null
     cfid=$(md5sum $name|head -c10)
     uniq=" and list.fid != '$cfid'"
 fi
@@ -25,9 +25,9 @@ dist=$(info-dist)
 dstr="list.dist=='$dist'"
 sub_date="select $sel(date) from content,list where content.id == list.fid and $nstr and $hstr and $dstr $uniq"
 sub_fid="select id from content where date == ($sub_date)"
-fid=$(db-files <<< "$sub_fid;")
+fid=$(bkup-sqlite <<< "$sub_fid;")
 if [ "$fid" ] ; then
-    db-files <<< "select base64 from content where id == '$fid';"|base64 -d > $name
+    bkup-sqlite <<< "select base64 from content where id == '$fid';"|base64 -d > $name
     echo "Recall OK"
 else
     echo1 "No such id stored for $host"

@@ -5,7 +5,7 @@
 _usage "(-i:init db) [file]" $1
 if [ "$1" = -i ] ; then
     shift
-    db-files <<EOF
+    bkup-sqlite <<EOF
 drop table if exists content;
 drop table if exists list;
 create table content (id primary key,name,mode,date,base64);
@@ -20,7 +20,7 @@ base64=$(base64 -w0 $1)
 dist=$(info-dist)
 stat -c "%n %a %Y %U" $1 | {
     read name mode date owner
-    db-files <<EOF
+    bkup-sqlite <<EOF
 insert or ignore into content values('$fid','$name','$mode','$date','$base64');
 insert or ignore into list values('$fid','$host','$dist','$owner','$dir');
 EOF
