@@ -2,6 +2,7 @@
 # Required packages: coreutils(cat,tty),diffutils(cmp)
 # Description: provides query function
 # Usage: _query
+shopt -s nullglob
 _query(){
     [ "$ALL" ] && return
     [ "$tty" ] || tty=`tty`

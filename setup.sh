@@ -8,9 +8,13 @@
 #  .bashrc (calls .bash_aliases)
 hl(){ echo "$C5$*$C0"; }
 PATH=$PATH:~/bin
+hl "Installing Packages"
+which apt-get >/dev/null || { echo "This might not Debian"; exit; }
+which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
+ichk(){ for i ;do which $i >/dev/null || sudo -i apt-get install $i;done; }
+ichk grep sed
+sudo -i apt-get install coreutils diffutils
 hl "Registering Files"
 ~/utils/file-register.sh
-hl "Installing Packages"
-pkg-deb init
 hl "Updating Database"
 upd-db

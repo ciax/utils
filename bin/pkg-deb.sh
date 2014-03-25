@@ -1,27 +1,22 @@
 #!/bin/bash
 #alias pkg
 #alias wf which
-# Required packages: sudo,apt-spy,debconf,findutils
+# Required packages: sudo,grep,sed,apt-spy,debconf,findutils,deborphan
 # Required scripts: rc.app, show-required
 # Description: Debian package utils
 . rc.app
-shopt -s nullglob
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
-ichk(){ for i ;do which $i >/dev/null || sudo -i apt-get install $i;done; }
 cmd="$1";shift
 case "$cmd" in
     init)
-        ichk grep sed
         sudo -i apt-get install $(show-required packages)
         exit;;
     clean)
-        ichk deborphan
         sudo -i apt-get autoremove
         sudo -i apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         exit;;
     spy)
-        ichk apt-spy
         sudo -i apt-spy -d stable -a North-America
         exit;;
     upd)
