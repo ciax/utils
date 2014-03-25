@@ -65,4 +65,4 @@ dirreg(){
     showlist
 }
 shopt -s nullglob
-dirreg ~/utils ~/cfg.* $*
+dirreg ~/utils ~/cfg.*/*/ $*
