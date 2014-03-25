@@ -15,6 +15,6 @@ ichk(){ for i ;do which $i >/dev/null || sudo -i apt-get install $i;done; }
 ichk grep sed
 sudo -i apt-get install coreutils diffutils
 hl "Registering Files"
-~/utils/file-register.sh
+~/utils/bin/file-register.sh
 hl "Updating Database"
 upd-db
