@@ -16,5 +16,4 @@ ichk grep sed
 sudo -i apt-get install coreutils diffutils
 hl "Registering Files"
 ~/utils/bin/file-register.sh
-hl "Updating Database"
-upd-db
+echo "*** You need to re-login ***"
