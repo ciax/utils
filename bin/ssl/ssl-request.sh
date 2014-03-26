@@ -2,16 +2,18 @@
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-input=
 site=$1
 . ssl-newkey $site
 . db-setfield $site ssl
-[ "$country" ] && input="$input/C=$country"
-[ "$state" ] && input="$input/ST=$state"
-[ "$city" ] && input="$input/L=$city"
-[ "$company" ] && input="$input/O=$company"
-[ "$section" ] && input="$input/OU=$section"
-[ "$fdqn" ] && input="$input/CN=$fdqn"
-[ "$email" ] && input="$input/emailAddress=$email"
-openssl req -new -key $site.key ${input:+-subj "$input"} > $site.csr
-[ -s "$site.csr" ] || { rm "$site.csr";echo "Generate CSR failed"; }
+input="/C=${country:-US}/ST=${state:-HI}/L=${city:-HILO}/O=${company:-NAOJ}"
+input="$input/OU=${section:-STN}/CN=${fdqn:-$site}"
+input="$input/emailAddress=${email:-$site}"
+openssl req -new -key $site.key -subj "$input" > $site.csr
+if [ -s "$site.csr" ] ;then
+    echo "CSR is generated"
+else
+    rm "$site.csr"
+    echo "Generate CSR failed"
+    exit 1
+fi
+
