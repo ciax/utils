@@ -16,25 +16,22 @@ if [ -t 2 ] ; then
 fi
 # Set environment for login
 # Required Packages: emacs,most
-addenv(){
-    local name=$1;shift
-    local list=$(IFS=: eval echo \$$name)
-    for j ; do
-        for i in $list;do
-            [ "$j" = "$i" ] && break 2
-        done
-        eval "export $name=$j:\$$name"
+# For PATH
+addpath(){
+    local list="$1";shift
+    for j; do
+        [ -d "$j" ] && [[ ! "$list" =~ "$j" ]] && list="$list:$j"
     done
+    echo $list
 }
-
-# Local functions
-addenv PATH "$HOME/bin" "$HOME/lib"
-addenv RUBYLIB "$HOME/lib"
+export PATH=$(addpath $PATH {~,/usr{/local,},}/{bin,sbin,lib})
+export RUBYLIB=$(addpath $RUBYLIB $HOME/lib)
+unset -f addpath
+# Other Environments
 export EDITOR='emacs'
 export PAGER='most'
 export MOST_EDITOR='emacs %s -g %d'
 export GREP_OPTIONS='--color=auto'
-unset -f addenv
 
 # PROMPT
 PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
