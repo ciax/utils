@@ -31,5 +31,6 @@ clrdir(){
         popd >/dev/null
     done
 }
+echo $C3"File Cleaning"$C0
 [ "$1" ] || set - .
 clrdir $*
