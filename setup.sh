@@ -1,11 +1,5 @@
 #!/bin/bash
 # Description: install utils (need to re-login for environment effective)
-#
-#* rcfile priority (bash executes just one of them)
-# Invoked bash as a Login shell
-#  .bash_profile > .bash_login > .profile (calls .bashrc)
-# Merely invoked
-#  .bashrc (calls .bash_aliases)
 PATH=$PATH:~/bin
 echo $C3"Installing Packages"$C0
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }

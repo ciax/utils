@@ -1,3 +1,9 @@
+# rcfile priority (bash executes just one of them)
+ Invoked bash as a Login shell
+  .bash_profile || .bash_login || .profile (calls .bashrc)
+ Invoked bash as others 
+  .bashrc (calls .bash_complete)
+
 # command usage by prefix
 rc.app.sh: should be source for loading functions;
 
