@@ -53,6 +53,7 @@ link2dir(){
 }
 dirreg(){
     [ "$1" ] || return
+    declare -A dirlist
     for i ; do
         pushd $i >/dev/null
         link2dir -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
@@ -65,6 +66,5 @@ dirreg(){
     showlist
 }
 shopt -s nullglob
-declare -A dirlist
 echo $C3"File Registering"$C0
 dirreg ~/utils ~/cfg.*/ $*
