@@ -43,20 +43,27 @@ show_tree(){
     done
 }
 
+chk_host(){ true; }
+
+# Options
+opt-p(){
+    chk_host(){
+        _progress "Checking"
+        ping -c1 -w1 $1 &>/dev/null
+    }
+}
+
 ### main ###
-case "$1" in
-    -p)
-        chk_host(){
-            _progress "Checking"
-            ping -c1 -w1 $1 &>/dev/null
-        }
-        shift
-        ;;
-    -*) shift;;
-    *)
-        chk_host(){ true; }
-        ;;
-esac
+for i;do
+    case "$i" in
+        -*)
+            shift
+            fname="opt$i"
+            type -t $fname &>/dev/null  && $fname
+            ;;
+        *);;
+    esac
+done
 _usage "(-p:ping check) [subnet]" $1 < <(db-list subnet)
 
 declare -A sub
