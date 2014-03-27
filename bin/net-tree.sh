@@ -32,8 +32,7 @@ get_hosts(){
 }
 
 show_tree(){
-    [ $depth -gt  10 ] && _abort "Infinite Loop Error"
-    depth=$(( $depth + 1 ))
+    [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     local ind="    |$2"
     for i in ${sub[$1]};do
         if [ "${connect[$i]}" ];then
@@ -43,19 +42,24 @@ show_tree(){
         fi
         show_tree $i "$ind"
     done
-    depth=$(( $depth - 1 ))
 }
 
-chk_host(){ echo -n '.';ping -c1 -w1 $1 &>/dev/null; }
+chk_host(){
+    if [ "$chk_start" ]; then
+        echo -n '.'
+    else
+        echo -n "Checking "
+        chk_start=1
+    fi
+    ping -c1 -w1 $1 &>/dev/null
+}
 
 declare -A sub
 declare -A super
 declare -A title
 declare -A connect
 IFS='|'
-depth=0
 get_hubs $1
-echo -n "Checking "
 get_hosts
 echo
 echo " $1"
