@@ -10,7 +10,6 @@ subtree(){
     depth=$(( $depth + 1 ))
     local ind="   |$2"
     for i in ${sub[$1]};do
-        echo "${ind}"
         echo "${ind}-${title[$i]}"
         subtree $i "$ind"
     done
@@ -23,7 +22,7 @@ IFS='|'
 while read h u n; do
     u="${u:-$1}"
     sub[$u]="${sub[$u]}$h|"
-    title[$h]="$n"
+    title[$h]=$C5"$n"$C0
 done < <(db-register "select id,upper,description from hub where subnet == '$1';")
 for u in ${!title[*]};do
     while read h; do
