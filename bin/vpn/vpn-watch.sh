@@ -9,7 +9,7 @@ _usage "(-d:disconnect) [vpnhost] (pw)" $1
 host="$1";shift
 pw=$1;shift
 . db-setfield $host vpn route
-[ "$watch" ] || { echo "No such host"; exit 1; }
+[ "$watch" ] || _abort "No such host"
 while sleep 5;do
     ping -c3 $watch > /dev/null 2>&1 || $client $host $pw
 done &

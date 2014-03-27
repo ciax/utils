@@ -5,8 +5,8 @@
 # Required scripts: rc.app, show-required
 # Description: Debian package utils
 . rc.app
-which apt-get >/dev/null || { echo "This might not Debian"; exit; }
-which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
+which apt-get >/dev/null || _abort "This might not Debian"
+which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
 cmd="$1";shift
 case "$cmd" in
     init)
@@ -40,7 +40,7 @@ init,list; spy; clean; upd; upg
 EOF
 case "$cmd" in
     install)
-        sudo -i apt-get install $* || { echo "Error $?"; exit; }
+        sudo -i apt-get install $* || _abort "Error $?"
         echo Install success. $?
         ;;
     remove)

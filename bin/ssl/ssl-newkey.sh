@@ -12,4 +12,4 @@ else
     openssl genrsa 2048 > $site.key
 fi
 chmod 600 $site.key
-[ -s "$site.key" ] || { echo "Generate KEY file failed"; rm "$site.key"; exit 1; }
+[ -s "$site.key" ] || { rm "$site.key"; _abort "Generate KEY file failed"; }

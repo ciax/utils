@@ -15,7 +15,7 @@ case "$1" in
     *);;
 esac
 ca=$1;shift
-[ -s "$ca.key" ] || { echo "No ca key file"; exit; }
+[ -s "$ca.key" ] || _abort "No ca key file"
 [ -s $ca.srl ] || opt="-CAcreateserial"
 [ -s $v3 ] && ext="-extfile $v3"
 for ss; do

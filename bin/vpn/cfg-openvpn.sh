@@ -11,7 +11,7 @@ _usage "[vpnhost]" $1 < <(db-list vpn)
 vardir=$HOME/.var
 myhost=`hostname`
 . db-setfield $1 vpn host
-[ "$fdqn" ] || { echo "No such host in DB"; exit; }
+[ "$fdqn" ] || _abort "No such host in DB"
 cat <<EOF
 verb 3
 script-security 2

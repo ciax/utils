@@ -4,8 +4,8 @@
 _usage "[ca name] [site name]" $1
 cd ~/.var
 cacrt="$1.crt";shift
-[ -s "$cacrt" ] || { echo "No ca crt file"; exit; }
+[ -s "$cacrt" ] || _abort "No ca crt file"
 site="$1.crt";shift
-[ -s "$site" ] || { echo "No site crt file"; exit; }
+[ -s "$site" ] || _abort "No site crt file"
 openssl verify -CAfile $cacrt $site
 

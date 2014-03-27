@@ -6,7 +6,7 @@
 . rc.app
 ath=~/.ssh/authorized_keys
 pub=~/.ssh/id_rsa.pub
-[ -f $ath -a -f $pub ] || { echo "No ssh files"; exit 1; }
+[ -f $ath -a -f $pub ] || _abort "No ssh files"
 read rsa mykey me < $pub
 _temp tath
 while read line; do
