@@ -1,7 +1,7 @@
 #!/bin/bash
-# Description: show hub tree
-# Required scripts: rc.app, db-registe
-# Required tables: hub,subnet
+# Description: show network tree
+# Required scripts: rc.app, db-register
+# Required tables: mac,hub,subnet
 . rc.app
 
 open_super(){
@@ -44,21 +44,21 @@ show_tree(){
 }
 
 ### main ###
-_usage "(-p:ping check) [subnet]" $1 < <(db-list subnet)
-
 case "$1" in
     -p)
         chk_host(){
-            echo -n '.'
+            _progress "Checking"
             ping -c1 -w1 $1 &>/dev/null
         }
-        echo -n "Checking "
         shift
         ;;
+    -*) shift;;
     *)
         chk_host(){ true; }
         ;;
 esac
+_usage "(-p:ping check) [subnet]" $1 < <(db-list subnet)
+
 declare -A sub
 declare -A super
 declare -A title

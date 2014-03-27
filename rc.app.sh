@@ -60,3 +60,13 @@ _usage(){
 # Desctiption: Abort with message
 # Usage: abort [message]
 _abort(){ echo "$C1$*$C0";exit 1; }
+# Description: Show progress
+# Usage: _progress [Title]
+_progress(){
+    if [ "$_pr_title" = "$1" ]; then
+        echo -n '.'
+    else
+        echo -n "$1 "
+        _pr_title="$1"
+    fi
+}
