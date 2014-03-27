@@ -5,59 +5,58 @@
 . rc.app
 _usage "[subnet]" $1 < <(db-list subnet)
 
-open_upper(){
-    stat[$1]="---"
-    local up="${upper[$1]}"
-    [ "$up" ] && open_upper "$up"
+open_super(){
+    connect[$1]=1
+    local up="${super[$1]}"
+    [ "$up" ] && [ ! "${connect[$up]}" ] && open_super "$up"
 }
 
-gethubs(){
+get_hubs(){
     while read h u n; do
         u="${u:-$1}"
         sub[$u]="${sub[$u]}$h|" # add itself to parent var
-        upper[$h]="$u"
+        super[$h]="$u"
         title[$h]=$C2"$n"$C0
-        stat[$h]=-$C1"X"$C0- # default status is disconnect
-    done < <(db-register "select id,upper,description from hub where subnet == '$1';")
+    done < <(db-register "select id,super,description from hub where subnet == '$1';")
 }
 
-gethosts(){
+get_hosts(){
     for u in ${!title[*]};do
         while read h; do
             sub[$u]="${sub[$u]}$h|"
-            upper[$h]="$u"
+            super[$h]="$u"
             title[$h]="("$C4"$h"$C0")"
-            if chkhost $h; then
-                open_upper $h
-            else
-                stat[$h]=-$C1"X"$C0-
-            fi
+            chk_host $h && open_super $h
         done < <(db-register "select host from mac where hub == '$u';")
     done
 }
 
-subtree(){
+show_tree(){
     [ $depth -gt  10 ] && _abort "Infinite Loop Error"
     depth=$(( $depth + 1 ))
     local ind="    |$2"
     for i in ${sub[$1]};do
-        echo "${ind}${stat[$i]}${title[$i]}"
-        subtree $i "$ind"
+        if [ "${connect[$i]}" ];then
+            echo "${ind}---${title[$i]}"
+        else
+            echo "${ind}-${C1}X$C0-${title[$i]}"
+        fi
+        show_tree $i "$ind"
     done
     depth=$(( $depth - 1 ))
 }
 
-chkhost(){ echo -n '.';ping -c1 -w1 $1 &>/dev/null; }
+chk_host(){ echo -n '.';ping -c1 -w1 $1 &>/dev/null; }
 
 declare -A sub
-declare -A upper
+declare -A super
 declare -A title
-declare -A stat
+declare -A connect
 IFS='|'
 depth=0
-gethubs $1
+get_hubs $1
 echo -n "Checking "
-gethosts
+get_hosts
 echo
 echo " $1"
-subtree $1
+show_tree $1
