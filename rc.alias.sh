@@ -47,5 +47,5 @@ reg(){
     source rc.alias
 }
 gr(){
-    grep -r $1 *
+    grep -ir $* *
 }
