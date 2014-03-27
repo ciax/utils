@@ -9,18 +9,18 @@ _query(){
     echo -en "\tOK? $C3[A/Y/N/Q]$C0"
     read -e ans < $tty
     case "$ans" in
-	[Aa]*)
+        [Aa]*)
             echo "All Accept!"
             ALL=1
             ;;
-	[Yy]*)
+        [Yy]*)
             echo "Accept!"
             ;;
-	[Qq]* )
+        [Qq]* )
             echo "Abort"
             exit 2
             ;;
-	* )
+        * )
             echo "Skip"
             return 1
             ;;
@@ -32,9 +32,9 @@ _temp(){
     local trp="/bin/rm -f -- "
     local i=
     for i ; do
-	local tmp=$(tempfile) || { echo "Can't make mktemp"; exit 1; }
-	_tmplist="$_tmplist $tmp"
-	eval "$i=$tmp"
+        local tmp=$(tempfile) || { echo "Can't make mktemp"; exit 1; }
+        _tmplist="$_tmplist $tmp"
+        eval "$i=$tmp"
     done
     trap "$trp$tmplist" EXIT
 }
@@ -53,7 +53,7 @@ _usage(){
     [ "$2" ] && return
     echo "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
     [ -t 0 ] || while read i; do
-	echo -e "\t$i"
+        echo -e "\t$i"
     done
     exit 2
 }
