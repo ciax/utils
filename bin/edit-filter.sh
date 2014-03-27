@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias wri
+#alias fil
 # Required scripts: rc.app
 # Required packages: coreutils(cat),diffutils(cmp)
 # Description: Overwrite if these are different.
