@@ -3,7 +3,6 @@
 # Required scripts: rc.app, db-registe
 # Required tables: hub,subnet
 . rc.app
-_usage "[subnet]" $1 < <(db-list subnet)
 
 open_super(){
     connect[$1]=1
@@ -44,16 +43,22 @@ show_tree(){
     done
 }
 
-chk_host(){
-    if [ "$chk_start" ]; then
-        echo -n '.'
-    else
-        echo -n "Checking "
-        chk_start=1
-    fi
-    ping -c1 -w1 $1 &>/dev/null
-}
+### main ###
+_usage "(-p:ping check) [subnet]" $1 < <(db-list subnet)
 
+case "$1" in
+    -p)
+        chk_host(){
+            echo -n '.'
+            ping -c1 -w1 $1 &>/dev/null
+        }
+        echo -n "Checking "
+        shift
+        ;;
+    *)
+        chk_host(){ true; }
+        ;;
+esac
 declare -A sub
 declare -A super
 declare -A title
