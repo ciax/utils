@@ -3,7 +3,8 @@
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
 . rc.app
-_chkarg $1 < <(db-list vpn) || shift $#
+_chkarg < <(db-list vpn)
+set - "$ARGV"
 _usage "[vpn] (pw)" $1
 vid=$1;shift
 . db-setfield  $vid vpn

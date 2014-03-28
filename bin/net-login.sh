@@ -5,7 +5,8 @@
 # Required tables: login (user,password,host,rcmd)
 # Description: login command
 . rc.app
-_chkarg $1 < <(db-list login)
+_chkarg < <(db-list login)
+#set - "$ARGV"
 _usage "[host] (command)" $1
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift

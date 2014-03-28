@@ -6,8 +6,9 @@
 . rc.app
 # Options
 opt-d(){ sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated";exit; }
-_chkopt $* && shift
-_chkarg $1 < <(db-list vpn) || shift
+_chkopt
+_chkarg < <(db-list vpn)
+set - "$ARGV"
 _usage "(-d:disconnect) [vpnhost]" $1
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile

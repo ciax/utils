@@ -1,29 +1,20 @@
 #!/bin/bash
 # Required packages: coreutils(cat,tty),diffutils(cmp)
 # Description: provides query function
-# Usage: _query
+ARGV="$*"
 shopt -s nullglob
+# Description: interactive query
+# Usage: _query
 _query(){
     [ "$ALL" ] && return
     [ "$tty" ] || tty=`tty`
     echo -en "\tOK? $C3[A/Y/N/Q]$C0"
     read -e ans < $tty
     case "$ans" in
-        [Aa]*)
-            echo "All Accept!"
-            ALL=1
-            ;;
-        [Yy]*)
-            echo "Accept!"
-            ;;
-        [Qq]* )
-            echo "Abort"
-            exit 2
-            ;;
-        * )
-            echo "Skip"
-            return 1
-            ;;
+        [Aa]*) echo "All Accept!";ALL=1;;
+        [Yy]*) echo "Accept!";;
+        [Qq]*) echo "Abort";exit 2;;
+        * ) echo "Skip";return 1;;
     esac
 }
 # Desctiption: makes temporaly files
@@ -61,20 +52,25 @@ _progress(){
     fi
 }
 # Description: Check single options. opt-?() function should be provided.
-# Usage: _chkopt $* && shift
+# Usage: _chkopt; set - $ARGV
 _chkopt(){
-    local opt="$1";shift
-    [[ "$opt" == -* ]] || return 1
-    if type -t opt$opt &>/dev/null;then
-        opt$opt $*
-    else
-        echo $C1"No such option ($opt)"$C0
-    fi
+    set - $ARGV
+    while [[ "$1" == -* ]];do
+        if type -t opt$1 &>/dev/null;then
+            opt$1;shift
+        else
+            echo $C1"No such option ($1)"$C0
+            unset ARGV
+            return 1
+        fi
+    done
+    ARGV="$*"
 }
 # Desctiption: Check argument
 #  (lists (input from file) are available.)
-# Usage: _chkarg [arg] < (option list) || shift $#
+# Usage: _chkarg < (option list); set - $ARGV
 _chkarg(){
+    set - "$ARGV"
     while read i ;do
         for j in $i;do
             [ "$1" = "$j" ] && return
@@ -82,6 +78,7 @@ _chkarg(){
         _usg_list="$_usg_list\t$i\n"
     done
     [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
+    unset ARGV
     return 1
 }
 # Desctiption: Show usage if second arg is null.
