@@ -6,18 +6,13 @@
 . rc.app
 _al(){ echo -e "\t"$C1"$*"$C0; }
 _hl(){ echo -e "\t"$C2"$*"$C0; }
-opt-d(){
-    oldstr="$1"
-    newstr=''
-}
-oldstr="$1"
-newstr="$2"
-_chkopt $*
-_usage "(-d:delete) [oldstr] [newstr] (ext)
+_usage "[oldstr] [newstr] (ext)
 \tENV[files] for target
 \tENV[ex] for exclude line
-\t(ext) includes [mv old.ext new.ext]" $2
+\t(ext) includes [mv old.ext new.ext]" $1
 _temp outtmp
+oldstr="$1"
+newstr="$2"
 ext="$3"
 echo "OLDSTR=$oldstr, NEWSTR=$newstr"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
