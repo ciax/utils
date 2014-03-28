@@ -7,12 +7,7 @@
 . rc.app
 which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-_chkarg <<EOF
-install remove config
-files stat info
-which search gpg
-init list spy clean upd upg
-EOF
+_chkarg "install remove config files stat info which search gpg init list spy clean upd upg"
 set - "$ARGV"
 _usage "[option]" $1
 cmd="$1";shift

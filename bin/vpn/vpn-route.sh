@@ -5,7 +5,7 @@
 . rc.app
 opt-r(){ mode="del"; }
 mode="add"
-_chkarg < <(db-list vpn)
+_chkarg $(db-list vpn)
 set - "$ARGV"
 _usage "(-r:remove) [vpnhost]" $1
 db-register "select 'route $mode -net '||network||' netmask '||netmask from subnet where route == (select route from vpn where id == '$1');"

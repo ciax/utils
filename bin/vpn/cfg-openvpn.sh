@@ -7,7 +7,7 @@
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
 . rc.app
-_chkarg < <(db-list vpn)
+_chkarg $(db-list vpn)
 set - "$ARGV"
 _usage "[vpnhost]" $1
 vardir=$HOME/.var

@@ -6,7 +6,7 @@
 . rc.app
 PATH=$PATH:/usr/sbin
 opt-d(){ sudo vpnc-disconnect;exit; }
-_chkarg < <(db-list vpn)
+_chkarg $(db-list vpn)
 set - "$ARGV"
 _usage "(-d:disconnect) [vpnhost]" $1
 _temp config

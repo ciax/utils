@@ -22,18 +22,18 @@ schema(){
     local pkeys=''
     local fkeys=''
     while read col; do
-	local field="${col%(*}"
+        local field="${col%(*}"
         if [[ $field =~ '!' ]] ; then
             field=${field#!}
             pkeys="${pkeys:+$pkeys,}$field"
         fi
-	local ref="${col#*(}";ref="${ref%)*}"
-	local rtable="${ref%:*}";rtable=${rtable:-$field}
-	if [[ $ref =~ ':' ]]; then
-	    local rkey="${ref#*:}"
-	else
-	    local rkey="id"
-	fi
+        local ref="${col#*(}";ref="${ref%)*}"
+        local rtable="${ref%:*}";rtable=${rtable:-$field}
+        if [[ $ref =~ ':' ]]; then
+            local rkey="${ref#*:}"
+        else
+            local rkey="id"
+        fi
         create="$create'$field',"
         for rfile in $(show-tables $rtable); do
             fkeys="$fkeys,foreign key('$field') references $rfile('$rkey')"

@@ -3,7 +3,7 @@
 # Required scripts: rc.app, db-register, info-subnet
 # Required tables: hub, subnet(network)
 . rc.app
-_chkarg < <(db-list subnet)
+_chkarg $(db-list subnet)
 set - "$ARGV"
 _usage "[subnet]" $1
 for hub in $(db-register "select id from hub where subnet == '$1';"); do

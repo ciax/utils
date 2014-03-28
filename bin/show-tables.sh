@@ -28,7 +28,5 @@ for i;do
         tblcore $i
     elif [ -s db-$i.csv ]; then
         echo $i
-    else
-        exit 1
     fi
 done

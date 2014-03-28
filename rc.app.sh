@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(cat,tty),diffutils(cmp)
+# Required packages: coreutils(cat,tty),diffutils(cmp),bsdmainutils(column)
 # Description: provides query function
 ARGV="$*"
 shopt -s nullglob
@@ -54,8 +54,9 @@ _progress(){
 # Desctiption: Check argument
 #  1.Check single options. opt-?() function should be provided.
 #  2.Check argument by lists input from file.
-# Usage: _chkarg < (option list); set - $ARGV
+# Usage: _chkarg (option list); set - $ARGV
 _chkarg(){
+    _usg_list="$*"
     set - "$ARGV"
     while [[ "$1" == -* ]];do
         if type -t opt$1 &>/dev/null;then
@@ -67,17 +68,13 @@ _chkarg(){
         fi
     done
     ARGV="$*"
-    if [ ! -t 0 ];then
-        while read i ;do
-            for j in $i;do
-                [ "$1" = "$j" ] && return
-            done
-            _usg_list="$_usg_list\t$i\n"
-        done
-        [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
-        unset ARGV
-        return 1
-    fi
+    [ "$_usg_list" ] || return 0
+    for j in $_usg_list;do
+        [ "$1" = "$j" ] && return
+    done
+    [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
+    unset ARGV
+    return 1
 }
 # Desctiption: Show usage if second arg is null.
 #  (option lists in $_usg_list are available.)
@@ -86,7 +83,9 @@ _usage(){
         unset _usg_list
     else
         echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
-        [ "$_usg_list" ] && echo -en "$_usg_list"
+        if [ "$_usg_list" ] ; then
+            echo -e "\t$_usg_list"|column -c 50
+        fi
         exit 2
     fi
 }
