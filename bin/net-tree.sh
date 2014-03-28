@@ -17,7 +17,7 @@ get_hubs(){
         super[$h]="$u"
         title[$h]=$C2"$n"$C0
     done < <(db-register "select id,super,description from hub where subnet == '$1';")
-    [ "${!sub[*]}" ]
+    [ "${!sub[*]}" ] || _abort "No such subnet $1"
 }
 
 get_hosts(){
@@ -63,7 +63,7 @@ declare -A super
 declare -A title
 declare -A connect
 IFS='|'
-get_hubs $1 || exit
+get_hubs $1
 get_hosts
 echo
 echo " $1"

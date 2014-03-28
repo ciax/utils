@@ -73,5 +73,12 @@ _progress(){
 # Description: Get single options. opt-?() function should be provided.
 # Usage: _chkopt [arg]
 _chkopt(){
-    [[ "$1" == -* ]] && type -t opt$1 &>/dev/null && opt$1
+    local opt="$1";shift
+    [[ "$opt" == -* ]] || return
+    if type -t opt$opt &>/dev/null;then
+        opt$opt $*
+    else
+        _abort "No such option ($opt)"
+    fi
 }
+

@@ -8,20 +8,26 @@ tblcore(){
     local r=${1#*-}
     echo ${r%%[-.]*}
 }
-_usage "(-i:independent tables) [table]" $1
-if [ "$1" = "-i" ] ; then
+
+# Options
+
+opt-i(){
     _temp fields
     grep -h "^!" db-*.csv|tr ',' '\n'|grep -v '^!'|sort -u > $fields
     for i in db-*.csv;do
         table=$(tblcore $i)
         grep  -q "$table" $fields || echo $table
     done|sort -u
-else
-    for i;do
-        if [ -s "$i" ]; then
-            tblcore $i
-        elif [ -s db-$i.csv ]; then
-            echo $i
-        fi
-    done
-fi
+    exit
+}
+
+cd ~/db
+_chkopt $*
+_usage "(-i:independent tables) [table]" $1
+for i;do
+    if [ -s "$i" ]; then
+        tblcore $i
+    elif [ -s db-$i.csv ]; then
+        echo $i
+    fi
+done
