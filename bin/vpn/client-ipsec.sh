@@ -5,10 +5,7 @@
 # Description: vpn client of ipsec
 . rc.app
 PATH=$PATH:/usr/sbin
-opt-d(){
-    sudo vpnc-disconnect
-    exit
-}
+opt-d(){ sudo vpnc-disconnect;exit; }
 _chkopt $* && shift
 _chkarg $1 < <(db-list vpn) || shift $#
 _usage "(-d:disconnect) [vpnhost]" $1

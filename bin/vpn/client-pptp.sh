@@ -4,10 +4,7 @@
 # Description: client for dd-wrt pptp server
 . rc.app
 # Options
-opt-d(){
-    sudo kill $(< /var/run/ppp0.pid)
-    exit
-}
+opt-d(){ sudo kill $(< /var/run/ppp0.pid);exit; }
 _chkopt $* && shift
 _chkarg $1 < <(db-list vpn) || shift $#
 _usage "(-d:disconnect) [vpnhost]" $1

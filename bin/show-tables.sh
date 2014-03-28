@@ -10,7 +10,6 @@ tblcore(){
 }
 
 # Options
-
 opt-i(){
     _temp fields
     grep -h "^!" db-*.csv|tr ',' '\n'|grep -v '^!'|sort -u > $fields

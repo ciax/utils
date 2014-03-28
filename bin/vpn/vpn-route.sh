@@ -3,9 +3,7 @@
 # Required tables: subnet(network,netmask,vpn)
 # Description: Generate routing commands
 . rc.app
-opt-r(){
-    mode="del"
-}
+opt-r(){ mode="del"; }
 mode="add"
 _chkopt $* && shift
 _chkarg $1 < <(db-list vpn) || shift $#
