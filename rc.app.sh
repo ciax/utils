@@ -61,19 +61,19 @@ _progress(){
     fi
 }
 # Description: Check single options. opt-?() function should be provided.
-# Usage: _chkopt [arg] && shift
+# Usage: _chkopt $* && shift
 _chkopt(){
     local opt="$1";shift
-    [[ "$opt" == -* ]] || return
+    [[ "$opt" == -* ]] || return 1
     if type -t opt$opt &>/dev/null;then
         opt$opt $*
     else
-        _abort "No such option ($opt)"
+        echo $C1"No such option ($opt)"$C0
     fi
 }
 # Desctiption: Check argument
 #  (lists (input from file) are available.)
-# Usage: _chkarg [arg] [option list] || shift
+# Usage: _chkarg [arg] < (option list) || shift $#
 _chkarg(){
     while read i ;do
         for j in $i;do
@@ -81,17 +81,17 @@ _chkarg(){
         done
         _usg_list="$_usg_list\t$i\n"
     done
+    [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
     return 1
 }
 # Desctiption: Show usage if second arg is null.
 #  (option lists in $_usg_list are available.)
 _usage(){
-    [ "$2" ] && return
-    echo "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
-    [ -t 0 ] || while read i; do
-        echo -e "\t$i"
-    done
-    [ "$_usg_list" ] && echo -en "$_usg_list"
-    exit 2
+    if [ "$2" ] ; then
+        unset _usg_list
+    else
+        echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
+        [ "$_usg_list" ] && echo -en "$_usg_list"
+        exit 2
+    fi
 }
-

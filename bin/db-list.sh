@@ -7,5 +7,6 @@
 list(){
     db-register "$1"|sort|column -c${2:-50}
 }
-_usage "[table]" $1 < <(list '.tables')
+_chkarg $1 < <(list '.tables') || shift
+_usage "[table]" $1 
 list "select id from $1;" $2

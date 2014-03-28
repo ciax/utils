@@ -4,11 +4,15 @@
 # Required scripts: rc.app
 # Description: vpn client of ipsec
 . rc.app
-_usage "(-d:disconnect) [vpnhost]" $1 < <(db-list vpn)
+PATH=$PATH:/usr/sbin
+opt-d(){
+    sudo vpnc-disconnect
+    exit
+}
+_chkopt $* && shift
+_chkarg $1 < <(db-list vpn) || shift $#
+_usage "(-d:disconnect) [vpnhost]" $1
 _temp config
 cfg-ipsec $* > $config
-PATH=$PATH:/usr/sbin
-sudo vpnc-disconnect
-[ "$1" = -d ] && exit
 sudo vpnc $config
 

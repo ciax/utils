@@ -54,8 +54,8 @@ opt-p(){
 }
 
 ### main ###
-_chkopt "$1" && shift
-_chkarg "$1" < <(db-list subnet) || shift
+_chkopt $* && shift
+_chkarg $1 < <(db-list subnet) || shift $#
 _usage "(-p:ping check) [subnet]" $1
 
 declare -A sub

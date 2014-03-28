@@ -7,6 +7,13 @@
 . rc.app
 which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
+_chkarg $1 <<EOF || shift $#
+install remove config
+files stat info
+which search gpg
+init list spy clean upd upg
+EOF
+_usage "[option]" $1
 cmd="$1";shift
 case "$cmd" in
     init)
@@ -30,36 +37,36 @@ case "$cmd" in
         exit;;
     *);;
 esac
-_usage "[option]" $1 <<EOF
-install,remove,config (package)
-files,stat,info (package)
-which (file)
-search (pattern)
-gpg (key)
-init,list; spy; clean; upd; upg
-EOF
 case "$cmd" in
     install)
+        _usage "$cmd [packages]" $1
         sudo -i apt-get install $* || _abort "Error $?"
         echo Install success. $?
         ;;
     remove)
+        _usage "$cmd [package]" $1
         sudo -i apt-get remove --purge $1;;
     config)
+        _usage "$cmd [package]" $1
         sudo -i dpkg-reconfigure $1;;
     gpg)
-        gpg --keyserver pgpkeys.mit.edu --recv-keys $1 &&\
-    gpg --armor --export $1 | sudo -i apt-key add -;;
+        _usage "$cmd [key]" $1
+        gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | sudo -i apt-key add -;;
     which)
+        _usage "$cmd [file]" $1
         par=`which "$1"` && par=`readlink -f $par` || par=$1
         dpkg -S $par;;
     search)
+        _usage "$cmd [pattern]" $1
         apt-cache search $1;;
     files)
+        _usage "$cmd [package]" $1
         dpkg -L "$1";;
     info)
+        _usage "$cmd [package]" $1
         dpkg -s "$1";;
     stat)
+        _usage "$cmd [package]" $1
         dpkg -l "$1";;
     *);;
 esac

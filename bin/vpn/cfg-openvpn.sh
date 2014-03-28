@@ -7,7 +7,8 @@
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
 . rc.app
-_usage "[vpnhost]" $1 < <(db-list vpn)
+_chkarg $1 < <(db-list vpn) || shift $#
+_usage "[vpnhost]" $1
 vardir=$HOME/.var
 myhost=`hostname`
 . db-setfield $1 vpn host

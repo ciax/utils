@@ -3,7 +3,8 @@
 # Required scripts: rc.app, db-register, info-subnet
 # Required tables: hub, subnet(network)
 . rc.app
-_usage "[subnet]" $1 < <(db-list subnet)
+_chkarg $1 < <(db-list subnet)
+_usage "[subnet]" $1
 for hub in $(db-register "select id from hub where subnet == '$1';"); do
     for host in $(db-register "select host from mac where hub == '$hub';"); do
         ping -c1 -w1 $host &>/dev/null && break

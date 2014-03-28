@@ -4,18 +4,16 @@
 # Required scripts: rc.app, db-list, cfg-openvpn, vpn-nat, show-syslog
 # Description: client for dd-wrt openvpn server
 . rc.app
-case "$1" in
-    '')
-        _usage "(-d:disconnect) [vpnhost]" < <(db-list vpn)
-        ;;
-    -d)
-        sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated"
-        exit
-        ;;
-    -*)
-        _abort "No such option"
-        ;;
-esac
+
+# Options
+opt-d(){
+    sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated"
+    exit
+}
+
+_chkopt $* && shift
+_chkarg $1 < <(db-list vpn) || shift
+_usage "(-d:disconnect) [vpnhost]" $1
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile
 sudo ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }
