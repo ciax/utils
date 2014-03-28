@@ -30,12 +30,12 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
         conv="${line//$oldstr/$newstr}"
         if [ "$conv" != "$line" ] && ! { [ "$ex" ] && [[ "$line" == *$ex* ]]; }
         then
-	    before="${line//$oldstr/$C1$oldstr$C0}"
-	    after="${line//$oldstr/$C1$newstr$C0}"
-	    echo -n "${before}"
-	    _hl "====>"
-	    echo "${after}"
-	    _query && line="$conv"
+            before="${line//$oldstr/$C1$oldstr$C0}"
+            after="${line//$oldstr/$C1$newstr$C0}"
+            echo -n "${before}"
+            _hl "====>"
+            echo "${after}"
+            _query && line="$conv"
         fi
         echo "$line" >> "$outtmp"
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
