@@ -11,7 +11,6 @@ opt-c(){ echo "nsCertType=client" > $v3; }
 opt-a(){ echo "basicConstraints=CA:true" > $v3; }
 cd ~/.var
 _temp v3
-_chkarg
 _usage "(-s:server,-c:client,-a:ca) [ca]" "[site] ..."
 set - $ARGV
 ca=$1;shift

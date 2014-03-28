@@ -65,19 +65,9 @@ _fold_list(){
 }
 
 # Desctiption: Check argument
-#  1.Check single options. opt-?() function should be provided.
-#  2.Check argument by lists input from file.
-# Usage: _chkarg (option list); set - $ARGV
+# Check argument by lists input from file.
+# Usage: _chkarg (option list)
 _chkarg(){
-    # Option handling
-    for i in $OPT;do
-        if type -t opt$i &>/dev/null;then
-            opt$i
-        else
-            echo $C1"No such option ($i)"$C0
-            return 1
-        fi
-    done
     # In the list? (ARGV check)
     _valid_list=$*
     [ "$_valid_list" -a "$ARGV" ] || return 0
@@ -88,8 +78,17 @@ _chkarg(){
     return 1
 }
 # Desctiption: Show usage if second arg is null.
+#  1.Check single options. opt-?() function should be provided.
 #  (option lists in $_valid_list are available.)
 _usage(){
+    # Option handling
+    for i in $OPT;do
+        if type -t opt$i &>/dev/null;then
+            opt$i
+        else
+            echo $C1"No such option ($i)"$C0
+        fi
+    done
     local parv=$* parc=$#
     if [ "$ARGC" -lt "$parc" ]; then
         echo -e "Usage: $C3${0##*/}$C0 $parv"
