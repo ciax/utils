@@ -23,10 +23,12 @@ opt-i(){
 cd ~/db
 _chkarg
 _usage "(-i:independent tables) [table]" $1
-if [ -s "$1" ]; then
-    tblcore $1
-elif [ -s db-$1.csv ]; then
-    echo $1
-else
-    exit 1
-fi
+for i;do
+    if [ -s "$i" ]; then
+        tblcore $i
+    elif [ -s db-$i.csv ]; then
+        echo $i
+    else
+        exit 1
+    fi
+done
