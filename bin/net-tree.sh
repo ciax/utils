@@ -17,7 +17,6 @@ get_hubs(){
         super[$h]="$u"
         title[$h]=$C2"$n"$C0
     done < <(db-register "select id,super,description from hub where subnet == '$1';")
-    [ "${!sub[*]}" ] || _abort "No such subnet $1"
 }
 
 get_hosts(){
@@ -56,7 +55,8 @@ opt-p(){
 
 ### main ###
 _chkopt "$1" && shift
-_usage "(-p:ping check) [subnet]" $1 < <(db-list subnet)
+_chkarg "$1" < <(db-list subnet) || shift
+_usage "(-p:ping check) [subnet]" $1
 
 declare -A sub
 declare -A super

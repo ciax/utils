@@ -47,31 +47,21 @@ _overwrite(){
         /bin/mv -b $1 $2
     fi
 }
-# Desctiption: Show usage if second arg is null.
-#  (option and lists (input from file) are available.)
-_usage(){
-    [ "$2" ] && return
-    echo "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
-    [ -t 0 ] || while read i; do
-        echo -e "\t$i"
-    done
-    exit 2
-}
 # Desctiption: Abort with message
 # Usage: _abort [message]
 _abort(){ echo "$C1$*$C0";exit 1; }
 # Description: Show progress
 # Usage: _progress [Title]
 _progress(){
-    if [ "$_pr_title" = "$1" ]; then
+    if [ "$_prg_title" = "$1" ]; then
         echo -n '.'
     else
         echo -n "$1 "
-        _pr_title="$1"
+        _prg_title="$1"
     fi
 }
-# Description: Get single options. opt-?() function should be provided.
-# Usage: _chkopt [arg]
+# Description: Check single options. opt-?() function should be provided.
+# Usage: _chkopt [arg] && shift
 _chkopt(){
     local opt="$1";shift
     [[ "$opt" == -* ]] || return
@@ -80,5 +70,28 @@ _chkopt(){
     else
         _abort "No such option ($opt)"
     fi
+}
+# Desctiption: Check argument
+#  (lists (input from file) are available.)
+# Usage: _chkarg [arg] [option list] || shift
+_chkarg(){
+    while read i ;do
+        for j in $i;do
+            [ "$1" = "$j" ] && return
+        done
+        _usg_list="$_usg_list\t$i\n"
+    done
+    return 1
+}
+# Desctiption: Show usage if second arg is null.
+#  (option lists in $_usg_list are available.)
+_usage(){
+    [ "$2" ] && return
+    echo "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
+    [ -t 0 ] || while read i; do
+        echo -e "\t$i"
+    done
+    [ "$_usg_list" ] && echo -en "$_usg_list"
+    exit 2
 }
 
