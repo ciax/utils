@@ -21,7 +21,7 @@ opt-i(){
 }
 
 cd ~/db
-_chkopt
+_chkarg
 _usage "(-i:independent tables) [table]" $1
 for i;do
     if [ -s "$i" ]; then

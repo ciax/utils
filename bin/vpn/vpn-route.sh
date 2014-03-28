@@ -5,7 +5,6 @@
 . rc.app
 opt-r(){ mode="del"; }
 mode="add"
-_chkopt
 _chkarg < <(db-list vpn)
 set - "$ARGV"
 _usage "(-r:remove) [vpnhost]" $1

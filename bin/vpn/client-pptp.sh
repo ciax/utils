@@ -5,7 +5,6 @@
 . rc.app
 # Options
 opt-d(){ sudo kill $(< /var/run/ppp0.pid);exit; }
-_chkopt
 _chkarg < <(db-list vpn)
 set - "$ARGV"
 _usage "(-d:disconnect) [vpnhost]" $1

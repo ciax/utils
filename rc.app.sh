@@ -51,10 +51,12 @@ _progress(){
         _prg_title="$1"
     fi
 }
-# Description: Check single options. opt-?() function should be provided.
-# Usage: _chkopt; set - $ARGV
-_chkopt(){
-    set - $ARGV
+# Desctiption: Check argument
+#  1.Check single options. opt-?() function should be provided.
+#  2.Check argument by lists input from file.
+# Usage: _chkarg < (option list); set - $ARGV
+_chkarg(){
+    set - "$ARGV"
     while [[ "$1" == -* ]];do
         if type -t opt$1 &>/dev/null;then
             opt$1;shift
@@ -65,21 +67,17 @@ _chkopt(){
         fi
     done
     ARGV="$*"
-}
-# Desctiption: Check argument
-#  (lists (input from file) are available.)
-# Usage: _chkarg < (option list); set - $ARGV
-_chkarg(){
-    set - "$ARGV"
-    while read i ;do
-        for j in $i;do
-            [ "$1" = "$j" ] && return
+    if [ ! -t 0 ];then
+        while read i ;do
+            for j in $i;do
+                [ "$1" = "$j" ] && return
+            done
+            _usg_list="$_usg_list\t$i\n"
         done
-        _usg_list="$_usg_list\t$i\n"
-    done
-    [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
-    unset ARGV
-    return 1
+        [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
+        unset ARGV
+        return 1
+    fi
 }
 # Desctiption: Show usage if second arg is null.
 #  (option lists in $_usg_list are available.)

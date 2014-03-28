@@ -54,7 +54,6 @@ opt-p(){
 }
 
 ### main ###
-_chkopt
 _chkarg < <(db-list subnet)
 set - "$ARGV"
 _usage "(-p:ping check) [subnet]" $1
