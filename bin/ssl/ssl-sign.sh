@@ -5,15 +5,14 @@
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 . rc.app
+
+opt-s(){ echo "nsCertType=server" > $v3; }
+opt-c(){ echo "nsCertType=client" > $v3; }
+opt-a(){ echo "basicConstraints=CA:true" > $v3; }
 cd ~/.var
 _temp v3
-case "$1" in
-    '') _usage "(-s:server,-c:client,-a:ca) [ca] [site] ...";;
-    -s) shift;echo "nsCertType=server" > $v3;;
-    -c) shift;echo "nsCertType=client" > $v3;;
-    -a) shift;echo "basicConstraints=CA:true" > $v3;;
-    *);;
-esac
+_chkopt $* && shift
+_usage "(-s:server,-c:client,-a:ca) [ca] [site] ..." $2
 ca=$1;shift
 [ -s "$ca.key" ] || _abort "No ca key file"
 [ -s $ca.srl ] || opt="-CAcreateserial"
