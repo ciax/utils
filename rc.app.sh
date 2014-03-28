@@ -51,6 +51,20 @@ _progress(){
         _prg_title="$1"
     fi
 }
+# Description: 5 col folding list
+_fold_list(){
+    local c=0
+    for i ;do
+        c=$(( $c + 1))
+        case $c in
+            1) echo -en "\t$i";;
+            5) echo "  $i";c=0;;
+            *) echo -n "  $i";;
+        esac
+    done
+    [ $c = 0 ] || echo
+}
+
 # Desctiption: Check argument
 #  1.Check single options. opt-?() function should be provided.
 #  2.Check argument by lists input from file.
@@ -83,16 +97,7 @@ _usage(){
         unset _usg_list
     else
         echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
-        c=0
-        for i in $_usg_list;do
-            c=$(( $c + 1))
-            case $c in
-                1) echo -en "\t$i";;
-                5) echo "  $i";c=0;;
-                *) echo -n "  $i";;
-            esac
-        done
-        echo
+        _fold_list $_usg_list
         exit 2
     fi
 }
