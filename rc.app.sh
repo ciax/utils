@@ -39,7 +39,7 @@ _temp(){
     trap "$trp$tmplist" EXIT
 }
 # Description: Overwrite if these are different.
-# Usage: overwrite [src_file] [dst_file]
+# Usage: _overwrite [src_file] [dst_file]
 _overwrite(){
     if cmp -s $1 $2 ; then
         /bin/rm $1;return 1
@@ -58,7 +58,7 @@ _usage(){
     exit 2
 }
 # Desctiption: Abort with message
-# Usage: abort [message]
+# Usage: _abort [message]
 _abort(){ echo "$C1$*$C0";exit 1; }
 # Description: Show progress
 # Usage: _progress [Title]
@@ -69,4 +69,9 @@ _progress(){
         echo -n "$1 "
         _pr_title="$1"
     fi
+}
+# Description: Get single options. opt-?() function should be provided.
+# Usage: _chkopt [arg]
+_chkopt(){
+    [[ "$1" == -* ]] && type -t opt$1 &>/dev/null && opt$1
 }

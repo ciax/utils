@@ -17,6 +17,7 @@ get_hubs(){
         super[$h]="$u"
         title[$h]=$C2"$n"$C0
     done < <(db-register "select id,super,description from hub where subnet == '$1';")
+    [ "${!sub[*]}" ]
 }
 
 get_hosts(){
@@ -54,16 +55,7 @@ opt-p(){
 }
 
 ### main ###
-for i;do
-    case "$i" in
-        -*)
-            shift
-            fname="opt$i"
-            type -t $fname &>/dev/null  && $fname
-            ;;
-        *);;
-    esac
-done
+_chkopt "$1" && shift
 _usage "(-p:ping check) [subnet]" $1 < <(db-list subnet)
 
 declare -A sub
@@ -71,7 +63,7 @@ declare -A super
 declare -A title
 declare -A connect
 IFS='|'
-get_hubs $1
+get_hubs $1 || exit
 get_hosts
 echo
 echo " $1"
