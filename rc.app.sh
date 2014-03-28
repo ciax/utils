@@ -96,7 +96,7 @@ _usage(){
     if [ "$2" ] ; then
         unset _usg_list
     else
-        echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
+        echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg)}"
         _fold_list $_usg_list
         exit 2
     fi
