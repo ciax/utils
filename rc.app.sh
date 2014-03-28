@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(cat,tty),diffutils(cmp),bsdmainutils(column)
+# Required packages: coreutils(cat,tty),diffutils(cmp)
 # Description: provides query function
 ARGV="$*"
 shopt -s nullglob
@@ -83,9 +83,16 @@ _usage(){
         unset _usg_list
     else
         echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg) <(list)}"
-        if [ "$_usg_list" ] ; then
-            echo -e "\t$_usg_list"|column -c 50
-        fi
+        c=0
+        for i in $_usg_list;do
+            c=$(( $c + 1))
+            case $c in
+                1) echo -en "\t$i";;
+                5) echo "  $i";c=0;;
+                *) echo -n "  $i";;
+            esac
+        done
+        echo
         exit 2
     fi
 }
