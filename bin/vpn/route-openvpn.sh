@@ -4,6 +4,6 @@
 # Description: Generate routing commands for openvpn
 . rc.app
 _chkarg $(db-list vpn)
-set - "$ARGV"
-_usage "[vpnhost]" $1
+_usage "[vpnhost]"
+set - $ARGV
 db-register "select 'route '||network||' '||netmask from subnet where route == (select route from vpn where id == '$1');"

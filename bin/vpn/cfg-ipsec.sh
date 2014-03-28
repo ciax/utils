@@ -4,8 +4,8 @@
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
 . rc.app
 _chkarg $(db-list vpn)
-set - "$ARGV"
-_usage "[vpn] (pw)" $1
+_usage "[vpn] (pw)"
+set - $ARGV
 vid=$1;shift
 . db-setfield  $vid vpn
 [ "$id" ] || _abort "No such id"

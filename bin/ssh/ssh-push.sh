@@ -13,7 +13,7 @@ putrem(){
     scp -pq $1 $rhost:$3
     echo "${3##*/}($(stat -c%s $1)) is updated at $rhost"
 }
-_usage "[(user@)host] .." $1
+_usage "[(user@)host] .."
 ssh-setup
 case $0 in
     *ssh-push) cmd(){ cut -d' ' -f1-2; };;

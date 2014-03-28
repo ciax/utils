@@ -3,7 +3,7 @@
 # Required packages: coreutils(grep,tr,cut,tee)
 # Required scripts: rc.app, sql-schema, sql-insert
 . rc.app
-_usage "[tables]" $1
+_usage "[tables]"
 _temp sch
 echo "begin;"
 sql-schema $*|tee $sch

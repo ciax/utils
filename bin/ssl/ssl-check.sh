@@ -6,7 +6,7 @@ show(){
     echo -n "$1:"
     openssl $2 -in "$site.$1" -modulus -noout| openssl md5
 }
-_usage "[site]" $1
+_usage "[site]"
 cd ~/.var
 site="$1"
 show key rsa

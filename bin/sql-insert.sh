@@ -3,7 +3,7 @@
 # Required scripts: rc.app
 # Required packages: coreutils(basename,head,tr),grep
 . rc.app
-_usage "[tables]" $1
+_usage "[tables]"
 cd ~/db
 for i;do
     table=$(show-tables $i) || { echo "No file for $1"; continue; }

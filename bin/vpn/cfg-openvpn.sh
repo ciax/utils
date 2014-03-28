@@ -8,8 +8,8 @@
 # (host).key (Client Secret Key)
 . rc.app
 _chkarg $(db-list vpn)
-set - "$ARGV"
-_usage "[vpnhost]" $1
+_usage "[vpnhost]"
+set - $ARGV
 vardir=$HOME/.var
 myhost=`hostname`
 . db-setfield $1 vpn host

@@ -5,7 +5,7 @@
 client=vpn
 pidfile=~/.var/vpn.pid
 [ "$1" = "-d" ] && { kill $(< $pid); $client -d; exit; }
-_usage "(-d:disconnect) [vpnhost] (pw)" $1
+_usage "(-d:disconnect) [vpnhost] (pw)"
 host="$1";shift
 pw=$1;shift
 . db-setfield $host vpn route

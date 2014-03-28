@@ -8,8 +8,8 @@
 which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
 _chkarg "install remove config files stat info which search gpg init list spy clean upd upg"
-set - "$ARGV"
-_usage "[option]" $1
+_usage "[option]"
+set - $ARGV
 cmd="$1";shift
 case "$cmd" in
     init)
@@ -35,34 +35,34 @@ case "$cmd" in
 esac
 case "$cmd" in
     install)
-        _usage "$cmd [packages]" $1
+        _usage "$cmd [packages]"
         sudo -i apt-get install $* || _abort "Error $?"
         echo Install success. $?
         ;;
     remove)
-        _usage "$cmd [package]" $1
+        _usage "$cmd [package]"
         sudo -i apt-get remove --purge $1;;
     config)
-        _usage "$cmd [package]" $1
+        _usage "$cmd [package]"
         sudo -i dpkg-reconfigure $1;;
     gpg)
-        _usage "$cmd [key]" $1
+        _usage "$cmd [key]"
         gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | sudo -i apt-key add -;;
     which)
-        _usage "$cmd [file]" $1
+        _usage "$cmd [file]"
         par=`which "$1"` && par=`readlink -f $par` || par=$1
         dpkg -S $par;;
     search)
-        _usage "$cmd [pattern]" $1
+        _usage "$cmd [pattern]"
         apt-cache search $1;;
     files)
-        _usage "$cmd [package]" $1
+        _usage "$cmd [package]"
         dpkg -L "$1";;
     info)
-        _usage "$cmd [package]" $1
+        _usage "$cmd [package]"
         dpkg -s "$1";;
     stat)
-        _usage "$cmd [package]" $1
+        _usage "$cmd [package]"
         dpkg -l "$1";;
     *);;
 esac

@@ -4,6 +4,6 @@
 # Description: Generate routing commands for ipsec
 . rc.app
 _chkarg $(db-list vpn)
-set - "$ARGV"
-_usage "[vpnhost]" $1
+_usage "[vpnhost]"
+set - $ARGV
 db-register "select network||'/'||netmask from subnet where route == '$1';"

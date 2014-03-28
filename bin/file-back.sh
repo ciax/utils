@@ -2,5 +2,5 @@
 #alias back
 # Description: restore backup file
 . rc.app
-_usage "[file]" $1
+_usage "[file]"
 [ "$1~" ] && /bin/mv $1~ $1

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required packages: coreutils(cat,tty),diffutils(cmp)
 # Description: provides query function
-ARGV="$*"
+ARGV=$*;ARGC=$#
 shopt -s nullglob
 # Description: interactive query
 # Usage: _query
@@ -70,34 +70,35 @@ _fold_list(){
 #  2.Check argument by lists input from file.
 # Usage: _chkarg (option list); set - $ARGV
 _chkarg(){
-    _usg_list="$*"
-    set - "$ARGV"
+    _valid_list=$*;shift $#
+    # Option handling
+    set - $ARGV
     while [[ "$1" == -* ]];do
         if type -t opt$1 &>/dev/null;then
             opt$1;shift
         else
             echo $C1"No such option ($1)"$C0
-            unset ARGV
+            unset ARGV;ARGC=0
             return 1
         fi
     done
-    ARGV="$*"
-    [ "$_usg_list" ] || return 0
-    for j in $_usg_list;do
-        [ "$1" = "$j" ] && return
-    done
+    # In the list? (ARGV check)
+    ARGV=$*;ARGC=$#
+    [ "$_valid_list" ] || return 0
+    [[ " $_valid_list " =~ " $1 " ]] && return # exact match
     [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
-    unset ARGV
+    unset ARGV;ARGC=0
     return 1
 }
 # Desctiption: Show usage if second arg is null.
-#  (option lists in $_usg_list are available.)
+#  (option lists in $_valid_list are available.)
 _usage(){
-    if [ "$2" ] ; then
-        unset _usg_list
-    else
-        echo -e "Usage: $C3${0##*/}$C0 ${1:-[option] \$n(=requred arg)}"
-        _fold_list $_usg_list
+    local parv=$* parc=$#
+    if [ "$ARGC" -lt "$parc" ]; then
+        echo -e "Usage: $C3${0##*/}$C0 $parv"
+        _fold_list $_valid_list
         exit 2
+    else
+        unset _valid_list
     fi
 }

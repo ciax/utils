@@ -3,7 +3,7 @@
 # Required packages: coreutils(sort),openssh-client(ssh),iputils-ping(ping)
 # Description: show list of the user@host which will accept the ssh connection
 . rc.app
-_usage "[(user@)host ..]" $1
+_usage "[(user@)host ..]"
 ahost=''
 auser=''
 chkcom(){

@@ -11,7 +11,7 @@ case "$1" in
         shift;sel="min";;
     *) sel="max";;
 esac
-_usage "(-f:first,-l:list) [file] (host)" $1
+_usage "(-f:first,-l:list) [file] (host)"
 name="$1"
 if [ -s "$name" ] ; then
     bkup-stash $name >/dev/null
@@ -30,6 +30,5 @@ if [ "$fid" ] ; then
     bkup-sqlite <<< "select base64 from content where id == '$fid';"|base64 -d > $name
     echo "Recall OK"
 else
-    echo1 "No such id stored for $host"
-    exit 1
+    _abort "No such id stored for $host"
 fi

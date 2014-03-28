@@ -22,7 +22,7 @@ opt-i(){
 
 cd ~/db
 _chkarg
-_usage "(-i:independent tables) [table]" $1
+_usage "(-i:independent tables) [table]"
 for i;do
     if [ -s "$i" ]; then
         tblcore $i

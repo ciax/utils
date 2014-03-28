@@ -7,8 +7,8 @@
 # Options
 opt-d(){ sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated";exit; }
 _chkarg $(db-list vpn)
-set - "$ARGV"
-_usage "(-d:disconnect) [vpnhost]" $1
+_usage "(-d:disconnect) [vpnhost]"
+set - $ARGV
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile
 sudo ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }

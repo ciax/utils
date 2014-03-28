@@ -47,6 +47,6 @@ setfield(){
     [ -s $_list ]
 }
 set -f
-[[ $0 =~ db-setfield ]] && _usage "[id | key=a,key=b..] [table1] (table2..)" $2
+[[ $0 =~ db-setfield ]] && _usage "[id | key=a,key=b..]" "[table1] (table2..)"
 _temp _list
 [ "$2" ] && setfield $*

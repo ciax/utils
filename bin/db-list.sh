@@ -8,6 +8,6 @@ list(){
     db-register "$1"|sort
 }
 _chkarg $(list '.tables')
-set - "$ARGV"
-_usage "[table]" $1
+_usage "[table]"
+set - $ARGV
 list "select id from $1;" $2

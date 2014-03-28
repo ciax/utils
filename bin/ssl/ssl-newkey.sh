@@ -3,7 +3,7 @@
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
 . rc.app
-_usage "[site name]" $1
+_usage "[site name]"
 cd ~/.var
 site="$1"
 if [ -s "$site.key" ] ;then

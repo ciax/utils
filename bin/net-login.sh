@@ -6,8 +6,8 @@
 # Description: login command
 . rc.app
 _chkarg $(db-list login)
-#set - "$ARGV"
-_usage "[host] (command)" $1
+_usage "[host] (command)"
+set - $ARGV
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift
 . db-setfield $host login

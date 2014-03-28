@@ -45,7 +45,7 @@ schema(){
     echo $create"primary key($pkeys)$fkeys);"
 }
 shopt -s nullglob
-_usage "[table] .." $1
+_usage "[table] .."
 tables=''
 echo "pragma foreign_keys=on;"
 cd ~/db

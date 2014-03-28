@@ -5,7 +5,7 @@
 #  Export-DB format: (%proj),!id,(!another key),field1,field2...
 #  Config Dir: ~/cfg.(project)/db
 . rc.app
-_usage "[dbfiles]" $1
+_usage "[dbfiles]"
 _temp dbfile
 for src;do
     tbl=$(show-tables $src)||continue
