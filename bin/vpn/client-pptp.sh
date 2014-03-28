@@ -7,7 +7,6 @@
 opt-d(){ sudo kill $(< /var/run/ppp0.pid);exit; }
 _chkarg $(db-list vpn)
 _usage "(-d:disconnect) [vpnhost]"
-set - $ARGV
 . db-setfield $1 vpn
 setfield $host host
 id="--create $1"

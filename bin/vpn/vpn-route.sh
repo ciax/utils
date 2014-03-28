@@ -7,5 +7,4 @@ mode="add"
 opt-r(){ mode="del"; }
 _chkarg $(db-list vpn)
 _usage "(-r:remove) [vpnhost]"
-set - $ARGV
 db-register "select 'route $mode -net '||network||' netmask '||netmask from subnet where route == (select route from vpn where id == '$1');"

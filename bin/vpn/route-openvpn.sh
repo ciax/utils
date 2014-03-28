@@ -5,5 +5,4 @@
 . rc.app
 _chkarg $(db-list vpn)
 _usage "[vpnhost]"
-set - $ARGV
 db-register "select 'route '||network||' '||netmask from subnet where route == (select route from vpn where id == '$1');"

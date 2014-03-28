@@ -5,7 +5,6 @@
 . rc.app
 _chkarg $(db-list vpn)
 _usage "[vpn] (pw)"
-set - $ARGV
 vid=$1;shift
 . db-setfield  $vid vpn
 [ "$id" ] || _abort "No such id"

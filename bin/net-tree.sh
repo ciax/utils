@@ -56,7 +56,6 @@ opt-p(){
 ### main ###
 _chkarg $(db-list subnet)
 _usage "(-p:ping check) [subnet]"
-set - $ARGV
 
 declare -A sub
 declare -A super

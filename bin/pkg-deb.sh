@@ -9,7 +9,6 @@ which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
 _chkarg "install remove config files stat info which search gpg init list spy clean upd upg"
 _usage "[option]"
-set - $ARGV
 cmd="$1";shift
 case "$cmd" in
     init)

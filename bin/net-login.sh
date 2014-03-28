@@ -7,7 +7,6 @@
 . rc.app
 _chkarg $(db-list login)
 _usage "[host] (command)"
-set - $ARGV
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift
 . db-setfield $host login

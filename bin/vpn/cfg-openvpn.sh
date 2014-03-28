@@ -9,7 +9,6 @@
 . rc.app
 _chkarg $(db-list vpn)
 _usage "[vpnhost]"
-set - $ARGV
 vardir=$HOME/.var
 myhost=`hostname`
 . db-setfield $1 vpn host
