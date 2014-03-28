@@ -16,17 +16,17 @@ opt-i(){
     for i in db-*.csv;do
         table=$(tblcore $i)
         grep  -q "$table" $fields || echo $table
-    done|sort -u
+    done|sort -u|tr "\n" " ";echo
     exit
 }
 
 cd ~/db
 _chkarg
 _usage "(-i:independent tables) [table]" $1
-for i;do
-    if [ -s "$i" ]; then
-        tblcore $i
-    elif [ -s db-$i.csv ]; then
-        echo $i
-    fi
-done
+if [ -s "$1" ]; then
+    tblcore $1
+elif [ -s db-$1.csv ]; then
+    echo $1
+else
+    exit 1
+fi
