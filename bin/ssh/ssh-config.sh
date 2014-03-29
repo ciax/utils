@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: generate ~/.ssh/config
-# Required scripts: db-register, net-name, db-setfield
+# Required scripts: db-exec, net-name, db-setfield
 # Required tables: login(command,user,password,host),ssh(subnet,login,alias,port,proxy)
 . db-setfield
 net=$1;shift

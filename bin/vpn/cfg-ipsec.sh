@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: rc.app, db-setfield, db-register
+# Required scripts: rc.app, db-setfield, db-exec
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
 . rc.app

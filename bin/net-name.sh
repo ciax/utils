@@ -1,5 +1,5 @@
 #!/bin/bash
 # Description: lookup network name
-# Required scripts: db-register, info-subnet
+# Required scripts: db-exec, info-subnet
 # Required tables: subnet(network)
-db-register "select id from subnet where network == '`info-subnet`';"
+db-exec "select id from subnet where network == '`info-subnet`';"

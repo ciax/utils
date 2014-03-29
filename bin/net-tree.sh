@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: show network tree
-# Required scripts: rc.app, db-register
+# Required scripts: rc.app, db-exec
 # Required tables: mac,hub,subnet
 . rc.app
 
@@ -16,7 +16,7 @@ get_hubs(){
         sub[$u]="${sub[$u]}$h|" # add itself to parent var
         super[$h]="$u"
         title[$h]=$C2"$n"$C0
-    done < <(db-register "select id,super,description from hub where subnet == '$1';")
+    done < <(db-exec "select id,super,description from hub where subnet == '$1';")
 }
 
 get_hosts(){
@@ -26,7 +26,7 @@ get_hosts(){
             super[$h]="$u"
             title[$h]="("$C4"$h"$C0")"
             chk_host $h && open_super $h
-        done < <(db-register "select host from mac where hub == '$u';")
+        done < <(db-exec "select host from mac where hub == '$u';")
     done
 }
 

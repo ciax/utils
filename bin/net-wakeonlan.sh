@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias wol
 # Required packages: wakeonlan
-# Required scripts: rc.app, db-register
+# Required scripts: rc.app, db-exec
 # Required tables: mac(host)
 # Description: make network devices wake up
 . rc.app
 _usage "[host]"
-wakeonlan $(db-register "select id from mac where host == '$1';")
+wakeonlan $(db-exec "select id from mac where host == '$1';")

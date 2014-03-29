@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: rc.app, db-register, db-fields
+# Required scripts: rc.app, db-exec, db-fields
 # Required tables: *
 # Description: Set variables corresponding field names of last table of param;
 #     default reference key(search key) name is 'id'
@@ -38,7 +38,7 @@ setfield(){
     echo -n > $_list
     while read _key _eq _val;do
         [ "$_val" ] && echo "$_key='$_val'" >> $_list
-    done < <(db-register -i "$_sql")
+    done < <(db-exec -i "$_sql")
     if [ "$VER" ] || [[ $0 =~ db-setfield ]]; then
         echo $_sql
         cat $_list
