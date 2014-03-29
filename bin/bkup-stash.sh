@@ -16,8 +16,8 @@ dist=$(info-dist)
 stat -c "%n %a %Y %U" $1 | {
     read name mode date owner
     bkup-exec <<EOF
-insert or ignore into content values('$fid','$name','$mode','$date','$base64');
-insert or ignore into list values('$fid','$host','$dist','$owner','$dir');
+insert or ignore into content values('$fid','$mode','$date','$base64');
+insert or ignore into list values('$fid','$host','$dist','$owner','$name','$dir');
 EOF
     echo "File stashed"
 }

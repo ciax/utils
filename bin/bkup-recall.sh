@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias recall
-# -r means pick the original one (first stashed)
+# -f means pick the original one (first stashed)
 # otherwise pick last one
 . rc.app
 sel="max"
@@ -10,18 +10,19 @@ name="$1"
 if [ -s "$name" ] ; then
     bkup-stash $name >/dev/null
     cfid=$(md5sum $name|head -c10)
-    uniq=" and list.fid != '$cfid'"
+    uniq=" and fid != '$cfid'"
 fi
-nstr="content.name=='$name'"
+nstr="name=='$name'"
 host=${2:-$(hostname)}
-hstr="list.host=='$host'"
+hstr="host=='$host'"
 dist=$(info-dist)
-dstr="list.dist=='$dist'"
-sub_date="select $sel(date) from content,list where content.id == list.fid and $nstr and $hstr and $dstr $uniq"
-sub_fid="select id from content where date == ($sub_date)"
-fid=$(bkup-exec <<< "$sub_fid;")
+dstr="dist=='$dist'"
+sub_fid="select fid from list where $nstr and $hstr and $dstr $uniq"
+sub_date="select $sel(date) from content where id in ($sub_fid)"
+sub_id="select id from content where date == ($sub_date)"
+fid=$(bkup-exec "$sub_id;")
 if [ "$fid" ] ; then
-    bkup-exec <<< "select base64 from content where id == '$fid';"|base64 -d|zcat > $name
+    bkup-exec "select base64 from content where id == '$fid';"|base64 -d|zcat > $name
     echo "Recall OK"
 else
     _abort "No such id stored for $host"
