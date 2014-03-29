@@ -2,6 +2,7 @@
 # Required packages: sqlite3
 # Description: transaction for file history
 # Usage: bkup-exec (separator)
+. rc.app
+_usage || exit 1
 db=~/.var/bkup.sq3
-sep=${1:-,}
-sqlite3 -list -separator "$sep" $db
+sqlite3 -csv $db ${1:+"$1"}

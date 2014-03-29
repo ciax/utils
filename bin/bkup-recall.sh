@@ -3,16 +3,9 @@
 # -r means pick the original one (first stashed)
 # otherwise pick last one
 . rc.app
-case "$1" in
-    -l)
-        bkup-exec <<< "select distinct name from content;"
-        exit
-        ;;
-    -f)
-        shift;sel="min";;
-    *) sel="max";;
-esac
-_usage "(-f:first,-l:list) [file] (host)"
+sel="max"
+opt-f(){ sel="min"; }
+_usage "(-f:first) [file] (host)"
 name="$1"
 if [ -s "$name" ] ; then
     bkup-stash $name >/dev/null
@@ -28,7 +21,7 @@ sub_date="select $sel(date) from content,list where content.id == list.fid and $
 sub_fid="select id from content where date == ($sub_date)"
 fid=$(bkup-exec <<< "$sub_fid;")
 if [ "$fid" ] ; then
-    bkup-exec <<< "select base64 from content where id == '$fid';"|base64 -d > $name
+    bkup-exec <<< "select base64 from content where id == '$fid';"|base64 -d|zcat > $name
     echo "Recall OK"
 else
     _abort "No such id stored for $host"
