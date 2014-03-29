@@ -4,7 +4,7 @@
 #LIST: id(date),host,dist,owner,dir,fid
 . rc.app
 opt-i(){
-    bkup-sqlite <<EOF
+    bkup-exec <<EOF
 drop table if exists content;
 drop table if exists list;
 create table content (id primary key,name,mode,date,base64);
@@ -20,7 +20,7 @@ base64=$(base64 -w0 $1)
 dist=$(info-dist)
 stat -c "%n %a %Y %U" $1 | {
     read name mode date owner
-    bkup-sqlite <<EOF
+    bkup-exec <<EOF
 insert or ignore into content values('$fid','$name','$mode','$date','$base64');
 insert or ignore into list values('$fid','$host','$dist','$owner','$dir');
 EOF

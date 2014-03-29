@@ -5,7 +5,7 @@
 . rc.app
 case "$1" in
     -l)
-        bkup-sqlite <<< "select distinct name from content;"
+        bkup-exec <<< "select distinct name from content;"
         exit
         ;;
     -f)
@@ -26,9 +26,9 @@ dist=$(info-dist)
 dstr="list.dist=='$dist'"
 sub_date="select $sel(date) from content,list where content.id == list.fid and $nstr and $hstr and $dstr $uniq"
 sub_fid="select id from content where date == ($sub_date)"
-fid=$(bkup-sqlite <<< "$sub_fid;")
+fid=$(bkup-exec <<< "$sub_fid;")
 if [ "$fid" ] ; then
-    bkup-sqlite <<< "select base64 from content where id == '$fid';"|base64 -d > $name
+    bkup-exec <<< "select base64 from content where id == '$fid';"|base64 -d > $name
     echo "Recall OK"
 else
     _abort "No such id stored for $host"
