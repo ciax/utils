@@ -74,7 +74,7 @@ _chkarg(){
     set - $ARGV
     [[ " $_valid_list " =~ " $1 " ]] && return # exact match
     [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
-    unset ARGV;ARGC=0
+    ARGERR=1
     return 1
 }
 # Desctiption: Show usage if second arg is null.
@@ -87,10 +87,12 @@ _usage(){
             opt$i
         else
             echo $C1"No such option ($i)"$C0
+            ARGERR=1
         fi
     done
     local parv=$* parc=$#
-    if [ "$ARGC" -lt "$parc" ]; then
+    [ "$ARGC" -lt "$parc" ] && ARGERR=1
+    if [ "$ARGERR" ]; then
         echo -e "Usage: $C3${0##*/}$C0 $parv"
         _fold_list $_valid_list
         exit 2
