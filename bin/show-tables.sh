@@ -11,6 +11,7 @@ tblcore(){
 
 # Options
 opt-i(){
+    cd ~/db
     _temp fields
     grep -h "^!" db-*.csv|tr ',' '\n'|grep -v '^!'|sort -u > $fields
     for i in db-*.csv;do
@@ -20,15 +21,15 @@ opt-i(){
     exit
 }
 
-cd ~/db
 _usage "(-i:independent tables) [table]"
-code=1
+err=1
 for i;do
     if [ -s "$i" ]; then
         tblcore $i
+        err=0
     elif [ -s db-$i.csv ]; then
         echo $i
-        code=0
+        err=0
     fi
 done
-exit $code
+exit $err
