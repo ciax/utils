@@ -9,7 +9,7 @@
 _usage "[dbfiles]"
 _temp dbfile
 for src;do
-    tbl=$(show-tables $src)||continue
+    tbl=$(show-tables $src)|| { echo "No such table ($tbl)"; continue; }
     egrep -h "^%" $src | cut -d, -f2- > $dbfile
     [ -s $dbfile ] || continue
     _overwrite $dbfile ~/utils/db/db-$tbl.csv && echo "Update db-$tbl.csv"
