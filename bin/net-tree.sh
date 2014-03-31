@@ -21,12 +21,13 @@ get_hubs(){
 
 get_hosts(){
     for u in ${!title[*]};do
-        while read h; do
+        while read h fdqn; do
             sub[$u]="${sub[$u]}$h|"
             super[$h]="$u"
             title[$h]="("$C4"$h"$C0")"
-            chk_host $h && open_super $h
-        done < <(db-exec "select id from host where hub == '$u';")
+            site="${fdqn:-$h}"
+            chk_host "$site" && open_super $h
+        done < <(db-exec "select id,fdqn from host where hub == '$u';")
     done
 }
 
