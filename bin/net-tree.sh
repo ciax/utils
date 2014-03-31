@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description: show network tree
 # Required scripts: rc.app, db-exec
-# Required tables: mac,hub,subnet
+# Required tables: host,hub,subnet
 . rc.app
 
 open_super(){
@@ -26,7 +26,7 @@ get_hosts(){
             super[$h]="$u"
             title[$h]="("$C4"$h"$C0")"
             chk_host $h && open_super $h
-        done < <(db-exec "select host from mac where hub == '$u';")
+        done < <(db-exec "select id from host where hub == '$u';")
     done
 }
 
