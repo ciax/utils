@@ -22,10 +22,13 @@ opt-i(){
 
 cd ~/db
 _usage "(-i:independent tables) [table]"
+code=1
 for i;do
     if [ -s "$i" ]; then
         tblcore $i
     elif [ -s db-$i.csv ]; then
         echo $i
+        code=0
     fi
 done
+exit $code
