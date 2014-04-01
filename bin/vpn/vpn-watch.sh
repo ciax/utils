@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: rc.app, db-setfield
+# Required scripts: rc.app, db-trace
 # Description: parsistent connection to vpn
 . rc.app
 client=vpn
@@ -8,7 +8,7 @@ pidfile=~/.var/vpn.pid
 _usage "(-d:disconnect) [vpnhost] (pw)"
 host="$1";shift
 pw=$1;shift
-. db-setfield $host vpn route
+eval "$(db-trace $host vpn route)"
 [ "$watch" ] || _abort "No such host"
 while sleep 5;do
     ping -c3 $watch > /dev/null 2>&1 || $client $host $pw

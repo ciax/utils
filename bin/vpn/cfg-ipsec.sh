@@ -1,14 +1,14 @@
 #!/bin/bash
-# Required scripts: rc.app, db-setfield, db-exec
+# Required scripts: rc.app, db-trace
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
 . rc.app
 _chkarg $(db-list vpn)
 _usage "[vpn] (pw)"
 vid=$1;shift
-. db-setfield  $vid vpn
+eval "$(db-trace $vid vpn)"
 [ "$id" ] || _abort "No such id"
-setfield $host host
+eval "$(db-trace $host host)"
 echo "IPSec gateway $static_ip"
 echo "IPSec ID $user"
 echo "IPSec secret $password"

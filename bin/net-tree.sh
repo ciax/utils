@@ -2,7 +2,7 @@
 # Description: show network tree
 # Required scripts: rc.app, db-exec
 # Required tables: host,hub,subnet
-. db-setfield
+. rc.app
 
 open_super(){
     connect[$1]=1

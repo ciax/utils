@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: wget
+# Required packages: coreutils(cut),grep,wget
 # Required scripts: rc.app, db-exec, file-register
 # Required tables: gdocs,gsheet
 # Desctiption: get db from gdocs and split into db-files

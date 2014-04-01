@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required packages: coreutils
-# Required scripts: rc.app, db-list, db-setfield, vpn-route
+# Required scripts: rc.app, db-list, db-trace, route-openvpn
 # Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)
@@ -11,7 +11,7 @@ _chkarg $(db-list vpn)
 _usage "[vpnhost]"
 vardir=$HOME/.var
 myhost=`hostname`
-. db-setfield $1 vpn host
+eval "$(db-trace $1 vpn host)"
 [ "$fdqn" ] || _abort "No such host in DB"
 cat <<EOF
 verb 3

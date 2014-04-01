@@ -1,10 +1,11 @@
 #!/bin/bash
-## SSL files (Server vs CA vs Client)
-##@ Server
-##  private.key(+pub.key) -> csr(Signning Request file)
+# Required packages: openssl
+# Required scripts: ssl-newkey,db-trace
+# Description: generate certificate request file
+#   private.key(+pub.key) -> csr(Signning Request file)
 site=$1
 . ssl-newkey $site
-. db-setfield $site ssl
+eval "$(db-trace $site ssl)"
 input="/C=${country:-US}/ST=${state:-HI}/L=${city:-HILO}/O=${company:-NAOJ}"
 input="$input/OU=${section:-STN}/CN=${fdqn:-$site}"
 input="$input/emailAddress=${email:-$site}"
