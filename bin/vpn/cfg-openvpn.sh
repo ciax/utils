@@ -1,12 +1,12 @@
 #!/bin/bash
 # Required packages: coreutils
-# Required scripts: src.app, db-list, db-trace, route-openvpn
+# Required scripts: func.app, db-list, db-trace, route-openvpn
 # Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
-. src.app
+. func.app
 _chkarg $(db-list vpn)
 _usage "[vpnhost]"
 vardir=$HOME/.var

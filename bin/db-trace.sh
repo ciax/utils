@@ -1,11 +1,11 @@
 #!/bin/bash
-# Required scripts: src.app, db-exec
+# Required scripts: func.app, db-exec
 # Required tables: *
 # Description: Print fields corresponding field names of last table of param;
 #     The default reference key(search key) is 'id';
 #     Also multiple keys are available (these must be primary keys);
 #     In the multiple key, null value is matched as a default value;
-. src.app
+. func.app
 cond(){
     for i;do
         if [[ $i =~ = ]]; then

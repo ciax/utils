@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: src.app, db-trace
+# Required scripts: func.app, db-trace
 # Description: parsistent connection to vpn
-. src.app
+. func.app
 opt-d(){
     kill $(< $pidfile)
     $client -d

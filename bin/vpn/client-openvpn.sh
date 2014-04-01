@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias ovpn
 # Required packages: openvpn
-# Required scripts: src.app, db-list, cfg-openvpn, vpn-nat, show-syslog
+# Required scripts: func.app, db-list, cfg-openvpn, vpn-nat, show-syslog
 # Description: client for dd-wrt openvpn server
-. src.app
+. func.app
 # Options
 opt-d(){ sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated";exit; }
 _chkarg $(db-list vpn)

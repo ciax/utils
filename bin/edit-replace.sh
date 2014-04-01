@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias rep
-# Required scripts: src.app, file-register
+# Required scripts: func.app, file-register
 # Required packages: coreutils(tty,cat,tail),grep
 # Description: replace string in files
-. src.app
+. func.app
 _al(){ echo -e "\t"$C1"$*"$C0; }
 _hl(){ echo -e "\t"$C2"$*"$C0; }
 _usage "[oldstr] [newstr] (ext)

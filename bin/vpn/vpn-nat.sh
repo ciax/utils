@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: setting nat table
-. src.app
+. func.app
 #
 clrtbl(){
 # Filtering Clear Tables

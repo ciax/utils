@@ -2,7 +2,7 @@
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-. src.app
+. func.app
 _usage "[site name]"
 cd ~/.var
 site="$1"

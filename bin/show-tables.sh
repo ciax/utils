@@ -1,9 +1,9 @@
 #!/bin/bash
 # Required packages: coreutils(basename)
-# Required scripts: src.app
+# Required scripts: func.app
 # Desctiption: pick up the table names from file name(db-*.csv)
 #   if option '-i', show independent tables in db-*.csv
-. src.app
+. func.app
 tblcore(){
     local r=${1#*-}
     echo ${r%%[-.]*}

@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias cutout
-# Required scripts: src.app
+# Required scripts: func.app
 # Required packages: coreutils(grep)
 # Description: cutoutt matched lines from file and display
-. src.app
+. func.app
 _usage "[expression]" "[file]"
 exp=$1;shift
 file=$1;shift

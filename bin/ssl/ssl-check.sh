@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Check the consistency of SSL files
-. src.app
+. func.app
 show(){
     [ -s "$site.$1" ] || return
     echo -n "$1:"

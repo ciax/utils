@@ -2,9 +2,9 @@
 #alias pkg
 #alias wf which
 # Required packages: sudo,grep,sed,apt-spy,debconf,findutils,deborphan
-# Required scripts: src.app, show-required
+# Required scripts: func.app, show-required
 # Description: Debian package utils
-. src.app
+. func.app
 which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
 _chkarg "install remove config files stat info which search gpg init list spy clean upd upg"

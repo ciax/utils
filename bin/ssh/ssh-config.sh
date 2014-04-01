@@ -2,7 +2,7 @@
 # Required scripts: ac.app, db-exec, net-name, db-trace
 # Required tables: login(command,user,password,host),ssh(subnet,login,alias,port,proxy)
 # Description: generate ~/.ssh/config
-. src.app
+. func.app
 site(){
     eval "$(db-trace $1 login)"
     [ "$command" = ssh ] || return

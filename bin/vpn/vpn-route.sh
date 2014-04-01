@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: src.app, db-exec
+# Required scripts: func.app, db-exec
 # Required tables: subnet(network,netmask,vpn)
 # Description: Generate routing commands
-. src.app
+. func.app
 mode="add"
 opt-r(){ mode="del"; }
 _chkarg $(db-list vpn)

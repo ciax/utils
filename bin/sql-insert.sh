@@ -1,8 +1,8 @@
 #!/bin/bash
 # Description: generate sql statement of insert from db-*.csv file
-# Required scripts: src.app
+# Required scripts: func.app
 # Required packages: coreutils(basename,head,tr),grep
-. src.app
+. func.app
 _usage "[tables]"
 cd ~/db
 for i;do

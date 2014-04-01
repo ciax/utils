@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: src.app
+# Required scripts: func.app
 # Description: generate routing file for ppp
 
 #*Config files take the following parameters at start up
@@ -9,7 +9,7 @@
 #   local-IP-address
 #   remote-IP-address
 #   ipparam
-. src.app
+. func.app
 rtstr(){
     echo 'route add -net ${5%.*}.0 netmask 255.255.255.0 $1'
 }

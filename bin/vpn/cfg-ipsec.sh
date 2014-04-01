@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: src.app, db-trace
+# Required scripts: func.app, db-trace
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
-. src.app
+. func.app
 _chkarg $(db-list vpn)
 _usage "[vpn] (pw)"
 vid=$1;shift

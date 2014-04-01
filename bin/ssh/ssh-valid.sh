@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: src.app
+# Required scripts: func.app
 # Required packages: coreutils(sort),openssh-client(ssh),iputils-ping(ping)
 # Description: show list of the user@host which will accept the ssh connection
-. src.app
+. func.app
 _usage "[(user@)host ..]"
 ahost=''
 auser=''

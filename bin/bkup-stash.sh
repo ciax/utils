@@ -1,11 +1,11 @@
 #!/bin/bash
 #alias stash
 # Required packages: coreutils(md5,base64),gzip
-# Required scripts: src.app,bkup-exec
+# Required scripts: func.app,bkup-exec
 # Required table: content,list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid
-. src.app
+. func.app
 _usage "[file]"
 [ -s "$1" ] || _abort "No such file"
 host=$(hostname)

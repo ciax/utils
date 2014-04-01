@@ -1,8 +1,8 @@
 #!/bin/bash
 # Description: make sqlite3 database from csv file
 # Required packages: coreutils(grep,tr,cut,tee)
-# Required scripts: src.app, sql-schema, sql-insert
-. src.app
+# Required scripts: func.app, sql-schema, sql-insert
+. func.app
 _usage "[tables]"
 _temp sch
 echo "begin;"
