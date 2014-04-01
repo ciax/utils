@@ -4,6 +4,5 @@
 # Required tables: *
 # Desctiption: show table list or table entry
 . func.app
-_chkarg $(db-tables)
-_usage "[table]"
+_usage "[table]" $(db-tables)
 db-exec "select id from $1;"|sort

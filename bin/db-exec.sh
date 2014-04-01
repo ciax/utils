@@ -5,6 +5,6 @@
 #        -i:ini (a=b) style
 . func.app
 opt-i(){ opt=-line; }
-_usage
+_usage "(statement)"
 db=~/.var/db-device.sq3
 sqlite3 $opt $db ${1:+"$1"}

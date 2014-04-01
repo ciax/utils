@@ -57,8 +57,7 @@ opt-p(){
 }
 
 ### main ###
-_chkarg $(db-list subnet)
-_usage "(-p:ping check) [subnet]"
+_usage "(-p:ping check) [subnet]" $(db-list subnet)
 
 declare -A sub
 declare -A super

@@ -4,8 +4,7 @@
 # Description: generate dnsmasq config
 # Usage: cfg-dnsmasq (subnet)
 . func.app
-_chkarg $(db-list subnet)
-_usage
+_usage "(subnet)" $(db-list subnet)
 net=${1:-$(net-name)}
 sub_hub="select id from hub where subnet == '$net'"
 sub_host="select id from host where hub in ($sub_hub)"

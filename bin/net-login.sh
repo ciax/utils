@@ -5,8 +5,7 @@
 # Required tables: login (user,password,host,rcmd)
 # Description: login command
 . func.app
-_chkarg $(db-list login)
-_usage "[host] (command)"
+_usage "[host] (command)" $(db-list login)
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift
 eval "$(db-trace $host login)"

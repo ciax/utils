@@ -65,48 +65,45 @@ _fold_list(){
     done
     [ $c = 0 ] || echo
 }
-
-# Desctiption: Check argument
-# Check argument by lists input from file.
-# Usage: _chkarg (option list)
+# Descripton: subroutine of _usage
+_chkopt(){
+    # Option handling
+    for i in $OPT;do
+        if type -t opt$i &>/dev/null;then
+            opt$i
+        else
+            echo $C1"Invalid option ($i)"$C0
+            return 1
+        fi
+    done
+}
 _chkarg(){
-    # In the list? (ARGV check)
-    _valid_list=$*
-    [ "$_valid_list" -a "$ARGV" ] || return 0
+    local par="$1";shift
+    local valids=$*
+    # Check the number of argument
+    local num="$(IFS=[;set - $par;echo $(($#-1)))"
+    [ "$ARGC" -lt "$num" ] && { echo $C1"Short Argument"$C0; return 1; }
+    # Matching to the list
+    [ "$valids" ] || return 0
     set - $ARGV
-    [[ " $_valid_list " =~ " $1 " ]] && return # exact match
+    [[ " $valids " =~ " $1 " ]] && return 0 # exact match
     [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
-    ARGERR=1
     return 1
 }
-
 # Desctiption: Show usage and exec func as options
 #   1. Check the number of arguments (ARGC >= $# ?)
 #   2. Check the single options. opt-?() function should be provided.
 # Argument format: 
 #   mandatory must be enclosed by "[]"
 #   optional is enclosed by "()"
-#   (arg lists in $_valid_list are available.)
+#   (arg lists in $valids are available.)
+# Usage: _usage [string] (valid list)
 _usage(){
-    # Option handling
-    for i in $OPT;do
-        if type -t opt$i &>/dev/null;then
-            opt$i
-        else
-            echo $C1"No such option ($i)"$C0
-            ARGERR=1
-        fi
-    done
-    local parv="$1"
-    local parc=$(IFS=[;set - $parv;echo $(($#-1)))
-    [ "$ARGC" -lt "$parc" ] && ARGERR=1
-    if [ "$ARGERR" ]; then
-        echo -e "Usage: $C3${0##*/}$C0 $parv"
-        _fold_list $_valid_list
-        exit 2
-    else
-        unset _valid_list
-    fi
+    # Show usage
+    _chkopt && _chkarg "$@" && return 0
+    echo -e "Usage: $C3${0##*/}$C0 $1";shift
+    _fold_list $*
+    exit 2
 }
 
 # Option Separator
