@@ -8,4 +8,3 @@ for i in ~/utils/ ~/cfg.*/;do
     git pull;git push
 done
 file-register
-file-clean ~/bin ~/db ~/lib ~/.var

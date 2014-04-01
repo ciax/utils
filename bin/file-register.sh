@@ -69,5 +69,5 @@ dirreg(){
 shopt -s nullglob
 echo $C3"File Registering"$C0
 dirreg ~/utils ~/cfg.*/ $*
-file-clean ~/bin ~/lib ~/db
+file-clean ~/bin ~/lib ~/db ~/.var
 
