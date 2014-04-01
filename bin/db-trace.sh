@@ -2,8 +2,9 @@
 # Required scripts: rc.app, db-exec
 # Required tables: *
 # Description: Print fields corresponding field names of last table of param;
-#     default reference key(search key) name is 'id'
-#     if key is specified, null value is also matched as default key;
+#     The default reference key(search key) is 'id';
+#     Also multiple keys are available (these must be primary keys);
+#     In the multiple key, null value is matched as a default value;
 . rc.app
 cond(){
     for i;do
