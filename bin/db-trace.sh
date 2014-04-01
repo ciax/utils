@@ -31,5 +31,5 @@ traceback(){
     done < <(db-exec -i "$sql")
 }
 set -f
-_usage "[val | key=val,key=val..]" "[table1] (table2..)"
+_usage "[val | key=val,key=val..] [table1] (table2..)"
 traceback $*

@@ -4,7 +4,7 @@
 # Required packages: coreutils(cat),diffutils(cmp)
 # Description: Overwrite if these are different.
 . func.app
-_usage "[file]" "[filter] (par)"
+_usage "[file] [filter] (par)"
 file=$1;shift
 _temp temp
 $* $file > $temp

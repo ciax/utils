@@ -11,7 +11,7 @@ opt-c(){ echo "nsCertType=client" > $v3; }
 opt-a(){ echo "basicConstraints=CA:true" > $v3; }
 cd ~/.var
 _temp v3
-_usage "(-s:server,-c:client,-a:ca) [ca]" "[site] ..."
+_usage "(-s:server,-c:client,-a:ca) [ca] [site] ..."
 ca=$1;shift
 [ -s "$ca.key" ] || _abort "No ca key file"
 [ -s $ca.srl ] || opt="-CAcreateserial"

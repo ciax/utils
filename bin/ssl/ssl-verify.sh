@@ -1,7 +1,7 @@
 #!/bin/bash
 ## Vefiry the relationship
 . func.app
-_usage "[ca name]" "[site name]"
+_usage "[ca name] [site name]"
 cd ~/.var
 cacrt="$1.crt";shift
 [ -s "$cacrt" ] || _abort "No ca crt file"

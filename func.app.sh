@@ -81,9 +81,12 @@ _chkarg(){
 }
 
 # Desctiption: Show usage and exec func as options
-#  1. Check the number of arguments (ARGC >= $# ?)
-#  2. Check the single options. opt-?() function should be provided.
-#  (arg lists in $_valid_list are available.)
+#   1. Check the number of arguments (ARGC >= $# ?)
+#   2. Check the single options. opt-?() function should be provided.
+# Argument format: 
+#   mandatory must be enclosed by "[]"
+#   optional is enclosed by "()"
+#   (arg lists in $_valid_list are available.)
 _usage(){
     # Option handling
     for i in $OPT;do
@@ -94,7 +97,8 @@ _usage(){
             ARGERR=1
         fi
     done
-    local parv=$* parc=$#
+    local parv="$1"
+    local parc=$(IFS=[;set - $parv;echo $(($#-1)))
     [ "$ARGC" -lt "$parc" ] && ARGERR=1
     if [ "$ARGERR" ]; then
         echo -e "Usage: $C3${0##*/}$C0 $parv"
