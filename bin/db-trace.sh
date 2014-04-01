@@ -10,9 +10,9 @@ cond(){
     for i;do
         if [[ $i =~ = ]]; then
             read fld val <<< "${i//=/,}"
-            echo "${con}($fld is null or $fld == '$val')"
+            echo -n "${con}($fld is null or $fld == '$val')"
         else
-            echo "${con}id == '$i'"
+            echo -n "${con}id == '$i'"
         fi
         con=" and "
     done
@@ -21,7 +21,7 @@ cond(){
 traceback(){
     local key=$1;shift
     local tbl=$1;shift
-    local sql="from $tbl where $(IFS=, cond $key)"
+    local sql="from $tbl where $(IFS=,;cond $key)"
     for tbl; do
         sql="from $tbl where id == (select $tbl $sql)"
     done
