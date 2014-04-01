@@ -2,9 +2,13 @@
 # Required scripts: rc.app, db-trace
 # Description: parsistent connection to vpn
 . rc.app
+opt-d(){
+    kill $(< $pidfile)
+    $client -d
+    exit
+}
 client=vpn
 pidfile=~/.var/vpn.pid
-[ "$1" = "-d" ] && { kill $(< $pid); $client -d; exit; }
 _usage "(-d:disconnect) [vpnhost] (pw)"
 host="$1";shift
 pw=$1;shift
