@@ -3,6 +3,10 @@
 # Required tables: mac(hub,host),hub(subnet)
 # Description: generate dnsmasq config
 # Usage: cfg-dnsmasq (subnet)
+. func.app
+_chkarg $(db-list subnet)
+_usage
 net=${1:-$(net-name)}
-subq="select id from hub where subnet == '$net'"
-db-exec "select 'dhcp-host='||id||','||host from mac where hub in ($subq) and host not null;"
+sub_hub="select id from hub where subnet == '$net'"
+sub_host="select id from host where hub in ($sub_hub)"
+db-exec "select 'dhcp-host='||id||','||host from mac where host in ($sub_host);"
