@@ -50,7 +50,9 @@ _progress(){
         _prg_title="$1"
     fi
 }
-# Description: 5 col folding list
+
+# Description: folding list (5 column)
+# Usage: _fold_list [str] ...
 _fold_list(){
     local c=0
     for i ;do
@@ -77,9 +79,11 @@ _chkarg(){
     ARGERR=1
     return 1
 }
-# Desctiption: Show usage if second arg is null.
-#  1.Check single options. opt-?() function should be provided.
-#  (option lists in $_valid_list are available.)
+
+# Desctiption: Show usage and exec func as options
+#  1. Check the number of arguments (ARGC >= $# ?)
+#  2. Check the single options. opt-?() function should be provided.
+#  (arg lists in $_valid_list are available.)
 _usage(){
     # Option handling
     for i in $OPT;do
@@ -100,6 +104,7 @@ _usage(){
         unset _valid_list
     fi
 }
+
 # Option Separator
 while [[ "$1" == -* ]];do
     OPT="$OPT $1";shift
