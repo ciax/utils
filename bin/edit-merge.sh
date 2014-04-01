@@ -1,9 +1,9 @@
 #!/bin/bash
-# Required scripts: rc.app
+# Required scripts: src.app
 # Required packages: coreutils(sort,nkf,cp,cmp)
 # Description: merge files with sorting and remove duplicated lines
 #   If no changes, then no rewrite
-. rc.app
+. src.app
 _usage "[file] (input)"
 file=$1;shift
 [ -f "$file" ] || touch $file

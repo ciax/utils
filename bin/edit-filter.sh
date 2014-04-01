@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias fil
-# Required scripts: rc.app
+# Required scripts: src.app
 # Required packages: coreutils(cat),diffutils(cmp)
 # Description: Overwrite if these are different.
-. rc.app
+. src.app
 _usage "[file]" "[filter] (par)"
 file=$1;shift
 _temp temp

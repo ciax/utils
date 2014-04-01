@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias ivpn
 # Required packages: vpnc
-# Required scripts: rc.app
+# Required scripts: src.app
 # Description: vpn client of ipsec
-. rc.app
+. src.app
 PATH=$PATH:/usr/sbin
 opt-d(){ sudo vpnc-disconnect;exit; }
 _chkarg $(db-list vpn)

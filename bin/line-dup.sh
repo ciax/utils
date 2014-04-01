@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias dup
-# Required scripts: rc.app
+# Required scripts: src.app
 # Required packages: coreutils(sort,nkf,uniq)
 # Description: Pick up duplicated lines
-. rc.app
+. src.app
 [ -t 0 ] && _usage " < [files]"
 prev=''
 while read line;do

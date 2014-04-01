@@ -1,8 +1,8 @@
 #!/bin/bash
 # Required packages: coreutils(cat),mawk
-# Required scripts: rc.app
+# Required scripts: src.app
 # Description: reorder columns of the file
-. rc.app
+. src.app
 _usage "[order(1,2,3..)]" "[file] (-w)"
 order="\$${1//,/,\$}"
 file=$2

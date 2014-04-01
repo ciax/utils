@@ -4,7 +4,7 @@
 ##  csr(Signning Request file) -> Submit to CA
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
-. rc.app
+. src.app
 shopt -s nullglob
 _usage "[site]"
 cd ~/.var

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: rc.app
+# Required scripts: src.app
 # Required packages: coreutils(dirname,basename,head,tr),grep,nkf
 # Description: generate sql statement for create table
 
@@ -12,7 +12,7 @@
 #    table : you can specify the refarence table instead of the 'name'.
 #    key : reference key can be specified, otherwise 'id' will be used.
 #    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
-. rc.app
+. src.app
 schema(){
     local tbl=$(show-tables $1) || return 1
     [[ "$tables" =~ $tbl ]] && return

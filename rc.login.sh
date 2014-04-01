@@ -1,7 +1,6 @@
 #!/bin/bash
-#link ~/.bash_completion
 # Required Packages: emacs,most
-# Description: initial login script loader
+# Description: setenv for login
 umask 022
 shopt -s nullglob
 complete -r
@@ -36,4 +35,3 @@ export GREP_OPTIONS='--color=auto'
 # PROMPT
 PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
 
-source ~/utils/rc.alias.sh

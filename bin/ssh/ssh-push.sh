@@ -1,9 +1,9 @@
 #!/bin/bash
 #link ssh-join
 # Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
-# Required scripts: rc.app, ssh-setup, ssh-trim, edit-merge
+# Required scripts: src.app, ssh-setup, ssh-trim, edit-merge
 # Desctiption: impose own trust to the object host (push pub-key anonymously)
-. rc.app
+. src.app
 getrem(){
     scp -pq $rhost:$1 $2
     cp $2 $3

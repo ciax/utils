@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias pvpn
-# Required scripts: rc.app, db-list, db-trace, cfg-ppp
+# Required scripts: src.app, db-list, db-trace, cfg-ppp
 # Description: client for dd-wrt pptp server
-. rc.app
+. src.app
 # Options
 opt-d(){ sudo kill $(< /var/run/ppp0.pid);exit; }
 _chkarg $(db-list vpn)

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required packages: coreutils(sort,tr),grep
-# Required scripts: rc.app db-exec
+# Required scripts: src.app db-exec
 # Required tables: *
 # Desctiption: show tables
-. rc.app
+. src.app
 db-exec '.tables'|tr ' ' "\n"|grep .

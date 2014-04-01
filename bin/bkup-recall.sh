@@ -2,7 +2,7 @@
 #alias recall
 # -f means pick the original one (first stashed)
 # otherwise pick last one
-. rc.app
+. src.app
 sel="max"
 opt-f(){ sel="min"; }
 _usage "(-f:first) [file] (host)"

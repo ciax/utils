@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: rc.app,bkup-exec
+# Required scripts: src.app,bkup-exec
 # Required table: content,list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid

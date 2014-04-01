@@ -1,10 +1,10 @@
 #!/bin/bash
 #alias l
 # Required packages: expect,bsdmainutils(column),sed
-# Required scripts: rc.app, db-list, db-trace
+# Required scripts: src.app, db-list, db-trace
 # Required tables: login (user,password,host,rcmd)
 # Description: login command
-. rc.app
+. src.app
 _chkarg $(db-list login)
 _usage "[host] (command)"
 sshopt="-o StrictHostKeyChecking=no -t"

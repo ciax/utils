@@ -1,8 +1,8 @@
 #!/bin/bash
 # Description: show network tree
-# Required scripts: rc.app, db-exec
+# Required scripts: src.app, db-exec
 # Required tables: host,hub,subnet
-. rc.app
+. src.app
 
 open_super(){
     connect[$1]=1

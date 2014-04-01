@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Vefiry the relationship
-. rc.app
+. src.app
 _usage "[ca name]" "[site name]"
 cd ~/.var
 cacrt="$1.crt";shift

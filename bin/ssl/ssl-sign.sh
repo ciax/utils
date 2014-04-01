@@ -4,7 +4,7 @@
 ##  csr(Signning Request file) -> Submit to CA
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
-. rc.app
+. src.app
 # Options
 opt-s(){ echo "nsCertType=server" > $v3; }
 opt-c(){ echo "nsCertType=client" > $v3; }
