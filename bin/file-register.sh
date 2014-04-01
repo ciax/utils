@@ -1,6 +1,7 @@
 #!/bin/bash
 # Description: make links to the specific dirs categorized by file type 
 # Required packages: coreutils(readlink)
+# Required scripts: file-clean
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 addlist(){
@@ -68,3 +69,5 @@ dirreg(){
 shopt -s nullglob
 echo $C3"File Registering"$C0
 dirreg ~/utils ~/cfg.*/ $*
+file-clean ~/bin ~/lib ~/db
+
