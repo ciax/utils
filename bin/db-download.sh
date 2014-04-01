@@ -14,13 +14,15 @@ split_sheet(){
     # Index line
     egrep -h "^%" $dlfile | cut -d, -f2- > $dbfile
     [ -s $dbfile ] || return 1
-    _overwrite $dbfile ~/utils/db/db-$sheet.csv && echo "Update db-$sheet.csv"
+    file="db-$sheet.csv"
+    _overwrite $dbfile ~/utils/db/$file && echo "Update $file"
     # Contents
     for d in ~/cfg.*;do
         sfx=${d#*.}
         egrep -h "^$sfx," $dlfile|cut -d, -f2- > $dbfile
         if [ -s $dbfile ] ;then
-            _overwrite $dbfile $d/db/db-$sheet-$sfx.csv && echo "Update db-$sheet-$sfx.csv"
+            file="db-$sheet-$sfx.csv"
+            _overwrite $dbfile $d/db/$file && echo "Update $file"
         fi
     done
 }
@@ -31,7 +33,8 @@ site="https://docs.google.com/spreadsheets/d/"
 key=$(db-exec "select key from gdocs where id == '$1';")
 while read line;do
     read sheet gid <<< "${line//|/ }"
+    echo $C3"Retrieving $sheet"$C0
     url="$site$key/export?format=csv&id=$key&gid=$gid"
-    wget -O $dlfile "$url" && split_sheet $sheet
+    wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
 file-register
