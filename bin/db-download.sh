@@ -38,3 +38,4 @@ while read line;do
     wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
 file-register
+upd-db
