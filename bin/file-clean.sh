@@ -8,10 +8,11 @@ chkdir(){
     [ -e "$1" ] && { echo $C1"Not a directory $1"$C0;return 1; }
 }
 nouse(){
-        [ "$1" ] || return
-        chkdir ~/.trash || exit 1
-        /bin/mv -fb "$@" ~/.trash
-        /bin/ls -aF --color
+    tsh=~/.trash
+    [ "$1" ] || return
+    [ -d $tsh ] || mkdir $tsh || { echo "Can't make $tsh"; exit 1; }
+    /bin/mv -fb "$@" $tsh
+    /bin/ls -aF --color
 }
 nolink(){
     for i ; do
