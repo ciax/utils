@@ -68,9 +68,11 @@ _fold_list(){
 # Descripton: subroutine of _usage
 _chkopt(){
     # Option handling
+    #  option can take par with '=' (-x=par)
     for i in $OPT;do
-        if type -t opt$i &>/dev/null;then
-            opt$i
+        set - ${i//=/ }
+        if type -t opt$1 &>/dev/null;then
+            opt$*
         else
             echo $C1"Invalid option ($i)"$C0
             return 1
