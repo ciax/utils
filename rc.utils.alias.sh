@@ -32,7 +32,7 @@ alias giu='git checkout'
 
 # Commands manupulating shell variables
 e-alias(){
-    file=rc.alias.sh
+    file=rc.utils.alias.sh
     pushd ~/utils >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
