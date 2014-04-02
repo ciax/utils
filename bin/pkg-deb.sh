@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias pkg
 #alias wf which
-# Required packages: sudo,grep,sed,apt-spy,debconf,findutils,deborphan
+# Required packages: sudo,grep,sed,debconf,findutils,deborphan
 # Required scripts: func.app, show-required
 # Description: Debian package utils
 . func.app
@@ -18,6 +18,7 @@ case "$cmd" in
         sudo -i apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         exit;;
     spy)
+	# apt-spy is not provided in ubuntu
         sudo -i apt-spy -d stable -a North-America
         exit;;
     upd)
