@@ -6,6 +6,7 @@ chkdir(){
     [ -h "$1" ] && return 1
     [ -d "$1" ] && return
     [ -e "$1" ] && { echo $C1"Not a directory $1"$C0;return 1; }
+    mkdir "$1"
 }
 nouse(){
     tsh=~/.trash
@@ -23,7 +24,7 @@ nolink(){
 }
 clrdir(){
     for i;do
-        chkdir "${i%/*}" || continue
+        chkdir "${i%/}" || continue
         pushd "$i" >/dev/null
         nouse \#* *~ .*~ *.orig
         nolink * .*
