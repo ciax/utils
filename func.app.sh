@@ -93,12 +93,13 @@ _chkarg(){
     return 1
 }
 # Desctiption: Show usage and exec func as options
-#   1. Check the number of arguments (ARGC >= $# ?)
-#   2. Check the single options. opt-?() function should be provided.
-# Argument format: 
-#   mandatory must be enclosed by "[]"
-#   optional is enclosed by "()"
-#   (arg lists in $valids are available.)
+#   1. Check the single options. opt-?() function should be provided.
+#   2. Check the number of arguments (ARGC >= { # of '[' })
+# Argument format:
+#   option with param => -x=y
+#   mandatory arg => enclosed by "[]"
+#   optional arg => enclosed by "()"
+#   (arg list is available.)
 # Usage: _usage [string] (valid list)
 _usage(){
     # Show usage
