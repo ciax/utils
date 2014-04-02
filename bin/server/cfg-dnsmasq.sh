@@ -2,7 +2,7 @@
 # Required scripts: net-name, db-exec
 # Required tables: mac(hub,host),hub(subnet)
 # Description: generate dnsmasq config
-# Usage: cfg-dnsmasq (subnet)
+# Usage: cfg-dnsmasq (subnet) > /etc/dnsmasq.conf
 . func.app
 _usage "(subnet)" $(db-list subnet)
 net=${1:-$(net-name)}
