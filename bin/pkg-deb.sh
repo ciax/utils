@@ -13,13 +13,13 @@ cmd="$1";shift
 case "$cmd" in
     init)
         sudo -i apt-get install $(show-required packages)
-	;;
+        ;;
     clean)
         sudo -i apt-get autoremove
         sudo -i apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         ;;
     spy)
-	# apt-spy is not provided in ubuntu
+        # apt-spy is not provided in ubuntu
         sudo -i apt-spy -d stable -a North-America
         ;;
     upd)
@@ -32,37 +32,37 @@ case "$cmd" in
         dpkg --get-selections '*'
         ;;
     tasks)
-	tasksel --list-tasks
-	;;
+        tasksel --list-tasks
+        ;;
     install)
-	_usage "[$cmd] [packages]"
-	sudo -i apt-get install $* || _abort "Error $?"
-	echo Install success. $?
-	;;
+        _usage "[$cmd] [packages]"
+        sudo -i apt-get install $* || _abort "Error $?"
+        echo Install success. $?
+        ;;
     remove)
-	_usage "[$cmd] [package]"
-	sudo -i apt-get remove --purge $1;;
+        _usage "[$cmd] [package]"
+        sudo -i apt-get remove --purge $1;;
     config)
-	_usage "[$cmd] [package]"
-	sudo -i dpkg-reconfigure $1;;
+        _usage "[$cmd] [package]"
+        sudo -i dpkg-reconfigure $1;;
     gpg)
-	_usage "[$cmd] [key]"
-	gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | sudo -i apt-key add -;;
+        _usage "[$cmd] [key]"
+        gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | sudo -i apt-key add -;;
     which)
-	_usage "[$cmd] [file]"
-	par=`which "$1"` && par=`readlink -f $par` || par=$1
-	dpkg -S $par;;
+        _usage "[$cmd] [file]"
+        par=`which "$1"` && par=`readlink -f $par` || par=$1
+        dpkg -S $par;;
     search)
-	_usage "[$cmd] [pattern]"
-	apt-cache search $1;;
+        _usage "[$cmd] [pattern]"
+        apt-cache search $1;;
     files)
-	_usage "[$cmd] [package]"
-	dpkg -L "$1";;
+        _usage "[$cmd] [package]"
+        dpkg -L "$1";;
     info)
-	_usage "[$cmd] [package]"
-	dpkg -s "$1";;
+        _usage "[$cmd] [package]"
+        dpkg -s "$1";;
     stat)
-	_usage "[$cmd] [package]"
-	dpkg -l "$1";;
+        _usage "[$cmd] [package]"
+        dpkg -l "$1";;
     *);;
 esac
