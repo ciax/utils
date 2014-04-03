@@ -4,15 +4,15 @@ case `uname` in
         set - $(< /etc/issue)
         case $1 in
             Debian*)
-                echo "debian${3%.*}";;
+                echo "debian-${3%.*}";;
             Ubuntu*)
-                echo "ubuntu${2%.*}";;
+                echo "ubuntu-${2%.*}";;
             White*)
-                echo "redhat${6%.*}";;
+                echo "redhat-${6%.*}";;
             *);;
         esac;;
     SunOS)
         ver=$(uname -r)
-        echo "sunos${ver%.*}";;
+        echo "sunos-${ver%.*}";;
     *);;
 esac
