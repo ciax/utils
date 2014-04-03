@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias bkl
+#alias bl
 # Required scripts: bkup-exec
 # Descripton: display backed up files
 [ "$(bkup-exec .tables)" ] || bkup-init
