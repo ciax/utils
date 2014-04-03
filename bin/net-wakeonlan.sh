@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias wol
-# Required packages: wakeonlan
+# Required commands: wakeonlan
 # Required scripts: func.app, db-exec
 # Required tables: mac(host)
 # Description: make network devices wake up

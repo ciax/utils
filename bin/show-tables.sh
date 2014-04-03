@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(basename)
+# Required commands: basename,grep,sort,tr
 # Required scripts: func.app
 # Desctiption: pick up the table names from file name(db-*.csv)
 #   if option '-i', show independent tables in db-*.csv

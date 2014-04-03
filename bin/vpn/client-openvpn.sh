@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias ovpn
-# Required packages: openvpn
+# Required commands: sudo,openvpn,kill
 # Required scripts: func.app, db-list, cfg-openvpn, vpn-nat, show-syslog
 # Description: client for dd-wrt openvpn server
 . func.app

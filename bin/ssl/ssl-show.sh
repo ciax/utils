@@ -1,4 +1,6 @@
 #!/bin/bash
+# Required command: openssl
+# Required scripts: func.app
 . func.app
 _usage "[site]"
 cd ~/.var

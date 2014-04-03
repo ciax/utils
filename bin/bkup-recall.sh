@@ -1,7 +1,10 @@
 #!/bin/bash
 #alias recall
-# -f means pick the original one (first stashed)
-# otherwise pick last one
+# Required commands: md5sum,head,hostname,base64,zcat
+# Required scripts: func.app, info-dist, bkup-stash, bkup-exec
+# Description: recall backed up file
+#  -f means pick the original one (first stashed)
+#  otherwise pick last one
 . func.app
 sel="max"
 opt-f(){ sel="min"; }

@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias wri
+# Required commands: cat
 # Required scripts: func.app
-# Required packages: coreutils(cat),diffutils(cmp)
 # Description: Overwrite if these are different.
 . func.app
 _usage "[file] < (input)"

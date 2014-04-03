@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: sqlite3
+# Required commands: sqlite3
 # Description: transaction for file history
 # Usage: bkup-exec (separator)
 . func.app

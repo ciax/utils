@@ -1,4 +1,6 @@
 #!/bin/bash
+# Requied commands: sudo,iptables,ifconfig,sysctl
+# Requied scripts: func.app
 # Description: setting nat table
 . func.app
 #

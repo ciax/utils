@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias rep
+# Required commands: tty,cat,tail,grep
 # Required scripts: func.app, file-register
-# Required packages: coreutils(tty,cat,tail),grep
 # Description: replace string in files
 . func.app
 _al(){ echo -e "\t"$C1"$*"$C0; }

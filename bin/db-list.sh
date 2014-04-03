@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required packages: coreutils(sort)
-# Required scripts: func.app db-exec
+# Required commands: sort
+# Required scripts: func.app,db-tables,db-exec
 # Required tables: *
 # Desctiption: show table list or table entry
 . func.app

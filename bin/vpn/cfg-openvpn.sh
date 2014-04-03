@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required packages: coreutils
-# Required scripts: func.app, db-list, db-trace, route-openvpn
+# Required commands: hostname,cat
+# Required scripts: func.app,db-list,db-trace,route-openvpn
 # Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)

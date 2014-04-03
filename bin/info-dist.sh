@@ -1,4 +1,5 @@
 #!/bin/bash
+# Required commands: uname
 case `uname` in
     Linux)
         set - $(< /etc/issue)

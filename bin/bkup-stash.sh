@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias stash
-# Required packages: coreutils(md5,base64),gzip
-# Required scripts: func.app,bkup-exec
+# Required commands: md5sum,base64,hostname,gzip,dirname,realpath,stat
+# Required scripts: func.app,info-dist,bkup-exec
 # Required table: content,list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid

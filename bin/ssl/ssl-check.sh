@@ -1,5 +1,6 @@
 #!/bin/bash
-## Check the consistency of SSL files
+# Requied commands: openssl
+# Description:  Check the consistency of SSL files
 . func.app
 show(){
     [ -s "$site.$1" ] || return

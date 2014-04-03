@@ -1,6 +1,6 @@
 #!/bin/bash
+# Required commands: od
 # Required scripts: func.app
-# Required packages: coreutils(od)
 # Description: display invisible chars in files
 #  option (-n): no folding by return code but show (0a)
 . func.app

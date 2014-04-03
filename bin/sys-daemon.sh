@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages:realpath,util-linux(setsid),grep
+# Required commands:realpath,setsid,grep,git
 # Description: run daemon
 . func.app
 # functions

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(sort,tr),grep
+# Required commands: tr,grep
 # Required scripts: func.app db-exec
 # Required tables: *
 # Desctiption: show tables

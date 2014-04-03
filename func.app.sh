@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(cat,tty),diffutils(cmp)
+# Required commands: tempfile,rm,mv,cmp,cat,tty
 # Description: provides query function
 shopt -s nullglob
 # Description: interactive query

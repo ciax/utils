@@ -1,4 +1,5 @@
 #!/bin/bash
+# Requied commands: ping
 # Required scripts: func.app, db-trace
 # Description: parsistent connection to vpn
 . func.app

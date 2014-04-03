@@ -1,5 +1,6 @@
 #!/bin/bash
 #alias pvpn
+# Required commands: sudo,kill,pptpsetup
 # Required scripts: func.app, db-list, db-trace, cfg-ppp
 # Description: client for dd-wrt pptp server
 . func.app

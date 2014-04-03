@@ -1,7 +1,7 @@
 #!/bin/bash
+# Required commands: sudo,install
 # Required scripts: func.app
 # Description: generate routing file for ppp
-
 #*Config files take the following parameters at start up
 #   interface-name
 #   tty-device

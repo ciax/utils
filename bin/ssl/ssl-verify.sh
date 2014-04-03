@@ -1,5 +1,7 @@
 #!/bin/bash
-## Vefiry the relationship
+# Required commands: openssl
+# Required scripts: func.app
+# Description: Vefiry the relationship
 . func.app
 _usage "[ca name] [site name]"
 cd ~/.var

@@ -1,4 +1,6 @@
 #!/bin/bash
+# Requied commands: openssl,chmod
+# Requied scripts: func.app
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)

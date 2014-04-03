@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.app, db-trace
+# Required scripts: func.app,db-list,db-trace,route-ipsec
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
 . func.app

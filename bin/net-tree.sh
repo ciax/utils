@@ -1,7 +1,8 @@
 #!/bin/bash
-# Description: show network tree
+# Required commands: ping
 # Required scripts: func.app, db-exec
 # Required tables: host,hub,subnet
+# Description: show network tree
 . func.app
 
 open_super(){

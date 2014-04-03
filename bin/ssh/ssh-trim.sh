@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(cp,cut,grep,sort,md5sum)
+# Required commands: cp,cut,grep,sort,md5sum
 # Required scripts: func.app, edit-cutout, line-dup, edit-write
 # Description: remove dup key from authorized_keys
 # Usage: ssh-trim (authorized_keys) (invalid_keys)

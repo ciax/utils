@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: net-name, db-exec
+# Required scripts: net-name,db-exec,db-list
 # Required tables: mac(hub,host),hub(subnet)
 # Description: generate bootp config
 # Usage: cfg-bootp (subnet) > /etc/bootptab

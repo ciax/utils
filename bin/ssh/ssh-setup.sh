@@ -1,6 +1,7 @@
 #!/bin/bash
+# Required commands: grep,cut,cat,sort,cmp,ssh,ssh-keygen,apt-get
+# Required scripts: ssh-config
 # Desctiption: setup ssh files 
-# Required packages: coreutils(grep,cut,cat,sort),diffutils(cmp),openssh-client(ssh,ssh-keygen)
 # Usage: ${0##*/} (-r:remove keys)
 echo $C5"Initializing SSH"$C0
 ath=~/.ssh/authorized_keys

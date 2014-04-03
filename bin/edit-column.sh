@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: coreutils(cat),mawk
+# Required commands: cat,mawk
 # Required scripts: func.app
 # Description: reorder columns of the file
 . func.app

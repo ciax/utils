@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias dup
+# Required commands: sort,nkf,uniq
 # Required scripts: func.app
-# Required packages: coreutils(sort,nkf,uniq)
 # Description: Pick up duplicated lines
 . func.app
 [ -t 0 ] && _usage " < [files]"

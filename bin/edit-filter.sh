@@ -1,7 +1,6 @@
 #!/bin/bash
 #alias fil
 # Required scripts: func.app
-# Required packages: coreutils(cat),diffutils(cmp)
 # Description: Overwrite if these are different.
 . func.app
 _usage "[file] [filter] (par)"

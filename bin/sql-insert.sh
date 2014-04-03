@@ -1,7 +1,7 @@
 #!/bin/bash
+# Required commands: basename,head,tr,grep,nkf
+# Required scripts: func.app,show-tables
 # Description: generate sql statement of insert from db-*.csv file
-# Required scripts: func.app
-# Required packages: coreutils(basename,head,tr),grep
 . func.app
 _usage "[tables]"
 cd ~/db

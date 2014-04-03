@@ -1,6 +1,6 @@
 #!/bin/bash
 #link ssh-join
-# Required packages: coreutils(grep,cut,sort),diffutils(cmp),openssh-client(scp)
+# Required commands: grep,cut,cat,sort,cmp,scp
 # Required scripts: func.app, ssh-setup, ssh-trim, edit-merge
 # Desctiption: impose own trust to the object host (push pub-key anonymously)
 . func.app

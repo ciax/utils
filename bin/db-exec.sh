@@ -1,5 +1,6 @@
 #!/bin/bash
-# Required packages: sqlite3
+# Required commands: sqlite3
+# Required scripts: func.app
 # Description: transaction for db file
 # Usage: db-exec (opt) (sql)
 #        -i:ini (a=b) style
