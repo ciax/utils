@@ -26,6 +26,11 @@ sub_id="select id from content where date == ($sub_date)"
 fid=$(bkup-exec "$sub_id;")
 if [ "$fid" ] ; then
     bkup-exec "select base64 from content where id == '$fid';"|base64 -d|zcat > $name
+    bkup-exec "select mode,date from content where id == '$fid';" | {
+        IFS=,;read mode date
+        chmod $mode $name
+        touch -d "@$date" $name
+    }
     echo "Recall OK"
 else
     _abort "No such id stored for $host"
