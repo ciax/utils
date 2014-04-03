@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: sudo,find,chmod
+# Required commands: find
 # Description: unify the file permittion under the current/sub dir
 #alias rwx
 regexp='.*\.(sh|pl|py|rb|exp|js)$'

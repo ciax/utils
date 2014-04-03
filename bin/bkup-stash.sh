@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias stash
-# Required commands: md5sum,base64,hostname,gzip,dirname,realpath,stat
+# Required commands: gzip,realpath
 # Required scripts: func.app,info-dist,bkup-exec
 # Required table: content,list
 #   content: fid(md5),name,mode,date,base64(gziped)

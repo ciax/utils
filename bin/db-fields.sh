@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: cut
 # Required scripts: func.app, db-tables, db-exec
 # Required tables: *
 # Description: Show field names

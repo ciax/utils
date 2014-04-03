@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: cp,cut,grep,sort,md5sum
 # Required scripts: func.app, edit-write, ssh-perm
 # Description: mark '#' if the line with own name is found in authorized_keys,
 #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys

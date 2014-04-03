@@ -1,6 +1,5 @@
 #!/bin/bash
 #alias rep
-# Required commands: tty,cat,tail,grep
 # Required scripts: func.app, file-register
 # Description: replace string in files
 . func.app

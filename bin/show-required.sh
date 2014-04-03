@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: grep,tr,sort,sed
+# Required commands: sed
 # Required scripts: func.app
 # Description: show required something in comments
 . func.app

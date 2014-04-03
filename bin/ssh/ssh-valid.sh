@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: sort,ssh,ping
+# Required commands: ssh,ping
 # Required scripts: func.app
 # Description: show list of the user@host which will accept the ssh connection
 . func.app

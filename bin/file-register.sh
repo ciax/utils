@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: readlink,grep,pwd,mkdir,ln
 # Required scripts: file-clean
 # Description: make links to the specific dirs categorized by file type 
 # Desctiption: Files in current dir will be classified into 'bin','db' ..

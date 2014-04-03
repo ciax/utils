@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: dirname,basename,head,tr,grep,nkf
+# Required commands: nkf
 # Required scripts: func.app,show-tables
 # Description: generate sql statement for create table
 

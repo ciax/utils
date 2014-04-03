@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: hostname,cat
+# Required commands: hostname
 # Required scripts: func.app,db-list,db-trace,route-openvpn
 # Description: client for dd-wrt openvpn server
 # Required SSL files for Client:

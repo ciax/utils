@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: chmod
 # Description: set ssh related file permission
 filemod(){
     mod="$1";shift

@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: sort
 # Required scripts: func.app,db-tables,db-exec
 # Required tables: *
 # Desctiption: show table list or table entry

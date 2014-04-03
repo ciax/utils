@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: cp,cut,grep,sort,md5sum
 # Required scripts: func.app, edit-cutout, line-dup, edit-write
 # Description: remove dup key from authorized_keys
 # Usage: ssh-trim (authorized_keys) (invalid_keys)
@@ -15,9 +14,9 @@ cp $ath $tath
 ## For invalid_keys (increase only -> merge)
 while read line;do
     if [ ${#line} -gt 32 ]; then 
-	getmd5 $line
+        getmd5 $line
     else
-	echo $line
+        echo $line
     fi
 done < <(edit-cutout "^#" $tath;cat $inv) |sort -u > $tinv
 _overwrite $tinv $inv

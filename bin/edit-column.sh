@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: cat,mawk
+# Required commands: mawk
 # Required scripts: func.app
 # Description: reorder columns of the file
 . func.app

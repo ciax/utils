@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias ivpn
-# Required commands: sudo,vpnc,vpnc-disconnect
+# Required commands: sudo,vpnc
 # Required scripts: func.app,cfg-ipsec
 # Description: vpn client of ipsec
 . func.app

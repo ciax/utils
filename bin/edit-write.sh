@@ -1,6 +1,5 @@
 #!/bin/bash
 #alias wri
-# Required commands: cat
 # Required scripts: func.app
 # Description: Overwrite if these are different.
 . func.app

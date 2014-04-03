@@ -1,6 +1,5 @@
 #!/bin/bash
 #alias clr
-# Required commands:mkdir,mv,ls,rm
 # Description: File clean up (remove backup,unlinked files)
 
 shopt -s nullglob

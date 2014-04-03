@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias recall
-# Required commands: md5sum,head,hostname,base64,zcat
+# Required commands: hostname,zcat
 # Required scripts: func.app, info-dist, bkup-stash, bkup-exec
 # Description: recall backed up file
 #  -f means pick the original one (first stashed)

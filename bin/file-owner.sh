@@ -1,6 +1,5 @@
 #!/bin/bash
 #alias chx
-# Required commands: sudo,stat,chown
 # Description: file owner will be uniformed under the current or specified dir tree
 # Usage file-owner [dir..]
 _chx(){

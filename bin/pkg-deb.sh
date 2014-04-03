@@ -1,8 +1,7 @@
 #!/bin/bash
 #alias pkg
 #alias wf which
-# Required commands: sudo,grep,sed,debconf,find
-# Required commands: deborphan,apt-get,apt-cache,apt-spy,dpkg,gpg,apt-key,dpkg-reconfigure,tasksel
+# Required commands: sed,find,deborphan,apt-spy,gpg,tasksel
 # Required scripts: func.app, show-required
 # Description: Debian package utils
 . func.app

@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: od
 # Required scripts: func.app
 # Description: display invisible chars in files
 #  option (-n): no folding by return code but show (0a)

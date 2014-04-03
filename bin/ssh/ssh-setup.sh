@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: grep,cut,cat,sort,cmp,ssh,ssh-keygen,apt-get
+# Required commands: ssh
 # Required scripts: ssh-config
 # Desctiption: setup ssh files 
 # Usage: ${0##*/} (-r:remove keys)

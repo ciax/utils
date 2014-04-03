@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias dup
-# Required commands: sort,nkf,uniq
+# Required commands: nkf
 # Required scripts: func.app
 # Description: Pick up duplicated lines
 . func.app

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands:realpath,setsid,grep,git
+# Required commands:realpath,setsid,git
 # Description: run daemon
 . func.app
 # functions

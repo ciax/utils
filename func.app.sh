@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: tempfile,rm,mv,cmp,cat,tty
+# Required commands: tempfile
 # Description: provides query function
 shopt -s nullglob
 # Description: interactive query

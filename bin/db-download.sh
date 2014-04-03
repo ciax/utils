@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: cut,grep,wget
+# Required commands: wget
 # Required scripts: func.app, db-exec, file-register
 # Required tables: gdocs,gsheet
 # Desctiption: get db from gdocs and split into db-files
