@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands:realpath,setsid,git
+# Required commands:setsid,git
 # Description: run daemon
 . func.app
 # functions
@@ -24,7 +24,7 @@ opt-t(){ tag=$1; }
 # main
 _usage "(-k:kill,-r:restart,-t=tag) [cmd]"
 type $1 >/dev/null 2>&1 || _abort "No such command [$1]"
-cd $(dirname $(realpath $(which $1)))
+cd $(dirname $1)
 line="setsid $* </dev/null 2>&1 "
 logging="setsid logger -p user.err -t '${tag:=$line}' >/dev/null"
 check="ps -eo pid,args|egrep -v 'grep|$0'|grep '$line\$'"

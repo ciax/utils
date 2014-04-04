@@ -2,6 +2,13 @@
 # Required commands: tempfile
 # Description: provides query function
 shopt -s nullglob
+# Description: realpath
+_realpath(){
+    local tmp=~/.var/temppath
+    ln -s $1 $tmp
+    readlink $tmp
+    rm $tmp
+}
 # Description: interactive query
 # Usage: _query
 _query(){

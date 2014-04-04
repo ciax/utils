@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias stash
-# Required commands: gzip,realpath
+# Required commands: gzip
 # Required scripts: func.app,info-dist,bkup-exec
 # Required table: content,list
 #   content: fid(md5),name,mode,date,base64(gziped)
@@ -10,7 +10,7 @@ _usage "[file]"
 [ -s "$1" ] || _abort "No such file"
 host=$(hostname)
 fid=$(md5sum $1|head -c10)
-dir=$(dirname `realpath $1`)
+dir=$(cd $(dirname $1);pwd -P)
 base64=$(gzip -c $1|base64 -w0)
 dist=$(info-dist)
 stat -c "%n %a %Y %U" $1 | {
