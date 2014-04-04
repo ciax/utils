@@ -41,6 +41,8 @@ _overwrite(){
     if cmp -s $1 $2 ; then
         /bin/rm $1;return 1
     else
+        local dir="$(dirname $2)"
+        [ -e "$dir" ] || mkdir -p "$dir"
         /bin/mv -b $1 $2
     fi
 }
