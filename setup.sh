@@ -1,12 +1,24 @@
 #!/bin/bash
 # Description: install utils (need to re-login for environment effective)
+ichk(){
+    for i ;do
+        which $i >/dev/null && continue
+        sudo -i apt-get install $i
+        [ "$i" = apt-file ] && apt-file update
+    done
+}
+initrc(){
+    if ! grep -q '#initrc' ~/.bashrc;then
+        echo 'shopt -s nullglob;for i in ~/bin/rc.*;do . $i;done #initrc' >> ~/.bashrc
+    fi
+}
 PATH=$PATH:~/bin
 echo $C3"Installing Packages"$C0
 which apt-get >/dev/null || { echo "This might not Debian"; exit; }
 which sudo >/dev/null || { echo "Need 'sudo' installed or to be root"; exit; }
-ichk(){ for i ;do which $i >/dev/null || sudo -i apt-get install $i;done; }
-ichk grep sed
-sudo -i apt-get install apt-file nkf sqlite3
-apt-file update
+ichk grep sed nkf sqlite3 apt-file
 ~/utils/bin/file-register.sh
+initrc
 echo $C1"*** You need to re-login here***"$C0
+
+
