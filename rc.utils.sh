@@ -19,7 +19,10 @@ fi
 addpath(){
     local list="$1";shift
     for j; do
-        [ -d "$j" ] && [[ ! "$list" =~ "$j" ]] && list="$list:$j"
+        [ -d "$j" ] || continue
+        (IFS=:;for i in $list;do
+            [ "$j" = "$i" ] && break
+        done) || list="$list:$j"
     done
     echo $list
 }
