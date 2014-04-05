@@ -1,7 +1,7 @@
 #!/bin/bash
 . func.app
 cd
-sudo mount /dev/cdrom /media/cdrom0
+sudo mount /dev/cdrom /media/cdrom0 || _abort "Can't mount cdrom"
 file=/media/cdrom0/VM*
 [ -s $file ] || _abort "No install file"
 # expand file
