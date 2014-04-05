@@ -57,6 +57,9 @@ case "$cmd" in
         _usage "[$cmd] [file]"
         par=`which "$1"` && par=`readlink -f $par` || par=$1
         dpkg -S $par;;
+    where)
+        _usage "[$cmd] [file]"
+        apt-file search "bin/$1 ";;
     search)
         _usage "[$cmd] [pattern]"
         apt-cache search $1;;

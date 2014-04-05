@@ -3,5 +3,5 @@
 # Description: Debian package utils
 . func.app
 while read cmd;do
-    type $cmd >/dev/null 2>&1 || apt-file search "bin/$cmd "
+    type $cmd >/dev/null 2>&1 || pkg where "$cmd"
 done < <(show-required commands)|sort -u

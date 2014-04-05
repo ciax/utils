@@ -29,10 +29,9 @@ case "$cmd" in
     remove)
         _usage "[$cmd] [package]"
         sudo -i yum remove --purge $1;;
-    which)
+    where)
         _usage "[$cmd] [file]"
-        par=`which "$1"` && par=`readlink -f $par` || par=$1
-        yum provides $par;;
+        yum provides $(which "$1");;
     search)
         _usage "[$cmd] [pattern]"
         yum search "$1";;
