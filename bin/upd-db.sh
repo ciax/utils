@@ -3,6 +3,6 @@
 # Required tables: mac,ssl,ssh
 # Description: update databases
 cd ~/db
-set - $(show-tables -i)
+set - $(show-tables -e)
 echo $C3"Database update for $*"$C0
 sql-make $*|db-exec

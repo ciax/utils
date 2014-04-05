@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required scripts: func.app
 # Desctiption: pick up the table names from file name(db-*.csv)
-#   if option '-i', show independent tables in db-*.csv
+#   if option '-e', show tables of the dependency ends in db-*.csv
 . func.app
 tblcore(){
     local r=${1#*-}
@@ -9,8 +9,8 @@ tblcore(){
 }
 
 # Options
-opt-i(){
-    cd ~/db
+opt-e(){ #end tables
+    cd ~/utils/db
     _temp fields
     grep -h "^!" db-*.csv|tr ',' '\n'|grep -v '^!'|sort -u > $fields
     for i in db-*.csv;do
@@ -20,7 +20,7 @@ opt-i(){
     exit
 }
 
-_usage "(-i:independent tables) [table]"
+_usage "(-e:end tables) [table]"
 err=1
 for i;do
     if [ -s "$i" ]; then
