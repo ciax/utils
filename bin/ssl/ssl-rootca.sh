@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: openssl
+# Required packages: openssl
 # Required scripts: func.app,ssl-request
 ## SSL files (Server vs CA vs Client)
 ##@ Server Site

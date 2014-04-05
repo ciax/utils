@@ -1,5 +1,5 @@
 #!/bin/bash
-# Requied commands: openssl
+# Requied packages: openssl
 # Description:  Check the consistency of SSL files
 . func.app
 show(){

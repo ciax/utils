@@ -1,3 +1,3 @@
 #!/bin/bash
-# Required commands: openssl
+# Required packages: openssl
 openssl dhparam 1024

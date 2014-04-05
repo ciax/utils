@@ -6,9 +6,9 @@
 _al(){ echo -e "\t"$C1"$*"$C0; }
 _hl(){ echo -e "\t"$C2"$*"$C0; }
 _usage "[oldstr] [newstr] (ext)
-\tENV[files] for target
-\tENV[ex] for exclude line
-\t(ext) includes [mv old.ext new.ext]" $1
+\tENV{files} for target
+\tENV{ex} for exclude line
+\t(ext) includes {mv old.ext new.ext}" $1
 _temp outtmp
 oldstr="$1"
 newstr="$2"

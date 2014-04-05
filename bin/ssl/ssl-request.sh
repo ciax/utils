@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: openssl
+# Required packages: openssl
 # Required scripts: ssl-newkey,db-trace
 # Description: generate certificate request file
 #   private.key(+pub.key) -> csr(Signning Request file)

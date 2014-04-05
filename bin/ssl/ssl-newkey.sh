@@ -1,5 +1,5 @@
 #!/bin/bash
-# Requied commands: openssl,chmod
+# Requied packages: openssl
 # Requied scripts: func.app
 ## SSL files (Server vs CA vs Client)
 ##@ Server

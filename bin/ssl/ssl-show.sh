@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: openssl
+# Required packages: openssl
 # Required scripts: func.app
 . func.app
 _usage "[site]"
