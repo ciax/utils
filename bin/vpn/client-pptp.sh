@@ -8,6 +8,7 @@
 opt-d(){ sudo kill $(< /var/run/ppp0.pid);exit; }
 _chkarg $(db-list vpn)
 _usage "(-d:disconnect) [vpnhost]"
+_selflink vpn
 eval "$(db-trace $1 vpn)"
 eval "$(db-trace $host host)"
 id="--create $1"

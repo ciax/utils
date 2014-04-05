@@ -9,6 +9,12 @@ _realpath(){
     readlink $tmp
     rm $tmp
 }
+
+# Make self link to ~/bin
+_selflink(){
+    ln -sf $(cd $(dirname $0);pwd -P)/$(basename $0) ~/bin/$1
+}
+
 # Description: interactive query
 # Usage: _query
 _query(){
@@ -23,6 +29,7 @@ _query(){
         * ) echo "Skip";return 1;;
     esac
 }
+
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 _temp(){
@@ -35,6 +42,7 @@ _temp(){
     done
     trap "$trp$tmplist" EXIT
 }
+
 # Description: Overwrite if these are different.
 # Usage: _overwrite [src_file] [dst_file]
 _overwrite(){
@@ -46,9 +54,11 @@ _overwrite(){
         /bin/mv -b $1 $2
     fi
 }
+
 # Desctiption: Abort with message
 # Usage: _abort [message]
 _abort(){ echo "$C1$*$C0";exit 1; }
+
 # Description: Show progress
 # Usage: _progress [Title]
 _progress(){
