@@ -1,5 +1,15 @@
+############## Description #############
+Here is the bash scripts.
+
+Features:
+ - All scripts are put into '~/bin' together as symbolic links. 
+ - All variable or temporaly data are put into '~/.var'.
+ - All configurations are in RDB (using sqlite3).
+
+Scope: Linux (Debian,Ubuntu,CentOS are tested)
+
 ############## Setup ##############
-### System Setup
+### Required System Setup
  1. Install sudo
  2. /etc/sudoers
    %sudo ALL=(ALL:ALL) NOPASSWD:ALL
@@ -7,7 +17,7 @@
    add username to sudo group
  4. Install ssh,git
  
-### Home Setup
+### Setup at Home Dir
 git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/cfg.pub
 ~/cfg.pub/setup
 
@@ -17,8 +27,8 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/cfg.pub
  func.app.sh: should be source for loading functions;
 
 ### Relevant Dirs
-  App Dirs    :  ~/utils(.*)
-  Config Dirs :  ~/cfg.*
+  App Dirs    :  ~/utils
+  Config Dirs :  ~/cfg.*  <------- Project name
   Work Dirs   :  ~/bin ~/db ~/.var ~/.trash
 
 ### Comment in scripts
@@ -26,6 +36,7 @@ git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/cfg.pub
  # Required scripts: *    <------- Script list for dependency check
  #alias *                 <------- Alias name that itself wants to be
  #link  *                 <------- Symbolic link name that itself wants to be
+ #link:distribution *     <------- Link if distribution is matched
 
 ############### General information ################
 
