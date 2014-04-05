@@ -8,6 +8,8 @@ Features:
 
 Scope: Linux (Debian,Ubuntu,CentOS are tested)
 
+Copyright (c) 2014 Koji Omata
+
 ############## Setup ##############
 ### Required System Setup
  1. Install sudo
