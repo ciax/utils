@@ -1,6 +1,7 @@
 #!/bin/bash
 #alias apt
 #alias wf which
+#link:Debian pkg
 # Required commands: sed,find,deborphan,apt-spy,gpg,tasksel
 # Required scripts: func.app, show-required
 # Description: Debian package utils

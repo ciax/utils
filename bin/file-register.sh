@@ -25,6 +25,9 @@ makelink(){
     ln -sf $src $dst || return 1
     addlist $dst
 }
+extlink(){
+    egrep "^#link(:$DIST| )" "$1"|cut -d' ' -f2-
+}
 link2dir(){
     [ "$1" = "-x" ] && { local xopt=$1;shift; }
     local objdir="$HOME/$1";shift
@@ -40,7 +43,7 @@ link2dir(){
             [ -x "$real" ] || continue
         fi
         # extra link should be described as #link head
-        for j in "$base" $(grep '^#link' "$real"|cut -d' ' -f2-);do
+        for j in "$base" $(extlink "$real");do
             if [[ "$j" =~ / ]] ; then
                 # eval: for tilde expansion
                 eval "dst=$j"
