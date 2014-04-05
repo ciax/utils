@@ -17,6 +17,10 @@ case "$cmd" in
     list)
         rpm -qa
         ;;
+    getheader)
+        sudo -i yum install kernel-headers || _abort "Error $?"
+        echo Install success. $?
+        ;;
     install)
         _usage "[$cmd] [packages]"
         sudo -i yum install $* || _abort "Error $?"

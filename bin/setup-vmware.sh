@@ -8,6 +8,6 @@ file=/media/cdrom0/VM*
 tar xvzf $file
 sudo umount /media/cdrom0
 # install headers
-pkg-apt getheader || exit 1
+pkg getheader || exit 1
 # install vmware tools
 sudo vmware-tools-distrib/vmware-install.pl
