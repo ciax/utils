@@ -34,6 +34,9 @@ export EDITOR='emacs'
 export PAGER='most'
 export MOST_EDITOR='emacs %s -g %d'
 export GREP_OPTIONS='--color=auto'
+# Set Distribution
+set - $(</etc/issue)
+export DIST="$1"
 
 # PROMPT
 PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
