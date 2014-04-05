@@ -33,6 +33,10 @@ case "$cmd" in
     tasks)
         tasksel --list-tasks
         ;;
+    getheader)
+        sudo apt-get install linux-headers-$(uname -r) || _abort "Error $?"
+        echo Install success. $?
+        ;;
     install)
         _usage "[$cmd] [packages]"
         sudo -i apt-get install $* || _abort "Error $?"
