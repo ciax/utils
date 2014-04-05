@@ -3,7 +3,7 @@
 #alias wf which
 #link:Debian pkg
 #link:Ubuntu pkg
-# Required commands: sed,find,deborphan,apt-spy,gpg,tasksel
+# Required commands: deborphan,apt-spy,gpg,tasksel
 # Required scripts: func.app, show-required
 # Description: Debian package utils
 . func.app
