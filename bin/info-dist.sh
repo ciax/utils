@@ -7,6 +7,8 @@ case `uname` in
                 echo "debian-${3%.*}";;
             Ubuntu*)
                 echo "ubuntu-${2%.*}";;
+            CentOS*)
+                echo "centos-${3%.*}";;
             White*)
                 echo "redhat-${6%.*}";;
             *);;
