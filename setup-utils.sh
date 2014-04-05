@@ -8,9 +8,8 @@ ichk(){
     done
 }
 initrc(){
-    if ! grep -q '#initrc' ~/.bashrc;then
-        echo 'shopt -s nullglob;for i in ~/bin/rc.*;do . $i;done #initrc' >> ~/.bashrc
-    fi
+    [ -f ~/.bashrc ] && grep -q '#initrc' ~/.bashrc && return
+    echo 'shopt -s nullglob;for i in ~/bin/rc.*;do . $i;done #initrc' >> ~/.bashrc
 }
 PATH=$PATH:~/bin
 echo $C3"Installing Packages"$C0
