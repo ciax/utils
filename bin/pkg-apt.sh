@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias pkg
+#alias apt
 #alias wf which
 # Required commands: sed,find,deborphan,apt-spy,gpg,tasksel
 # Required scripts: func.app, show-required
