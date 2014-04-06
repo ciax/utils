@@ -101,7 +101,7 @@ _optlist(){
 _chkopt(){
     # Option handling
     #  option can take par with '=' (-x=par)
-    for i in $OPT;do
+    for i in ${OPT[*]};do
         set - ${i//=/ }
         if type -t opt$1 &>/dev/null;then
             opt$*
@@ -120,7 +120,7 @@ _chkarg(){
     [ "$ARGC" -lt "$num" ] && { echo $C1"Short Argument"$C0; return 1; }
     # Matching to the list
     [ "$valids" ] || return 0
-    set - $ARGV
+    set - "${ARGV[@]}"
     [[ " $valids " =~ " $1 " ]] && return 0 # exact match
     [ "$1" ] && echo $C1"Invalid argument ($1)"$C0
     return 1
@@ -145,10 +145,12 @@ _usage(){
 }
 
 # Option Separator
+declare -a ARGV
+declare -a OPT
 for i;do
     case "$i" in
-        -*) OPT="$OPT $i";;
-        *) ARGV="$ARGV $i";;
+        -*) OPT=("${OPT[@]}" "$i");;
+        *) ARGV=("${ARGV[@]}" "$i");;
     esac
 done
-set - $ARGV;ARGC=$#
+set - "${ARGV[@]}";ARGC=$#
