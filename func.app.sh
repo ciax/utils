@@ -2,14 +2,6 @@
 # Required commands: tempfile
 # Description: provides query function
 shopt -s nullglob
-# Description: realpath
-_realpath(){
-    local tmp=~/.var/temppath
-    ln -s $1 $tmp
-    readlink $tmp
-    rm $tmp
-}
-
 # Make self link to ~/bin
 _selflink(){
     ln -sf $(cd $(dirname $0);pwd -P)/$(basename $0) ~/bin/$1
@@ -71,8 +63,8 @@ _progress(){
 }
 
 # Description: folding list (5 column)
-# Usage: _fold_list [str] ...
-_fold_list(){
+# Usage: __list_cols [str] ...
+__list_cols(){
     local c=0
     for i ;do
         c=$(( $c + 1))
@@ -84,14 +76,21 @@ _fold_list(){
     done
     [ $c = 0 ] || echo
 }
+# Descripton: csv line
+__list_line(){
+    while read line;do
+        list="${list:+$list,}$line"
+    done
+    echo "${list:+($list) }"
+}
 # Descripton: subroutine of _usage
+_caselist(){ egrep -o '^ +[a-z]+\)' $0|sort|tr -d ')';}
 _optlist(){
     while read line;do
         fnc="${line%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
-        list="${list:+$list,}${fnc#*opt}${desc/:=/=}"
-    done < <(grep '^opt-' $0)
-    echo "${list:+($list) }"
+        echo "${fnc#*opt}${desc/:=/=}"
+    done < <(grep '^opt-' $0)|__list_line
 }
 _chkopt(){
     # Option handling
@@ -133,7 +132,7 @@ _usage(){
     # Show usage
     _chkopt && _chkarg "$@" && return 0
     echo -e "Usage: $C3${0##*/}$C0 $(_optlist)$1";shift
-    _fold_list $*
+    __list_cols $*
     exit 2
 }
 
