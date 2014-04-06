@@ -20,8 +20,8 @@ Copyright (c) 2014 Koji Omata (MIT License)
  4. Install ssh,git
  
 ### Setup at Home Dir
-git clone ssh://ciax@ciax.sum.naoj.org/export/scr/repos-pub/cfg.pub
-~/cfg.pub/setup
+git clone https://git.hub/ciax/cfg.pub
+~/cfg.pub/setup-cfg-pub.sh
 
 ############# Local Rules ###############
 
