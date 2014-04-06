@@ -12,64 +12,63 @@ which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
 _usage "[option]" $(_caselist)
 cmd="$1";shift
 case "$cmd" in
-    init)
+    init) #install required packages
         sudo -i apt-get install $(show-required packages)
         ;;
-    clean)
+    clean) #clean up pakcages
         sudo -i apt-get autoremove
         sudo -i apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         ;;
-    spy)
-        # apt-spy is not provided in ubuntu
+    spy) #apt-spy is not provided in ubuntu
         sudo -i apt-spy -d stable -a North-America
         ;;
-    upd)
+    upd) #update db
         sudo -i apt-get update
         ;;
-    upg)
+    upg) #upgrade packages
         sudo -i apt-get upgrade
         ;;
-    list)
+    list) #list installed packages
         dpkg --get-selections '*'
         ;;
-    tasks)
+    tasks) #list tasks
         tasksel --list-tasks
         ;;
-    getheader)
+    getheader) #install linux-headers for vmware
         sudo apt-get install linux-headers-$(uname -r) || _abort "Error $?"
         echo Install success. $?
         ;;
-    install)
+    install) #install package
         _usage "[$cmd] [packages]"
         sudo -i apt-get install $* || _abort "Error $?"
         echo Install success. $?
         ;;
-    remove)
+    remove) #remove package
         _usage "[$cmd] [package]"
         sudo -i apt-get remove --purge $1;;
-    config)
+    config) #configure package
         _usage "[$cmd] [package]"
         sudo -i dpkg-reconfigure $1;;
-    gpg)
+    gpg) #set gpg for sources
         _usage "[$cmd] [key]"
         gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | sudo -i apt-key add -;;
-    which)
+    which) #show package which includes file
         _usage "[$cmd] [file]"
         par=`which "$1"` && par=`readlink -f $par` || par=$1
         dpkg -S $par;;
-    where)
+    where) #show package which not installed
         _usage "[$cmd] [file]"
         apt-file search "bin/$1 ";;
-    search)
+    search) #search package
         _usage "[$cmd] [pattern]"
         apt-cache search $1;;
-    files)
+    files) #show package contents
         _usage "[$cmd] [package]"
         dpkg -L "$1";;
-    info)
+    info) #show package info
         _usage "[$cmd] [package]"
         dpkg -s "$1";;
-    stat)
+    stat) #show package status
         _usage "[$cmd] [package]"
         dpkg -l "$1";;
     *);;
