@@ -84,12 +84,18 @@ __list_line(){
     echo "${list:+($list) }"
 }
 # Descripton: subroutine of _usage
-_caselist(){ egrep -o '^ +[a-z]+\)' $0|sort|tr -d ')';}
+_caselist(){
+    while read line;do
+        arg="${line%%)*}"
+        echo -n $C2"${arg#* }"$C0
+        [[ "$line" =~ '#' ]] && echo ":${line#*#}" || echo
+    done < <(egrep '^ +[a-z]+\)' $0)
+}
 _optlist(){
     while read line;do
         fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
-        echo "${fnc#*opt}${desc/:=/=}"
+        echo $C2"${fnc#*opt}$C0${desc/:=/=}"
     done < <(grep '^opt-' $0)|__list_line
 }
 _chkopt(){
@@ -140,9 +146,9 @@ _usage(){
 
 # Option Separator
 for i;do
-    case $i in
-        -*) OPT="$OPT $1";;
-        *) ARGV="$ARGV $1";;
+    case "$i" in
+        -*) OPT="$OPT $i";;
+        *) ARGV="$ARGV $i";;
     esac
 done
 set - $ARGV;ARGC=$#
