@@ -87,7 +87,7 @@ __list_line(){
 _caselist(){ egrep -o '^ +[a-z]+\)' $0|sort|tr -d ')';}
 _optlist(){
     while read line;do
-        fnc="${line%(*}"
+        fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
         echo "${fnc#*opt}${desc/:=/=}"
     done < <(grep '^opt-' $0)|__list_line
@@ -110,6 +110,7 @@ _chkarg(){
     local valids=$*
     # Check the number of argument
     local num="$(IFS=[;set - $par;echo $(($#-1)))"
+    [ -t 0 ] && [[ "$par" =~ '<' ]] && num=$(($num+1))
     [ "$ARGC" -lt "$num" ] && { echo $C1"Short Argument"$C0; return 1; }
     # Matching to the list
     [ "$valids" ] || return 0
@@ -125,6 +126,7 @@ _chkarg(){
 #   option is automatically shown as "(-x,-y..)"
 #   option with param => -x=par
 #   mandatory arg => enclosed by "[]"
+#   stdin or file => enclosed by "<>"
 #   optional arg => enclosed by "()"
 #   (arg list is available.)
 # Usage: _usage [string] (valid list)
