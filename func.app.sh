@@ -110,7 +110,7 @@ _chkarg(){
     local valids=$*
     # Check the number of argument
     local num="$(IFS=[;set - $par;echo $(($#-1)))"
-    [ -t 0 ] && [[ "$par" =~ '<' ]] && num=$(($num+1))
+    [[ "$par" =~ '<' ]] && [ -t 0 ] && num=$(($num+1))
     [ "$ARGC" -lt "$num" ] && { echo $C1"Short Argument"$C0; return 1; }
     # Matching to the list
     [ "$valids" ] || return 0
