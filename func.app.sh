@@ -139,7 +139,10 @@ _usage(){
 }
 
 # Option Separator
-while [[ "$1" == -* ]];do
-    OPT="$OPT $1";shift
+for i;do
+    case $i in
+        -*) OPT="$OPT $1";;
+        *) ARGV="$ARGV $1";;
+    esac
 done
-ARGV=$*;ARGC=$#
+set - $ARGV;ARGC=$#
