@@ -8,7 +8,7 @@ Features:
 
 Scope: Linux (Debian,Ubuntu,CentOS are tested)
 
-Copyright (c) 2014 Koji Omata
+Copyright (c) 2014 Koji Omata (MIT License)
 
 ############## Setup ##############
 ### Required System Setup
