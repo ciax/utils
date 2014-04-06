@@ -65,16 +65,16 @@ _progress(){
 # Description: folding list (5 column)
 # Usage: __list_cols [str] ...
 __list_cols(){
-    local c=0
+    local line=''
     for i ;do
-        c=$(( $c + 1))
-        case $c in
-            1) echo -en "\t$i";;
-            5) echo "  $i";c=0;;
-            *) echo -n "  $i";;
-        esac
+        if [ $(( ${#line} + ${#i} )) -gt ${COLUMNS:-80} ]; then
+            echo -e "$line"
+            line="\t$i"
+        else
+            line="$line\t$i"
+        fi
     done
-    [ $c = 0 ] || echo
+    echo -e "$line"
 }
 # Descripton: csv line
 __list_line(){
@@ -140,7 +140,7 @@ _usage(){
     # Show usage
     _chkopt && _chkarg "$@" && return 0
     echo -e "Usage: $C3${0##*/}$C0 $(_optlist)$1";shift
-    __list_cols $*
+    __list_cols "$@"
     exit 2
 }
 
