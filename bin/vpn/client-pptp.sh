@@ -5,9 +5,11 @@
 # Description: client for dd-wrt pptp server
 . func.app
 # Options
-opt-d(){ sudo kill $(< /var/run/ppp0.pid);exit; }
-_chkarg $(db-list vpn)
-_usage "(-d:disconnect) [vpnhost]"
+opt-d(){ #disconnect
+    sudo kill $(< /var/run/ppp0.pid)
+    exit
+}
+_usage "[vpnhost]" $(db-list vpn)
 _selflink vpn
 eval "$(db-trace $1 vpn)"
 eval "$(db-trace $host host)"

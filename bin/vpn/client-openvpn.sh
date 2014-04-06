@@ -5,9 +5,12 @@
 # Description: client for dd-wrt openvpn server
 . func.app
 # Options
-opt-d(){ sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated";exit; }
+opt-d(){ #disconnect
+    sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated"
+    exit
+}
 _chkarg $(db-list vpn)
-_usage "(-d:disconnect) [vpnhost]"
+_usage "[vpnhost]"
 _selflink vpn
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile

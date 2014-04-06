@@ -8,12 +8,12 @@
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 . func.app
 # Options
-opt-s(){ echo "nsCertType=server" > $v3; }
-opt-c(){ echo "nsCertType=client" > $v3; }
-opt-a(){ echo "basicConstraints=CA:true" > $v3; }
+opt-s(){ echo "nsCertType=server" > $v3; } #server
+opt-c(){ echo "nsCertType=client" > $v3; } #client
+opt-a(){ echo "basicConstraints=CA:true" > $v3; } #ca
 cd ~/.var
 _temp v3
-_usage "(-s:server,-c:client,-a:ca) [ca] [site] ..."
+_usage "[ca] [site] ..."
 ca=$1;shift
 [ -s "$ca.key" ] || _abort "No ca key file"
 [ -s $ca.srl ] || opt="-CAcreateserial"

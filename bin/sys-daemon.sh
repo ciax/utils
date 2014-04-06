@@ -18,11 +18,11 @@ try(){
 wait_up(){ try "($check >/dev/null)" $1; }
 wait_down(){ try "!($check >/dev/null)" $1; }
 # options
-opt-r(){ msg="Restart";kill=1; }
-opt-k(){ msg="Kill";kill=1;exit='exit'; }
-opt-t(){ tag=$1; }
+opt-r(){ msg="Restart";kill=1; } #restart
+opt-k(){ msg="Kill";kill=1;exit='exit'; } #kill
+opt-t(){ tag=$1; } #=tag:set tag
 # main
-_usage "(-k:kill,-r:restart,-t=tag) [cmd]"
+_usage "[cmd]"
 type $1 >/dev/null 2>&1 || _abort "No such command [$1]"
 cd $(dirname $1)
 line="setsid $* </dev/null 2>&1 "

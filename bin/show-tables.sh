@@ -20,7 +20,7 @@ opt-e(){ #end tables
     exit
 }
 
-_usage "(-e:end tables) [table]"
+_usage "[table]"
 err=1
 for i;do
     if [ -s "$i" ]; then

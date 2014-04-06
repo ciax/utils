@@ -5,9 +5,8 @@
 # Description: vpn client of ipsec
 . func.app
 PATH=$PATH:/usr/sbin
-opt-d(){ sudo vpnc-disconnect;exit; }
-_chkarg $(db-list vpn)
-_usage "(-d:disconnect) [vpnhost]"
+opt-d(){ sudo vpnc-disconnect;exit; } #disconnect
+_usage "[vpnhost]" $(db-list vpn)
 _selflink vpn
 _temp config
 cfg-ipsec $* > $config

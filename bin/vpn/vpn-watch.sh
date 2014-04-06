@@ -3,14 +3,14 @@
 # Required scripts: func.app, db-trace
 # Description: parsistent connection to vpn
 . func.app
-opt-d(){
+opt-d(){ #disconnect
     kill $(< $pidfile)
     $client -d
     exit
 }
 client=vpn
 pidfile=~/.var/vpn.pid
-_usage "(-d:disconnect) [vpnhost] (pw)"
+_usage "[vpnhost] (pw)"
 host="$1";shift
 pw=$1;shift
 eval "$(db-trace $host vpn route)"

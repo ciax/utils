@@ -7,8 +7,8 @@
 #  otherwise pick last one
 . func.app
 sel="max"
-opt-f(){ sel="min"; }
-_usage "(-f:first) [file] (host)"
+opt-f(){ sel="min"; } #first
+_usage "[file] (host)"
 name="$1"
 if [ -s "$name" ] ; then
     bkup-stash $name >/dev/null

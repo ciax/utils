@@ -85,6 +85,14 @@ _fold_list(){
     [ $c = 0 ] || echo
 }
 # Descripton: subroutine of _usage
+_optlist(){
+    while read line;do
+        fnc="${line%(*}"
+        [[ "$line" =~ '#' ]] && desc=":${line#*#}"
+        list="${list:+$list,}${fnc#*opt}${desc/:=/=}"
+    done < <(grep '^opt-' $0)
+    echo "${list:+($list) }"
+}
 _chkopt(){
     # Option handling
     #  option can take par with '=' (-x=par)
@@ -113,9 +121,10 @@ _chkarg(){
 }
 # Desctiption: Show usage and exec func as options
 #   1. Check the single options. opt-?() function should be provided.
-#   2. Check the number of arguments (ARGC >= { # of '[' })
+#   2. Check the number of arguments (ARGC >= The count of '[')
 # Argument format:
-#   option with param => -x=y
+#   option is automatically shown as "(-x,-y..)"
+#   option with param => -x=par
 #   mandatory arg => enclosed by "[]"
 #   optional arg => enclosed by "()"
 #   (arg list is available.)
@@ -123,7 +132,7 @@ _chkarg(){
 _usage(){
     # Show usage
     _chkopt && _chkarg "$@" && return 0
-    echo -e "Usage: $C3${0##*/}$C0 $1";shift
+    echo -e "Usage: $C3${0##*/}$C0 $(_optlist)$1";shift
     _fold_list $*
     exit 2
 }

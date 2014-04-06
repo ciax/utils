@@ -50,7 +50,7 @@ show_tree(){
 chk_host(){ true; }
 
 # Options
-opt-p(){
+opt-p(){ #ping check
     chk_host(){
         _progress "Checking"
         ping -c1 -w1 "$1" &>/dev/null
@@ -58,7 +58,7 @@ opt-p(){
 }
 
 ### main ###
-_usage "(-p:ping check) [subnet]" $(db-list subnet)
+_usage "[subnet]" $(db-list subnet)
 
 declare -A sub
 declare -A super
