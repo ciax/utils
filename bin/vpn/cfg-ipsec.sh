@@ -3,8 +3,7 @@
 # Required tables: subnet(network,netmask,vpn),vpn(login),login(command,user,password,host)
 # Description: generate ipsec configulation text (for /etc/vpnc/default.conf)
 . func.app
-_chkarg $(db-list vpn)
-_usage "[vpn] (pw)"
+_usage "[vpn] (pw)" $(db-list vpn)
 vid=$1;shift
 eval "$(db-trace $vid vpn)"
 [ "$id" ] || _abort "No such id"

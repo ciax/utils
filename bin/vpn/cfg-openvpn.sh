@@ -7,8 +7,7 @@
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
 . func.app
-_chkarg $(db-list vpn)
-_usage "[vpnhost]"
+_usage "[vpnhost]" $(db-list vpn)
 vardir=$HOME/.var
 myhost=`hostname`
 eval "$(db-trace $1 vpn host)"

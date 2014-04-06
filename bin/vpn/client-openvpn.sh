@@ -9,8 +9,7 @@ opt-d(){ #disconnect
     sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated"
     exit
 }
-_chkarg $(db-list vpn)
-_usage "[vpnhost]"
+_usage "[vpnhost]" $(db-list vpn)
 _selflink vpn
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile
