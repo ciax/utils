@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: func.app
+# Required scripts: func.getpar
 # Description: display invisible chars in files
 #  option (-n): no folding by return code but show (0a)
-. func.app
+. func.getpar
 nl='0a'
 opt-n(){ nl=; } #no fold
 _usage "<file>"

@@ -1,5 +1,6 @@
 #!/bin/bash
 # Required commands: sqlite3
+# Required scripts: func.getpar
 # Description: transaction for file history
 # Usage: bkup-exec (separator)
 . func.getpar
