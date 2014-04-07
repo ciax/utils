@@ -6,10 +6,10 @@
 # Required commands: deborphan,apt-spy,gpg,tasksel
 # Required scripts: func.app, show-required
 # Description: Debian package utils
-. func.app
+. func.getpar
 which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-_usage "[option]" $(_caselist)
+_usage "[command]" <(_caselist)
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages

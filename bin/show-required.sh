@@ -2,7 +2,7 @@
 # Required commands: sed
 # Required scripts: func.app
 # Description: show required something in comments
-. func.app
+. func.getpar
 _usage "[type]"
 cd ~/utils
 grep -ihr "^# *req.* $1" * | tr -d ' ' | sed -re 's/\([^\)]+\)//g' -e 's/.*://'| tr ',' '\n'|grep .|sort -u
