@@ -3,7 +3,8 @@
 # Usage: _list_cols [str] ...
 _list_cols(){
     while read line;do
-        echo "   $C2${line/,/$C0: }"
+        [[ "$line" =~ , ]] && line="  $C2${line/,/$C0: }"
+        echo "  $line"
     done|column
 }
 # Description: show lined list
