@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias dup
-# Required commands: nkf
+# Required packages: nkf
 # Required scripts: func.getpar
 # Description: Pick up duplicated lines
 . func.getpar

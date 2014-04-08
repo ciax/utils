@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: nkf
+# Required packages: nkf
 # Required scripts: func.getpar,func.temp
 # Description: merge files with sorting and remove duplicated lines
 #   If no changes, then no rewrite

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: nkf
+# Required packages: nkf
 # Required scripts: func.getpar,show-tables
 # Description: generate sql statement for create table
 
