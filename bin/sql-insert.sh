@@ -4,9 +4,8 @@
 # Description: generate sql statement of insert from db-*.csv file
 . func.getpar
 _usage "[tables]"
-cd ~/db
 for i;do
-    table=$(show-tables $i) || { echo "No file for $1"; continue; }
+    table=$(show-tables $i) || continue
     pfx="insert or ignore into $table values ("
     while read line; do
         list="'${line//,/','}'"

@@ -48,7 +48,6 @@ shopt -s nullglob
 _usage "[table] .."
 tables=''
 echo "pragma foreign_keys=on;"
-cd ~/db
 for i; do
     schema $i
 done

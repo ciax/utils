@@ -6,8 +6,12 @@ _usage "[tables]"
 . func.temp
 _temp sch
 echo "begin;"
+cd ~/utils/db
 sql-schema $*|tee $sch
 for tbl in $(grep '^drop' $sch|tr -d ';'|cut -d' ' -f5);do
-    sql-insert $tbl
+    for dir in ~/cfg.*/db;do
+        cd $dir
+        sql-insert $tbl
+    done
 done
 echo "commit;"

@@ -27,9 +27,12 @@ for i;do
     if [ -s "$i" ]; then
         tblcore $i
         err=0
-    elif [ -s db-$i.csv ]; then
-        echo $i
-        err=0
+    else
+        for j in db-$i*.csv;do
+            echo $i
+            err=0
+            break
+        done
     fi
 done
 exit $err

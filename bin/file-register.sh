@@ -61,7 +61,6 @@ dirreg(){
         pushd $i >/dev/null
         link2dir -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
         link2dir lib lib*
-        link2dir db *.tsv *.csv
         link2dir .emacs.d *.el
         dirreg */
         popd >/dev/null
