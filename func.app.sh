@@ -6,22 +6,6 @@ shopt -s nullglob
 _selflink(){
     ln -sf $(cd $(dirname $0);pwd -P)/$(basename $0) ~/bin/$1
 }
-
-# Description: interactive query
-# Usage: _query
-_query(){
-    [ "$ALL" ] && return
-    [ "$tty" ] || tty=`tty`
-    echo -en "\tOK? $C3[A/Y/N/Q]$C0"
-    read -e ans < $tty
-    case "$ans" in
-        [Aa]*) echo "All Accept!";ALL=1;;
-        [Yy]*) echo "Accept!";;
-        [Qq]*) echo "Abort";exit 2;;
-        * ) echo "Skip";return 1;;
-    esac
-}
-
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 _temp(){
