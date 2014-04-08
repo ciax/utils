@@ -28,6 +28,7 @@ split_sheet(){
 }
 
 _usage "[db]"
+. func.temp
 _temp dlfile dbfile
 site="https://docs.google.com/spreadsheets/d/"
 key=$(db-exec "select key from gdocs where id == '$1';")
