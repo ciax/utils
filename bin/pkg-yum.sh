@@ -1,11 +1,11 @@
 #!/bin/bash
 #link:CentOS pkg
-# Required scripts: func.app, show-required
+# Required scripts: func.getpar, show-required
 # Description: Debian package utils
-. func.app
+. func.getpar
 which yum >/dev/null || _abort "This might not RedHat"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-_usage "[option]" $(_caselist)
+_usage "[option]" <(_caselist)
 cmd="$1";shift
 case "$cmd" in
     init)

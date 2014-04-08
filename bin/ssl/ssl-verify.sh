@@ -1,8 +1,8 @@
 #!/bin/bash
 # Required packages: openssl
-# Required scripts: func.app
+# Required scripts: func.getpar
 # Description: Vefiry the relationship
-. func.app
+. func.getpar
 _usage "[ca name] [site name]"
 cd ~/.var
 cacrt="$1.crt";shift

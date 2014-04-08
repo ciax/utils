@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.app, file-register
+# Required scripts: func.getpar, func.temp, file-register
 # Description: replace string in files
-. func.app
+. func.getpar
 _al(){ echo -e "\t"$C1"$*"$C0; }
 _hl(){ echo -e "\t"$C2"$*"$C0; }
 _query(){
@@ -21,6 +21,7 @@ _usage "[oldstr] [newstr] (ext)
 \tENV{files} for target
 \tENV{ex} for exclude line
 \t(ext) includes {mv old.ext new.ext}" $1
+. func.temp
 _temp outtmp
 oldstr="$1"
 newstr="$2"

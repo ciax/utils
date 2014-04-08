@@ -1,13 +1,13 @@
 #!/bin/bash
 # Required commands: wget
-# Required scripts: func.app, db-exec, file-register
+# Required scripts: func.getpar, db-exec, file-register
 # Required tables: gdocs,gsheet
 # Desctiption: get db from gdocs and split into db-files
 #  split downloaded-db files into db files in the cfg directorys that are categoryzed by project
 #  Downloaded-DB format: (%proj),!id,(!another key),field1,field2...
 #  Config Dir: ~/cfg.(project)/db
 #  Ignore files that don't have (%proj) line
-. func.app
+. func.getpar
 
 split_sheet(){
     sheet=$1

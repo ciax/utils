@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required commands: sed
-# Required scripts: func.app
+# Required scripts: func.getpar
 # Description: show required something in comments
 . func.getpar
 _usage "[type]"

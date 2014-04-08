@@ -1,11 +1,11 @@
 #!/bin/bash
 #alias recall
 # Required commands: hostname,zcat
-# Required scripts: func.app, info-dist, bkup-stash, bkup-exec
+# Required scripts: func.getpar, info-dist, bkup-stash, bkup-exec
 # Description: recall backed up file
 #  -f means pick the original one (first stashed)
 #  otherwise pick last one
-. func.app
+. func.getpar
 sel="max"
 opt-f(){ sel="min"; } #first
 _usage "[file] (host)"

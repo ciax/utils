@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required commands: nkf
-# Required scripts: func.app,show-tables
+# Required scripts: func.getpar,show-tables
 # Description: generate sql statement for create table
 
 # CSV file rule:
@@ -12,7 +12,7 @@
 #    table : you can specify the refarence table instead of the 'name'.
 #    key : reference key can be specified, otherwise 'id' will be used.
 #    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
-. func.app
+. func.getpar
 schema(){
     local tbl=$(show-tables $1) || return 1
     [[ "$tables" =~ $tbl ]] && return

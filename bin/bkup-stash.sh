@@ -1,11 +1,11 @@
 #!/bin/bash
 #alias stash
 # Required commands: gzip
-# Required scripts: func.app,info-dist,bkup-exec
+# Required scripts: func.getpar,info-dist,bkup-exec
 # Required table: content,list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid
-. func.app
+. func.getpar
 _usage "[file]"
 [ -s "$1" ] || _abort "No such file"
 host=$(hostname)

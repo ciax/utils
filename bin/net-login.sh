@@ -1,11 +1,11 @@
 #!/bin/bash
 #alias l
 # Required commands: expect,column,sed,ssh,(telnet)
-# Required scripts: func.app, db-list, db-trace
+# Required scripts: func.getpar, func.temp, db-list, db-trace
 # Required tables: login (user,password,host,rcmd)
 # Description: login command
-. func.app
-_usage "[host] (command)" $(db-list login)
+. func.getpar
+_usage "[host] (command)" <(db-list login)
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift
 eval "$(db-trace $host login)"
@@ -14,6 +14,7 @@ eval "$(db-trace $host host)"
 if [ "$command" = telnet ]; then
     telnet $host
 else
+    . func.temp
     str="ssh $sshopt ${user:+$user@}$host"
     [ "$VER" ] && echo $str
     if [ "$password" ] ; then

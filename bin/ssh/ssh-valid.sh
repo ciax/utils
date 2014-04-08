@@ -1,8 +1,8 @@
 #!/bin/bash
 # Required commands: ssh,ping
-# Required scripts: func.app
+# Required scripts: func.getpar
 # Description: show list of the user@host which will accept the ssh connection
-. func.app
+. func.getpar
 _usage "[(user@)host ..]"
 ahost=''
 auser=''

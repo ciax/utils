@@ -1,7 +1,8 @@
 #!/bin/bash
-# Requied packages: openssl
+# Required packages: openssl
+# Required scripts: func.getpar
 # Description:  Check the consistency of SSL files
-. func.app
+. func.getpar
 show(){
     [ -s "$site.$1" ] || return
     echo -n "$1:"

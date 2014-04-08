@@ -1,8 +1,8 @@
 #!/bin/bash
 # Requied commands: sudo,iptables,ifconfig,sysctl
-# Requied scripts: func.app
+# Requied scripts: func.getpar
 # Description: setting nat table
-. func.app
+. func.getpar
 #
 clrtbl(){
 # Filtering Clear Tables
@@ -26,15 +26,14 @@ setnat(){
 natstat(){
     sudo iptables -t nat -L
 }
+_usage "[command]" <(_caselist)
 case "$1" in
-    clr)
+    clr) #Clear the table
         clrtbl;;
-    set)
+    set) #Set nat table
         clrtbl
         setnat;;
-    stat)
+    stat) #Show status
         natstat;;
-    *)
-        _usage "[clr|set|stat]"
-        ;;
+    *);;
 esac

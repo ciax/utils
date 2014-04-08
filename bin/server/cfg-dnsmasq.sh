@@ -1,10 +1,10 @@
 #!/bin/bash
-# Required scripts: net-name,db-list,db-exec
+# Required scripts: func.getpar,net-name,db-list,db-exec
 # Required tables: mac(hub,host),hub(subnet)
 # Description: generate dnsmasq config
 # Usage: cfg-dnsmasq (subnet) > /etc/dnsmasq.conf
-. func.app
-_usage "(subnet)" $(db-list subnet)
+. func.getpar
+_usage "(subnet)" <(db-list subnet)
 net=${1:-$(net-name)}
 sub_hub="select id from hub where subnet == '$net'"
 sub_host="select id from host where hub in ($sub_hub)"

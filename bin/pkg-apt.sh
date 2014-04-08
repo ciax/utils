@@ -4,7 +4,7 @@
 #link:Debian pkg
 #link:Ubuntu pkg
 # Required commands: deborphan,apt-spy,gpg,tasksel
-# Required scripts: func.app, show-required
+# Required scripts: func.getpar, show-required
 # Description: Debian package utils
 . func.getpar
 which apt-get >/dev/null || _abort "This might not Debian"

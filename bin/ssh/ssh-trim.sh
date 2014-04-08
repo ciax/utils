@@ -1,14 +1,15 @@
 #!/bin/bash
-# Required scripts: func.app, edit-cutout, line-dup, edit-write
+# Required scripts: func.getpar, func.temp, edit-cutout, line-dup, edit-write
 # Description: remove dup key from authorized_keys
 # Usage: ssh-trim (authorized_keys) (invalid_keys)
-. func.app
+. func.getpar
 getmd5(){ md5sum <<< $2 | cut -c-32; }
 ath=${1:-~/.ssh/authorized_keys}
 inv=${2:-~/.ssh/invalid_keys}
 #
 # Split file into invalid_keys by #headed line
 #
+. func.temp
 _temp tath tinv tdup
 cp $ath $tath
 ## For invalid_keys (increase only -> merge)

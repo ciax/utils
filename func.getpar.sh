@@ -1,6 +1,10 @@
 #!/bin/bash
+shopt -s nullglob
+# Desctiption: Abort with message
+# Usage: _abort [message]
+_abort(){ echo "$C1$*$C0";exit 1; }
+
 # Description: show folded list
-# Usage: _list_cols [str] ...
 _list_cols(){
     while read line;do
         [[ "$line" =~ , ]] && line="  $C2${line/,/$C0: }"
@@ -82,7 +86,7 @@ _usage(){
     exit 2
 }
 
-# Option Separator
+# Option Parser
 declare -a ARGV
 declare -a OPT
 for i;do

@@ -1,8 +1,8 @@
 #!/bin/bash
 # Required commands: nkf
-# Required scripts: func.app,show-tables
+# Required scripts: func.getpar,show-tables
 # Description: generate sql statement of insert from db-*.csv file
-. func.app
+. func.getpar
 _usage "[tables]"
 cd ~/db
 for i;do

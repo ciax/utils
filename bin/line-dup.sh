@@ -1,9 +1,9 @@
 #!/bin/bash
 #alias dup
 # Required commands: nkf
-# Required scripts: func.app
+# Required scripts: func.getpar
 # Description: Pick up duplicated lines
-. func.app
+. func.getpar
 _usage "<files>"
 prev=''
 while read line;do

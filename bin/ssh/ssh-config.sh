@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: ac.app, db-exec, net-name, db-trace
+# Required scripts: ac.getpar, db-exec, net-name, db-trace
 # Required tables: login(command,user,password,host),ssh(subnet,login,alias,port,proxy)
 # Description: generate ~/.ssh/config
-. func.app
+. func.getpar
 site(){
     eval "$(db-trace $1 login)"
     [ "$command" = ssh ] || return

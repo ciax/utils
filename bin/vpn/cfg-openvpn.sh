@@ -1,13 +1,13 @@
 #!/bin/bash
 # Required commands: hostname
-# Required scripts: func.app,db-list,db-trace,route-openvpn
+# Required scripts: func.getpar,db-list,db-trace,route-openvpn
 # Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
-. func.app
-_usage "[vpnhost]" $(db-list vpn)
+. func.getpar
+_usage "[vpnhost]" <(db-list vpn)
 vardir=$HOME/.var
 myhost=`hostname`
 eval "$(db-trace $1 vpn host)"

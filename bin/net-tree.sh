@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required commands: ping
-# Required scripts: func.app, db-exec
+# Required scripts: func.getpar, db-exec
 # Required tables: host,hub,subnet
 # Description: show network tree
 . func.getpar

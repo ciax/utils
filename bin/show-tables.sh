@@ -1,8 +1,8 @@
 #!/bin/bash
-# Required scripts: func.app
+# Required scripts: func.getpar,func.temp
 # Desctiption: pick up the table names from file name(db-*.csv)
 #   if option '-e', show tables of the dependency ends in db-*.csv
-. func.app
+. func.getpar
 tblcore(){
     local r=${1#*-}
     echo ${r%%[-.]*}
@@ -11,6 +11,7 @@ tblcore(){
 # Options
 opt-e(){ #end tables
     cd ~/utils/db
+    . func.temp
     _temp fields
     grep -h "^!" db-*.csv|tr ',' '\n'|grep -v '^!'|sort -u > $fields
     for i in db-*.csv;do

@@ -1,10 +1,10 @@
 #!/bin/bash
 # Required commands: sqlite3
-# Required scripts: func.app
+# Required scripts: func.getpar
 # Description: transaction for db file
 # Usage: db-exec (opt) (sql)
 #        -i:ini (a=b) style
-. func.app
+. func.getpar
 opt-i(){ opt=-line; }
 _usage "(statement)"
 db=~/.var/db-device.sq3

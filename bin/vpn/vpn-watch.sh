@@ -1,8 +1,8 @@
 #!/bin/bash
 # Requied commands: ping
-# Required scripts: func.app, db-trace
+# Required scripts: func.getpar, db-trace
 # Description: parsistent connection to vpn
-. func.app
+. func.getpar
 opt-d(){ #disconnect
     kill $(< $pidfile)
     $client -d

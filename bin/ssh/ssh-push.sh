@@ -1,9 +1,9 @@
 #!/bin/bash
 #link ssh-join
 # Required commands: scp
-# Required scripts: func.app, ssh-setup, ssh-trim, edit-merge
+# Required scripts: func.getpar, func.temp,  ssh-setup, ssh-trim, edit-merge
 # Desctiption: impose own trust to the object host (push pub-key anonymously)
-. func.app
+. func.getpar
 getrem(){
     scp -pq $rhost:$1 $2
     cp $2 $3
@@ -24,6 +24,7 @@ rath=.ssh/authorized_keys
 lath=~/$rath
 rinv=.ssh/invalid_keys
 linv=~/$rinv
+. func.temp
 _temp trath trinv tath tinv
 for rhost;do
     [[ ${rhost#*@} =~ "`hostname`|localhost" ]] && _abort "Self push"

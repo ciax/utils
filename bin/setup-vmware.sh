@@ -1,5 +1,5 @@
 #!/bin/bash
-. func.app
+. func.getpar
 cd
 sudo mount /dev/cdrom /media/cdrom0 || _abort "Can't mount cdrom"
 file=/media/cdrom0/VM*

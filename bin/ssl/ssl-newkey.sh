@@ -1,10 +1,10 @@
 #!/bin/bash
 # Requied packages: openssl
-# Requied scripts: func.app
+# Requied scripts: func.getpar
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-. func.app
+. func.getpar
 _usage "[site name]"
 cd ~/.var
 site="$1"

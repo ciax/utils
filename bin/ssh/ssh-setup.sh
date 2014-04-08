@@ -3,7 +3,7 @@
 # Required scripts: ssh-config
 # Desctiption: setup ssh files 
 # Usage: ${0##*/} (-r:remove keys)
-. func.app
+. func.getpar
 echo $C5"Initializing SSH"$C0
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys

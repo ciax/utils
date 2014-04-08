@@ -1,12 +1,13 @@
 #!/bin/bash
 # Required packages: openssl
-# Required scripts: func.app,ssl-request
+# Required scripts: func.getpar,ssl-request
 ## SSL files (Server vs CA vs Client)
 ##@ Server Site
 ##  csr(Signning Request file) -> Submit to CA
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
-. func.app
+. func.getpar
+. func.temp
 # Options
 opt-s(){ echo "nsCertType=server" > $v3; } #server
 opt-c(){ echo "nsCertType=client" > $v3; } #client
