@@ -1,8 +1,10 @@
 #!/bin/bash
 shopt -s nullglob
+# Description: Print alert to stderr
+_alert(){ echo "$C1$*$C0" >/dev/stderr; }
 # Desctiption: Abort with message
 # Usage: _abort [message]
-_abort(){ echo "$C1$*$C0";exit 1; }
+_abort(){ _alert "$*";exit 1; }
 
 # Description: show folded list
 _list_cols(){
@@ -81,8 +83,8 @@ _usage(){
     # Show usage
     local reqp=$1;shift
     _chkopt && _chkargc "$reqp" && _chkargv "$@" && return 0
-    echo -e "Usage: $C3${0##*/}$C0 $(_optlist)$reqp"
-    [ "$1" ] && _list_cols < "$1"
+    echo -e "Usage: $C3${0##*/}$C0 $(_optlist)$reqp" > /dev/stderr
+    [ "$1" ] && _list_cols < "$1" > /dev/stderr
     exit 2
 }
 
