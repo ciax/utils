@@ -9,6 +9,7 @@ _chx(){
     echo "`cd $dir;pwd -P`($ug)"
     sudo chown -R $ug $dir
 }
+echo $C3"Uniform Owner"$C0
 if [ "$1" ] ;then
     for i ; do
         _chx $i
