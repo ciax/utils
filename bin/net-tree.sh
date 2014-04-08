@@ -3,7 +3,7 @@
 # Required scripts: func.app, db-exec
 # Required tables: host,hub,subnet
 # Description: show network tree
-. func.app
+. func.getpar
 
 open_super(){
     connect[$1]=1
@@ -51,14 +51,15 @@ chk_host(){ true; }
 
 # Options
 opt-p(){ #ping check
+    echo -n "Checking ";nl=$'\n'
     chk_host(){
-        _progress "Checking"
+        echo -n '.'
         ping -c1 -w1 "$1" &>/dev/null
     }
 }
 
 ### main ###
-_usage "[subnet]" $(db-list subnet)
+_usage "[subnet]" <(db-list subnet)
 
 declare -A sub
 declare -A super
@@ -68,6 +69,5 @@ declare -A connect
 IFS='|'
 get_hubs $1
 get_hosts
-echo
-echo " $1"
+echo "$nl $1"
 show_tree $1

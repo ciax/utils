@@ -37,14 +37,6 @@ _abort(){ echo "$C1$*$C0";exit 1; }
 
 # Description: Show progress
 # Usage: _progress [Title]
-_progress(){
-    if [ "$_prg_title" = "$1" ]; then
-        echo -n '.'
-    else
-        echo -n "$1 "
-        _prg_title="$1"
-    fi
-}
 
 # Description: folding list (5 column)
 # Usage: __list_cols [str] ...
