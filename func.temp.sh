@@ -2,10 +2,6 @@
 # Required commands: tempfile
 # Description: provides query function
 shopt -s nullglob
-# Make self link to ~/bin
-_selflink(){
-    ln -sf $(cd $(dirname $0);pwd -P)/$(basename $0) ~/bin/$1
-}
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 _temp(){

@@ -10,7 +10,6 @@ opt-d(){ #disconnect
     exit
 }
 _usage "[vpnhost]" <(db-list vpn)
-_selflink vpn
 . func.temp
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile
