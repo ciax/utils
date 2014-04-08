@@ -58,7 +58,7 @@ _chkargv(){
     local i=0
     for file;do
         grep -q "${ARGV[$i]}" "$file" || {
-            echo $C1"Invalid argument ($1)"$C0
+            echo $C1"Invalid argument (${ARGV[$i]})"$C0
             return 1
         }
         i=$(($i+1))
