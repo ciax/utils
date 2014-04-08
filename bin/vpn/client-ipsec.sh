@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias ivpn
-# Required commands: sudo,vpnc
+# Required packages: vpnc
 # Required scripts: func.getpar,cfg-ipsec
 # Description: vpn client of ipsec
 . func.getpar

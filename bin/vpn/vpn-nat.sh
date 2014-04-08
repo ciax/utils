@@ -1,5 +1,5 @@
 #!/bin/bash
-# Requied commands: sudo,iptables,ifconfig,sysctl
+# Requied commands: iptables,ifconfig,sysctl
 # Requied scripts: func.getpar
 # Description: setting nat table
 . func.getpar

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required commands: sqlite3
+# Required packages: sqlite3
 # Required scripts: func.getpar
 # Description: transaction for db file
 # Usage: db-exec (opt) (sql)

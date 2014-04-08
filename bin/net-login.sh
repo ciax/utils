@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias l
-# Required commands: expect,column,sed,ssh,(telnet)
+# Required packages: expect
 # Required scripts: func.getpar, func.temp, db-list, db-trace
 # Required tables: login (user,password,host,rcmd)
 # Description: login command
