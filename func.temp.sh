@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: tempfile
 # Description: provides query function
 shopt -s nullglob
 # Desctiption: makes temporaly files
@@ -8,7 +7,7 @@ _temp(){
     local trp="/bin/rm -f -- "
     local i=
     for i ; do
-        local tmp=$(tempfile) || { echo "Can't make mktemp"; exit 1; }
+        local tmp=$(mktemp) || { echo "Can't make mktemp"; exit 1; }
         _tmplist="$_tmplist $tmp"
         eval "$i=$tmp"
     done
