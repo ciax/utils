@@ -7,5 +7,8 @@
 PATH=$PATH:/usr/sbin
 opt-d(){ sudo vpnc-disconnect;exit; } #disconnect
 _usage "[vpnhost]" <(db-list vpn)
-sudo vpnc <(cfg-ipsec $*)
+. func.temp
+_temp cfgfile
+cfg-ipsec $* > $cfgfile
+sudo vpnc $cfgfile
 cd ~/bin;ln -sf $0 vpn
