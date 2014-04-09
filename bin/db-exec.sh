@@ -5,6 +5,7 @@
 # Usage: db-exec (opt) (sql)
 #        -i:ini (a=b) style
 . func.getpar
+opt=-csv
 opt-i(){ opt=-line; }
 _usage "(statement)"
 db=~/.var/db-device.sq3
