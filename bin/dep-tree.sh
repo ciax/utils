@@ -16,7 +16,7 @@ sub_list(){
         line="${line// /}"
         line="${line##*:}"
         for sup in ${line//,/ };do
-            sub[$sup]="${sub[$sup]}$me "
+            sub[$sup]="${sub[$sup]} $me"
         done
     done < <(egrep -R "$search" *)
 }
@@ -32,15 +32,21 @@ dep_dig(){
 dep_stack(){
     for me in ${!super[*]};do
         local sup=${super[$me]}
-        sub2[$sup]="${sub2[$sup]}$me "
+        sub2[$sup]="${sub2[$sup]} $me"
     done
 }
 show_tree(){
-    local ind="    |$2"
-    while read sb;do
-        echo "${ind}---$C2$sb$C0"
-        show_tree $sb "$ind"
-    done < <(for i in ${sub2[$1]};do echo "$i";done|sort)
+    local subs="$(for i in ${sub2[$1]};do echo " $i";done|sort)"
+    local last="${subs##* }"
+    local ind="$2   "
+    for sb in $subs;do
+        echo "$ind|--$C2$sb$C0"
+        if [ "$sb" = "$last" ] ; then
+            show_tree $sb "$ind "
+        else
+            show_tree $sb "$ind|"
+        fi
+    done
 }
 ### main ###
 declare -A sub
