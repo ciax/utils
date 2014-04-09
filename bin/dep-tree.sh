@@ -16,13 +16,13 @@ sub_list(){
         line="${line// /}"
         line="${line##*:}"
         for sup in ${line//,/ };do
-            sub[$sup]="${sub[$sup]} $me"
+            sub0[$sup]="${sub0[$sup]} $me"
         done
     done < <(egrep -R "$search" *)
 }
 dep_dig(){
     [ "${2:-0}" -gt  20 ] && _abort "Infinite Loop Error"
-    for sb in ${sub[$1]};do
+    for sb in ${sub0[$1]};do
         [ "${depth[$sb]:-0}" -le ${2:-0} ] || continue
         depth[$sb]=$2
         super[$sb]=$1
@@ -32,11 +32,12 @@ dep_dig(){
 dep_stack(){
     for me in ${!super[*]};do
         local sup=${super[$me]}
-        sub2[$sup]="${sub2[$sup]} $me"
+        sub[$sup]="${sub[$sup]} $me"
     done
 }
 show_tree(){
-    local subs="$(for i in ${sub2[$1]};do echo " $i";done|sort)"
+    [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
+    local subs="$(for i in ${sub[$1]};do echo " $i";done|sort)"
     local last="${subs##* }"
     local ind="$2   "
     for sb in $subs;do
@@ -49,8 +50,8 @@ show_tree(){
     done
 }
 ### main ###
+declare -A sub0
 declare -A sub
-declare -A sub2
 declare -A super
 declare -A depth
 cd ~/utils
@@ -63,5 +64,5 @@ done
 dep_stack
 for top in $all;do
     echo $C5"$top"$C0
-    show_tree $top
+    show_tree "$top"
 done
