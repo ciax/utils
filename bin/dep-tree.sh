@@ -28,7 +28,7 @@ show_tree(){
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     local ind="    |$2"
     for i in ${sub[$1]};do
-        echo "${ind}---$i"
+        echo "${ind}---$C2$i$C0"
         show_tree $i "$ind"
     done
 }
@@ -40,5 +40,8 @@ declare -A depth
 
 dep_list
 dep_clean
-echo "func.getpar"
-show_tree "func.getpar"
+cd ~/utils
+while read top;do
+    echo $C5"${top%.*}"$C0
+    show_tree "${top%.*}"
+done < <(grep -RL "Required scripts" *.sh)
