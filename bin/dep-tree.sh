@@ -2,47 +2,56 @@
 #alias dep
 # Required scripts: func.getpar
 # Description: show script dependency tree
+top_list(){
+    while read top;do
+        top="${top##*/}"
+        echo "${top%.*}"
+    done < <(cd ~/utils;grep -RL "Required scripts" *|grep 'sh$')|sort
+}
 dep_list(){
     while read line;do
-        me="${line%%:*}"
+        local me="${line%%:*}"
         line="${line// /}"
         line="${line##*:}"
         for sup in ${line//,/ };do
-            [[ "${sub[$sup]}" =~ "$me" ]] || sub[$sup]="${sub[$sup]}$me "
+            sub[$sup]="${sub[$sup]}$me "
         done
-    done < <(egrep "^# Required scripts" *-*)
+    done < <(cd ~/bin;egrep "^# Required scripts" *-*)
 }
 dep_dig(){
-    for i in ${sub[$1]};do
-        if [ "${depth[$i]:-0}" -lt $2 ];then
-            depth[$i]=$2
-            old=${super[$i]}
-            [ "$old" ] &&  sub[$old]="${sub[$old]//$i/}"
-            super[$i]=$1
-            dep_dig "$i" $(($2+1))
-        fi
+    for sb in ${sub[$1]};do
+        [ "${depth[$sb]:-0}" -le ${2:-0} ] || continue
+        depth[$sb]=$2
+        super[$sb]=$1
+        dep_dig "$sb" $(($2+1))
+    done
+}
+dep_stack(){
+    for me in ${!super[*]};do
+        local sup=${super[$me]}
+        sub2[$sup]="${sub2[$sup]}$me "
     done
 }
 show_tree(){
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     local ind="    |$2"
-    for i in ${sub[$1]};do
-        echo "${ind}---$C2$i$C0"
-        show_tree $i "$ind"
-    done
+    while read sb;do
+        echo "${ind}---$C2$sb$C0"
+        show_tree $sb "$ind"
+    done < <(for i in ${sub2[$1]};do echo "$i";done|sort)
 }
 ### main ###
-cd ~/bin
 declare -A sub
+declare -A sub2
 declare -A super
 declare -A depth
 
+all=$(top_list)
 dep_list
-cd ~/utils
-while read top;do
-    dep_dig "${top%.*}" 1
-    all="$all ${top%.*}"
-done < <(grep -RL "Required scripts" *.sh)
+for top in $all;do
+    dep_dig "$top"
+done
+dep_stack
 for top in $all;do
     echo $C5"$top"$C0
     show_tree $top
