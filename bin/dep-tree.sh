@@ -1,6 +1,5 @@
 #!/bin/bash
 #alias dep
-# Required scripts: func.getpar
 # Description: show script dependency tree
 core(){
     base="${1##*/}"
@@ -9,7 +8,7 @@ core(){
 top_list(){
     while read top;do
         echo "$(core $top)"
-    done < <(grep -RL "Required scripts" *|grep 'sh$')|sort
+    done < <(egrep -RL "$search" *|grep 'sh$')|sort
 }
 sub_list(){
     while read line;do
@@ -19,7 +18,7 @@ sub_list(){
         for sup in ${line//,/ };do
             sub[$sup]="${sub[$sup]}$me "
         done
-    done < <(egrep -R "^# Required scripts" *)
+    done < <(egrep -R "$search" *)
 }
 dep_dig(){
     [ "${2:-0}" -gt  20 ] && _abort "Infinite Loop Error"
@@ -49,6 +48,7 @@ declare -A sub2
 declare -A super
 declare -A depth
 cd ~/utils
+search="^# Required scripts"
 all=$(top_list)
 sub_list
 for top in $all;do
