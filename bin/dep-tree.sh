@@ -8,20 +8,19 @@ dep_list(){
         line="${line// /}"
         line="${line##*:}"
         for sup in ${line//,/ };do
-                [[ "${super[$me]}" =~ "$sup" ]] || super[$me]="${super[$me]}$sup "
-                [[ "${sub[$sup]}" =~ "$me" ]] || sub[$sup]="${sub[$sup]}$me "
+            [[ "${sub[$sup]}" =~ "$me" ]] || sub[$sup]="${sub[$sup]}$me "
         done
-        [[ "$all" =~ "$me" ]] || all="$all $me"
     done < <(egrep "^# Required scripts" *-*)
 }
-dep_clean(){
-    for me in $all;do
-        for sb in ${sub[$me]};do
-            for sp in ${super[$me]};do
-                sub[$sp]=${sub[$sp]//$sb/}
-                super[$sb]=${super[$sb]//$sp/}
-            done
-        done
+dep_dig(){
+    for i in ${sub[$1]};do
+        if [ "${depth[$i]:-0}" -lt $2 ];then
+            depth[$i]=$2
+            old=${super[$i]}
+            [ "$old" ] &&  sub[$old]="${sub[$old]//$i/}"
+            super[$i]=$1
+            dep_dig "$i" $(($2+1))
+        fi
     done
 }
 show_tree(){
@@ -39,9 +38,12 @@ declare -A super
 declare -A depth
 
 dep_list
-dep_clean
 cd ~/utils
 while read top;do
-    echo $C5"${top%.*}"$C0
-    show_tree "${top%.*}"
+    dep_dig "${top%.*}" 1
+    all="$all ${top%.*}"
 done < <(grep -RL "Required scripts" *.sh)
+for top in $all;do
+    echo $C5"$top"$C0
+    show_tree $top
+done
