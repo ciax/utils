@@ -2,15 +2,28 @@
 #alias dep
 # Required scripts: func.getpar
 # Description: show script dependency tree
-. func.getpar
-
-get_nodes(){
-    while read h u; do
-        sub[$u]="${sub[$u]}$h " # add itself to parent var
-        super[$h]="$u"
-    done < <(dep_list)
+dep_list(){
+    while read line;do
+        me="${line%%:*}"
+        line="${line// /}"
+        line="${line##*:}"
+        for sup in ${line//,/ };do
+                [[ "${super[$me]}" =~ "$sup" ]] || super[$me]="${super[$me]}$sup "
+                [[ "${sub[$sup]}" =~ "$me" ]] || sub[$sup]="${sub[$sup]}$me "
+        done
+        [[ "$all" =~ "$me" ]] || all="$all $me"
+    done < <(egrep "^# Required scripts" *-*)
 }
-
+dep_clean(){
+    for me in $all;do
+        for sb in ${sub[$me]};do
+            for sp in ${super[$me]};do
+                sub[$sp]=${sub[$sp]//$sb/}
+                super[$sb]=${super[$sb]//$sp/}
+            done
+        done
+    done
+}
 show_tree(){
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     local ind="    |$2"
@@ -19,25 +32,13 @@ show_tree(){
         show_tree $i "$ind"
     done
 }
-
 ### main ###
 cd ~/bin
-dep_list(){
-    IFS=:
-    while read child dmy list;do
-        (
-            IFS=,
-            for i in $list;do
-                echo "$child $i"
-            done
-        )
-    done < <(grep "Required scripts" *-*)|sort -u
-}
-#_usage "[subnet]" <(db-list subnet)
-
 declare -A sub
 declare -A super
+declare -A depth
 
-get_nodes
+dep_list
+dep_clean
 echo "func.getpar"
 show_tree "func.getpar"
