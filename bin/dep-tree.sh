@@ -2,23 +2,27 @@
 #alias dep
 # Required scripts: func.getpar
 # Description: show script dependency tree
+core(){
+    base="${1##*/}"
+    echo "${base%.*}"
+}
 top_list(){
     while read top;do
-        top="${top##*/}"
-        echo "${top%.*}"
-    done < <(cd ~/utils;grep -RL "Required scripts" *|grep 'sh$')|sort
+        echo "$(core $top)"
+    done < <(grep -RL "Required scripts" *|grep 'sh$')|sort
 }
-dep_list(){
+sub_list(){
     while read line;do
-        local me="${line%%:*}"
+        local me="$(core ${line%%:*})"
         line="${line// /}"
         line="${line##*:}"
         for sup in ${line//,/ };do
             sub[$sup]="${sub[$sup]}$me "
         done
-    done < <(cd ~/bin;egrep "^# Required scripts" *-*)
+    done < <(egrep -R "^# Required scripts" *)
 }
 dep_dig(){
+    [ "${2:-0}" -gt  20 ] && _abort "Infinite Loop Error"
     for sb in ${sub[$1]};do
         [ "${depth[$sb]:-0}" -le ${2:-0} ] || continue
         depth[$sb]=$2
@@ -33,7 +37,6 @@ dep_stack(){
     done
 }
 show_tree(){
-    [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     local ind="    |$2"
     while read sb;do
         echo "${ind}---$C2$sb$C0"
@@ -45,9 +48,9 @@ declare -A sub
 declare -A sub2
 declare -A super
 declare -A depth
-
+cd ~/utils
 all=$(top_list)
-dep_list
+sub_list
 for top in $all;do
     dep_dig "$top"
 done
