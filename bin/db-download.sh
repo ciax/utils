@@ -38,5 +38,9 @@ while read line;do
     url="$site$key/export?format=csv&id=$key&gid=$gid"
     wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
-file-register
 upd-db
+for d in ~/cfg.*;do
+    cd $d
+    file-clean
+    git commit -a -m "update db"
+done
