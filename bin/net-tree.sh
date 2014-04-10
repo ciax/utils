@@ -19,7 +19,7 @@ get_hubs(){
         eval "title[$h]=$n$C0" # to remove '"'
         eval "$(db-trace $h hub subnet domain)"
         domain[$h]=$name
-    done < <(db-exec "select id,super,description from hub where subnet == '$1';")
+    done < <(db-exec "select id,super,description from hub where subnet == '$1';"|sort)
 }
 
 get_hosts(){
