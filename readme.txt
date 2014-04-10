@@ -21,7 +21,7 @@ Copyright (c) 2014 Koji Omata (MIT License)
  
 ### Setup at Home Dir
 git clone https://git.hub/ciax/cfg.(proj).git
-~/cfg.pub/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
+~/cfg.(proj)/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
 
 ############# Local Rules ###############
 
