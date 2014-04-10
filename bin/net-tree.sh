@@ -6,7 +6,7 @@
 . func.getpar
 
 open_super(){
-    connect[$1]=1
+    connect[$1]="---$C2"
     local up="${super[$1]}"
     [ "$up" ] && [ ! "${connect[$up]}" ] && open_super "$up"
 }
@@ -14,9 +14,9 @@ open_super(){
 get_hubs(){
     while read h u n; do
         u="${u:-$1}"
-        sub[$u]="${sub[$u]}$h," # add itself to parent var
+        sub[$u]="${sub[$u]},$h" # add itself to parent var
         super[$h]="$u"
-        title[$h]=$C2"$n"$C0
+        eval "title[$h]=$n$C0" # to remove '"'
         eval "$(db-trace $h hub subnet domain)"
         domain[$h]=$name
     done < <(db-exec "select id,super,description from hub where subnet == '$1';")
@@ -25,9 +25,9 @@ get_hubs(){
 get_hosts(){
     for u in ${!title[*]};do
         while read h fdqn; do
-            sub[$u]="${sub[$u]}$h,"
+            sub[$u]="${sub[$u]},$h"
             super[$h]="$u"
-            title[$h]="("$C4"$h"$C0")"
+            title[$h]="$C4$h$C0"
             site="$h.${domain[$u]}"
             chk_host "$site" && open_super $h
         done < <(db-exec "select id,fdqn from host where hub == '$u';")
@@ -36,14 +36,15 @@ get_hosts(){
 
 show_tree(){
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
-    local ind="    |$2"
-    for i in ${sub[$1]};do
-        if [ "${connect[$i]}" ];then
-            echo "${ind}---${title[$i]}"
+    last=${sub[$1]##*,}
+    local ind="$2   "
+    for i in ${sub[$1]#*,};do
+        echo "${ind}|${connect[$i]:--${C1}X-}${title[$i]}"$C0
+        if [ "$i" = "$last" ];then
+            show_tree $i "$ind "
         else
-            echo "${ind}-${C1}X$C0-${title[$i]}"
+            show_tree $i "$ind|"
         fi
-        show_tree $i "$ind"
     done
 }
 
