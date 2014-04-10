@@ -1,12 +1,12 @@
 ############## Description #############
-Here is the bash scripts.
+Here is the utilities of bash script.
 
 Features:
- - All scripts are put into '~/bin' together as symbolic links. 
+ - All scripts are put into '~/bin' as a symbolic link. 
  - All variable or temporaly data are put into '~/.var'.
- - All configurations are in RDB (using sqlite3).
+ - All configurations are stored in RDB (using sqlite3).
 
-Scope: Linux (Debian,Ubuntu,CentOS are tested)
+Scope: Linux (Debian,Ubuntu and CentOS are tested)
 
 Copyright (c) 2014 Koji Omata (MIT License)
 
@@ -20,24 +20,24 @@ Copyright (c) 2014 Koji Omata (MIT License)
  4. Install ssh,git
  
 ### Setup at Home Dir
-git clone https://git.hub/ciax/cfg.pub
-~/cfg.pub/setup-cfg-pub.sh
+git clone https://git.hub/ciax/cfg.(proj).git
+~/cfg.pub/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
 
 ############# Local Rules ###############
 
 ### Command usage
- func.app.sh: should be source for loading functions;
+  func.*: should be sourced for loading functions;
 
 ### Relevant Dirs
   App Dirs    :  ~/utils
   Config Dirs :  ~/cfg.*  <------- Project name
-  Work Dirs   :  ~/bin ~/db ~/.var ~/.trash
+  Work Dirs   :  ~/bin ~/.var ~/.trash
 
-### Comment in scripts
- # Required packages: *   <------- Package list that wants to be installed
- # Required scripts: *    <------- Script list for dependency check
- #alias *                 <------- Alias name that itself wants to be
- #link  *                 <------- Symbolic link name that itself wants to be
+### Comment in script files
+ # Required packages: *   <------- Package list that is required in the script file
+ # Required scripts: *    <------- Script file list for dependency check
+ #alias *                 <------- Alias name for the script file
+ #link  *                 <------- Symbolic link name for the script file
  #link:distribution *     <------- Link if distribution is matched
 
 ############### General information ################
@@ -46,12 +46,12 @@ git clone https://git.hub/ciax/cfg.pub
  Invoked bash as a Login shell
   .bash_profile || .bash_login || .profile (calls .bashrc)
  Invoked bash as others 
-  .bashrc (calls .bash_complete)
+  .bashrc
 
 ### Git Tips
-#To make new repository
-git --bare init
-#To clone empty repository
-git clone (dir)
-#To push to bare repository at first time
-git push origin master
+ To make new repository
+   git --bare init
+ To clone empty repository
+   git clone (dir)
+ To push to bare repository at first time
+   git push origin master
