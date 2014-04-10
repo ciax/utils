@@ -1,5 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
+# Description: lantronix configulator
 # use nc for input to lantronix (i.e. ltcfg id | nc host 23)
 . func.getpar
 _usage "[id] (range)" <(db-exec "select distinct host from lantronix;")
