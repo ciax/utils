@@ -11,10 +11,11 @@ _usage "[file]"
 host=$(hostname)
 fid=$(md5sum $1|head -c10)
 dir=$(cd $(dirname $1);pwd -P)
+name=$(basename $1)
 base64=$(gzip -c $1|base64 -w0)
 dist=$(info-dist)
-stat -c "%n %a %Y %U" $1 | {
-    read name mode date owner
+stat -c "%a %Y %U" $1 | {
+    read mode date owner
     bkup-exec <<EOF
 insert or ignore into content values('$fid','$mode','$date','$base64');
 insert or ignore into list values('$fid','$host','$dist','$owner','$name','$dir');
