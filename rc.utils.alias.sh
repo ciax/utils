@@ -7,7 +7,7 @@ done < <(cd ~/bin;grep '^#alias' *)
 [[ $0 == *utils.alias* ]] && alias
 
 # General Commands
-alias update='upd-git;upd-db'
+alias update='git-update;db-update'
 alias mo='more'
 alias ls='ls -AF --color'
 alias v='ls -l'
