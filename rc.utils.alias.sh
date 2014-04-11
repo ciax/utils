@@ -9,7 +9,6 @@ done < <(cd ~/bin;grep '^#alias' *)
 # General Commands
 alias update='upd-git;upd-db'
 alias mo='more'
-alias e='emacs -nw'
 alias ls='ls -AF --color'
 alias v='ls -l'
 alias ag='alias|grep -i'
