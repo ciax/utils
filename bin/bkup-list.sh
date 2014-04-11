@@ -1,9 +1,17 @@
 #!/bin/bash
 #alias bl
-# Required scripts: bkup-exec
+# Required scripts: func.getpar,bkup-exec
 # Descripton: display backed up files
+. func.getpar
+list(){
+    where="where host == '$(hostname)' and dist == '$(info-dist)'"
+    bkup-exec "select dir,name,count(*) from list $where group by name;"|tr , ' '
+}
+opt-b(){ #bare output
+    list;exit
+}
 [ "$(bkup-exec .tables)" ] || bkup-init
-IFS=,
+_usage
 while read dir name count;do
     echo -e "$name [$dir] ($count)"
-done < <(bkup-exec "select dir,name,count(*) from list group by name;")|column -t
+done < <(list)|column -t

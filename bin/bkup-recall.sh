@@ -15,12 +15,9 @@ if [ -s "$name" ] ; then
     cfid=$(md5sum $name|head -c10)
     uniq=" and fid != '$cfid'"
 fi
-nstr="name=='$name'"
 host=${2:-$(hostname)}
-hstr="host=='$host'"
-dist=$(info-dist)
-dstr="dist=='$dist'"
-sub_fid="select fid from list where $nstr and $hstr and $dstr $uniq"
+limit="name=='$name' and host=='$host' and dist=='$(info-dist)'"
+sub_fid="select fid from list where $limit $uniq"
 sub_date="select $sel(date) from content where id in ($sub_fid)"
 date=$(bkup-exec "$sub_date;")
 sub_id="select id from content where date == '$date'"
@@ -32,7 +29,7 @@ if [ "$fid" ] ; then
         chmod $mode $name
         touch -d "@$date" $name
     }
-    sub_fid="select fid from list where $nstr and $hstr and $dstr"
+    sub_fid="select fid from list where $limit"
     total=$(bkup-exec "select count(id) from content where id in ($sub_fid);")
     rank=$(bkup-exec "select count(id) from content where id in ($sub_fid) and date > '$date';")
     echo "Recall OK($rank/$total)"
