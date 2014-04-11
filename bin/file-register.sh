@@ -60,7 +60,6 @@ dirreg(){
     for i ; do
         pushd $i >/dev/null
         link2dir -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
-        link2dir lib lib*
         link2dir .emacs.d *.el
         dirreg */
         popd >/dev/null
@@ -68,6 +67,7 @@ dirreg(){
     showlist
 }
 shopt -s nullglob
-echo $C3"File Registering"$C0
+read DIST etc < /etc/issue
+echo $C3"File Registering ($DIST)"$C0
 dirreg ~/utils ~/cfg.*/ $*
-file-clean ~/bin ~/lib ~/db ~/.var
+file-clean ~/bin ~/.var
