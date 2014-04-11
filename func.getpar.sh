@@ -34,10 +34,18 @@ _optlist(){
         fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
         echo $C2"${fnc#*opt}$C0${desc/:=/=}"
-    done < <(grep '^opt-' $0)|_list_line
+    done < <(grep '^opt-' $0)
 }
-# Description: handling options
+# Description: check options
 _chkopt(){
+    for i in ${OPT[*]};do
+        type -t "opt${i%%=*}" &>/dev/null && continue
+        echo $C1"Invalid option ($i)"$C0
+        return 1
+    done
+}
+# Description: option handling
+_exeopt(){
     for i in ${OPT[*]};do
         set - ${i//=/ }
         if type -t opt$1 &>/dev/null;then
@@ -82,8 +90,8 @@ _chkargv(){
 _usage(){
     # Show usage
     local reqp=$1;shift
-    _chkopt && _chkargc "$reqp" && _chkargv "$@" && return 0
-    echo -e "Usage: $C3${0##*/}$C0 $(_optlist)$reqp" > /dev/stderr
+    _chkopt && _chkargc "$reqp" && _chkargv "$@" && _exeopt && return 0
+    echo "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" > /dev/stderr
     [ "$1" ] && _list_cols < "$1" > /dev/stderr
     exit 2
 }
