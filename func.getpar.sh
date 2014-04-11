@@ -1,7 +1,7 @@
 #!/bin/bash
 shopt -s nullglob
 # Description: Print alert to stderr
-_alert(){ echo "$C1$*$C0" >/dev/stderr; }
+_alert(){ echo "$C1$*$C0" 1>&2; }
 # Desctiption: Abort with message
 # Usage: _abort [message]
 _abort(){ _alert "$*";exit 1; }
@@ -9,9 +9,9 @@ _abort(){ _alert "$*";exit 1; }
 # Description: show folded list
 _list_cols(){
     while read line;do
-        [[ "$line" =~ , ]] && line="  $C2${line/,/$C0: }"
-        echo "  $line"
-    done|column
+        [[ "$line" =~ , ]] && line="$C2${line/,/$C0: }"
+        echo "$line"
+    done|column|while read line;do echo -e "\t$line";done
 }
 # Description: show lined list
 _list_line(){
@@ -40,20 +40,14 @@ _optlist(){
 _chkopt(){
     for i in ${OPT[*]};do
         type -t "opt${i%%=*}" &>/dev/null && continue
-        echo $C1"Invalid option ($i)"$C0
+        _alert "Invalid option ($i)"
         return 1
     done
 }
 # Description: option handling
 _exeopt(){
     for i in ${OPT[*]};do
-        set - ${i//=/ }
-        if type -t opt$1 &>/dev/null;then
-            opt$*
-        else
-            echo $C1"Invalid option ($i)"$C0
-            return 1
-        fi
+        type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
     done
 }
 # Description: check the argument count
@@ -61,14 +55,14 @@ _chkargc(){
     local reqp="$1"
     local reqc="$(IFS=[;set - $reqp;echo $(($#-1)))"
     [[ "$reqp" =~ '<' ]] && [ -t 0 ] && reqc=$(($reqc+1))
-    [ "$ARGC" -ge "$reqc" ] || { echo $C1"Short Argument"$C0; return 1; }
+    [ "$ARGC" -ge "$reqc" ] || { _alert "Short Argument"; return 1; }
 }
 # Description: check the argument value
 _chkargv(){
     local i=0
     for file;do
         grep -q "${ARGV[$i]}" "$file" || {
-            echo $C1"Invalid argument (${ARGV[$i]})"$C0
+            _alert "Invalid argument (${ARGV[$i]})"
             return 1
         }
         i=$(($i+1))
@@ -91,8 +85,8 @@ _usage(){
     # Show usage
     local reqp=$1;shift
     _chkopt && _chkargc "$reqp" && _chkargv "$@" && _exeopt && return 0
-    echo "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" > /dev/stderr
-    [ "$1" ] && _list_cols < "$1" > /dev/stderr
+    echo "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" 1>&2
+    [ "$1" ] && _list_cols < "$1" 1>&2
     exit 2
 }
 
