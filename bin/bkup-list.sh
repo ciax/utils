@@ -4,6 +4,6 @@
 # Descripton: display backed up files
 [ "$(bkup-exec .tables)" ] || bkup-init
 IFS=,
-while read name count;do
-    echo "$name ($count)"
-done < <(bkup-exec "select name,count(*) from list group by name;")
+while read dir name count;do
+    echo -e "$name [$dir] ($count)"
+done < <(bkup-exec "select dir,name,count(*) from list group by name;")|column -t
