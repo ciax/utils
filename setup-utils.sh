@@ -9,4 +9,5 @@ DIST="$1"
 pkg init
 upd-git
 upd-db
+bkup-init
 echo $C1"*** You need to re-login here***"$C0

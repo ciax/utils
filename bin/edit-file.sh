@@ -7,6 +7,7 @@
 _usage "[file]"
 if [ -s "$1" ];then
     user=$(stat -c %U $1)
+    bkup-stash $1
 else
     user=$LOGNAME
 fi
