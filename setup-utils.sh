@@ -7,6 +7,5 @@ DIST="$1"
 ~/utils/bin/file-register.sh
 ~/utils/bin/setup-bashrc.sh
 pkg init
-upd-db
-bkup-init
-echo $C1"*** You need to re-login here***"$C0
+db-update
+echo $C1"*** You need to invoke 'exec bash' here***"$C0
