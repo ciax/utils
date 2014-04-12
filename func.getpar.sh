@@ -85,7 +85,7 @@ _usage(){
     # Show usage
     local reqp=$1;shift
     _chkopt && _chkargc "$reqp" && _chkargv "$@" && _exeopt && return 0
-    echo "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" 1>&2
+    echo -e "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" 1>&2
     [ "$1" ] && _list_cols < "$1" 1>&2
     exit 2
 }

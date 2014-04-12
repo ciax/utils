@@ -20,7 +20,7 @@ _query(){
 _usage "[oldstr] [newstr] (ext)
 \tENV{files} for target
 \tENV{ex} for exclude line
-\t(ext) includes {mv old.ext new.ext}" $1
+\t(ext) includes {mv old.ext new.ext}"
 . func.temp
 _temp outtmp
 oldstr="$1"
