@@ -20,5 +20,5 @@ stat -c "%a %Y %U" $1 | {
 insert or ignore into content values('$fid','$mode','$date','$base64');
 insert or ignore into list values('$fid','$host','$dist','$owner','$name','$dir');
 EOF
-    echo "File stashed"
+    echo "$fid"
 }

@@ -11,8 +11,7 @@ opt-f(){ sel="min"; } #first
 _usage "[file] (host)"
 name="$1"
 if [ -s "$name" ] ; then
-    bkup-stash $name >/dev/null
-    cfid=$(md5sum $name|head -c10)
+    cfid=$(bkup-stash $name)
     uniq=" and fid != '$cfid'"
 fi
 host=${2:-$(hostname)}
