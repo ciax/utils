@@ -22,6 +22,8 @@ _overwrite(){
     else
         local dir="$(dirname $2)"
         [ -e "$dir" ] || mkdir -p "$dir"
-        /bin/mv -b $1 $2
+        [ -d ~/.trash ] || mkdir -p ~/.trash
+        chmod --reference=$2 $1
+        /bin/mv -b $2 ~/.trash/ && /bin/mv $1 $2
     fi
 }
