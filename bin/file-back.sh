@@ -4,4 +4,6 @@
 # Description: restore backup file
 . func.getpar
 _usage "[file]"
-[ "$1~" ] && /bin/mv $1~ $1
+[ -e ~/.trash/$1 ] || exit
+/bin/mv ~/.trash/$1 $1
+echo $C3"File $1 restored"$C0
