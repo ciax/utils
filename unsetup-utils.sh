@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description: uninstall utils environment
 cd
-for i in bin .var .trash utils;do
+for i in bin .var .trash;do
     [ -d $i ] && rm -rf $i
 done
 shopt -s dotglob
