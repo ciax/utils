@@ -12,25 +12,25 @@ open_super(){
 }
 
 get_hubs(){
-    while read h u n; do
-        u="${u:-$1}"
-        sub[$u]="${sub[$u]},$h" # add itself to parent var
-        super[$h]="$u"
-        eval "title[$h]=$n$C0" # to remove '"'
-        eval "$(db-trace $h hub subnet domain)"
-        domain[$h]=$name
+    while read crh sup desc; do
+        sup="${sup:-top}"
+        sub[$sup]="${sub[$sup]},$crh" # add itself to parent var
+        super[$crh]="$sup"
+        eval "title[$crh]=$desc$C0" # to remove '"'
+        eval "$(db-trace $crh hub subnet domain)"
+        domain[$crh]=$name
     done < <(db-exec "select id,super,description from hub where subnet == '$1';"|sort)
 }
 
 get_hosts(){
-    for u in ${!title[*]};do
-        while read h fdqn; do
-            sub[$u]="${sub[$u]},$h"
-            super[$h]="$u"
-            title[$h]="$C4$h$C0"
-            site="$h.${domain[$u]}"
-            chk_host "$site" && open_super $h
-        done < <(db-exec "select id,fdqn from host where hub == '$u';")
+    for sup in ${!title[*]};do
+        while read hst fdqn; do
+            sub[$sup]="${sub[$sup]},$hst:"
+            super[$hst:]="$sup"
+            title[$hst:]="$C4$hst$C0"
+            site="$hst.${domain[$sup]}"
+            chk_host "$site" && open_super $hst:
+        done < <(db-exec "select id,fdqn from host where hub == '$sup';")
     done
 }
 
@@ -71,4 +71,4 @@ IFS=','
 get_hubs $1
 get_hosts
 echo "$nl $1"
-show_tree $1
+show_tree top
