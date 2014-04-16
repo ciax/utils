@@ -21,4 +21,4 @@
  1. export csv file from spread sheet as exp-db
  2. split the exp-db by project into files which is stored in /cfg.(project) (command: db-split)
  3. register the db files (link to /db directory) (command: file-register)
- 4. update sqlite3 rdb (command: upd-db) 
+ 4. update sqlite3 rdb (command: db-update) 

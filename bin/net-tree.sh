@@ -14,10 +14,10 @@ open_super(){
 get_hubs(){
     while read crh sup desc; do
         sup="${sup:-top}"
-        sub[$sup]="${sub[$sup]},$crh" # add itself to parent var
+        sub[$sup]="${sub[$sup]}|$crh" # add itself to parent var
         super[$crh]="$sup"
-        eval "title[$crh]=$desc$C0" # to remove '"'
-        eval "$(db-trace $crh hub subnet domain)"
+        title[$crh]=$desc$C0
+        eval $(db-trace $crh hub subnet domain)
         domain[$crh]=$name
     done < <(db-exec "select id,super,description from hub where subnet == '$1';"|sort)
 }
@@ -25,7 +25,7 @@ get_hubs(){
 get_hosts(){
     for sup in ${!title[*]};do
         while read hst fdqn; do
-            sub[$sup]="${sub[$sup]},$hst:"
+            sub[$sup]="${sub[$sup]}|$hst:"
             super[$hst:]="$sup"
             title[$hst:]="$C4$hst$C0"
             site="$hst.${domain[$sup]}"
@@ -36,9 +36,9 @@ get_hosts(){
 
 show_tree(){
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
-    last=${sub[$1]##*,}
+    last="${sub[$1]##*|}"
     local ind="$2   "
-    for i in ${sub[$1]#*,};do
+    for i in ${sub[$1]#*|};do
         echo "${ind}|${connect[$i]:--${C1}X-}${title[$i]}"$C0
         if [ "$i" = "$last" ];then
             show_tree $i "$ind "
@@ -67,7 +67,7 @@ declare -A super
 declare -A title
 declare -A domain
 declare -A connect
-IFS=','
+IFS='|'
 get_hubs $1
 get_hosts
 echo "$nl $1"

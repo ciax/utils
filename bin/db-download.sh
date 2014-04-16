@@ -33,12 +33,12 @@ _temp dlfile dbfile
 site="https://docs.google.com/spreadsheets/d/"
 key=$(db-exec "select key from gdocs where id == '$1';")
 while read line;do
-    read sheet gid <<< "${line//,/ }"
+    read sheet gid <<< "${line//|/ }"
     echo $C3"Retrieving $sheet"$C0
     url="$site$key/export?format=csv&id=$key&gid=$gid"
     wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
-upd-db
+db-update
 for d in ~/cfg.*;do
     cd $d
     file-clean
