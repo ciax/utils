@@ -11,7 +11,7 @@ site(){
     [ ! "$password" ] || [ "$proxy" ] || return
     eval "$(db-trace $host host)"
     echo "Host $1"
-    echo -e "\tHostName ${alias:-${fdqn:-$host}}"
+    echo -e "\tHostName ${alias:-${static_ip:-${fdqn:-$host}}}"
     echo -e "\tUser $user"
     [ "$port" ] && echo -e "\tPort $port"
     [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $proxy"

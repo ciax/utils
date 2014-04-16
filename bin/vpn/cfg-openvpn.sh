@@ -26,7 +26,7 @@ persist-tun
 float
 daemon
 keepalive 15 60
-remote $fdqn 1194
+remote ${static_ip:-$fdqn} 1194
 ca $vardir/rootca.crt
 cert $vardir/$myhost.crt
 key $vardir/$myhost.key
