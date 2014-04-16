@@ -6,7 +6,7 @@
 . func.getpar
 
 open_super(){
-    connect[$1]="---$C2"
+    connect[$1]="---${2:-$C2}"
     local up="${super[$1]}"
     [ "$up" ] && [ ! "${connect[$up]}" ] && open_super "$up"
 }
@@ -27,9 +27,9 @@ get_hosts(){
         while read hst fdqn; do
             sub[$sup]="${sub[$sup]}|$hst:"
             super[$hst:]="$sup"
-            title[$hst:]="$C4$hst$C0"
+            title[$hst:]="$hst$C0"
             site="$hst.${domain[$sup]}"
-            chk_host "$site" && open_super $hst:
+            chk_host "$site" && open_super $hst: "$C4"
         done < <(db-exec "select id,fdqn from host where hub == '$sup';")
     done
 }
