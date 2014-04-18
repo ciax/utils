@@ -11,7 +11,7 @@ _usage "[vpnhost]" <(db-list vpn)
 vardir=$HOME/.var
 myhost=`hostname`
 eval "$(db-trace $1 vpn host)"
-[ "$fdqn" ] || _abort "No such host in DB"
+[ "$static_ip" ] || _abort "No such host in DB"
 cat <<EOF
 verb 3
 script-security 2
@@ -26,7 +26,7 @@ persist-tun
 float
 daemon
 keepalive 15 60
-remote ${static_ip:-$fdqn} 1194
+remote $static_ip 1194
 ca $vardir/rootca.crt
 cert $vardir/$myhost.crt
 key $vardir/$myhost.key

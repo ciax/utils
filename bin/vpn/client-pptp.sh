@@ -13,7 +13,7 @@ _usage "[vpnhost]" <(db-list vpn)
 eval "$(db-trace $1 vpn)"
 eval "$(db-trace $host host)"
 id="--create $1"
-host="--server $fdqn"
+host="--server $static_ip"
 user="--username $user"
 [ "$password" ] && pw="--password $password"
 opt="--encrypt"
