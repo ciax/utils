@@ -4,7 +4,7 @@
 # Required scripts: func.getpar,cfg-ipsec
 # Description: vpn client of ipsec
 . func.getpar
-PATH=$PATH:/usr/sbin
+PATH+=:/usr/sbin
 opt-d(){ sudo vpnc-disconnect;exit; } #disconnect
 _usage "[vpnhost]" <(db-list vpn)
 . func.temp

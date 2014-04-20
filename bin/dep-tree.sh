@@ -16,7 +16,7 @@ sub_list(){
         line="${line// /}"
         line="${line##*:}"
         for sup in ${line//,/ };do
-            sub0[$sup]="${sub0[$sup]} $me"
+            sub0[$sup]+=" $me"
         done
     done < <(egrep -R "$search" *)
 }
@@ -32,7 +32,7 @@ dep_dig(){
 dep_stack(){
     for me in ${!super[*]};do
         local sup=${super[$me]}
-        sub[$sup]="${sub[$sup]} $me"
+        sub[$sup]+=" $me"
     done
 }
 show_tree(){

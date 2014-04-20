@@ -14,7 +14,7 @@ open_super(){
 get_hubs(){
     while read crh sup desc; do
         sup="${sup:-top}"
-        sub[$sup]="${sub[$sup]}|$crh" # add itself to parent var
+        sub[$sup]+="|$crh" # add itself to parent var
         super[$crh]="$sup"
         title[$crh]=$desc$C0
         eval $(db-trace $crh hub subnet)
@@ -24,7 +24,7 @@ get_hubs(){
 get_hosts(){
     for sup in ${!title[*]};do
         while read hst static_ip; do
-            sub[$sup]="${sub[$sup]}|$hst:"
+            sub[$sup]+="|$hst:"
             super[$hst:]="$sup"
             title[$hst:]="$hst$C0"
             site="${static_ip:-$hst}"

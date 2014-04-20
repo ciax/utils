@@ -22,7 +22,7 @@ addpath(){
         [ -d "$j" ] || continue
         (IFS=:;for i in $list;do
             [ "$j" = "$i" ] && break
-        done) || list="$list:$j"
+        done) || list+=":$j"
     done
     echo $list
 }
