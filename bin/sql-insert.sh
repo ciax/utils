@@ -6,10 +6,10 @@
 _usage "[tables]"
 for i;do
     table=$(show-tables $i) || continue
-    pfx="insert or ignore into $table values ("
+    pfx="insert or ignore into $table values ('"
     while read line; do
-        list="'${line//,/','}'"
-        null="${list//\'\'/null}"
-        echo "$pfx$null);"
-    done < <(egrep -hv '^([#!].*|[[:blank:]]*)$' db-$i*.csv|nkf -Lu|tr $'\t' ',')
+        line=${line//,/"','"}
+        null=${line//"''"/null}
+        echo "$pfx$null');"
+    done < <(egrep -hv '^([#!].*|[[:blank:]]*)$' db-$i*.csv|nkf -Lu)
 done
