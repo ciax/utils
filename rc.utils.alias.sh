@@ -43,7 +43,7 @@ e-alias(){
     popd >/dev/null
 }
 reg(){
-    file-register
+    file-register $*
     source rc.utils.alias
 }
 gr(){
