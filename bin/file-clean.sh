@@ -11,8 +11,8 @@ chkdir(){
 }
 nouse(){
     tsh=~/.trash
-    [ "$1" ] || return
     [ -d $tsh ] || mkdir $tsh || { echo "Can't make $tsh"; exit 1; }
+    [ "$1" ] || return
     /bin/mv -fb "$@" $tsh
     /bin/ls -aF --color
 }
