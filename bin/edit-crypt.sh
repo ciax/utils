@@ -6,13 +6,15 @@
 . func.getpar
 passfile="$HOME/.ssh/.gpgpass"
 salt="--passphrase-file $passfile"
+opt-i(){ #init
+    grep -q . "$passfile" >/dev/null 2>&1 && exit
+    read -p "GPG Password:" -e passphrase < $(tty)
+    echo "$passphrase" > $passfile
+    exit
+}
 opt-d(){ #decrypt
     base64 -d|gpg $salt
     exit
 }
-if [ ! -s "$passfile" ] ; then
-    read -p "GPG Password:" -e passphrase < $(tty)
-    echo "$passphrase" > $passfile
-fi
 _usage "<file>"
 cat $*|gpg -c --force-mdc $salt|base64 -w0
