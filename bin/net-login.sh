@@ -18,17 +18,15 @@ if [ "$command" = telnet ]; then
     telnet $host
 else
     . func.temp
-    str="ssh $sshopt ${user:+$user@}$host"
+    batch="-o BatchMode=yes"
+    ssharg="$sshopt ${user:+$user@}$host"
     [ "$VER" ] && echo $str
-    if [ "$password" ] ; then
-        _temp expfile
-        echo "set timeout 10" > $expfile
-        echo "spawn -noecho $str" >> $expfile
-        echo "expect word: { send $password\n };" >> $expfile
-        [ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
-        echo "interact" >> $expfile
-        expect $expfile
-    else
-        $str $rcmd
-    fi
+    ssh $batch $ssharg $rcmd && exit
+    _temp expfile
+    echo "set timeout 10" > $expfile
+    echo "spawn -noecho ssh $ssharg" >> $expfile
+    echo "expect word: { send $password\n };" >> $expfile
+    [ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
+    echo "interact" >> $expfile
+    expect $expfile
 fi
