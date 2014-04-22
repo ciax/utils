@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias apt
 #alias wf which
-#link:Debian pkg
-#link:Ubuntu pkg
+#link(Debian) pkg
+#link(Ubuntu) pkg
 # Required packages: deborphan,apt-file
 # Required packages(Debian): apt-spy
 # Required scripts: func.getpar, show-required

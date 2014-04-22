@@ -5,7 +5,7 @@
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 addlist(){
     local dir="${1%/*}"
-    dirlist[$dir]="${dirlist[$dir]} ${1##*/}"
+    dirlist[$dir]+=" ${1##*/}"
 }
 showlist(){
     for i in ${!dirlist[*]};do
@@ -26,7 +26,7 @@ makelink(){
     addlist $dst
 }
 extlink(){
-    egrep "^#link(:$DIST| )" "$1"|cut -d' ' -f2-
+    egrep "^#link(\($DIST\)|) " "$1"|cut -d' ' -f2-
 }
 link2dir(){
     [ "$1" = "-x" ] && { local xopt=$1;shift; }

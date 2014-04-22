@@ -1,5 +1,5 @@
 #!/bin/bash
-#link:CentOS pkg
+#link(CentOS) pkg
 # Required scripts: func.getpar, show-required
 # Description: Debian package utils
 . func.getpar
