@@ -34,11 +34,12 @@ git clone https://git.hub/ciax/cfg.(proj).git
   Work Dirs   :  ~/bin ~/.var ~/.trash
 
 ### Comment in script files
- # Required packages: *   <------- Package list that is required in the script file
+ # Required packages: *   <--- Package list that is required in the script file
+ # Required packages(DIST): * <--- Package list limit with distribution
  # Required scripts: *    <------- Script file list for dependency check
  #alias *                 <------- Alias name for the script file
  #link  *                 <------- Symbolic link name for the script file
- #link:distribution *     <------- Link if distribution is matched
+ #link:DIST *             <------- Link if distribution is matched
 
 ############### General information ################
 
