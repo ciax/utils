@@ -4,5 +4,4 @@
 # Description: show required something in comments
 . func.getpar
 _usage "[type]"
-cd ~/utils
-grep -ihr "^# *req.* $1" * | tr -d ' ' | sed -re 's/\([^\)]+\)//g' -e 's/.*://'| tr ',' '\n'|grep .|sort -u
+grep -ihr "^# *req.* $1" ~/utils . | tr -d ' ' | sed -re 's/\([^\)]+\)//g' -e 's/.*://'| tr ',' '\n'|grep .|sort -u
