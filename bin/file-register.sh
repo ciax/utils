@@ -69,5 +69,5 @@ dirreg(){
 shopt -s nullglob
 read DIST etc < /etc/issue
 echo $C3"File Registering ($DIST)"$C0
-dirreg ~/utils ~/cfg.*/ $*
+dirreg ~
 file-clean ~/bin ~/.var
