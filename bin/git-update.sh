@@ -1,9 +1,11 @@
 #!/bin/bash
-# Required scripts: file-register
+# Required scripts: git-dirs,file-register
 # Description: update git repositories
-for i in ~/utils/ ~/cfg.*/;do
+cd
+for i in $(git-dirs);do
     echo $C3"Git update for $i"$C0
-    cd $i
+    pushd $i >/dev/null
     git pull
+    popd >/dev/null
 done
 file-register
