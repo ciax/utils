@@ -4,12 +4,13 @@
 # Description: crypt/decrypt strings
 #   need ~/.ssh/.gpgpass for passphrase
 . func.getpar
-passfile="$HOME/.ssh/.gpgpass"
+passfile="$HOME/.gpgpass"
 salt="--passphrase-file $passfile"
 opt-i(){ #init
     grep -q . "$passfile" >/dev/null 2>&1 && exit
-    read -p "GPG Password:" -e passphrase < $(tty)
+    read -p "GPG Password:" -e passphrase < /dev/tty
     echo "$passphrase" > $passfile
+    chomd 600 $passfile
     exit
 }
 opt-e(){ #encrypt
@@ -17,4 +18,4 @@ opt-e(){ #encrypt
     exit
 }
 _usage "<file>"
-base64 -d|gpg $salt
+base64 -d|gpg $salt || rm $passfile
