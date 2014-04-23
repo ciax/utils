@@ -4,7 +4,7 @@
 # Description: crypt/decrypt strings
 #   need ~/.ssh/.gpgpass for passphrase
 . func.getpar
-passfile="$HOME/.gpgpass"
+passfile="$HOME/.var/gpgpass"
 salt="--passphrase-file $passfile"
 opt-i(){ #init
     grep -q . "$passfile" >/dev/null 2>&1 && exit
