@@ -20,7 +20,7 @@ else
     . func.temp
     batch="-o BatchMode=yes"
     ssharg="$sshopt ${user:+$user@}$host"
-    [ "$VER" ] && echo $str
+    [ "$VER" ] && echo "ssh $ssharg $rcmd"
     ssh $batch $ssharg $rcmd && exit
     _temp expfile
     echo "set timeout 10" > $expfile

@@ -10,7 +10,7 @@ opt-i(){ #init
     grep -q . "$passfile" >/dev/null 2>&1 && exit
     read -p "GPG Password:" -e passphrase < /dev/tty
     echo "$passphrase" > $passfile
-    chomd 600 $passfile
+    chmod 600 $passfile
     exit
 }
 opt-e(){ #encrypt
