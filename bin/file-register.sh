@@ -61,6 +61,7 @@ dirreg(){
         [ -h "${i%/}" ] && continue
         [ -d "$i" ] || continue
         pushd $i >/dev/null
+        [ "$VER" ] && echo "Entering $PWD"
         link2dir -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
         link2dir .emacs.d *.el
         dirreg */
