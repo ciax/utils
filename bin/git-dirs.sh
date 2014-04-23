@@ -4,8 +4,9 @@ shopt -s nullglob
 showdir(){
     local i
     for i in */ ;do
+        [ -h ${i%/} ] && continue
         if [ -e "$i.git" ] ; then
-            echo "${i%/*}"
+            echo "${i%/}"
         else
             pushd $i > /dev/null
             showdir
