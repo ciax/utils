@@ -4,8 +4,10 @@ PATH=$PATH:~/bin
 echo $C3"Installing Packages"$C0
 set - $(</etc/issue)
 DIST="$1"
-~/utils/bin/file-register.sh
-~/utils/setup-bashrc.sh
+cd ~/utils
+./reg-bin.sh
+rec-dir reg-bin
+setup-bashrc
 pkg init
 db-update
 echo $C1"*** You need to invoke 'exec bash' here***"$C0
