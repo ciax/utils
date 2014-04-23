@@ -14,4 +14,5 @@ showdir(){
         fi
     done
 }
+cd
 showdir
