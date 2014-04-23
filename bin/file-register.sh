@@ -58,7 +58,9 @@ dirreg(){
     [ "$1" ] || return
     declare -A dirlist
     for i ; do
-        pushd $i >/dev/null
+        [ -h "${i%/}" ] && continue
+        [ -d "$i" ] || continue
+        pushd $i #>/dev/null
         link2dir -x bin *.sh *.pl *.py *.rb *.awk *.exp *.js
         link2dir .emacs.d *.el
         dirreg */
