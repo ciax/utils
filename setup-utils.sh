@@ -1,13 +1,9 @@
 #!/bin/bash
 # Description: install utils (need to re-login for environment effective)
-PATH=$PATH:~/bin
-echo $C3"Installing Packages"$C0
-set - $(</etc/issue)
-DIST="$1"
 cd ~/utils
 ./reg-bin.sh
-rec-dir reg-bin
-setup-bashrc
+. setup-bashrc
+rec-dirs reg-bin
 pkg init
 db-update
 echo $C1"*** You need to invoke 'exec bash' here***"$C0
