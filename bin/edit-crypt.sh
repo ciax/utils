@@ -12,9 +12,9 @@ opt-i(){ #init
     echo "$passphrase" > $passfile
     exit
 }
-opt-d(){ #decrypt
-    base64 -d|gpg $salt
+opt-e(){ #encrypt
+    cat $*|gpg -c --force-mdc $salt|base64 -w0
     exit
 }
 _usage "<file>"
-cat $*|gpg -c --force-mdc $salt|base64 -w0
+base64 -d|gpg $salt
