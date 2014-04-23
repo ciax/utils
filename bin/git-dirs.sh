@@ -2,14 +2,14 @@
 # Description: dirlist that has .git
 shopt -s nullglob
 showdir(){
-    cd $1
-    for i in */ ;do
-        [ -h ${i%/} ] && continue
-        if [ -e "$i.git" ] ; then
-            (cd $i;pwd -P)
-        else
+    [ -h "${1%/}" ] && return
+    cd $1 || return
+    if [ -d ".git" ] ; then
+        pwd -P
+    else
+        for i in */ ;do
             (showdir $i)
-        fi
-    done
+        done
+    fi
 }
 showdir ~
