@@ -25,8 +25,13 @@ nolink(){
     done
 }
 clrdir(){
+    echo -n "$sep${PWD#*$top}"
     nouse \#* *~ .*~ *.orig
     nolink * .*
 }
-echo $C3"File Cleaning ($PWD)"$C0
-_subdirs clrdir
+top="$PWD/"
+echo -n $C3"File Cleaning ("
+for i in ${*:-.};do
+    (cd $i && _subdirs clrdir)
+done
+echo ")"$C0
