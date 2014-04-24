@@ -5,6 +5,7 @@
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 . func.link
 . func.dirs
+echo $C3"File Registering"$C0
 _subdirs _binreg
 cd ~/bin
 while read file dst;do
@@ -12,3 +13,4 @@ while read file dst;do
     _mklink $(readlink $src) $dst
 done < <(egrep "^#link(\($DIST\)|) " *)
 _showlink
+file-clean
