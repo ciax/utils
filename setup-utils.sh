@@ -2,7 +2,8 @@
 # Description: install utils (need to re-login for environment effective)
 cd ~/utils
 ./setup-bin.sh
-. setup-bashrc
+./setup-bashrc.sh
+. ~/.bashrc
 rec-dirs setup-bin
 file-selflink
 pkg init
