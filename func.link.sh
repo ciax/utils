@@ -29,5 +29,4 @@ _binreg(){
 }
 shopt -s nullglob
 [ -d "$HOME/bin" ] || mkdir "$HOME/bin"
-PATH=~/bin:$PATH
 _binreg

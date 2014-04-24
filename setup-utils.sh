@@ -1,6 +1,7 @@
 #!/bin/bash
 # Description: install utils (need to re-login for environment effective)
 cd ~/utils
+. ./rc.utils.sh
 . ./func.link.sh
 file-reg
 pkg init
