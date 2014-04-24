@@ -8,7 +8,6 @@
 #  Config Dir: ~/cfg.(project)/db
 #  Ignore files that don't have (%proj) line
 . func.getpar
-
 split_sheet(){
     sheet=$1
     # Index line

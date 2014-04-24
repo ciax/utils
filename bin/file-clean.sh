@@ -1,7 +1,8 @@
 #!/bin/bash
 #alias clr
+# Required scripts: func.dirs
 # Description: File clean up (remove backup,unlinked files)
-
+. func.dirs
 shopt -s nullglob
 chkdir(){
     [ -h "$1" ] && return 1
@@ -24,15 +25,8 @@ nolink(){
     done
 }
 clrdir(){
-    for i;do
-        chkdir "${i%/}" || continue
-        pushd "$i" >/dev/null
-        nouse \#* *~ .*~ *.orig
-        nolink * .*
-        clrdir */
-        popd >/dev/null
-    done
+    nouse \#* *~ .*~ *.orig
+    nolink * .*
 }
-echo $C3"File Cleaning"$C0
-[ "$1" ] || set - .
-clrdir $*
+echo $C3"File Cleaning ($PWD)"$C0
+_subdirs clrdir

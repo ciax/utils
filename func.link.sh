@@ -20,6 +20,7 @@ _showlink(){
     [ "$link" ] && echo "[$link ] -> $C1${1:-~/bin}$C0"
 }
 _binreg(){
+    link=
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
         _mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"

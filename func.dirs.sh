@@ -4,8 +4,9 @@
 shopt -s nullglob
 _subdirs(){
     local cmd="${*:-pwd -P}"
+    eval "$cmd"
     for i in */ ;do
         [ -h "${i%/}" ] && continue
-        (cd $i && { eval "$cmd"; _subdirs "$cmd"; } )
+        ( cd $i && _subdirs "$cmd" )
     done
 }
