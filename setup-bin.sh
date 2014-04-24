@@ -14,13 +14,19 @@ mklink(){
             return 1
         fi
     fi
-    ln -sf $src $dst
+    ln -sf $src $dst && link+=" ${dst##*/}"
+}
+showlink(){
+    [ "$link" ] && echo "[$link ] -> $C1~/bin$C0"
+}
+regist(){
+    for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
+        [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
+        mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
+    done
+    showlink
 }
 shopt -s nullglob
 [ -d "$HOME/bin" ] || mkdir "$HOME/bin"
 link=''
-for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
-    [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
-    mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}" && link+=" $i"
-done
-[ "$link" ] && echo "[$link ] -> $C1~/bin$C0"
+regist

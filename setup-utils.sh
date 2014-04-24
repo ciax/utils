@@ -3,7 +3,8 @@
 cd ~/utils
 ./setup-bin.sh
 . setup-bashrc
-rec-dirs sestup-bin
+rec-dirs setup-bin
+file-selflink
 pkg init
 db-update
 echo $C1"*** You need to invoke 'exec bash' here***"$C0
