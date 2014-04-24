@@ -11,7 +11,7 @@ chkdir(){
     mkdir "$1"
 }
 nouse(){
-    tsh=~/.trash
+    local tsh=~/.trash
     [ -d $tsh ] || mkdir $tsh || { echo "Can't make $tsh"; exit 1; }
     [ "$1" ] || return
     /bin/mv -fb "$@" $tsh
@@ -25,7 +25,8 @@ nolink(){
     done
 }
 clrdir(){
-    echo -n "$sep${PWD#*$top}"
+    local dir="${PWD#*$top}"
+    echo -n "$sep${dir/$HOME/~}"
     nouse \#* *~ .*~ *.orig
     nolink * .*
 }
