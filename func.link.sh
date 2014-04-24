@@ -1,8 +1,8 @@
 #!/bin/bash
-# Description: make links of script files to ~/bin
+# Description: make links of files
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
-mklink(){
+_mklink(){
     local src="$1";shift
     local dst="$1";shift
     if [ -e $dst ] ; then
@@ -16,17 +16,16 @@ mklink(){
     fi
     ln -sf $src $dst && link+=" ${dst##*/}"
 }
-showlink(){
-    [ "$link" ] && echo "[$link ] -> $C1~/bin$C0"
+_showlink(){
+    [ "$link" ] && echo "[$link ] -> $C1${1:-~/bin}$C0"
 }
-regist(){
+_binreg(){
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
-        mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
+        _mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
     done
-    showlink
+    _showlink
 }
 shopt -s nullglob
 [ -d "$HOME/bin" ] || mkdir "$HOME/bin"
-link=''
-regist
+PATH=~/bin:$PATH

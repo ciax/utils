@@ -1,5 +1,6 @@
 #!/bin/bash
-# Required scripts: rec-dirs
+# Required scripts: func.dirs
 # Description: dirlist that has .git
+. func.dirs
 cd
-rec-dirs '[ -d ".git" ] && pwd -P'
+_execdir '[ -d ".git" ] && pwd -P'

@@ -1,12 +1,14 @@
 #!/bin/bash
-# Required scripts: file-clean
+# Required scripts: func.link,func.dirs,file-clean
 # Description: make links to the specific dirs categorized by file type 
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 cd ~/bin
-. setup-bin
+. func.link
+. func.dirs
+_execdir _binreg
 while read file dst;do
     src=${file%:*}
-    mklink $(readlink $src) $dst
+    _mklink $(readlink $src) $dst
 done < <(egrep "^#link(\($DIST\)|) " *)
-showlink
+_showlink
