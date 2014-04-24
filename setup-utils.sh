@@ -4,7 +4,8 @@ echo $C3"Setting up utils"$C0
 cd ~/utils
 . ./func.link.sh
 . ./rc.utils.sh
-file-reg
+file-linkbin
+file-linkcfg
 pkg init
 db-update
 setup-bashrc
