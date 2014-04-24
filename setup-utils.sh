@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: install utils (need to re-login for environment effective)
+echo $C3"Setting up utils"$C0
 cd ~/utils
 . ./rc.utils.sh
 . ./func.link.sh
