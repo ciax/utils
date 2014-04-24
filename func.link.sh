@@ -2,6 +2,13 @@
 # Description: make links of files
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
+_abspath(){
+    eval "local apath=$1"
+    if [[ "$apath" =~ / ]]; then
+        echo -n $(cd ${apath%/*};pwd -P)
+    fi
+    echo " ${apath##*/}"
+}
 _mklink(){
     local src="$1";shift
     local dst="$1";shift
