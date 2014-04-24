@@ -8,12 +8,12 @@ selflink(){
     while read file dst;do
         src=${file%:*}
         _mklink $(readlink $src) $dst
-    done < <(egrep "^[#;]link(\($DIST\)|) " *)
+    done < <(egrep -H "^[#;]link(\($DIST\)|) " *)
 }
 . func.link
 . func.dirs
-echo $C3"File Registering"$C0
+echo $C3"File Registering (~/bin)"$C0
 _subdirs _binreg
 selflink
 _showlink
-file-clean
+file-clean ~/bin
