@@ -3,8 +3,8 @@
 #alias wf which
 #link(Debian) pkg
 #link(Ubuntu) pkg
-# Required packages: deborphan,apt-file
-# Required packages(Debian): apt-spy
+# Required packages(Ubuntu): deborphan,apt-file
+# Required packages(Debian): deborphan,apt-file,apt-spy
 # Required scripts: func.getpar, show-required
 # Description: Debian package utils
 . func.getpar
