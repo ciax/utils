@@ -40,7 +40,7 @@ e-alias(){
 reg(){
     for i in $(git-dirs) $*;do
         cd $i
-        file-register
+        file-linkbin
     done
     source rc.utils.alias
 }
