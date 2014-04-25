@@ -22,6 +22,9 @@ _mklink(){
             echo $C1"Error: $dst is regular file"$C0
             return 1
         fi
+    else
+        local ddir="${dst%/*}"
+        [ -d "$ddir" ] || mkdir -p "$ddir"
     fi
     ln -sf $src $dst && link+=" ${dst##*/}"
 }
