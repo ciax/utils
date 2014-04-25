@@ -38,7 +38,10 @@ e-alias(){
     popd >/dev/null
 }
 reg(){
-    file-register $(git-dirs) $*
+    for i in $(git-dirs) $*;do
+        cd $i
+        file-register
+    done
     source rc.utils.alias
 }
 gr(){
