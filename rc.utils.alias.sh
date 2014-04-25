@@ -39,8 +39,7 @@ e-alias(){
 }
 reg(){
     for i in $(git-dirs) $*;do
-        cd $i
-        file-linkbin
+        (cd $i;file-linkbin)
     done
     source rc.utils.alias
 }
