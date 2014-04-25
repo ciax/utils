@@ -7,3 +7,4 @@ done
 shopt -s dotglob
 [ -d /etc/skel ] && cp /etc/skel/* .
 echo "Unsetup complete!"
+exec bash

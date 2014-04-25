@@ -10,3 +10,4 @@ pkg init
 db-update
 setup-bashrc
 echo $C1"*** You need to invoke 'exec bash' here***"$C0
+exec bash
