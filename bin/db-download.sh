@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required commands: wget
-# Required scripts: func.getpar, db-exec, file-register
+# Required scripts: func.getpar, db-exec
 # Required tables: gdocs,gsheet
 # Desctiption: get db from gdocs and split into db-files
 #  split downloaded-db files into db files in the cfg directorys that are categoryzed by project
@@ -41,5 +41,5 @@ db-update
 for d in ~/cfg.*;do
     cd $d
     file-clean
-    git commit -a -m "update db"
+    git commit -a -m "expand gsheet and update db"
 done

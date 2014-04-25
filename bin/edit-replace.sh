@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.getpar, func.temp, file-register
+# Required scripts: func.getpar, func.temp, file-linkbin
 # Description: replace string in files
 . func.getpar
 _al(){ echo -e "\t"$C1"$*"$C0; }
@@ -64,4 +64,4 @@ if [ -e "$oldfn" ] ; then
         _query && mv $oldfn $newfn
     fi
 fi
-file-register
+file-linkbin

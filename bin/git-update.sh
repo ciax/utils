@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: git-dirs,file-register
+# Required scripts: git-dirs,file-linkbin
 # Description: update git repositories
 dirs="$(git-dirs)"
 for i in $dirs;do
@@ -8,4 +8,4 @@ for i in $dirs;do
     git pull
     popd >/dev/null
 done
-file-register $dirs
+file-linkbin $dirs

@@ -9,7 +9,7 @@
 
 ## Exported CSV file ##
    You can generate the db files from exported file of spread sheet.
-   This exported file can be splitted into db files by project.
+   This exported file will be splitted into db files based on projects.
    The format of the exported file is,
    a. the fist column of index will have '%' which contains project
    b. each line will be splitted into the sorted dbs based on the first column
@@ -20,5 +20,4 @@
 ## Procedure for translation from csv to sqlite3 ##
  1. export csv file from spread sheet as exp-db
  2. split the exp-db by project into files which is stored in /cfg.(project) (command: db-split)
- 3. register the db files (link to /db directory) (command: file-register)
- 4. update sqlite3 rdb (command: db-update) 
+ 3. update sqlite3 rdb (command: db-update) 
