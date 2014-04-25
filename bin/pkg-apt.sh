@@ -1,6 +1,5 @@
 #!/bin/bash
 #alias apt
-#alias wf which
 #link(Debian) pkg
 #link(Ubuntu) pkg
 # Required packages(Ubuntu): deborphan,apt-file
@@ -35,18 +34,18 @@ case "$cmd" in
     tasks) #list tasks
         tasksel --list-tasks
         ;;
-    getheader) #install linux-headers for vmware
-        sudo apt-get install linux-headers-$(uname -r) || _abort "Error $?"
+    develop) #install gcc and linux-headers for vmware
+        sudo apt-get install gcc linux-headers-$(uname -r) || _abort "Error $?"
         echo Install success. $?
         ;;
-    install) #install package
+    install) #install packages
         _usage "[$cmd] [packages]"
         sudo -i apt-get install $* || _abort "Error $?"
         echo Install success. $?
         ;;
-    remove) #remove package
+    remove) #remove packages
         _usage "[$cmd] [package]"
-        sudo -i apt-get remove --purge $1;;
+        sudo -i apt-get remove --purge $*;;
     config) #configure package
         _usage "[$cmd] [package]"
         sudo -i dpkg-reconfigure $1;;
@@ -57,7 +56,7 @@ case "$cmd" in
         _usage "[$cmd] [file]"
         par=`which "$1"` && par=`readlink -f $par` || par=$1
         dpkg -S $par;;
-    where) #show package which not installed
+    where) #show package that isn't installed
         _usage "[$cmd] [file]"
         apt-file search "bin/$1 ";;
     search) #search package
