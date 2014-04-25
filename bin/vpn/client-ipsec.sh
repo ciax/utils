@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias ivpn
-# Required packages: vpnc
+# Required packages(Debian): vpnc
 # Required scripts: func.getpar,cfg-ipsec
 # Description: vpn client of ipsec
 . func.getpar
