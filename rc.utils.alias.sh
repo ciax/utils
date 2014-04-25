@@ -38,9 +38,7 @@ e-alias(){
     popd >/dev/null
 }
 reg(){
-    for i in $(git-dirs) $*;do
-        (cd $i;file-linkbin)
-    done
+    file-linkbin $(git-dirs) $*
     source rc.utils.alias
 }
 gr(){
