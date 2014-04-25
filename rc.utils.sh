@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required Packages: emacs,most
 # Description: setenv for login
 umask 022
 shopt -s nullglob
@@ -14,7 +13,6 @@ if [ -t 2 ] ; then
     export C0=$'\e[0m'
 fi
 # Set environment for login
-# Required Packages: emacs,most
 # For PATH
 addpath(){
     local list="$1";shift
@@ -30,9 +28,6 @@ export PATH=$(addpath $PATH {~,/usr{/local,},}/{bin,sbin,lib})
 export RUBYLIB=$(addpath $RUBYLIB $HOME/lib)
 unset -f addpath
 # Other Environments
-export EDITOR='emacs'
-export PAGER='most'
-export MOST_EDITOR='emacs %s -g %d'
 export GREP_OPTIONS='--color=auto'
 # Set Distribution
 set - $(</etc/issue)
