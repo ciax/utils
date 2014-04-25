@@ -28,7 +28,7 @@ case "$cmd" in
         sudo -i yum remove --purge $*;;
     where) #show packages that isn't installed
         _usage "[$cmd] [file]"
-        yum provides $(which "$1");;
+        yum provides "*bin/$1";;
     search) #search package
         _usage "[$cmd] [pattern]"
         yum search "$1";;
