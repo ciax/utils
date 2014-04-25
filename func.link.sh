@@ -2,11 +2,16 @@
 # Description: make links of files
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
+_absdir(){
+    local dir="${1%/*}"
+    [ -d "$dir" ] || mkdir -p "$dir"
+    cd "$dir";pwd -P
+}
 _abspath(){ # absdir filename
     eval "local apath=$1"
     [ -h "$apath" ] && apath=$(readlink $apath)
     if [[ "$apath" =~ / ]]; then
-        echo "$(cd ${apath%/*};pwd -P) ${apath##*/}"
+        echo "$(_absdir $apath) ${apath##*/}"
     else
         echo "$(pwd -P) ${apath##*/}"
     fi
@@ -22,17 +27,14 @@ _mklink(){
             echo $C1"Error: $dst is regular file"$C0
             return 1
         fi
-    else
-        local ddir="${dst%/*}"
-        [ -d "$ddir" ] || mkdir -p "$ddir"
     fi
     ln -sf $src $dst && link+=" ${dst##*/}"
 }
 _showlink(){
     [ "$link" ] && echo "[$link ] -> $C1${1:-~/bin}$C0"
+    link=
 }
 _binreg(){
-    link=
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
         _mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
