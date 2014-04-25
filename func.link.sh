@@ -2,19 +2,21 @@
 # Description: make links of files
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
-_abspath(){
+_abspath(){ # absdir filename
     eval "local apath=$1"
+    [ -h "$apath" ] && apath=$(readlink $apath)
     if [[ "$apath" =~ / ]]; then
-        echo -n $(cd ${apath%/*};pwd -P)
+        echo "$(cd ${apath%/*};pwd -P) ${apath##*/}"
+    else
+        echo "$(pwd -P) ${apath##*/}"
     fi
-    echo " ${apath##*/}"
 }
 _mklink(){
     local src="$1";shift
     local dst="$1";shift
     if [ -e $dst ] ; then
         if [ -h $dst ]; then
-            [ "$src" = `readlink $dst` ] && return 1
+            [ "$src" = $(readlink $dst) ] && return 1
             echo $C3"Warning: link of $dst is different from $src"$C0
         else
             echo $C1"Error: $dst is regular file"$C0
