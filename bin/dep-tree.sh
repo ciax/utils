@@ -5,20 +5,16 @@ core(){
     base="${1##*/}"
     echo "${base%.*}"
 }
-top_list(){
-    while read top;do
-        echo "$(core $top)"
-    done < <(egrep -RL "$search" *|grep 'sh$')|sort
-}
-sub_list(){
-    while read line;do
-        local me="$(core ${line%%:*})"
-        line="${line// /}"
-        line="${line##*:}"
-        for sup in ${line//,/ };do
-            sub0[$sup]+=" $me"
+make_list(){
+    while read line; do
+        shared=$(core $line)
+        for user in $(grep -rl "$shared" *);do
+            [[ $user == *.sh ]] || continue
+            user=$(core $user)
+            [ "$user" = "$shared" ] || sub0[$shared]+=" $user"
         done
-    done < <(egrep -R "$search" *)
+    done < <(find ~/utils -name '*.sh')
+    all="${!sub0[*]}"
 }
 dep_dig(){
     [ "${2:-0}" -gt  20 ] && _abort "Infinite Loop Error"
@@ -26,6 +22,7 @@ dep_dig(){
         [ "${depth[$sb]:-0}" -le ${2:-0} ] || continue
         depth[$sb]=$2
         super[$sb]=$1
+        all=${all// $sb/}
         dep_dig "$sb" $(($2+1))
     done
 }
@@ -55,9 +52,7 @@ declare -A sub
 declare -A super
 declare -A depth
 cd ~/utils
-search="^# Required scripts"
-all=$(top_list)
-sub_list
+make_list
 for top in $all;do
     dep_dig "$top"
 done
