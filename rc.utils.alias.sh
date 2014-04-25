@@ -26,7 +26,11 @@ alias gis='git branch -a;git log -1|cat;git status'
 alias giu='git checkout'
 
 # For package admin
-alias pkgs='pkg search'
+alias pks='pkg search'
+alias pki='pkg install'
+alias pku='pkg upd'
+alias pkw='pkg where'
+alias pkf='pkg files'
 
 # Commands manupulating shell variables
 e-alias(){
