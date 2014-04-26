@@ -27,8 +27,12 @@ nolink(){
 clrdir(){
     local dir="${PWD#*$top}"
     echo -n "$sep${dir/$HOME/~}"
-    nouse \#* *~ .*~ *.orig
-    nolink * .*
+    if [[ $PWD == */.trash ]] ; then
+        /bin/rm -rf *
+    else
+        nouse \#* *~ .*~ *.orig
+        nolink * .*
+    fi
 }
 top="$PWD/"
 echo -n $C3"File Cleaning ("
