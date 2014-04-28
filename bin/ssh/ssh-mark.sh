@@ -3,7 +3,7 @@
 # Description: mark '#' if the line with own name is found in authorized_keys,
 #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
 . func.getpar
-ath=~/.ssh/authorized_keys
+ath=${1:-~/.ssh/authorized_keys}
 pub=~/.ssh/id_rsa.pub
 [ -f $ath -a -f $pub ] || _abort "No ssh files"
 read rsa mykey me < $pub
