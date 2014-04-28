@@ -51,7 +51,6 @@ declare -A sub0
 declare -A sub
 declare -A super
 declare -A depth
-cd ~/utils
 make_list
 for top in $all;do
     dep_dig "$top"
