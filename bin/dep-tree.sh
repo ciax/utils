@@ -1,6 +1,7 @@
 #!/bin/bash
 #alias dep
 # Description: show script dependency tree
+. func.getpar
 core(){
     base="${1##*/}"
     echo "${base%.*}"
