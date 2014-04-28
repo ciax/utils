@@ -17,5 +17,4 @@ for i ; do
         chkcom $i && ahost="$ahost $host"
     fi
 done
-sort -u <<< $auser
-
+sort -u <<< $auser|grep .
