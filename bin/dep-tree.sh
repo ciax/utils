@@ -1,6 +1,7 @@
 #!/bin/bash
 #alias dep
 # Description: show script dependency tree
+. func.getpar
 core(){
     base="${1##*/}"
     echo "${base%.*}"
@@ -51,7 +52,6 @@ declare -A sub0
 declare -A sub
 declare -A super
 declare -A depth
-cd ~/utils
 make_list
 for top in $all;do
     dep_dig "$top"
