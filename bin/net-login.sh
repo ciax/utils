@@ -5,12 +5,12 @@
 # Required tables: login(user,password,host,rcmd)
 # Description: login command
 . func.getpar
-_usage "[host] (command)" <(db-list login)
+_usage "[host] (command)"
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift
 eval "$(db-trace $host login)"
 eval "$(db-trace $host host)"
-eval "$(db-trace $auth auth)"
+[ "$auth" ] && eval "$(db-trace $auth auth)"
 edit-crypt -i
 password=$(edit-crypt <<< "$password")
 [ "$1" ] && rcmd="$*"
