@@ -15,7 +15,9 @@ selflink(){
 file-clean ~/bin
 echo $C3"File Registering (~/bin)"$C0
 for i in ${*:-.};do
-    (cd $i;_subdirs _binreg)
+    pushd $i >/dev/null
+    _subdirs _binreg
+    popd >/dev/null
 done
 selflink
 _showlink

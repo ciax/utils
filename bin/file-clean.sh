@@ -25,8 +25,6 @@ nolink(){
     done
 }
 clrdir(){
-    local dir="${PWD#*$top}"
-    echo -n "$sep${dir/$HOME/~}"
     if [[ $PWD == */.trash ]] ; then
         /bin/rm -rf *
     else
@@ -34,9 +32,9 @@ clrdir(){
         nolink * .*
     fi
 }
-top="$PWD/"
-echo -n $C3"File Cleaning ("
 for i in ${*:-.};do
-    (cd $i && _subdirs clrdir)
+    pushd $i >/dev/null
+    _subdirs clrdir
+    popd >/dev/null
 done
-echo ")"$C0
+echo $C3"File Cleaning ($_dirlist)"$C0
