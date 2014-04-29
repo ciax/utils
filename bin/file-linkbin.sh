@@ -12,10 +12,10 @@ selflink(){
 }
 . func.link
 . func.dirs
+file-clean ~/bin
 echo $C3"File Registering (~/bin)"$C0
 for i in ${*:-.};do
     (cd $i;_subdirs _binreg)
 done
 selflink
 _showlink
-file-clean ~/bin
