@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar, func.temp,  ssh-setup, ssh-mark, ssh-trim
-# Desctiption: impose self trust to the object host (push pub-key anonymously)
+# Desctiption: share authorized keys with remote host
 . func.getpar
 getrem(){
     scp -pq $rhost:$1 $2
@@ -13,8 +13,8 @@ putrem(){
 _usage "[(user@)host] .."
 ssh-setup
 ath=.ssh/authorized_keys
-lath=~/$ath
 inv=.ssh/invalid_keys
+lath=~/$ath
 linv=~/$inv
 . func.temp
 _temp rath rinv tath tinv
@@ -25,8 +25,7 @@ for rhost;do
     getrem $ath $rath
     getrem $inv $rinv
 # Join with local file
-    cat $rath > $tath
-    cut -d' ' -f1-2 $lath >> $tath
+    cat $rath $lath > $tath
     cat $rinv $linv > $tinv
 # Trimming
     ssh-mark $tath
@@ -35,5 +34,6 @@ for rhost;do
     putrem $tath $rath $ath
     putrem $tinv $rinv $inv
 # Renew local files
+    _overwrite $tath $lath
     _overwrite $tinv $linv
 done
