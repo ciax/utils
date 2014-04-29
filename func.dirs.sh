@@ -14,7 +14,7 @@ _subdirs(){
     local i
     for i in */ ;do
         [ -h "${i%/}" ] && continue
-        pushd $i >/dev/null
+        pushd "$i" >/dev/null
         _subdirs "$cmd" "$_defsep"
         popd >/dev/null
     done
