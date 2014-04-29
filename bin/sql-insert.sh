@@ -8,8 +8,7 @@ for i;do
     table=$(show-tables $i) || continue
     pfx="insert or ignore into $table values ('"
     while read line; do
-        line=${line//,/"','"}
-        null=${line//"''"/null}
-        echo "$pfx$null');"
+        line=$pfx${line//,/"','"}"');"
+        echo ${line//"''"/null}
     done < <(egrep -hv '^([#!].*|[[:blank:]]*)$' db-$i*.csv|nkf -Lu)
 done
