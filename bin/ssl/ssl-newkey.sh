@@ -1,6 +1,6 @@
 #!/bin/bash
-# Requied packages: openssl
-# Requied scripts: func.getpar
+# Required packages: openssl
+# Required scripts: func.getpar
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)

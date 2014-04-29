@@ -1,5 +1,5 @@
 #!/bin/bash
-# Requied commands: ping
+# Required commands: ping
 # Required scripts: func.getpar, db-trace
 # Description: parsistent connection to vpn
 . func.getpar

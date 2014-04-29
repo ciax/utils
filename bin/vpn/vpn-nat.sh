@@ -1,6 +1,6 @@
 #!/bin/bash
-# Requied commands: iptables,ifconfig,sysctl
-# Requied scripts: func.getpar
+# Required commands: iptables,ifconfig,sysctl
+# Required scripts: func.getpar
 # Description: setting nat table
 . func.getpar
 #
