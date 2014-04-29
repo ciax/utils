@@ -11,8 +11,8 @@ host=$1;shift
 eval "$(db-trace $host login)"
 eval "$(db-trace $host host)"
 [ "$auth" ] && eval "$(db-trace $auth auth)"
-edit-crypt -i
-password=$(edit-crypt <<< "$password")
+crypt-init
+password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
 if [ "$command" = telnet ]; then
     telnet $host
