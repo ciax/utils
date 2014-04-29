@@ -9,5 +9,6 @@
 opt-i(){ opt=-line; }
 _usage "(statement)"
 [ -d ~/.var ] || mkdir ~/.var
+[[ "$VER" == *sql* ]] && opt+=" -echo"
 db=~/.var/db-device.sq3
 sqlite3 $opt $db ${1:+"$1"}
