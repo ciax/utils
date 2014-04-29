@@ -9,6 +9,6 @@ for i;do
     pfx="insert or ignore into $table values ('"
     while read line; do
         line=$pfx${line//,/"','"}"');"
-        echo ${line//"''"/null}
+        echo "${line//"''"/null}"
     done < <(egrep -hv '^([#!].*|[[:blank:]]*)$' db-$i*.csv|nkf -Lu)
 done
