@@ -1,6 +1,7 @@
 #!/bin/bash
 #alias dep
 # Description: show script dependency tree
+#  '*' prefixed file -> independent file;
 . func.getpar
 core(){
     base="${1##*/}"
@@ -9,13 +10,13 @@ core(){
 make_list(){
     while read line; do
         shared=$(core $line)
+        all+=" $shared"
         for user in $(grep -rl "$shared" *);do
             [[ $user == *.sh ]] || continue
             user=$(core $user)
             [ "$user" = "$shared" ] || sub0[$shared]+=" $user"
         done
-    done < <(find ~/utils -name '*.sh')
-    all="${!sub0[*]}"
+    done < <(find "$1" -name '*.sh'|sort)
 }
 dep_dig(){
     [ "${2:-0}" -gt  20 ] && _abort "Infinite Loop Error"
@@ -52,12 +53,16 @@ declare -A sub0
 declare -A sub
 declare -A super
 declare -A depth
-make_list
+make_list ${1:-.}
 for top in $all;do
     dep_dig "$top"
 done
 dep_stack
 for top in $all;do
-    echo $C5"$top"$C0
+    if [ "${sub0[$top]}" ] ; then
+        echo $C3"$top"$C0
+    else
+        echo $C5"*$top"$C0
+    fi
     show_tree "$top"
 done
