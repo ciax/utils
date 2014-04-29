@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required commands: mawk
-# Required scripts: func.getpar,func.temp
+# Required scripts: func.getpar func.temp
 # Description: reorder columns of the file
 . func.getpar
 _usage "[order(1,2,3..)] [file] (-w)"

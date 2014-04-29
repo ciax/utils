@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar, func.temp,  ssh-setup, ssh-mark, ssh-trim
+# Required scripts: func.getpar func.temp  ssh-setup ssh-mark ssh-trim
 # Desctiption: impose self trust to the object host (push pub-key anonymously)
 . func.getpar
 getrem(){

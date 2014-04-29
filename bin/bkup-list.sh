@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias bl
-# Required scripts: func.getpar,bkup-exec
+# Required scripts: func.getpar bkup-exec
 # Descripton: display backed up files
 . func.getpar
 list(){

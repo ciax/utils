@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required scripts: func.getpar,net-name,db-exec,db-list
-# Required tables: mac(hub,host),hub(subnet)
+# Required scripts: func.getpar net-name db-exec db-list
+# Required tables: mac(hub,host) hub(subnet)
 # Description: generate bootp config
 # Usage: cfg-bootp (subnet) > /etc/bootptab
 . func.getpar

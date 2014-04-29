@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar
+# Required scripts: func.getpar db-exec
 # Description: lantronix configulator
 # use nc for input to lantronix (i.e. ltcfg id | nc host 23)
 . func.getpar

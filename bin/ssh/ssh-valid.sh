@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: ssh,ping
 # Required scripts: func.getpar
 # Description: show list of the user@host which will accept the ssh connection
 . func.getpar

@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.getpar, func.temp, file-linkbin
+# Required scripts: func.getpar func.temp file-linkbin
 # Description: replace string in files
 . func.getpar
 _al(){ echo -e "\t"$C1"$*"$C0; }

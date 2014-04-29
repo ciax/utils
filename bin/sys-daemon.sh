@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands:setsid,git
 # Required scripts: func.getpar
 # Description: run daemon
 . func.getpar

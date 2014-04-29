@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar, func.temp,  ssh-setup, ssh-mark, ssh-trim
+# Required scripts: func.getpar func.temp  ssh-setup ssh-mark ssh-trim
 # Desctiption: share authorized keys with remote host
 . func.getpar
 getrem(){

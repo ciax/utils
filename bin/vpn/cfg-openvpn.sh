@@ -1,6 +1,5 @@
 #!/bin/bash
-# Required commands: hostname
-# Required scripts: func.getpar,db-list,db-trace,route-openvpn
+# Required scripts: func.getpar db-list db-trace route-openvpn
 # Description: client for dd-wrt openvpn server
 # Required SSL files for Client:
 # rootca.crt (Root Certificate)

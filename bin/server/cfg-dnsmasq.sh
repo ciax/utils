@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required scripts: func.getpar,net-name,db-list,db-exec
-# Required tables: mac(hub,host),hub(subnet)
+# Required scripts: func.getpar net-name db-list db-exec
+# Required tables: mac(hub,host) hub(subnet)
 # Description: generate dnsmasq config
 # Usage: cfg-dnsmasq (subnet) > /etc/dnsmasq.conf
 . func.getpar

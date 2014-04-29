@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar, db-exec
+# Required scripts: func.getpar db-exec
 # Required tables: *
 # Description: Print fields corresponding field names of last table of param;
 #     The default reference key(search key) is 'id';

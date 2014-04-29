@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required packages: openssl
-# Required scripts: func.getpar,ssl-request
+# Required scripts: func.getpar ssl-request
 ## SSL files (Server vs CA vs Client)
 ##@ Server Site
 ##  csr(Signning Request file) -> Submit to CA

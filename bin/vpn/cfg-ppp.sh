@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar,func.temp
+# Required scripts: func.getpar func.temp
 # Description: generate routing file for ppp
 #*Config files take the following parameters at start up
 #   interface-name

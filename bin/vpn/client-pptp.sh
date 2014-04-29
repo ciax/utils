@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias pvpn
-# Required commands: kill,pptpsetup
-# Required scripts: func.getpar, db-list, db-trace, cfg-ppp
+# Required packages(Debian): pptp-linux
+# Required scripts: func.getpar db-list db-trace cfg-ppp
 # Description: client for dd-wrt pptp server
 . func.getpar
 # Options

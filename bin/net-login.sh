@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias l
 # Required packages: expect
-# Required scripts: func.getpar, func.temp, db-list, db-trace
-# Required tables: login (user,password,host,rcmd)
+# Required scripts: func.getpar func.temp db-list db-trace
+# Required tables: login(user,password,host,rcmd)
 # Description: login command
 . func.getpar
 _usage "[host] (command)" <(db-list login)

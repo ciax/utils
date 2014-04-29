@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required commands: iptables,ifconfig,sysctl
 # Required scripts: func.getpar
 # Description: setting nat table
 . func.getpar

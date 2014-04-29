@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar,func.temp, sql-schema, sql-insert
+# Required scripts: func.getpar func.temp sql-schema sql-insert
 # Description: make sqlite3 database from csv file
 . func.getpar
 _usage "[tables]"

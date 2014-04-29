@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar,func.temp
+# Required scripts: func.getpar func.temp
 # Desctiption: pick up the table names from file name(db-*.csv)
 #   if option '-e', show tables of the dependency ends in db-*.csv
 . func.getpar

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required packages: nkf
-# Required scripts: func.getpar,show-tables
+# Required scripts: func.getpar show-tables
 # Description: generate sql statement for create table
 
 # CSV file rule:

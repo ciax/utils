@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias ovpn
 # Required packages(Debian): openvpn
-# Required scripts: func.getpar, func.temp, db-list, cfg-openvpn, vpn-nat, show-syslog
+# Required scripts: func.getpar func.temp db-list cfg-openvpn vpn-nat show-syslog
 # Description: client for dd-wrt openvpn server
 . func.getpar
 # Options

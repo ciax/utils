@@ -2,9 +2,9 @@
 #alias apt
 #link(Debian) pkg
 #link(Ubuntu) pkg
-# Required packages(Ubuntu): deborphan,apt-file
-# Required packages(Debian): deborphan,apt-file,apt-spy
-# Required scripts: func.getpar, show-required
+# Required packages(Ubuntu): deborphan apt-file
+# Required packages(Debian): deborphan apt-file apt-spy
+# Required scripts: func.getpar show-required
 # Description: Debian package utils
 . func.getpar
 which apt-get >/dev/null || _abort "This might not Debian"

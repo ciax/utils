@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.link,func.dirs,file-clean
+# Required scripts: func.link func.dirs file-clean
 # Description: make links to the specific dirs categorized by file type 
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"

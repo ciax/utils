@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar, db-exec
+# Required scripts: func.getpar db-exec
 # Required tables: subnet(network,netmask,vpn)
 # Description: Generate routing commands for ipsec
 . func.getpar

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: git-dirs,file-linkbin
+# Required scripts: git-dirs file-linkbin
 # Description: update git repositories
 dirs="$(git-dirs)"
 for i in $dirs;do

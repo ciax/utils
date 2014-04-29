@@ -1,6 +1,6 @@
 #!/bin/bash
 #link(CentOS) pkg
-# Required scripts: func.getpar, show-required
+# Required scripts: func.getpar show-required
 # Description: Debian package utils
 . func.getpar
 which yum >/dev/null || _abort "This might not RedHat"

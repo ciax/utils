@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required scripts: ac.getpar, db-exec, net-name, db-trace
-# Required tables: login(command,user,password,host),ssh(subnet,login,alias,port,proxy)
+# Required scripts: ac.getpar db-exec net-name db-trace
+# Required tables: login(command,user,password,host) ssh(subnet,login,alias,port,proxy)
 # Description: generate ~/.ssh/config
 . func.getpar
 site(){

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar, func.temp, edit-cutout, line-dup, edit-write
+# Required scripts: func.getpar func.temp edit-cutout line-dup edit-write
 # Description: remove dup key from authorized_keys
 # Usage: ssh-trim (authorized_keys) (invalid_keys)
 . func.getpar
