@@ -7,4 +7,4 @@
 passfile="$HOME/.var/gpgpass"
 salt="--passphrase-file $passfile"
 _usage "<file>"
-base64 -d|gpg $salt || rm $passfile
+base64 -d|gpg -q $salt || rm $passfile
