@@ -1,4 +1,5 @@
 #!/bin/bash
+#alias depr |dep-tree
 # Description: show ruby script dependency list
 core(){
     base="${1##*/}"

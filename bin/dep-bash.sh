@@ -1,4 +1,5 @@
 #!/bin/bash
+#alias depb |dep-tree
 # Description: show script dependency list
 core(){
     base="${1##*/}"
