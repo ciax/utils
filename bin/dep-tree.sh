@@ -8,15 +8,10 @@ core(){
     echo "${base%.*}"
 }
 make_list(){
-    while read line; do
-        shared=$(core $line)
-        all+=" $shared"
-        for user in $(grep -rl "$shared" *);do
-            [[ $user == *.sh ]] || continue
-            user=$(core $user)
-            [ "$user" = "$shared" ] || sub0[$shared]+=" $user"
-        done
-    done < <(find "$1" -name '*.sh'|sort)
+    while read shared user; do
+        [[ "$all" =~ " $shared " ]] || all+="$shared "
+        [ "$user" -a "$user" != "$shared" ] && sub0[$shared]+=" $user"
+    done
 }
 dep_dig(){
     [ "${2:-0}" -gt  20 ] && _abort "Infinite Loop Error"
@@ -49,11 +44,13 @@ show_tree(){
     done
 }
 ### main ###
+_usage "<dep list>"
 declare -A sub0
 declare -A sub
 declare -A super
 declare -A depth
-make_list ${1:-.}
+all=' '
+make_list
 for top in $all;do
     dep_dig "$top"
 done
