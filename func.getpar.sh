@@ -99,4 +99,5 @@ for i;do
         *) ARGV=("${ARGV[@]}" "$i");;
     esac
 done
-set - "${ARGV[@]}";ARGC=$#
+ARGC=${#ARGV[@]}
+set - "${ARGV[@]}"
