@@ -12,7 +12,7 @@ open_super(){
 
 get_hubs(){
     while read self sup wire desc; do
-        sup="${sup:-top}"
+        sup="${sup:-$1}"
         sub[$sup]+="|$self" # add itself to parent var
         super[$self]="$sup"
         [ "$wire" = opt ] && fiber[$self]=true
@@ -80,7 +80,12 @@ declare -A title
 declare -A fiber
 declare -A connect
 IFS='|'
-get_hubs $1
-get_hosts
-echo "$nl $1"
-show_tree top
+for i;do
+    get_hubs $i
+    get_hosts
+done
+echo -n "$nl"
+for i;do
+    echo " $i"
+    show_tree $i
+done
