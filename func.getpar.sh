@@ -1,4 +1,10 @@
 #!/bin/bash
+# Option parse module
+# Usage:
+#  souce $0 at head of file,
+#  set opt-?(){} functions,
+#  then set _usage()
+
 shopt -s nullglob
 # Description: Print alert to stderr
 _alert(){ echo "$C1$*$C0" 1>&2; }
@@ -68,11 +74,14 @@ _chkargv(){
         i=$(($i+1))
     done
 }
-# Desctiption: Print usage
-#   1. Check the single options. opt-?() function should be provided.
+
+# Usage: _usage [parlist] (list files)
+# Desctiption
+#   1. Check the single options that provided as opt-?() functions.
 #   2. Check the number of arguments (ARGC >= The count of '[' in parlist)
 #   3. Check the value of argument whether it is in list file
-# ParList format:
+#   4. Execute opt-?() functions.
+# Parameter List format:
 #   option is automatically printed as "(-x,-y..)"
 #   option with parameter => -x=par
 #   mandatory parameters => enclosed by "[]"
@@ -80,7 +89,6 @@ _chkargv(){
 #   optional parameters => enclosed by "()"
 # List file format: (csv)
 #   parameter,desctiption
-# Usage: _usage [parlist] (list files)
 _usage(){
     # Show usage
     local reqp=$1;shift
