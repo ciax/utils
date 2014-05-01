@@ -28,7 +28,7 @@ get_hosts(){
             super[$self:]="$sup"
             title[$self:]="$self"
             site="${static_ip:-$self}"
-            chk_host "$site" && open_super $self:
+            ${cmd:-true} "$site" && open_super $self:
         done < <(db-exec "select id,static_ip from host where hub == '$sup';")
     done
 }
@@ -60,20 +60,16 @@ show_tree(){
     done
 }
 
-chk_host(){ true; }
+chk_host(){
+    echo -n '.'
+    ping -c1 -w1 "$1" &>/dev/null
+}
 
 # Options
-opt-p(){ #ping check
-    echo -n "Checking ";nl=$'\n'
-    chk_host(){
-        echo -n '.'
-        ping -c1 -w1 "$1" &>/dev/null
-    }
-}
+opt-p(){ echo -n "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
 
 ### main ###
 _usage "[subnet]" <(db-list subnet)
-
 declare -A sub
 declare -A super
 declare -A title

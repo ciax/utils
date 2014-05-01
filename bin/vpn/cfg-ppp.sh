@@ -9,11 +9,10 @@
 #   remote-IP-address
 #   ipparam
 . func.getpar
-opt-i(){ #install
-    sudo install $temp /etc/ppp/ip-up.d/route
-}
 . func.temp
+opt-i(){ install=1; } #install
+_usage
 _temp temp
 echo 'route add -net ${5%.*}.0 netmask 255.255.255.0 $1' > $temp
-_usage
+[ "$install" ] && sudo install $temp /etc/ppp/ip-up.d/route
 cat $temp

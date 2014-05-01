@@ -9,16 +9,19 @@
 . func.getpar
 . func.temp
 # Options
-opt-s(){ echo "nsCertType=server" > $v3; } #server
-opt-c(){ echo "nsCertType=client" > $v3; } #client
-opt-a(){ echo "basicConstraints=CA:true" > $v3; } #ca
+opt-s(){ role+="nsCertType=server\n"; } #server
+opt-c(){ role+="nsCertType=client\n"; } #client
+opt-a(){ role+="basicConstraints=CA:true\n"; } #ca
 cd ~/.var
-_temp v3
 _usage "[ca] [site] ..."
 ca=$1;shift
 [ -s "$ca.key" ] || _abort "No ca key file"
 [ -s $ca.srl ] || opt="-CAcreateserial"
-[ -s $v3 ] && ext="-extfile $v3"
+if [ "$role" ] ; then
+    _temp v3
+    echo -e "$role" > "$v3"
+    ext="-extfile $v3"
+fi
 for ss; do
     . ssl-request "$ss"
     openssl x509 -CA $ca.crt -CAkey $ca.key -req -days 3650 -in $ss.csr -out $ss.crt $opt $ext
