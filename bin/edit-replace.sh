@@ -20,7 +20,7 @@ _query(){
 _usage "[oldstr] [newstr] (ext)
 \tENV{files} for target
 \tENV{ex} for exclude line
-\t(ext) includes {mv old.ext new.ext}"
+\t(ext) includes {git mv old.ext new.ext}"
 . func.temp
 _temp outtmp
 oldstr="$1"
@@ -61,7 +61,7 @@ if [ -e "$oldfn" ] ; then
         _al "newfn aleady exists"
     else
         _al "rename $oldfn -> $newfn?"
-        _query && mv $oldfn $newfn
+        _query && git mv $oldfn $newfn
     fi
 fi
 file-linkbin
