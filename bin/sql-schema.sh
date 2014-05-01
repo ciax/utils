@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required packages: nkf
-# Required scripts: func.getpar show-tables
+# Required scripts: func.getpar table-core
 # Description: generate sql statement for create table
 
 # CSV file rule:
@@ -14,7 +14,7 @@
 #    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
 . func.getpar
 schema(){
-    local tbl=$(show-tables $1) || return 1
+    local tbl=$(table-core $1) || return 1
     [[ "$tables" =~ $tbl ]] && return
     tables="$tables $tbl"
     local drop="drop table if exists $tbl;"
@@ -35,7 +35,7 @@ schema(){
             local rkey="id"
         fi
         create="$create'$field',"
-        for rfile in $(show-tables $rtable); do
+        for rfile in $(table-core $rtable); do
             fkeys="$fkeys,foreign key('$field') references $rfile('$rkey')"
             reftbl="$reftbl $rfile"
             schema $rfile
@@ -51,4 +51,3 @@ echo "pragma foreign_keys=on;"
 for i; do
     schema $i
 done
-
