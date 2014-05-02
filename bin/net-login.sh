@@ -12,7 +12,7 @@ eval "$(db-trace $host login)"
 eval "$(db-trace $host host)"
 [ "$auth" ] && eval "$(db-trace $auth auth)"
 crypt-init
-password=$(crypt-de <<< "$password")
+[ "$password" ] && password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
 if [ "$command" = telnet ]; then
     telnet $host
