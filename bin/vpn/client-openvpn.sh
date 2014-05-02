@@ -5,9 +5,9 @@
 # Description: client for dd-wrt openvpn server
 . func.getpar
 # Options
-opt-d(){ #disconnect
-    sudo kill $(< ~/.var/openvpn.pid) && echo "Openvpn Terminated"
-    exit
+xopt-d(){ #disconnect
+    pidfile=~/.var/openvpn.pid
+    [ -s $pidfile ] && sudo kill $(< $pidfile) && echo "Openvpn Terminated"
 }
 _usage "[vpnhost]" <(db-list vpn)
 . func.temp

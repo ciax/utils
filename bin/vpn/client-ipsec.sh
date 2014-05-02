@@ -4,8 +4,11 @@
 # Required scripts: func.getpar cfg-ipsec
 # Description: vpn client of ipsec
 . func.getpar
+xopt-d(){ #disconnect
+    sudo vpnc-disconnect && echo "IPsec VPN Terminated"
+}
+
 PATH+=:/usr/sbin
-opt-d(){ sudo vpnc-disconnect;exit; } #disconnect
 _usage "[vpnhost]" <(db-list vpn)
 . func.temp
 _temp cfgfile

@@ -2,8 +2,8 @@
 # Option parse module
 # Usage:
 #  souce $0 at head of file,
-#  set opt-?(){} functions,
-#  then set _usage()
+#  set opt-?() or xopt-?() functions,
+#  then put _usage()
 
 shopt -s nullglob
 # Description: Print alert to stderr
@@ -40,7 +40,7 @@ _optlist(){
         fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
         echo $C2"${fnc#*opt}$C0${desc/:=/=}"
-    done < <(grep '^opt-' $0)
+    done < <(egrep '^x?opt-' $0)
 }
 # Description: check options
 _chkopt(){
@@ -50,8 +50,17 @@ _chkopt(){
         return 1
     done
 }
+# Description: exclusive option handling
+_exe_xopt(){
+    for i in ${OPT[*]};do
+        if type -t "xopt${i%%=*}" &>/dev/null; then
+            xopt${i//=/ }
+            exit
+        fi
+    done
+}
 # Description: option handling
-_exeopt(){
+_exe_opt(){
     for i in ${OPT[*]};do
         type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
     done
@@ -77,10 +86,11 @@ _chkargv(){
 
 # Usage: _usage [parlist] (list files)
 # Desctiption
-#   1. Check the single options that provided as opt-?() functions.
-#   2. Check the number of arguments (ARGC >= The count of '[' in parlist)
-#   3. Check the value of argument whether it is in list file
-#   4. Execute opt-?() functions.
+#   1. Execute xopt-?() and exit as an exclusive function if exist.
+#   2. Check the single options that provided as opt-?() or xopt-?() functions.
+#   3. Check the number of arguments (ARGC >= The count of '[' in parlist)
+#   4. Check the value of argument whether it is in list file
+#   5. Execute opt-?() functions.
 # Parameter List format:
 #   option is automatically printed as "(-x,-y..)"
 #   option with parameter => -x=par
@@ -92,7 +102,8 @@ _chkargv(){
 _usage(){
     # Show usage
     local reqp=$1;shift
-    _chkopt && _chkargc "$reqp" && _chkargv "$@" && _exeopt && return 0
+    _exe_xopt
+    _chkopt && _chkargc "$reqp" && _chkargv "$@" && _exe_opt && return 0
     echo -e "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" 1>&2
     [ "$1" ] && _list_cols < "$1" 1>&2
     exit 2

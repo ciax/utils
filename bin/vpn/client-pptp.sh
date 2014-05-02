@@ -5,9 +5,8 @@
 # Description: client for dd-wrt pptp server
 . func.getpar
 # Options
-opt-d(){ #disconnect
-    sudo kill $(< /var/run/ppp0.pid)
-    exit
+xopt-d(){ #disconnect
+    [ -s /var/run/ppp0.pid ] && sudo kill $(< /var/run/ppp0.pid) && echo "PPTP Terminated"
 }
 _usage "[vpnhost]" <(db-list vpn)
 eval "$(db-trace $1 vpn)"
