@@ -13,5 +13,4 @@ _usage "[vpnhost]" <(db-list vpn)
 . func.temp
 _temp cfgfile
 cfg-ipsec $* > $cfgfile
-sudo vpnc $cfgfile
-cd ~/bin;ln -sf $0 vpn
+sudo vpnc $cfgfile && ln -sf $(readlink $0) ~/bin/vpn

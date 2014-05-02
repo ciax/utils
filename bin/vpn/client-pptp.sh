@@ -19,5 +19,4 @@ opt="--encrypt"
 cmd="sudo pptpsetup $id $host $user $pw $opt --start"
 cfg-ppp -i
 echo $cmd
-$cmd
-cd ~/bin;ln -sf $0 vpn
+$cmd && ln -sf $(readlink $0) ~/bin/vpn
