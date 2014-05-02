@@ -78,8 +78,8 @@ declare -A connect
 IFS='|'
 for i;do
     get_hubs $i
-    get_hosts
 done
+get_hosts
 echo -n "$nl"
 for i;do
     echo " $i"
