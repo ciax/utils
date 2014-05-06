@@ -1,0 +1,4 @@
+#Editor command	 key
+* indent all line
+   emacs: M-<(to top), C-' '(select), M->(to bottom), 'C-M-\' (indent)
+    vi : 'gg'(to top), '='(indent), 'G'(to bottom)  
