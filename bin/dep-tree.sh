@@ -1,5 +1,4 @@
 #!/bin/bash
-#alias dep
 # Description: show script dependency tree
 #  '*' prefixed file -> independent file;
 . func.getpar
