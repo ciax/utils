@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: list the mate accounts in authorized_keys
-# Usage: ssh-mate
+# Usage: ssh-mates
 ath=~/.ssh/authorized_keys
 pub=~/.ssh/id_rsa.pub
 read rs mykey me < $pub
