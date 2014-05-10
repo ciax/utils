@@ -49,5 +49,5 @@ reg(){
     source rc.utils.alias
 }
 gr(){
-    grep -ir $* *
+    grep -ir "$*" *
 }
