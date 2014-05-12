@@ -46,6 +46,7 @@ e-alias(){
 }
 reg(){
     file-linkbin $(git-dirs) $*
+    file-linkcfg ~/cfg.*
     source rc.utils.alias
 }
 gr(){
