@@ -49,5 +49,10 @@ reg(){
     source rc.utils.alias
 }
 gr(){
-    grep -ir "$*" *
+    [ "$1" ] || return
+    if [[ "$1" =~ [A-Z] ]]; then
+        grep -r "$*" *
+    else
+        grep -ir "$*" *
+    fi
 }
