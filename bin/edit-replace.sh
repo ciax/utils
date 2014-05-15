@@ -1,26 +1,13 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.getpar func.temp file-linkbin
+# Required scripts: func.getpar func.temp func.query file-linkbin
 # Description: replace string in files
 . func.getpar
-_al(){ echo -e "\t"$C1"$*"$C0; }
-_hl(){ echo -e "\t"$C2"$*"$C0; }
-_query(){
-    [ "$ALL" ] && return
-    [ "$tty" ] || tty=`tty`
-    echo -en "\tOK? $C3[A/Y/N/Q]$C0"
-    read -e ans < $tty
-    case "$ans" in
-        [Aa]*) echo "All Accept!";ALL=1;;
-        [Yy]*) echo "Accept!";;
-        [Qq]*) echo "Abort";exit 2;;
-        * ) echo "Skip";return 1;;
-    esac
-}
 _usage "[oldstr] [newstr] (ext)
 \tENV{files} for target
 \tENV{ex} for exclude line
 \t(ext) includes {git mv old.ext new.ext}"
+. func.query
 . func.temp
 _temp outtmp
 oldstr="$1"
