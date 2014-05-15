@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar func.temp  ssh-setup ssh-mark ssh-trim
+# Required scripts: func.getpar func.temp  setup-ssh ssh-mark ssh-trim
 # Desctiption: share authorized keys with remote host
 . func.getpar
 getrem(){
@@ -11,7 +11,7 @@ putrem(){
     echo "${3##*/}($(stat -c%s $1)) is updated at $rhost"
 }
 _usage "[(user@)host] .."
-ssh-setup
+setup-ssh
 sshopt="-o StrictHostKeyChecking=no"
 ath=.ssh/authorized_keys
 inv=.ssh/invalid_keys
