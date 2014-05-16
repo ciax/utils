@@ -1,13 +1,10 @@
 #!/bin/bash
-# Required packages: openssl
-# Required scripts: func.getpar
+# Required scripts: func.ssl
 ## SSL files (Server vs CA vs Client)
 ##@ Server
 ##  private.key(+pub.key) -> csr(Signning Request file)
-. func.getpar
-_usage "[site name]"
-cd ~/.var
-site="$1"
+. func.ssl
+_usage "[site]"
 if [ -s "$site.key" ] ;then
     echo $C3"$site.key exists"$C0
 else

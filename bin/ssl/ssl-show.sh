@@ -1,7 +1,6 @@
 #!/bin/bash
 # Required packages: openssl
 # Required scripts: func.getpar
-. func.getpar
+. func.ssl
 _usage "[site]"
-cd ~/.var
-openssl x509 -text -noout -in $1.crt
+openssl x509 -text -noout -in $site.crt

@@ -1,13 +1,9 @@
 #!/bin/bash
-# Required packages: openssl
-# Required scripts: func.getpar
+# Required scripts: func.ssl
 # Description: Vefiry the relationship
-. func.getpar
-_usage "[ca name] [site name]"
-cd ~/.var
-cacrt="$1.crt";shift
-[ -s "$cacrt" ] || _abort "No ca crt file"
-site="$1.crt";shift
-[ -s "$site" ] || _abort "No site crt file"
-openssl verify -CAfile $cacrt $site
+. func.ssl
+_usage "[site]"
+[ -s "$ca.crt" ] || _abort "No ca crt file"
+[ -s "$site.crt" ] || _abort "No site crt file"
+openssl verify -CAfile $ca.crt $site.crt
 

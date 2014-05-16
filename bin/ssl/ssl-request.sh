@@ -3,10 +3,9 @@
 # Required scripts: ssl-newkey db-trace
 # Description: generate certificate request file
 #   private.key(+pub.key) -> csr(Signning Request file)
-site=$1
 server(){ cn="$fdqn"; }
 opt-s(){ func='server'; } #server mode
-. ssl-newkey $site
+. ssl-newkey
 eval "$(db-trace $site ssl)"
 $func
 input="/C=${country:-US}/ST=${state:-HI}/L=${city:-HILO}/O=${company:-NAOJ}"
