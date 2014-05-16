@@ -60,3 +60,5 @@ route-openvpn $1
 # TLS Auth Key: blank
 # Certificate Revoke List: blank
 
+## Administraton -> Commands (Execute when Initialized)
+# echo "iroute xxx.xxx.xxx.xxx 255.255.255.0" > /tmp/openvpn/$site
