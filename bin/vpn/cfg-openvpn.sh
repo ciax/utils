@@ -8,6 +8,7 @@
 . func.getpar
 _usage "[vpnhost]" <(db-list vpn)
 vardir=$HOME/.var
+ssldir=$vardir/ssl
 myhost=`hostname`
 eval "$(db-trace $1 vpn host)"
 [ "$static_ip" ] || _abort "No such host in DB"
@@ -26,9 +27,9 @@ float
 daemon
 keepalive 15 60
 remote $static_ip 1194
-ca $vardir/rootca.crt
-cert $vardir/$myhost.crt
-key $vardir/$myhost.key
+ca $ssldir/rootca.crt
+cert $ssldir/$myhost.crt
+key $ssldir/$myhost.key
 writepid $vardir/openvpn.pid
 status $vardir/openvpn-status.log
 ns-cert-type server
