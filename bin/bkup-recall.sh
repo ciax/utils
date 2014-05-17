@@ -21,12 +21,7 @@ rank="${1:-1}";shift
 limit="name=='$file' and host=='$(hostname)' and dist=='$(info-dist)'"
 sub_fid="select fid from list where $limit $uniq"
 sub_date="select id,date from content where id in ($sub_fid)"
-sub_rank1="select (select count(*) from ($sub_date) a where a.date >= b.date) as rank,id,date from ($sub_date) b where rank == $rank"
-sub_rank="select id,date from ($sub_date) b where (select count(*) from ($sub_date) a where a.date >= b.date) == $rank"
-bkup-exec "$sub_rank;"
-exit
-date=$(bkup-exec "$sub_date;")
-sub_id="select id from content where date == '$date'"
+sub_id="select id from ($sub_date) b where (select count(*) from ($sub_date) a where a.date >= b.date) == $rank"
 fid=$(bkup-exec "$sub_id;")
 if [ "$fid" ] ; then
     _temp content
@@ -34,7 +29,6 @@ if [ "$fid" ] ; then
     $func
     sub_fid="select fid from list where $limit"
     total=$(bkup-exec "select count(id) from content where id in ($sub_fid);")
-    rank=$(bkup-exec "select count(id) from content where id in ($sub_fid) and date > '$date';")
     date=$(bkup-exec "select date from content where id == '$fid';")
     echo $C3"Recall OK($rank/$total) [$(date --date=@$date)]"$C0
 else
