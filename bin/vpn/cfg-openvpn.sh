@@ -58,7 +58,7 @@ route-openvpn $1
 # Public Server Cert: --BEGIN CERTIFICATE -- (server.crt)
 # CA Cert: -- BEGIN CERTIFICATE -- (rootca.crt)
 # DH PEM: -- BEGIN DH PARAMETERS -- (dh.pem)
-# Additional Config: blank
+# Additional Config: route x.x.x.x y.y.y.y (routing to client)
 # TLS Auth Key: blank
 # Certificate Revoke List: blank
 
