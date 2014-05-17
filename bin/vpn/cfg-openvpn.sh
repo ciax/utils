@@ -41,7 +41,9 @@ route-openvpn $1
 # server.crt (Server Certificate)
 # dh.pem (DH pem file)
 
-## Server Setting on DD-WRT v24-sp2
+### Server Setting on DD-WRT v24-sp2
+
+## Service/VPN
 # OpenVPN: Enable
 # Start Type: WAN Up
 # Config as: Server
@@ -60,5 +62,5 @@ route-openvpn $1
 # TLS Auth Key: blank
 # Certificate Revoke List: blank
 
-## Administraton -> Commands (Execute when Initialized)
-# echo "iroute xxx.xxx.xxx.xxx 255.255.255.0" > /tmp/openvpn/ccd/$site
+## Administraton/Commands (Execute at Startup)
+# echo "iroute x.x.x.x 255.255.255.0" > /tmp/openvpn/ccd/$site
