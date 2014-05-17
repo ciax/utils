@@ -11,15 +11,20 @@ write(){
 }
 opt-w(){ func='write'; } #overwrite
 _usage "[file]"
-file="$1"
+file="$1";shift
 if [ -s "$file" ] ; then
     cfid=$(bkup-stash $file)
     uniq=" and fid != '$cfid'"
 fi
+rank="${1:-1}";shift
 #get fid
 limit="name=='$file' and host=='$(hostname)' and dist=='$(info-dist)'"
 sub_fid="select fid from list where $limit $uniq"
-sub_date="select max(date) from content where id in ($sub_fid)"
+sub_date="select id,date from content where id in ($sub_fid)"
+sub_rank1="select (select count(*) from ($sub_date) a where a.date >= b.date) as rank,id,date from ($sub_date) b where rank == $rank"
+sub_rank="select id,date from ($sub_date) b where (select count(*) from ($sub_date) a where a.date >= b.date) == $rank"
+bkup-exec "$sub_rank;"
+exit
 date=$(bkup-exec "$sub_date;")
 sub_id="select id from content where date == '$date'"
 fid=$(bkup-exec "$sub_id;")
