@@ -10,7 +10,7 @@ write(){
     touch -d "@$date" $file
 }
 opt-w(){ func='write'; } #overwrite
-_usage "[file]"
+_usage "[file] (generation)"
 file="$1";shift
 if [ -s "$file" ] ; then
     cfid=$(bkup-stash $file)
