@@ -63,6 +63,4 @@ route-openvpn $1
 # Certificate Revoke List: blank
 
 ## [Administraton]/[Commands]/<Diagnostics> (Execute at Startup)
-# echo "route x.x.x.x 255.255.255.0" > /tmp/openvpn/ccd/$site
 # echo "iroute x.x.x.x 255.255.255.0" > /tmp/openvpn/ccd/$site
-# (Both route and iroute are needed.)
