@@ -43,7 +43,7 @@ route-openvpn $1
 
 ### Server Setting on DD-WRT v24-sp2
 
-## Service/VPN
+## [Services]/[VPN]/<OpenVPN Server/Daemon>
 # OpenVPN: Enable
 # Start Type: WAN Up
 # Config as: Server
@@ -62,5 +62,7 @@ route-openvpn $1
 # TLS Auth Key: blank
 # Certificate Revoke List: blank
 
-## Administraton/Commands (Execute at Startup)
+## [Administraton]/[Commands]/<Diagnostics> (Execute at Startup)
+# echo "route x.x.x.x 255.255.255.0" > /tmp/openvpn/ccd/$site
 # echo "iroute x.x.x.x 255.255.255.0" > /tmp/openvpn/ccd/$site
+# (Both route and iroute are needed.)
