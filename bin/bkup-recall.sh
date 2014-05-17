@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias recall
-# Required scripts: func.getpar info-dist bkup-stash bkup-exec
+# Required scripts: func.temp info-dist bkup-stash bkup-exec
 # Description: recall latest backed up file
-. func.getpar
+. func.temp
 write(){
     mv $content $file
     mode=$(bkup-exec "select mode from content where id == '$fid';")
@@ -24,7 +24,6 @@ date=$(bkup-exec "$sub_date;")
 sub_id="select id from content where date == '$date'"
 fid=$(bkup-exec "$sub_id;")
 if [ "$fid" ] ; then
-    . func.temp
     _temp content
     bkup-exec "select base64 from content where id == '$fid';"|base64 -d|zcat|tee $content
     $func

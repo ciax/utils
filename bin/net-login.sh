@@ -1,10 +1,10 @@
 #!/bin/bash
 #alias l
 # Required packages: expect
-# Required scripts: func.getpar func.temp db-list db-trace
+# Required scripts: func.temp db-list db-trace
 # Required tables: login(user,password,host,rcmd)
 # Description: login command
-. func.getpar
+. func.temp
 _usage "[host] (command)"
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift
@@ -17,7 +17,6 @@ crypt-init
 if [ "$command" = telnet ]; then
     telnet $host
 else
-    . func.temp
     batch="-o BatchMode=yes"
     ssharg="$sshopt ${user:+$user@}$host"
     [ "$VER" ] && echo "ssh $ssharg $rcmd"

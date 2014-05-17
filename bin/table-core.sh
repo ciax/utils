@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar func.temp
+# Required scripts: func.getpar
 # Desctiption: pick up the table names from file name(db-*.csv)
 . func.getpar
 tblcore(){

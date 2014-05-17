@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: func.getpar func.temp  setup-ssh ssh-mark ssh-trim
+# Required scripts: func.temp setup-ssh ssh-mark ssh-trim
 # Desctiption: share authorized keys with remote host
-. func.getpar
+. func.temp
 getrem(){
     scp $sshopt -pq $rhost:$1 $2
 }
@@ -17,7 +17,6 @@ ath=.ssh/authorized_keys
 inv=.ssh/invalid_keys
 lath=~/$ath
 linv=~/$inv
-. func.temp
 _temp rath rinv tath tinv
 for rhost;do
     [[ ${rhost#*@} =~ "`hostname`|localhost" ]] && _abort "Self push"

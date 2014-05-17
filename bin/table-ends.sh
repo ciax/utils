@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar func.temp
+# Required scripts: func.temp
 # Desctiption: show tables of the dependency ends in db-*.csv
 . func.temp
 tblcore(){

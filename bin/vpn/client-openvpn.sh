@@ -1,16 +1,15 @@
 #!/bin/bash
 #alias ovpn
 # Required packages(Debian): openvpn
-# Required scripts: func.getpar func.temp db-list cfg-openvpn vpn-nat show-syslog
+# Required scripts: func.temp db-list cfg-openvpn vpn-nat show-syslog
 # Description: client for dd-wrt openvpn server
-. func.getpar
+. func.temp
 # Options
 xopt-d(){ #disconnect
     pidfile=~/.var/openvpn.pid
     [ -s $pidfile ] && sudo kill $(< $pidfile) && echo "Openvpn Terminated"
 }
 _usage "[vpnhost]" <(db-list vpn)
-. func.temp
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile
 sudo ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }

@@ -1,8 +1,7 @@
 #!/bin/bash
-# Description: provides query function
-shopt -s nullglob
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
+. func.getpar
 _temp(){
     local trp="/bin/rm -f -- "
     local i=
