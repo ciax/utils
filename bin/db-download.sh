@@ -12,13 +12,13 @@ split_sheet(){
     sheet=$1
     # Index line
     egrep -h "^%" $dlfile | cut -d, -f2- > $dbfile
-    [ -s $dbfile ] || return 1
+    [ -s $dbfile ] || { _alert "No index line in $sheet"; return 1;}
     file="db-$sheet.csv"
     _overwrite $dbfile ~/utils/db/$file && echo "Update $file"
     # Contents
     for d in ~/cfg.*;do
         sfx=${d#*.}
-        egrep -h "^$sfx," $dlfile|cut -d, -f2- > $dbfile
+        egrep -h "^$sfx," $dlfile|cut -d, -f2-|sort > $dbfile
         if [ -s $dbfile ] ;then
             file="db-$sheet-$sfx.csv"
             _overwrite $dbfile $d/db/$file && echo "Update $file"
