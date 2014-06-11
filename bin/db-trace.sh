@@ -30,5 +30,5 @@ traceback(){
         [ "$val" ] && echo "$key='$val'"
     done < <(db-exec -i "$sql")
 }
-_usage "[val | key=val,key=val..] [table1] (table2..)"
+_usage "[(id=)val | key=val,key=val..] [table1] (table2..)"
 traceback $*
