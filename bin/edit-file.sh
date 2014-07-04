@@ -11,6 +11,7 @@ for arg;do
     if [ -s "$file" ];then
         user=$(stat -c %U $file)
         cp -pub $file ~/.trash/
+        bkup-stash $file
     else
         user=$LOGNAME
     fi
