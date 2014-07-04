@@ -1,5 +1,6 @@
 #!/bin/bash
-# Required scripts: db-exec info-subnet
+# Required scripts: db-exec info-net
 # Required tables: subnet(network)
 # Description: lookup network name
-db-exec "select id from subnet where network == '`info-subnet`';"
+eval "$(info-net)"
+db-exec "select id from subnet where network == '$subnet';"

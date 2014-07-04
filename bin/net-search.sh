@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: db-exec info-subnet
+# Required scripts: db-exec info-net
 # Required tables: mac(network)
 # Description: search IP addres by mac
 #alias mac
