@@ -52,8 +52,8 @@ reg(){
 gr(){
     [ "$1" ] || return
     if [[ "$1" =~ [A-Z] ]]; then
-        grep -r "$*" *
+        grep -rn "$*" *
     else
-        grep -ir "$*" *
+        grep -irn "$*" *
     fi
 }
