@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias ovpn
-# Required packages(Debian): openvpn
+# Required packages(Debian,Raspbian): openvpn
 # Required scripts: func.temp db-list cfg-openvpn vpn-nat show-syslog
 # Description: client for dd-wrt openvpn server
 . func.temp

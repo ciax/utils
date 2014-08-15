@@ -35,11 +35,11 @@ git clone https://git.hub/ciax/cfg.(proj).git
 
 ### Comment in script files
  # Required packages: *   <--- Package list that is required in the script file
- # Required packages(DIST): * <--- Package list limited by distribution
+ # Required packages(DIST,..): * <--- Package list limited by distributions
  # Required scripts: *    <------- Script file list for dependency check
  #alias *                 <------- Alias name for the script file
  #link  *                 <------- Symbolic link name for the script file
- #link(DIST) *            <------- Link if distribution is matched
+ #link(DIST,..) *         <------- Link if distribution is matched
 
 ############### General information ################
 

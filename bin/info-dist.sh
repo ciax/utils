@@ -3,7 +3,7 @@ case `uname` in
     Linux)
         set - $(< /etc/issue)
         case $1 in
-            Debian*)
+            *bian*)
                 echo "debian-${3%.*}";;
             Ubuntu*)
                 echo "ubuntu-${2%.*}";;

@@ -8,7 +8,7 @@ selflink(){
     while read file dst;do
         src=${file%:*}
         _mklink $(readlink $src) $dst
-    done < <(egrep -H "^[#;]link(\($DIST\)|) " *)
+    done < <(egrep -H "^[#;]link(\(.*,?$DIST,?.*\)|) " *)
 }
 . func.link
 . func.dirs

@@ -8,4 +8,4 @@ while read line;do
     for i in ${line#*:};do
         echo ${i%(*}
     done
-done < <(egrep -ih "^# *req.* $1(\($DIST\)|):" ~/bin/*|tr -d '*')|sort -u
+done < <(egrep -ih "^# *req.* $1(\(.*,?$DIST,?.*\)|):" ~/bin/*|tr -d '*')|sort -u
