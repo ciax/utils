@@ -1,4 +1,15 @@
-#Editor command	 key
+# Editor command key
 * indent all line
    emacs: M-<(to top), C-' '(select), M->(to bottom), 'C-M-\' (indent)
     vi : 'gg'(to top), '='(indent), 'G'(to bottom)  
+
+# Command for USB
+ lsusb
+
+# Command for WiFi
+ iwconfig
+ iwlist
+
+# Command for Bluetooth
+ hciconfig
+ hcitool
