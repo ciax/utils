@@ -10,4 +10,5 @@ file-linkcfg
 pkg init
 db-update
 setup-bashrc
+bkup-init
 exec bash
