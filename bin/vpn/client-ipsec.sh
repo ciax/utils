@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias ivpn
-# Required packages(Debian): vpnc
+# Required packages(Debian,Raspbian): vpnc
 # Required scripts: func.temp cfg-ipsec
 # Description: vpn client of ipsec
 . func.temp

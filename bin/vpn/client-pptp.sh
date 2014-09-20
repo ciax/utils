@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias pvpn
-# Required packages(Debian): pptp-linux
+# Required packages(Debian,Raspbian): pptp-linux
 # Required scripts: func.getpar db-list db-trace cfg-ppp
 # Description: client for dd-wrt pptp server
 . func.getpar

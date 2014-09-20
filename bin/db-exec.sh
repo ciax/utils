@@ -1,6 +1,5 @@
 #!/bin/bash
-# Required packages(Debian): sqlite3
-# Required packages(Ubuntu): sqlite3
+# Required packages(Debian,Raspbian,Ubuntu): sqlite3
 # Required scripts: func.getpar
 # Description: transaction for db file
 # Usage: db-exec (opt) (sql)

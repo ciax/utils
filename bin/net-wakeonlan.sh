@@ -1,7 +1,6 @@
 #!/bin/bash
 #alias wol
-# Required packages(Debian): wakeonlan
-# Required packages(Ubuntu): wakeonlan
+# Required packages(Debian,Raspbian,Ubuntu): wakeonlan
 # Required scripts: func.getpar db-exec
 # Required tables: mac(host)
 # Description: make network devices wake up
