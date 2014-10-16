@@ -14,7 +14,7 @@ selflink(){
 . func.dirs
 file-clean ~/bin
 echo $C3"File Registering (~/bin)"$C0
-for i in ${*:-.};do
+for i in ~/utils $*;do
     pushd $i >/dev/null
     _subdirs _binreg
     popd >/dev/null
