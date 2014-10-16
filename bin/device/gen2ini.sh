@@ -26,3 +26,10 @@ PYTHONPATH=~/gen2/share/Git/python
 [ -d "$PYTHONPATH" ] || { echo "NO OSS files"; exit; }
 ln -sf $PYTHONPATH/Gen2/client/g2cmd.py ~/bin/OSST_ciaxTSCcommand
 ln -sf $PYTHONPATH/SOSS/status/screenPrint.py ~/bin/OSSC_screenPrint
+
+gen2cmd init
+gen2cmd login
+gen2cmd setinst 1
+gen2cmd logout
+gen2red
+rund
