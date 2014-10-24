@@ -12,6 +12,7 @@ opt-s(){ role+="nsCertType=server\n"; } #server
 opt-c(){ role+="nsCertType=client\n"; } #client
 opt-a(){ role+="basicConstraints=CA:true\n"; } #ca
 _usage "[site] ..."
+_exe_opt
 [ -s "$ca.key" ] || _abort "No ca key file"
 [ -s "$ca.srl" ] || opt="-CAcreateserial"
 if [ "$role" ] ; then

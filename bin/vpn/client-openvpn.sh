@@ -5,11 +5,13 @@
 # Description: client for dd-wrt openvpn server
 . func.temp
 # Options
-xopt-d(){ #disconnect
+opt-d(){ #disconnect
     pidfile=~/.var/openvpn.pid
     [ -s $pidfile ] && sudo kill $(< $pidfile) && echo "Openvpn Terminated"
+    exit
 }
 _usage "[vpnhost]" <(db-list vpn)
+_exe_opt
 _temp cfgfile
 . cfg-openvpn $1 > $cfgfile
 sudo ifconfig tun || { sudo openvpn --mktun --dev tun0;sleep 5; }

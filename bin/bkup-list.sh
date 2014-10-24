@@ -12,6 +12,7 @@ opt-b(){ #bare output
 }
 [ "$(bkup-exec .tables)" ] || bkup-init
 _usage
+_exe_opt
 while read dir name count;do
     echo -e "$name [$dir] ($count)"
 done < <(list)|column -t

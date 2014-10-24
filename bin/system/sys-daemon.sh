@@ -23,6 +23,7 @@ opt-k(){ msg="Kill";kill=1;exit='exit'; } #kill
 opt-t(){ tag=$1; } #=tag:set tag
 # main
 _usage "[cmd]"
+_exe_opt
 type $1 >/dev/null 2>&1 || _abort "No such command [$1]"
 cd $(dirname $1)
 line="setsid $* </dev/null 2>&1 "
