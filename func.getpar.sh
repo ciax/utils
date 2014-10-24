@@ -82,12 +82,12 @@ _chkargv(){
 # Usage: _exe_opt
 # Description: option handling, don't forget to execute after _usage
 _exe_opt(){
-    local opt=1
+    local _executed=1
     for i in ${OPT[*]};do
         type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
-        opt=0
+        _executed=0
     done
-    return $opt
+    return $_executed
 }
 
 # Usage: _usage [parlist] (list files)
