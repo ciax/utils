@@ -1,0 +1,29 @@
+#!/bin/bash
+# Require scripts: func.getpar db-exec
+# Description: Setting IP address for Devices
+. func.getpar
+opt-r(){
+#   -r: arping only(root)
+    sudo arping $mac;echo OK
+}
+opt-l(){
+#   -l: setip for Lantronix
+    sudo arp -s $ip $mac
+    ping $ip -s 113
+}
+opt-p(){
+#   -p: setip for PLIZZI
+    sudo arp -s $ip $mac
+    telnet $ip 1 >& /dev/null
+    telnet $ip 9999
+}
+_usage "[hosts]"
+IFS='|'
+while read host ip; do
+    mac=$(db-exec "select id from mac where host == '$host';")
+    echo "IP=$ip  MAC=$mac"
+    _exe_opt || {
+        sudo arp -s $ip $mac
+        ping $ip
+    }
+done < <(db-exec "select id,static_ip from host where id == '$1';")
