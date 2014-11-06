@@ -18,7 +18,7 @@ TIMEOUT=10;
 mkcmd(){ # (-b) [timeout] [commands]
     if [ "$1" = -b ] ; then
         shift
-        TIMEOUT=120
+        TIMEOUT=180
         cmd="-b"
     fi
     args="'EXEC TSC NATIVE CMD=\"$*\"'"
