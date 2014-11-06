@@ -35,6 +35,7 @@ while read line;do
     echo $C3"Retrieving $sheet"$C0
     url="$site$key/export?format=csv&id=$key&gid=$gid"
     wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
+    cp $dlfile ~/.var/download/$sheet.csv
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
 db-update
 for d in ~/cfg.*;do
