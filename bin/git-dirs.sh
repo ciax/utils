@@ -3,4 +3,4 @@
 # Description: dirlist that has .git
 cd
 . func.dirs
-_subdirs '[ -d ".git" ] && pwd -P'
+_subdirs '[ -d ".git" ] && pwd -P'|grep -v gen2
