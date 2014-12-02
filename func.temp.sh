@@ -16,7 +16,9 @@ _temp(){
 # Description: Overwrite if these are different.
 # Usage: _overwrite [src_file] [dst_file]
 _overwrite(){
-    if cmp -s $1 $2 ; then
+    if [ ! -e $2 ] ; then
+        /bin/mv $1 $2
+    elif cmp -s $1 $2 ; then
         /bin/rm $1;return 1
     else
         local dir="$(dirname $2)"
