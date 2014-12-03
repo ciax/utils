@@ -1,1 +1,1 @@
-!id,static_ip,dhcp_id,fdqn,hub,description
+!id,subnet,host_ip,assign,hub,description

@@ -12,9 +12,8 @@ opt-d(){ #disconnect
 _usage "[vpnhost]" <(db-list vpn)
 _exe_opt
 eval "$(db-trace $1 vpn)"
-eval "$(db-trace $host host)"
 id="--create $1"
-host="--server $static_ip"
+host="--server $(net-ip $host)"
 user="--username $user"
 [ "$password" ] && pw="--password $password"
 opt="--encrypt"

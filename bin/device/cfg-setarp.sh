@@ -19,11 +19,10 @@ opt-p(){
 }
 _usage "[hosts]"
 IFS='|'
-while read host ip; do
-    mac=$(db-exec "select id from mac where host == '$host';")
-    echo "IP=$ip  MAC=$mac"
-    _exe_opt || {
-        sudo arp -s $ip $mac
-        ping $ip
-    }
-done < <(db-exec "select id,static_ip from host where id == '$1';")
+host="$1"
+mac=$(db-exec "select id from mac where host == '$host';")
+echo "IP=$host  MAC=$mac"
+_exe_opt || {
+    sudo arp -s $host $mac
+    ping $host
+}

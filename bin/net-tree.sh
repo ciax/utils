@@ -19,17 +19,22 @@ get_hubs(){
         title[$self]="$desc"
         eval $(db-trace $self hub subnet)
     done < <(db-exec "select id,super,wire,description from hub where subnet == '$1';"|sort)
+    network=${network%.0}
 }
 
 get_hosts(){
     for sup in ${!title[*]};do
-        while read self static_ip; do
+        while read self host_ip; do
             sub[$sup]+="|$self:"
             super[$self:]="$sup"
             title[$self:]="$self"
-            site="${static_ip:-$self}"
-            ${cmd:-true} "$site" && open_super $self:
-        done < <(db-exec "select id,static_ip from host where hub == '$sup';")
+            if [ "$host_ip" ] ; then
+                site="$network.$host_ip"
+            else
+                site="$self"
+            fi
+            ${cmd:-true} "$self" && open_super $self:
+        done < <(db-exec "select id,host_ip from host where hub == '$sup';")
     done
 }
 
