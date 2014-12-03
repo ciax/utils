@@ -10,6 +10,7 @@ opt-i(){ opt=-line; }
 opt-c(){ opt="-csv -header"; }
 _usage "(statement)"
 _exe_opt
+echo "$*"
 [ -d ~/.var ] || mkdir ~/.var
 [[ "$VER" == *sql* ]] && opt+=" -echo"
 db=~/.var/db-device.sq3
