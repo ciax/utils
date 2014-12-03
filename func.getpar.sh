@@ -123,6 +123,7 @@ for i;do
         -*) OPT=("${OPT[@]}" "$i");;
         *) ARGV=("${ARGV[@]}" "$i");;
     esac
+    shift
 done
 ARGC=${#ARGV[@]}
 set - "${ARGV[@]}"
