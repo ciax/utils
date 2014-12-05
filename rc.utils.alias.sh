@@ -48,6 +48,7 @@ reg(){
     file-linkbin $(git-dirs) $*
     file-linkcfg ~/cfg.*
     source rc.utils.alias
+    file-clean ~/bin
 }
 gr(){
     [ "$1" ] || return
