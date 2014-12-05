@@ -11,7 +11,7 @@ vardir=$HOME/.var
 ssldir=$vardir/ssl
 myhost=`hostname`
 eval "$(db-trace $1 vpn)"
-static_ip="$(net-ip $host)"
+static_ip="$(search-ip $host)"
 [ "$static_ip" ] || _abort "No such host in DB"
 cat <<EOF
 verb 3

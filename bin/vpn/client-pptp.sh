@@ -13,7 +13,7 @@ _usage "[vpnhost]" <(db-list vpn)
 _exe_opt
 eval "$(db-trace $1 vpn)"
 id="--create $1"
-host="--server $(net-ip $host)"
+host="--server $(search-ip $host)"
 user="--username $user"
 [ "$password" ] && pw="--password $password"
 opt="--encrypt"
