@@ -1,6 +1,43 @@
 #!/bin/bash
-# Set alias for login
+### Set alias for login
+## Commands manupulating shell variables
+e-alias(){
+    file=rc.utils.alias.sh
+    pushd ~/utils >/dev/null
+    unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
+    unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
+    emacs $file
+    source $file
+    unset file
+    popd >/dev/null
+}
+# Generate alias by pick up '#alias XXX' line from each files
+self-alias(){
+    while read head name par; do
+        alias "$name=${head%:*}${par:+ $par}"
+    done < <(cd ~/bin;grep '^#alias' *)
+    echo $C3"Self Aliasing"$C0
+}
+# File registration
+reg(){
+    file-linkbin $(git-dirs) $*
+    file-linkcfg ~/cfg.*
+    file-clean ~/bin
+    self-alias
+}
+# Grep recursive
+gr(){
+    [ "$1" ] || return
+    if [[ "$1" =~ [A-Z] ]]; then
+        grep -rn "$*" *
+    else
+        grep -irn "$*" *
+    fi
+}
 
+self-alias
+
+## Aliasing
 # General Commands
 alias update='git-update;db-update'
 alias mo='more'
@@ -33,38 +70,4 @@ alias pku='pkg upd'
 alias pkw='pkg where'
 alias pkf='pkg files'
 
-### Commands manupulating shell variables ###
-e-alias(){
-    file=rc.utils.alias.sh
-    pushd ~/utils >/dev/null
-    unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
-    unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
-    emacs $file
-    source $file
-    unset file
-    popd >/dev/null
-}
-# Generate alias by pick up '#alias XXX' line from each files
-self-alias(){
-    while read head name par; do
-        alias "$name=${head%:*}${par:+ $par}"
-        al="$al $name"
-    done < <(cd ~/bin;grep '^#alias' *)
-    echo $C3"Self Aliasing$C0 [$al ]"
-}
-# File registration
-reg(){
-    file-linkbin $(git-dirs) $*
-    file-linkcfg ~/cfg.*
-    file-clean ~/bin
-    self-alias
-}
-# Grep recursive
-gr(){
-    [ "$1" ] || return
-    if [[ "$1" =~ [A-Z] ]]; then
-        grep -rn "$*" *
-    else
-        grep -irn "$*" *
-    fi
-}
+

@@ -7,6 +7,7 @@ cd ~/utils
 bin/file-linkbin.sh
 cd
 file-linkcfg
+. rc.utils.alias
 pkg init
 db-update
 setup-bashrc
