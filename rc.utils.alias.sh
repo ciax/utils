@@ -32,7 +32,7 @@ alias pku='pkg upd'
 alias pkw='pkg where'
 alias pkf='pkg files'
 
-# Commands manupulating shell variables
+### Commands manupulating shell variables ###
 e-alias(){
     file=rc.utils.alias.sh
     pushd ~/utils >/dev/null
@@ -44,12 +44,23 @@ e-alias(){
     unset file
     popd >/dev/null
 }
+# Generate alias by pick up '#alias XXX' line from each files
+self-alias(){
+
+    while read head name par; do
+        alias "$name=${head%:*}${par:+ $par}"
+        al="$al $name"
+    done < <(cd ~/bin;grep '^#alias' *)
+    echo $C3"Self Aliasing [$al ]"$C0
+}
+# File registration
 reg(){
     file-linkbin $(git-dirs) $*
     file-linkcfg ~/cfg.*
-    source rc.utils.alias
     file-clean ~/bin
+    self-alias
 }
+# Grep recursive
 gr(){
     [ "$1" ] || return
     if [[ "$1" =~ [A-Z] ]]; then
