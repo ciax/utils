@@ -6,6 +6,7 @@
 nl='0a'
 opt-n(){ nl=; } #no fold
 _usage "<file>"
+_exe_opt
 for c in $(od -v -A n -t x1 $*) ; do
     if [ "$c" = '0a' -a "$nl" ] ; then
         echo

@@ -3,7 +3,8 @@
 # Usage:
 #  souce $0 at head of file,
 #  set opt-?() or xopt-?() functions,
-#  then put _usage()
+#  _usage()
+#  _exe_opt()
 
 shopt -s nullglob
 # Description: Print alert to stderr
@@ -59,12 +60,6 @@ _exe_xopt(){
         fi
     done
 }
-# Description: option handling
-_exe_opt(){
-    for i in ${OPT[*]};do
-        type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
-    done
-}
 # Description: check the argument count
 _chkargc(){
     local reqp="$1"
@@ -82,6 +77,17 @@ _chkargv(){
         }
         i=$(($i+1))
     done
+}
+
+# Usage: _exe_opt
+# Description: option handling, don't forget to execute after _usage
+_exe_opt(){
+    local _executed=1
+    for i in ${OPT[*]};do
+        type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
+        _executed=0
+    done
+    return $_executed
 }
 
 # Usage: _usage [parlist] (list files)
@@ -103,7 +109,7 @@ _usage(){
     # Show usage
     local reqp=$1;shift
     _exe_xopt
-    _chkopt && _chkargc "$reqp" && _chkargv "$@" && _exe_opt && return 0
+    _chkopt && _chkargc "$reqp" && _chkargv "$@" && return 0
     echo -e "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" 1>&2
     [ "$1" ] && _list_cols < "$1" 1>&2
     exit 2
@@ -117,6 +123,7 @@ for i;do
         -*) OPT=("${OPT[@]}" "$i");;
         *) ARGV=("${ARGV[@]}" "$i");;
     esac
+    shift
 done
 ARGC=${#ARGV[@]}
 set - "${ARGV[@]}"

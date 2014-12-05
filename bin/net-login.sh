@@ -15,11 +15,13 @@ crypt-init
 [ "$password" ] && password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
 if [ "$command" = telnet ]; then
+    echo "telnet $host"
     telnet $host
 else
     batch="-o BatchMode=yes"
     ssharg="$sshopt ${user:+$user@}$host"
     [ "$VER" ] && echo "ssh $ssharg $rcmd"
+    echo "ssh $batch $ssharg $rcmd"
     ssh $batch $ssharg $rcmd && exit
     _temp expfile
     echo "set timeout 10" > $expfile

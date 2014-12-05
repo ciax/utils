@@ -6,6 +6,7 @@
 server(){ cn="$fdqn"; }
 opt-s(){ func='server'; } #server mode
 . ssl-newkey
+_exe_opt
 eval "$(db-trace $site ssl)"
 $func
 input="/C=${country:-US}/ST=${state:-HI}/L=${city:-HILO}/O=${company:-NAOJ}"

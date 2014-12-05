@@ -11,6 +11,7 @@ opt-d(){ #disconnect
 client=vpn
 pidfile=~/.var/vpn.pid
 _usage "[vpnhost] (pw)"
+_exe_opt
 host="$1";shift
 pw=$1;shift
 eval "$(db-trace $host vpn route)"

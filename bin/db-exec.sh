@@ -4,9 +4,12 @@
 # Description: transaction for db file
 # Usage: db-exec (opt) (sql)
 #        -i:ini (a=b) style
+#        -c:csv with header
 . func.getpar
 opt-i(){ opt=-line; }
+opt-c(){ opt="-csv -header"; }
 _usage "(statement)"
+_exe_opt
 [ -d ~/.var ] || mkdir ~/.var
 [[ "$VER" == *sql* ]] && opt+=" -echo"
 db=~/.var/db-device.sq3

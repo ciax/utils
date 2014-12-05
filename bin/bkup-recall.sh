@@ -11,6 +11,7 @@ write(){
 }
 opt-w(){ func='write'; } #overwrite
 _usage "[file] (generation)"
+_exe_opt
 file="$1";shift
 if [ -s "$file" ] ; then
     cfid=$(bkup-stash $file)

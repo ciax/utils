@@ -10,8 +10,9 @@ site(){
     eval "$(db-trace src=$sub,dst=$id ssh)"
     [ ! "$password" ] || [ "$proxy" ] || return
     eval "$(db-trace $host host)"
+    ip="$(net-ip $host)"
     echo "Host $1"
-    echo -e "\tHostName ${alias:-${static_ip:-$host}}"
+    echo -e "\tHostName ${alias:-${ip:-$host}}"
     echo -e "\tUser $user"
     [ "$port" ] && echo -e "\tPort $port"
     [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $proxy"
