@@ -1,5 +1,5 @@
 #!/bin/bash
-# Require scripts: func.getpar db-exec
+# Require scripts: func.getpar search-mac
 # Description: Setting IP address for Devices
 . func.getpar
 opt-r(){
@@ -20,7 +20,7 @@ opt-p(){
 _usage "[hosts]"
 IFS='|'
 host="$1"
-mac=$(db-exec "select id from mac where host == '$host';")
+mac=$(search-mac $host)
 echo "IP=$host  MAC=$mac"
 _exe_opt || {
     sudo arp -s $host $mac

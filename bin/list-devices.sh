@@ -15,18 +15,16 @@ select
     model."p/n",
     location.description,
     host.description
-from mac
-    inner join host on mac.host=host.id
+from host
+    inner join mac on host.mac=mac.id
     inner join device on mac.device=device.id
     inner join model on device.model=model.id
     inner join category on model.category=category.id
     inner join mfr on model.mfr=mfr.id
     inner join location on device.location=location.id
 where
-    mac.host in (
-        select id from host where hub in (
-            select id from hub where subnet == '$1'
-        )
+    host.hub in (
+        select id from hub where subnet == '$1'
     )
 order by length(host.host_ip),host.host_ip
 ;
