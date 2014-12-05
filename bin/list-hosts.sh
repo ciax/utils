@@ -3,12 +3,10 @@
 # Required tables: mac(host)
 # Description: show hosts which belong to same subnet
 . func.getpar
-eval "$(info-net)"
+subnet="${1:-$(net-name)}"
 db-exec <<EOF
 select id from host where hub in (
-  select id from hub where subnet == (
-    select id from subnet where network == '$subnet'
-  )
+  select id from hub where subnet == '$subnet'
 )
 ;
 EOF

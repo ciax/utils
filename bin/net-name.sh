@@ -2,5 +2,12 @@
 # Required scripts: db-exec info-net
 # Required tables: subnet(network)
 # Description: lookup network name
-eval "$(info-net)"
-db-exec "select id from subnet where network == '$subnet';"
+#alias mynet
+eval $(info-net)
+db-exec <<EOF
+select id
+from subnet
+where
+  network == '$subnet'
+;
+EOF
