@@ -8,4 +8,5 @@ for i in $dirs;do
     git pull
     popd >/dev/null
 done
+file-clean ~/bin
 file-linkbin $dirs

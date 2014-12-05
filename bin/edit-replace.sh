@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.temp func.query file-linkbin
+# Required scripts: func.temp func.query file-linkbin file-clean
 # Description: replace string in files
 . func.temp
 _usage "[oldstr] [newstr] (ext)
@@ -50,4 +50,5 @@ if [ -e "$oldfn" ] ; then
         _query && git mv $oldfn $newfn
     fi
 fi
+file-clean ~/bin
 file-linkbin

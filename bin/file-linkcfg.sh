@@ -1,8 +1,7 @@
 #!/bin/bash
 # Required scripts: func.link
-# Description: make links to the specific dirs categorized by file type 
-# Desctiption: Files in current dir will be classified into 'bin','db' ..
-# "Usage: ${0##*/} [DIR..] | [SRC..]"
+# Description: make links to the specific dirs categorized by file type
+# Desctiption: Files in cfg.*/ dirs will be classified into 'bin','db' ..
 selflink(){
     while read spath dpath;do
         read sdir src < <(_abspath ${spath%:*})
