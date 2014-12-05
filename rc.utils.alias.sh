@@ -12,6 +12,7 @@ alias sg='set|grep "^[a-zA-Z]"'
 alias psg='ps -ef|grep -i'
 alias kilg='sudo killall -i -I -r'
 alias sb='sudo bash'
+alias ae=e-alias
 
 # For GIT
 alias gia='git add . */'
@@ -39,7 +40,6 @@ e-alias(){
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
     emacs $file
-    git commit -m "update login script" $file
     source $file
     unset file
     popd >/dev/null
