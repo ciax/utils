@@ -46,12 +46,11 @@ e-alias(){
 }
 # Generate alias by pick up '#alias XXX' line from each files
 self-alias(){
-
     while read head name par; do
         alias "$name=${head%:*}${par:+ $par}"
         al="$al $name"
     done < <(cd ~/bin;grep '^#alias' *)
-    echo $C3"Self Aliasing [$al ]"$C0
+    echo $C3"Self Aliasing$C0 [$al ]"
 }
 # File registration
 reg(){
