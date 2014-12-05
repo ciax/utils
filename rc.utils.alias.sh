@@ -20,9 +20,9 @@ self-alias(){
 }
 # File registration
 reg(){
+    file-clean ~/bin
     file-linkbin $(git-dirs) $*
     file-linkcfg ~/cfg.*
-    file-clean ~/bin
     self-alias
 }
 # Grep recursive
