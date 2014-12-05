@@ -33,7 +33,7 @@ get_hosts(){
             else
                 site="$self"
             fi
-            ${cmd:-true} "$self" && open_super $self:
+            ${cmd:-true} "$site" && open_super $self:
         done < <(db-exec "select id,host_ip from host where hub == '$sup';")
     done
 }
