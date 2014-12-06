@@ -6,5 +6,12 @@
 . func.getpar
 _usage "(subnet)" <(db-list subnet)
 net=${1:-$(net-name)}
-sub_hub="select id from hub where subnet == '$net'"
-db-exec "select 'dhcp-host='||mac||','||id from host where hub in ($sub_hub);"
+db-exec <<EOF
+select
+  'dhcp-host='||mac||','||id
+from host
+where hub in (
+  select id from hub where subnet == '$net'
+)
+;
+EOF
