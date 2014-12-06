@@ -16,7 +16,6 @@ self-alias(){
     while read head name par; do
         alias "$name=${head%:*}${par:+ $par}"
     done < <(cd ~/bin;grep '^#alias' *)
-    echo $C3"Self Aliasing"$C0
 }
 # File registration
 reg(){
@@ -34,8 +33,6 @@ gr(){
         grep -irn "$*" *
     fi
 }
-
-self-alias
 
 ## Aliasing
 # General Commands
@@ -70,4 +67,4 @@ alias pku='pkg upd'
 alias pkw='pkg where'
 alias pkf='pkg files'
 
-
+self-alias
