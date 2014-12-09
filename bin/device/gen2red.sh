@@ -13,5 +13,7 @@ case `uname` in
         ;;
 esac
 port=${1:-9999}
+srv="socat tcp-l:$port,reuseaddr,fork EXEC:'/bin/sh'"
+ps -ef|grep -q "$srv" && exit
 echo "Start OSS Redirector at [$port]"
-socat tcp-l:$port,reuseaddr,fork EXEC:'/bin/sh' &
+$srv &
