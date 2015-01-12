@@ -14,6 +14,6 @@ cfg=~/.ssh/config
 type ssh > /dev/null || _abort "No ssh installed"
 [ -e $sec ] || ssh-keygen
 [ -e $pub ] || ssh-keygen -y -f $sec > $pub
-[ -e $ath ] || touch $ath
+[ -e $ath ] || cp $pub $ath
 [ -e $inv ] || touch $inv
 ssh-config > $cfg
