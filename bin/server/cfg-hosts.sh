@@ -1,10 +1,11 @@
 #!/bin/bash
-# Required scripts: func.getpar net-name db-list db-exec
-# Required tables: mac(hub,host) hub(subnet)
-# Description: generate dnsmasq config
-# Usage: cfg-dnsmasq (subnet) > /etc/dnsmasq.conf
+# Required scripts: func.getpar db-list db-exec
+# Required tables: host(host_ip),domain(name),subnet(network)
+# Description: generate hosts file
+# Usage: cfg-hosts > /etc/hosts
 . func.getpar
 _usage "(subnet)" <(db-list subnet)
+echo "#/etc/hosts"
 net=${1:-$(net-name)}
 db-exec <<EOF
 select
