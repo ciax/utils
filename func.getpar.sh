@@ -119,7 +119,7 @@ _usage(){
 declare -a ARGV
 declare -a OPT
 for i;do
-    case "$i" in
+    case "$ARGV$i" in
         -*) OPT=("${OPT[@]}" "$i");;
         *) ARGV=("${ARGV[@]}" "$i");;
     esac
