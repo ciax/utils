@@ -1,5 +1,6 @@
 #!/bin/bash
 # Required commands: netstat
+# Recommended app: ipcalc
 shopt -s nullglob
 mask2cidr(){
     local x=${1##*255.}
