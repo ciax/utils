@@ -62,4 +62,4 @@ case "$1" in
         exit;;
     *) mkcmd $*;;
 esac
-exe $cmd
+exelog $cmd

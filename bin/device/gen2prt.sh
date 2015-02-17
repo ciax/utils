@@ -19,7 +19,7 @@ cfg=~/drivers/config/cfg_tscst.txt
 case "$1" in
     -c)
         if [ -f $cfg ] ; then
-            $cmd $opt `grep -v "^#" $cfg| cut -d, -f1`|visi
+            $cmd $opt `grep -v "^#" $cfg| cut -d, -f1`|visible
         else
             echo "No CFG File"
         fi
@@ -28,7 +28,7 @@ case "$1" in
         $cmd $opt CXWS.TSCV.TELDRIVE CXWS.TSCV.0_SENSOR CXWS.TSCV.POWER_V2 CXWS.TSCV.POWER_V1 CXWS.TSCV.OBE_INR CXWS.TSCV.CIAX_MLP3_FAULT CXWS.TSCS.EL CXWS.TSCS.INSROT TSCV.InsRotRotation TSCV.RotatorType TSCV.TSC.LOGIN0 TSCV.TSC.LOGIN1 TSCV.TSC.LOGIN2 TSCV.TSC.LOGIN3 CXWS.TSCV.SHUTTER CXWS.TSCV.STOW_1 CXWS.TSCL.Z_SENSOR
         ;;
     iid)
-        $cmd $opt CXWS.TSCV.OBE_INR|visi
+        $cmd $opt CXWS.TSCV.OBE_INR|visible
         ;;
     login)
         $cmd $opt TSCV.TSC.LOGIN0 TSCV.TSC.LOGIN1 TSCV.TSC.LOGIN2 TSCV.TSC.LOGIN3
