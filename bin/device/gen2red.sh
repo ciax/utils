@@ -11,9 +11,12 @@ case `uname` in
         PYTHONPATH=~/gen2/share/Git/python
         [ -d "$PYTHONPATH" ] || { echo "NO OSS files"; exit; }
         ;;
+    *)
+        echo "Not for this system"
+        ;;
 esac
 port=${1:-9999}
 srv="socat tcp-l:$port,reuseaddr,fork EXEC:'/bin/sh'"
-ps -ef|grep -q "$srv" && exit
+ps -ef|grep -v "grep"|grep -q "$srv" && { echo "Redirecter is already running"; exit; }
 echo "Start OSS Redirector at [$port]"
 $srv &
