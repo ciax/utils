@@ -2,6 +2,7 @@
 # Usage: exe (-b|-p) [command]
 # -b:back ground execution
 # command is exclusive
+#link exe
 exit=~/.var/exit.txt
 pid=~/.var/pid.txt
 exelog=~/.var/exelog.txt
