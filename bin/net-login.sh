@@ -19,7 +19,7 @@ if [ "$command" = telnet ]; then
     telnet $host
 else
     batch="-o BatchMode=yes"
-    ["$port"] && sshopt="$sshopt -p $port"
+    [ "$port" ] && sshopt="$sshopt -p $port"
     ssharg="$sshopt ${user:+$user@}$host"
     [ "$VER" ] && echo "ssh $ssharg $rcmd"
     echo "ssh $batch $ssharg $rcmd"
