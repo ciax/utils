@@ -6,6 +6,7 @@
 . func.getpar
 _usage "(subnet)" <(db-list subnet)
 echo "#/etc/hosts"
+echo "127.0.0.1       localhost.localdomain   localhost"
 net=${1:-$(net-name)}
 db-exec <<EOF
 select
