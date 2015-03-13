@@ -52,7 +52,7 @@ case "$1" in
     jstop) mkcmd "932006";;
     setinst) mkcmd "1320070001";;
     '')
-        echo "Usage: osscmd (-b) [osscmd|rawcmd]"
+        echo "Usage: gen2cmd (-b) [osscmd|rawcmd]"
         echo "    login,logout,init,tsconly,tscpri"
         echo "    ron,roff,jon,joff,jres"
         echo "    rhook,runhk,rstop"
