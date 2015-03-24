@@ -1,3 +1,4 @@
 #!/bin/bash
 # UPDATE before login
-update
+(git-update >/dev/null 2>&1;db-update >/dev/null 2>&1) &
+
