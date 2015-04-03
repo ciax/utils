@@ -1,6 +1,6 @@
 #!/bin/bash
 # Requied packages: miniupnpc
-ext=42925
+ext=${1:-49999}
 a=$(ip route)
 l=${a##*src }
 upnpc -d $ext tcp
