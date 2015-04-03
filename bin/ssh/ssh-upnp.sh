@@ -7,8 +7,12 @@ case "$1" in
         upnpc -d $ext tcp
         ;;
     -c)
-        ext=${2:-$(<$pfile)}
-        echo "@reboot $HOME/utils/bin/ssh/ssh-upnp.sh $ext"
+        file=~/ssh-upnp
+        scr="$HOME/utils/bin/ssh/ssh-upnp.sh ${2:-$(<$pfile)}"
+        echo $scr > $file
+        chmod +x $file
+        sudo mv $file /etc/network/if-up.d/
+        cat /etc/network/if-up.d/ssh-upnp
         ;;
     [0-9]*)
         ext=$1
