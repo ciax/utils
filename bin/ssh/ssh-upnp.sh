@@ -1,8 +1,23 @@
 #!/bin/bash
 # Requied packages: miniupnpc
-ext=${1:-49999}
-a=$(ip route)
-l=${a##*src }
-upnpc -d $ext tcp
-upnpc -a $l 22 $ext tcp
-
+pfile=~/.var/ssh-export.txt
+case "$1" in
+    -d)
+        ext=${2:-$(<$pfile)}
+        upnpc -d $ext tcp
+        ;;
+    -c)
+        ext=${2:-$(<$pfile)}
+        echo "@reboot $HOME/utils/bin/ssh/ssh-upnp.sh $ext"
+        ;;
+    [0-9]*)
+        ext=$1
+        a=$(ip route)
+        l=${a##*src }
+        upnpc -a $l 22 $ext tcp
+        echo $ext > $pfile
+        ;;
+    *)
+        echo "$0 (-d,c) [port]"
+        ;;
+esac
