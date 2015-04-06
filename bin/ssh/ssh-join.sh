@@ -1,16 +1,16 @@
 #!/bin/bash
 # Required scripts: func.temp setup-ssh ssh-mark ssh-trim
-# Desctiption: share authorized keys with remote host
+# Desctiption: share authorized keys with remote host (Accepts join)
 . func.temp
 getrem(){
-    scp $sshopt -pq $rhost:$1 $2
+    scp $sshopt -pq -P $port $rhost:$1 $2
 }
 putrem(){
     cmp -s $1 $2 && return
-    scp $sshopt -pq $1 $rhost:$3
+    scp $sshopt -pq -P $port $1 $rhost:$3
     echo "${3##*/}($(stat -c%s $1)) is updated at $rhost"
 }
-_usage "[(user@)host] .."
+_usage "[(user@)host(:port)] .."
 setup-ssh
 sshopt="-o StrictHostKeyChecking=no"
 ath=.ssh/authorized_keys
@@ -18,9 +18,12 @@ inv=.ssh/invalid_keys
 lath=~/$ath
 linv=~/$inv
 _temp rath rinv tath tinv
-for rhost;do
+for url;do
+    rhost=${url%:*}
+    p=${url#$rhost:}
+    port=${p:-22}
     [[ ${rhost#*@} =~ "`hostname`|localhost" ]] && _abort "Self push"
-    echo "Host:$rhost"
+    echo "Host:$rhost:$port"
 # Get files from remote
     getrem $ath $rath
     getrem $inv $rinv
