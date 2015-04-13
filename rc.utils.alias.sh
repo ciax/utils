@@ -47,6 +47,7 @@ alias psg='ps -ef|grep -i'
 alias kilg='sudo killall -i -I -r'
 alias sb='sudo bash'
 alias ae=e-alias
+alias bogo='dmesg|grep Bogo'
 
 # For GIT
 alias gia='git add . */'
