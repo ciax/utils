@@ -1,5 +1,5 @@
 #!/bin/bash
-# Requied packages: miniupnpc
+# Required packages: miniupnpc
 dir=/etc/network/if-up.d
 file=ssh-upnp
 case "$1" in
