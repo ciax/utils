@@ -2,8 +2,8 @@
 # Required commands: ip netstat
 # Recommended app: ipcalc
 shopt -s nullglob
-while read cidr x b x c x x x hostip x; do
-    [ $b = "$netif" ] && break
+while read cidr x b x c x x s hostip x; do
+    [ $b = "$netif" -a "$s" = "src" ] && break
     [ $cidr = 'default' ] && { gw=$b; netif=$c; }
 done < <(ip route|sort -r)
 read x x x bcast x < <(ip addr|grep $netif$)
