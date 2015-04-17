@@ -9,6 +9,6 @@ cd
 file-linkcfg
 pkg init
 db-update
-setup-bashrc
+bashrc-setup
 bkup-init
 exec bash
