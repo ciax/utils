@@ -1,8 +1,12 @@
 #!/bin/bash
-# Description: setup bashrc
-if ! grep -q '#initrc' ~/.profile ; then
-    echo 'shopt -s nullglob;for i in ~/bin/rc.login*;do . $i;done #initrc' >> ~/.profile
-fi
-if ! grep -q '#initrc' ~/.bash_logout ; then
-    echo 'shopt -s nullglob;for i in ~/bin/rc.logout*;do . $i;done #initrc' >> ~/.bash_logout
-fi
+# Description: setup rc files
+setup(){
+    if ! grep -q '#initrc' ~/.$1 ; then
+        echo "shopt -s nullglob;for i in ~/bin/rc.$2*;do . \$i;done #initrc" >> ~/.$1
+        echo "Add line to $1"
+    fi
+}
+
+setup profile login
+setup bashrc bash
+setup bash_logout logout
