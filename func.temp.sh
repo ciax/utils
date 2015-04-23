@@ -37,7 +37,7 @@ _overwrite(){
         [ -e "$dir" ] || sudo -u $user mkdir -p "$dir"
         [ -d ~/.trash ] || mkdir -p ~/.trash
         chmod --reference=$2 $1
-        /bin/mv -b $2 ~/.trash/ && sudo /bin/mv $1 $2
+        sudo /bin/mv -b $2 ~/.trash/ && sudo /bin/mv $1 $2
         sudo chown $user $2
     fi
 }
