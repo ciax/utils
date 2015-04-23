@@ -4,7 +4,7 @@
 # Description: generate hosts file
 # Usage: cfg-hosts > /etc/hosts
 . func.temp
-xopt-o(){ #Out put to /etc/hosts
+xopt-s(){ #Set to /etc/hosts
     _temp thost
     $0 > $thost
     _overwrite $thost /etc/hosts

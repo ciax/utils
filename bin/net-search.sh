@@ -4,7 +4,7 @@
 # Description: search IP addres by mac
 #alias mac
 . func.temp
-opt-o(){ #Output to /etc/hosts
+opt-s(){ #Set to /etc/hosts
     _temp hosts
     egrep -v " $host$" /etc/hosts > $hosts
     echo "$line" >> $hosts
