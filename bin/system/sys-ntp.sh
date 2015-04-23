@@ -4,8 +4,7 @@
 # sys-ntp (-s) (server)
 
 if [ "$1" = "-s" ] ; then
-    [ "$2" ] || set - $(egrep "^server" /etc/ntp.conf)
-    server=$2
+    server=${2:-pool.ntp.org}
     sudo /etc/init.d/ntp stop
     sudo ntpdate -b -u $server
     sudo /etc/init.d/ntp start
