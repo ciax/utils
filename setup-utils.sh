@@ -3,7 +3,7 @@
 echo $C3"Setting up utils"$C0
 cd ~/utils
 . ./func.link.sh
-. ./rc.login.sh
+. ./rc.bash.sh
 bin/file-linkbin.sh
 cd
 file-linkcfg
