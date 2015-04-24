@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar db-exec
-# Required tables: mac(host)
+# Required tables: host
 # Description: show hosts which belong to same subnet
 . func.getpar
 subnet="${1:-$(net-name)}"

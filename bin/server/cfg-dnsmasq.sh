@@ -9,9 +9,10 @@ echo "#/etc/dnsmasq.conf"
 net=${1:-$(net-name)}
 db-exec <<EOF
 select
-  'dhcp-host='||mac||','||id
+  'dhcp-host='||mac.id||','||host.id
 from host
-where hub in (
+  inner join mac on mac.host=host.id
+where host.hub in (
   select id from hub where subnet == '$net'
 )
 ;

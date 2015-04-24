@@ -7,5 +7,13 @@
 _usage "(subnet)" <(db-list subnet)
 echo "#/etc/bootptab"
 net=${1:-$(net-name)}
-sub_hub="select id from hub where subnet == '$net'"
-db-exec "select id||':ha='||replace(mac,':','')  from host where hub in ($sub_hub);"
+db-exec <<EOF
+select
+  host.id||':ha='||replace(mac.id,':','')
+from host
+  inner join mac on mac.host=host.id
+where hub in (
+  select id from hub where subnet == '$net'
+)
+;
+EOF

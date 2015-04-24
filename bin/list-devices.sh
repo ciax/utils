@@ -16,7 +16,7 @@ select
     location.description,
     host.description
 from host
-    inner join mac on host.mac=mac.id
+    inner join mac on mac.host=host.id
     inner join device on mac.device=device.id
     inner join model on device.model=model.id
     inner join category on model.category=category.id
