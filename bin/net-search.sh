@@ -6,7 +6,7 @@
 . func.temp
 opt-s(){ #Set to /etc/hosts
     _temp hosts
-    egrep -v " $host$" /etc/hosts > $hosts
+    egrep -v " $hosts$" /etc/hosts > $hosts
     echo "$line" >> $hosts
     _overwrite $hosts /etc/hosts
     echo "Set to /etc/hosts"
@@ -14,10 +14,9 @@ opt-s(){ #Set to /etc/hosts
 _usage "[host]"
 host=$1;shift
 set - $(search-mac $host)
-if [ "$1" ] ; then
-    echo "Searching $host ($1)"
-    mac="${*,,*}"
-    mac="${mac// /|}"
+mac=$1
+if [ "$mac" ] ; then
+    echo "Searching $host ($mac)"
     eval "$(info-net)"
     nmap -sn $cidr > /dev/null 2>&1
     set - $(arp -n|egrep -i "($mac)")
