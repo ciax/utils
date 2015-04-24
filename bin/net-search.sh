@@ -5,29 +5,40 @@
 #alias mac
 . func.temp
 opt-s(){ #Set to /etc/hosts
-    _temp hosts
-    egrep -v " $hosts$" /etc/hosts > $hosts
-    echo "$line" >> $hosts
+    egrep -v " ($reg)$" /etc/hosts > $hosts
+    cat $hlist >> $hosts
     _overwrite $hosts /etc/hosts
     echo "Set to /etc/hosts"
 }
-_usage "[host]"
-host=$1;shift
-set - $(search-mac $host)
-mac=$1
-if [ "$mac" ] ; then
-    echo "Searching $host ($mac)"
-    eval "$(info-net)"
-    nmap -sn $cidr > /dev/null 2>&1
-    set - $(arp -n|egrep -i "($mac)")
-    line="$1    $host"
-    if [ "$1" ] ; then 
-        echo "Find $1"
-        _exe_opt
+_usage "[host].."
+declare -A macs
+for host ; do
+    mac=$(search-mac $host)
+    if [ "$mac" ] ; then
+        macs[$host]=$mac
+        reg="$reg${reg:+|}$host"
+    else
+        echo "No such host $host"
+    fi
+done
+[ "$reg" ] || exit 1
+
+_temp mlist hlist hosts
+eval "$(info-net)"
+echo "Scannig network ($cidr)"
+nmap -sn $cidr > /dev/null 2>&1
+arp -n|grep -v incomplete > $mlist
+for host in ${!macs[*]} ; do
+    mac=${macs[$host]}
+    set - $(egrep -i "($mac)" $mlist)
+    ip=$1
+    if [ "$ip" ] ; then 
+        echo "Find $ip for $host ($mac)"
+        echo "$ip    $host" >> $hlist 
     else
         echo "Can't find $host"
     fi
-else
-    echo "No such host $1"
-fi
+done
+_exe_opt
+
 
