@@ -10,7 +10,7 @@ _temp(){
         _tmplist="$_tmplist $tmp"
         eval "$i=$tmp"
     done
-    trap "$trp$tmplist" EXIT
+    trap "$trp$_tmplist" EXIT
 }
 
 # Show file/dir owner
