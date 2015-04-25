@@ -3,4 +3,4 @@
 [ -d ~/mmal ] || mkdir ~/mmal
 cd ~/mmal
 cp ~/cfg.*/mmal/* .
-sudo motion -n -c motion.conf &
+sudo ./motion -n -c motion.conf &
