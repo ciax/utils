@@ -22,7 +22,7 @@ declare -A hos
 for host ; do
     mac=$(search-mac $host)
     if [ "$mac" ] ; then
-        hos[$mac]=$host
+        hos[${mac,,}]=$host
         mreg="$mreg${mreg:+|}$mac"
         hreg="$hreg${hreg:+|}$host"
     else
