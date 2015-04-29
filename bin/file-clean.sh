@@ -14,7 +14,7 @@ nouse(){
     local tsh=~/.trash
     [ -d $tsh ] || mkdir $tsh || { echo "Can't make $tsh"; exit 1; }
     [ "$1" ] || return
-    /bin/mv -fb "$@" $tsh
+    sudo /bin/mv -fb "$@" $tsh
     /bin/ls -aF --color
 }
 nolink(){
