@@ -16,19 +16,22 @@ _abspath(){ # absdir filename
         echo "$(pwd -P) ${apath##*/}"
     fi
 }
+# _mklink src dstdir dstfile
 _mklink(){
     local src="$1";shift
+    local dir="$1";shift
     local dst="$1";shift
-    if [ -e $dst ] ; then
-        if [ -h $dst ]; then
-            [ "$src" = $(readlink $dst) ] && return 1
-            echo $C3"Warning: link of $dst is different from $src"$C0
+    if [ -e $dir/$dst ] ; then
+        if [ -h $dir/$dst ]; then
+            [ "$src" = $(readlink $dir/$dst) ] && return 1
+            echo $C3"Warning: link of $dir/$dst is different from $src"$C0
         else
-            echo $C1"Error: $dst is regular file"$C0
+            echo $C1"Error: $dir/$dst is regular file"$C0
             return 1
         fi
     fi
-    ln -sf $src $dst && link+=" ${dst##*/}"
+    user=$(stat -c %U $dir)
+    sudo -u $user ln -sf $src $dir/$dst && link+=" $dst"
 }
 _showlink(){
     [ "$link" ] && echo "[$link ] -> $C1${1:-~/bin}$C0"
@@ -37,7 +40,7 @@ _showlink(){
 _binreg(){
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
-        _mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
+        _mklink "$(pwd -P)/$i" "$HOME/bin" "${i%.*}"
     done
     _showlink
 }

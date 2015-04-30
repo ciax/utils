@@ -6,7 +6,7 @@ selflink(){
     while read spath dpath;do
         read sdir src < <(_abspath ${spath%:*})
         read ddir dst < <(_abspath $dpath)
-        _mklink $sdir/$src $ddir/${dst:-$src}
+        _mklink $sdir/$src $ddir ${dst:-$src}
         _showlink $ddir
     done < <(egrep -Hr "^[#;]link(\($DIST\)|) " *)
 }
