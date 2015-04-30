@@ -8,7 +8,7 @@ selflink(){
         read ddir dst < <(_abspath $dpath)
         _mklink $sdir/$src $ddir ${dst:-$src}
         _showlink $ddir
-    done < <(egrep -Hr "^[#;]link(\($DIST\)|) " *)
+    done < <(egrep -Hr "^[#;]link(\($DIST\)|) " *[!~])
 }
 . func.link
 echo $C3"File Registering (~/cfg.*)"$C0
