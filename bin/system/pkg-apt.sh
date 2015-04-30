@@ -14,11 +14,11 @@ _usage "[command]" <(_caselist)
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
-        sudo -i apt-get install $(show-required packages)
+        sudo -i apt-get install -y $(show-required packages)
         ;;
     clean) #clean up pakcages
-        sudo -i apt-get autoremove
-        sudo -i apt-get remove --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
+        sudo -i apt-get autoremove -y
+        sudo -i apt-get remove -y --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         ;;
     spy) #apt-spy is not provided in ubuntu
         sudo -i apt-spy -d stable -a North-America
@@ -27,8 +27,8 @@ case "$cmd" in
         sudo -i apt-get update
         ;;
     upg) #upgrade packages
-        sudo -i apt-get dist-upgrade
-        sudo -i apt-get upgrade
+        sudo -i apt-get dist-upgrade -y
+        sudo -i apt-get upgrade -y
         ;;
     list) #list installed packages
         dpkg --get-selections '*'
@@ -42,12 +42,12 @@ case "$cmd" in
         ;;
     install) #install packages
         _usage "[$cmd] [packages]"
-        sudo -i apt-get install $* || _abort "Error $?"
+        sudo -i apt-get install -y $* || _abort "Error $?"
         echo Install success. $?
         ;;
     remove) #remove packages
         _usage "[$cmd] [package]"
-        sudo -i apt-get remove --purge $*;;
+        sudo -i apt-get remove -y --purge $*;;
     config) #configure package
         _usage "[$cmd] [package]"
         sudo -i dpkg-reconfigure $1;;
