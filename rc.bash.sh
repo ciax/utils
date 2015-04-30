@@ -1,4 +1,5 @@
 #!/bin/bash
+# Recommended packages: byobu
 # Description: setenv for login
 umask 022
 shopt -s nullglob
