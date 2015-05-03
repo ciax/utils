@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required packages: miniupnpc
 dir=/etc/network/if-up.d
-file=ssh-upnp
+file=cfg-upnp
 case "$1" in
     -d)
         if [ -e $dir/$file ] ; then
@@ -16,14 +16,15 @@ case "$1" in
         ;;
     [0-9]*)
         ext=$1
-        a=$(ip route)
-        set - ${a##*src }
-        scr="upnpc -a $1 22 $ext tcp"
-        cd
-        echo $scr > $file
+        cat > $file <<EOF
+#!/bin/sh
+set \$(ip route)
+shift \$((\$# - 1))
+upnpc -a \$1 22 $ext tcp
+EOF
         chmod +x $file
         sudo mv $file $dir
-        $scr
+        sudo $dir/$file
         ;;
     *)
         echo "$0 (-d) [port]"
