@@ -27,8 +27,8 @@ case "$cmd" in
         sudo -i apt-get update
         ;;
     upg) #upgrade packages
-        sudo -i apt-get dist-upgrade -y
         sudo -i apt-get upgrade -y
+        sudo -i apt-get dist-upgrade -y
         ;;
     list) #list installed packages
         dpkg --get-selections '*'
