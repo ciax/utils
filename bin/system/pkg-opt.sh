@@ -1,5 +1,6 @@
 #!/bin/bash
 #link(QNAP) pkg
+# Required packages(QNAP): man emacs22 sudo grep sqlite
 # Required scripts: func.getpar show-required
 # Description: Package utils for Optware (Qnap)
 . func.getpar
