@@ -14,19 +14,19 @@ nouse(){
     local tsh=~/.trash
     [ -d $tsh ] || mkdir $tsh || { echo "Can't make $tsh"; exit 1; }
     [ "$1" ] || return
-    sudo /bin/mv -fb "$@" $tsh
-    /bin/ls -aF --color
+    sudo mv -fb "$@" $tsh
+    ls -aF --color
 }
 nolink(){
     for i ; do
         [ -L "$i" -a ! -e "$i" ] || continue
-        /bin/rm "$i"
+        rm "$i"
         echo $C3"[${i##*/}] is not linked"$C0
     done
 }
 clrdir(){
     if [[ $PWD == */.trash ]] ; then
-        /bin/rm -rf *
+        rm -rf *
     else
         nouse \#* *~ .*~ *.orig
         nolink * .*
