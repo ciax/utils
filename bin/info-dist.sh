@@ -2,7 +2,7 @@
 case `uname` in
     Linux)
         set - $(< /etc/issue)
-        case $1 in
+        case "$*" in
             *bian*)
                 echo "debian-${3%.*}";;
             Ubuntu*)
@@ -11,6 +11,8 @@ case `uname` in
                 echo "centos-${3%.*}";;
             White*)
                 echo "redhat-${6%.*}";;
+            *QNAP*)
+		echo "qnap";;
             *);;
         esac;;
     SunOS)

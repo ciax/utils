@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: install utils (need to re-login for environment effective)
+# Required packages(QNAP): man emacs22 sudo
 echo $C3"Setting up utils"$C0
 cd ~/utils
 . ./func.link.sh
