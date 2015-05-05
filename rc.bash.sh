@@ -33,10 +33,16 @@ export GREP_OPTIONS='--color=auto'
 # Set Distribution
 doc=system-relase
 [ -e /etc/$doc ] || doc=issue
-read DIST dmy < /etc/$doc
-[ $DIST = "Welcome" ] && DIST=QNAP
-export DIST
-
+while read dst dmy ; do
+    case $dst in
+	Welcome)
+	    export DIST=QNAP
+	    break;;
+	'');;
+	*) export DIST=$dst
+	   break;;
+    esac
+done < /etc/$doc
 # PROMPT
 PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
 
