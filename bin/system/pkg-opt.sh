@@ -10,7 +10,8 @@
 #  - Activate telnet at setup 
 # *CLI setting
 #  - Install sudo by ipkg
-#  - Edit /etc/passwd,/etc/gtoup and change account name from 'admin' to 'root'
+#  - Edit /etc/passwd,/etc/shadow,/etc/group and change account name from 'admin' to 'root'
+#  - Edit /etc/sudoers to access root by %users with no password 
 #  - Install openssh by ipkg for login by general user account
 . func.getpar
 which ipkg >/dev/null || _abort "This might not have Optware"
