@@ -12,7 +12,7 @@
 #    table : you can specify the refarence table instead of the 'name'.
 #    key : reference key can be specified, otherwise 'id' will be used.
 #    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
-. func.getpar
+. func.temp
 schema(){
     local tbl=$(table-core $1) || return 1
     [[ "$tables" =~ $tbl ]] && return
@@ -21,6 +21,8 @@ schema(){
     local create="create table $tbl ("
     local pkeys=''
     local fkeys=''
+    _temp tmpline
+    egrep "^!" db-$tbl.csv|head -1|tr ",\t" "\n" > $tmpline
     while read col; do
         local field="${col%(*}"
         if [[ $field =~ '!' ]] ; then
@@ -40,7 +42,7 @@ schema(){
             reftbl="$reftbl $rfile"
             schema $rfile
         done
-    done < <(egrep "^!" db-$tbl.csv|head -1|nkf -Lu|tr ",\t" "\n")
+    done < $tmpline
     echo "$drop"
     echo $create"primary key($pkeys)$fkeys);"
 }

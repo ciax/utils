@@ -7,8 +7,9 @@ _usage "[tables]"
 for i;do
     table=$(table-core $i) || continue
     pfx="insert or ignore into $table values ('"
+    egrep -hv '^([#!].*|[[:blank:]]*)$' db-$i*.csv|\
     while read line; do
         line=$pfx${line//,/"','"}"');"
         echo "${line//"''"/null}"
-    done < <(egrep -hv '^([#!].*|[[:blank:]]*)$' db-$i*.csv|nkf -Lu)
+    done 
 done
