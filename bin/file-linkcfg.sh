@@ -3,12 +3,15 @@
 # Description: make links to the specific dirs categorized by file type
 # Desctiption: Files in cfg.*/ dirs will be classified into 'bin','db' ..
 selflink(){
+    egrep -Hr "^[#;]link(\($DIST\)|) " *[!~] |\
     while read spath dpath;do
-        read sdir src < <(_abspath ${spath%:*})
-        read ddir dst < <(_abspath $dpath)
+        set - $(_abspath ${spath%:*})
+	sdir=$1;src=$2
+	set - $(_abspath $dpath)
+        ddir=$1;dst=$2
         _mklink $sdir/$src $ddir ${dst:-$src}
         _showlink $ddir
-    done < <(egrep -Hr "^[#;]link(\($DIST\)|) " *[!~])
+    done
 }
 . func.link
 echo $C3"File Registering (~/cfg.*)"$C0

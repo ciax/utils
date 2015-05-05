@@ -4,10 +4,11 @@
 # Desctiption: Files in current dir will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 selflink(){
+    egrep -H "^[#;]link(\(.*,?$DIST,?.*\)|) " ~/bin/* |\
     while read file dst;do
         src=${file%:*}
         _mklink $(readlink $src) ~/bin $dst
-    done < <(egrep -H "^[#;]link(\(.*,?$DIST,?.*\)|) " ~/bin/*)
+    done
 }
 . func.link
 . func.dirs

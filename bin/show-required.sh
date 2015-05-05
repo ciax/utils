@@ -4,8 +4,9 @@
 # Description: show required something in comments
 . func.getpar
 _usage "[type]"
-while read line;do
+egrep -ih "^# *re.* $1(\(.*,?$DIST,?.*\)|):" ~/bin/*|tr -d '*' |\
+ while read line;do
     for i in ${line#*:};do
         echo ${i%(*}
     done
-done < <(egrep -ih "^# *re.* $1(\(.*,?$DIST,?.*\)|):" ~/bin/*|tr -d '*')|sort -u
+done | sort -u

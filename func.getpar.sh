@@ -18,7 +18,7 @@ _list_cols(){
     while read line;do
         [[ "$line" =~ , ]] && line="$C2${line/,/$C0: }"
         echo "$line"
-    done|column|while read line;do echo -e "\t$line";done
+    done|while read line;do echo -e "\t$line";done
 }
 # Description: show lined list
 _list_line(){
@@ -29,19 +29,21 @@ _list_line(){
 }
 # Description: list of case option
 _caselist(){
+    egrep '^ +[a-z]+\)' $0 |\
     while read line;do
         arg="${line%%)*}"
         echo -n "${arg#* }"
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
-    done < <(egrep '^ +[a-z]+\)' $0)
+    done
 }
 # Description: list of options with opt-?() functions
 _optlist(){
+    egrep '^x?opt-' $0|\
     while read line;do
         fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
         echo $C2"${fnc#*opt}$C0${desc/:=/=}"
-    done < <(egrep '^x?opt-' $0)
+    done
 }
 # Description: check options
 _chkopt(){
@@ -111,7 +113,7 @@ _usage(){
     _exe_xopt
     _chkopt && _chkargc "$reqp" && _chkargv "$@" && return 0
     echo -e "Usage: $C3${0##*/}$C0 $(_optlist|_list_line)$reqp" 1>&2
-    [ "$1" ] && _list_cols < "$1" 1>&2
+    [ -t 0 ] || _list_cols 1>&2
     exit 2
 }
 
