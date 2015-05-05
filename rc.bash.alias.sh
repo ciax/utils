@@ -2,7 +2,7 @@
 ### Set alias for login
 ## Commands manupulating shell variables
 e-alias(){
-    file=rc.utils.alias.sh
+    file=rc.bash.alias.sh
     pushd ~/utils >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
@@ -13,9 +13,11 @@ e-alias(){
 }
 # Generate alias by pick up '#alias XXX' line from each files
 self-alias(){
+    grep '^#alias' ~/bin/* > ~/tmpfile
     while read head name par; do
         alias "$name=${head%:*}${par:+ $par}"
-    done < <(cd ~/bin;grep '^#alias' *)
+    done < ~/tmpfile
+    rm ~/tmpfile
 }
 # File registration
 reg(){
