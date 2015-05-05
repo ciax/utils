@@ -25,14 +25,17 @@ addpath(){
     done
     echo $list
 }
-export PATH=$(addpath $PATH {~,/usr{/local,},}/{bin,sbin,lib})
+export PATH=$(addpath {~,/opt,/usr{/local,},}/{bin,sbin,lib} $PATH)
 export RUBYLIB=$(addpath $RUBYLIB $HOME/lib)
 unset -f addpath
 # Other Environments
 export GREP_OPTIONS='--color=auto'
 # Set Distribution
-set - $(</etc/issue)
-export DIST="$1"
+doc=system-relase
+[ -e /etc/$doc ] || doc=issue
+read DIST dmy < /etc/$doc
+[ $DIST = "Welcome" ] && DIST=QNAP
+export DIST
 
 # PROMPT
 PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
