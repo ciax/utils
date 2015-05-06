@@ -7,17 +7,14 @@
 . func.getpar
 _usage "[host] (command)"
 sshopt="-o StrictHostKeyChecking=no -t"
-host=$1;shift
-eval "$(db-trace $host login)"
-eval "$(db-trace $host host)"
+id=$1;shift
+eval "$(db-trace $id ssh)"
+eval "$(db-trace $id host)"
 [ "$auth" ] && eval "$(db-trace $auth auth)"
 crypt-init
 [[ "$password" == jA0EA* ]] && password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
-if [ "$command" = telnet ]; then
-    echo "telnet $host"
-    telnet $host
-else
+if [ "$host" ]; then
     batch="-o BatchMode=yes"
     [ "$port" ] && sshopt="$sshopt -p $port"
     ssharg="$sshopt ${user:+$user@}$host"
@@ -31,4 +28,7 @@ else
     [ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
     echo "interact" >> $expfile
     expect $expfile
+else
+    echo "telnet $id"
+    telnet $id
 fi
