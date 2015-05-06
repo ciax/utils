@@ -6,7 +6,7 @@
 . func.temp
 xopt-r(){ #Refresh arp
     eval "$(info-net)"
-    echo "Scannig network ($cidr)"
+    _msg "Scannig network ($cidr)"
     nmap -sn $cidr > /dev/null 2>&1
     arp -n|grep -v incomplete > $alist
 }
@@ -19,7 +19,7 @@ opt-s(){ #Set to /etc/hosts
 	msg="Delete from /etc/hosts"
     fi
     _overwrite $hosts /etc/hosts || msg="No changes on /etc/hosts"
-    echo "$msg"
+    _msg "$msg"
 }
 alist=~/.var/arplist.txt
 _usage "[host].."
@@ -31,7 +31,7 @@ for host ; do
         mreg="$mreg${mreg:+|}$mac"
         hreg="$hreg${hreg:+|}$host"
     else
-        echo "No such host $host"
+        _alert "No such host $host"
     fi
 done
 [ "$hreg" ] || exit 1

@@ -7,6 +7,10 @@
 #  _exe_opt()
 
 shopt -s nullglob
+# Description: Print message to stderr
+_msg(){ echo "$C2$*$C0" 1>&2; }
+# Description: Print message to stderr
+_warn(){ echo "$C3$*$C0" 1>&2; }
 # Description: Print alert to stderr
 _alert(){ echo "$C1$*$C0" 1>&2; }
 # Desctiption: Abort with message

@@ -10,11 +10,16 @@ _temp infile outfile
 rem=$( tee $infile | grep "^#/" )
 file=${rem#*#}
 [ "$file" ] || _abort "No cfg file name"
-user=$(_fuser $file)
 cat $file > $outfile
 while read line; do
     [ "$line" ] || continue
     egrep -q "$line" $file && continue
     echo "$line" >> $outfile
 done < <(egrep -v "^#" $infile)
-sudo install -o $user $outfile $file
+if cmp -s $outfile $file ; then
+    user=$(_fuser $file)
+    sudo install -o $user $outfile $file
+    _msg "Add to $file"
+else
+    _msg "No changes on $file"
+fi
