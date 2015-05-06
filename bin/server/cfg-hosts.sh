@@ -14,17 +14,10 @@ echo "#/etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"
 net=${1:-$(net-name)}
-db-exec <<EOF
+IFS='|'
+db-exec <<EOF | while read a b c sub ip host domain; do echo "$a.$b.$(($c+$sub)).$ip    $host   $host.$domain";done
 select
-    rtrim(subnet.network,'.0')
-    ||'.'
-    ||host.host_ip
-    ||'    '
-    ||host.id
-    ||'    '
-    ||host.id
-    ||'.'
-    ||domain.name
+    replace(subnet.network,'.','|'),host.sub_ip,host.host_ip,host.id,domain.name
 from host
     inner join subnet on host.subnet=subnet.id
     inner join domain on subnet.domain=domain.id

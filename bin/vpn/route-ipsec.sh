@@ -4,4 +4,4 @@
 # Description: Generate routing commands for ipsec
 . func.getpar
 _usage "[vpnhost]" <(db-list vpn)
-db-exec "select network||'/'||netmask from subnet where route == '$1';"
+db-exec "select network||'.0/'||netmask from subnet where route == '$1';"

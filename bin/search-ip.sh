@@ -4,12 +4,14 @@
 # Description: show hosts which belong to same subnet
 . func.getpar
 _usage "[host]"
-db-exec <<EOF
+set - $(db-exec <<EOF
 select
-    rtrim(subnet.network,'.0')||'.'||host.host_ip
+    replace(subnet.network,'.',' ')||' '||host.sub_ip||' '||host.host_ip
 from host
     inner join subnet on host.subnet=subnet.id
 where
     host.id == '$1'
 ;
 EOF
+    )
+echo "$1.$2.$(($3 + $4)).$5"
