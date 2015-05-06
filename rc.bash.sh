@@ -14,18 +14,17 @@ if [ -t 2 ] ; then
     export C0=$'\e[0m'
 fi
 # Set environment for login
-# For PATH
+# For PATH setting without duplication
 addpath(){
-    local list="$1";shift
+    IFS=": "
     for j; do
         [ -d "$j" ] || continue
-        (IFS=:;for i in $list;do
-            [ "$j" = "$i" ] && break
-        done) || list+=":$j"
+	[[ "$list" =~ :$j[:$] ]] && continue
+	list+=":$j"
     done
-    echo $list
+    echo "${list#:}"
 }
-export PATH=$(addpath {~,/opt,/usr{/local,},}/{bin,sbin,lib} $PATH)
+export PATH=$(addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin} $PATH)
 export RUBYLIB=$(addpath $RUBYLIB $HOME/lib)
 unset -f addpath
 # Other Environments
