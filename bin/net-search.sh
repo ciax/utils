@@ -12,9 +12,14 @@ xopt-r(){ #Refresh arp
 }
 opt-s(){ #Set to /etc/hosts
     egrep -v " ($hreg)$" /etc/hosts > $hosts
-    cat $hlist >> $hosts
-    _overwrite $hosts /etc/hosts
-    echo "Set to /etc/hosts"
+    if [ -s $hlist ] ; then
+	cat $hlist >> $hosts
+	msg="Add to /etc/hosts"
+    else
+	msg="Delete from /etc/hosts"
+    fi
+    _overwrite $hosts /etc/hosts || msg="No changes on /etc/hosts"
+    echo "$msg"
 }
 alist=~/.var/arplist.txt
 _usage "[host].."
@@ -34,7 +39,7 @@ done
 _temp hlist hosts
 while read ip type mac other ; do
     host=${hos[$mac]}
-    echo "Find $ip for $host ($mac)"
+    echo "Find $ip for $host ($mac)" >/dev/stderr
     echo "$ip    $host" >> $hlist 
 done < <(egrep -i "($mreg)" $alist)
 _exe_opt
