@@ -14,4 +14,8 @@ where
 ;
 EOF
     )
-echo "$1.$2.$(($3 + $4)).$5"
+if [ "$5" ] ; then
+    echo "$1.$2.$(($3 + $4)).$5"
+else
+    echo "No entry"
+fi
