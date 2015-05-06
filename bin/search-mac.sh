@@ -4,6 +4,6 @@
 # Description: show mac address corresponding with host
 . func.getpar
 _usage "[host]"
-db-exec <<EOF
+db-exec <<EOF | head -1
 select id from mac where host='$1';
 EOF
