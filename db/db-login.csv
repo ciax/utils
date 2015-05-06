@@ -1,1 +1,1 @@
-!id,command,host,user,auth,port,rcmd
+!id,host,user,auth,port,proxy,rcmd

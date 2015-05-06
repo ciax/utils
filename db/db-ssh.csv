@@ -1,1 +1,1 @@
-!src(subnet),!dst(login),alias,proxy
+!id,host,user,auth,port,proxy,rcmd
