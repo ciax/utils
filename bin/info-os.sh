@@ -1,4 +1,13 @@
 #!/bin/bash
 # Show UNIX like OS
-# Linux(BusyBox),SunOS,BSD,Darwin(OSX)
-uname | tr "[A-Z]" "[a-z]"
+# Linux/DIST,SunOS,BSD,Darwin(OSX)
+case $(uname) in
+    Linux)
+	echo -n "Linux/"
+	exp="Debian|Ubuntu|CentOS|QNAP"
+	egrep -ho "$exp" /etc/*{release,issue}* /proc/version|head -1
+	;;
+    *)
+	uname
+	;;
+esac

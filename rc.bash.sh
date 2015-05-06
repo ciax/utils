@@ -11,7 +11,7 @@ if [ -t 2 ] ; then
     for i in 1 2 3 4 5 6 7 ; do
         eval "export C${i}=\$'\\e[1;3${i}m'"
     done
-    export C0=$'\e[0m'
+    C0=$'\e[0m'
 fi
 # Set environment for login
 # For PATH setting without duplication
@@ -24,24 +24,13 @@ addpath(){
     done
     echo "${list#:}"
 }
-export PATH=$(addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin} $PATH)
-export RUBYLIB=$(addpath $RUBYLIB $HOME/lib)
+PATH=$(addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin} $PATH)
 unset -f addpath
 # Other Environments
-export GREP_OPTIONS='--color=auto'
-# Set Distribution
-doc=system-relase
-[ -e /etc/$doc ] || doc=issue
-while read dst dmy ; do
-    case $dst in
-	Welcome)
-	    export DIST=QNAP
-	    break;;
-	'');;
-	*) export DIST=$dst
-	   break;;
-    esac
-done < /etc/$doc
+GREP_OPTIONS='--color=auto'
 # PROMPT
 PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
-
+# SET Dist
+info-os
+os=$(info-os)
+export DIST=${os#*/}
