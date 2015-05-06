@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: func.temp setup-ssh ssh-mark ssh-trim
+# Required scripts: func.getpar setup-ssh ssh-mark ssh-trim
 # Desctiption: share authorized keys with remote host (Accepts join)
-. func.temp
+. func.getpar
 getrem(){
     scp $sshopt -pq ${port:+-P $port} $rhost:$1 $2
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: func.temp setup-ssh ssh-mark ssh-trim
+# Required scripts: func.getpar setup-ssh ssh-mark ssh-trim
 # Desctiption: impose self trust to the object host (push pub-key anonymously)
-. func.temp
+. func.getpar
 getrem(){
     scp $sshopt -pq $rhost:$1 $2
 }

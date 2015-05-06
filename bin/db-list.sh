@@ -3,5 +3,5 @@
 # Required tables: *
 # Desctiption: show table list or table entry
 . func.getpar
-_usage "[table]" <(db-tables)
+_usage "[table]" < <(db-tables)
 db-exec "select id from $1;"|grep .

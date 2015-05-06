@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias fil
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Description: Overwrite if these are different.
-. func.temp
+. func.getpar
 _usage "[file] [filter] (par)"
 file=$1;shift
 _temp temp

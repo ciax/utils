@@ -1,12 +1,12 @@
 #!/bin/bash
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
-. func.getpar
+. func.msg
 _temp(){
     local trp="rm -f -- "
     local i=
     for i ; do
-        local tmp=$(mktemp) || { echo "Can't make mktemp"; exit 1; }
+        local tmp=$(mktemp) || _abort "Can't make mktemp"
         _tmplist="$_tmplist $tmp"
         eval "$i=$tmp"
     done

@@ -4,7 +4,7 @@
 # use nc for input to lantronix (i.e. ltcfg id | nc host 23)
 . func.getpar
 opt-r(){ : ;}
-_usage "[id] (range)" <(db-exec "select distinct host from lantronix;")
+_usage "[id] (range)" < <(db-exec "select distinct host from lantronix;")
 IFS='|'
 echo "s";echo "su";echo "system"
 _exe_opt || {

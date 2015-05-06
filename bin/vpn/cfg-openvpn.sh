@@ -6,7 +6,7 @@
 # (host).crt (Client Certificate)
 # (host).key (Client Secret Key)
 . func.getpar
-_usage "[vpnhost]" <(db-list vpn)
+_usage "[vpnhost]" < <(db-list vpn)
 vardir=$HOME/.var
 ssldir=$vardir/ssl
 myhost=`hostname`

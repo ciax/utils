@@ -3,7 +3,7 @@
 # Required scripts: search-mac info-net
 # Description: search IP addres by mac
 #alias mac
-. func.temp
+. func.getpar
 xopt-r(){ #Refresh arp
     eval "$(info-net)"
     _msg "Scannig network ($cidr)"

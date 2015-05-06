@@ -3,13 +3,13 @@
 # Required tables: host(host_ip),domain(name),subnet(network)
 # Description: generate hosts file
 # Usage: cfg-hosts > /etc/hosts
-. func.temp
+. func.getpar
 xopt-s(){ #Set to /etc/hosts
     _temp thost
     $0 > $thost
     _overwrite $thost /etc/hosts
 }
-_usage "(subnet)" <(db-list subnet)
+_usage "(subnet)" < <(db-list subnet)
 echo "#/etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"

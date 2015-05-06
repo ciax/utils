@@ -10,7 +10,7 @@
 . func.getpar
 which apt-get >/dev/null || _abort "This might not Debian"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-_usage "[command]" <(_caselist)
+_usage "[command]" < <(_caselist)
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages

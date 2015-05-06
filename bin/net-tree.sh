@@ -74,7 +74,7 @@ chk_host(){
 opt-p(){ echo -n "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
 
 ### main ###
-_usage "[subnet]" <(db-list subnet)
+_usage "[subnet]" < <(db-list subnet)
 _exe_opt
 declare -A sub
 declare -A super

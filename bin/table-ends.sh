@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Desctiption: show tables of the dependency ends in db-*.csv
-. func.temp
+. func.getpar
 tblcore(){
     local r=${1#*-}
     echo ${r%%[-.]*}

@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias cutout
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Description: cutoutt matched lines from file and display
-. func.temp
+. func.getpar
 _usage "[expression] [file]"
 exp=$1;shift
 file=$1;shift

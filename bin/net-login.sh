@@ -1,10 +1,10 @@
 #!/bin/bash
 #alias l
 # Required packages: expect
-# Required scripts: func.temp db-list db-trace
+# Required scripts: func.getpar db-list db-trace
 # Required tables: login(user,password,host,rcmd)
 # Description: login command
-. func.temp
+. func.getpar
 _usage "[host] (command)"
 sshopt="-o StrictHostKeyChecking=no -t"
 host=$1;shift

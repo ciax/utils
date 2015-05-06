@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Description: generate routing file for ppp
 #*Config files take the following parameters at start up
 #   interface-name
@@ -8,7 +8,7 @@
 #   local-IP-address
 #   remote-IP-address
 #   ipparam
-. func.temp
+. func.getpar
 opt-i(){ sudo install $temp /etc/ppp/ip-up.d/route; } #install
 _usage
 _temp temp

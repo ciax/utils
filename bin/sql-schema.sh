@@ -12,7 +12,7 @@
 #    table : you can specify the refarence table instead of the 'name'.
 #    key : reference key can be specified, otherwise 'id' will be used.
 #    The available charactors for 'field name' are [a-zA-Z0-9] and '_'
-. func.temp
+. func.getpar
 schema(){
     local tbl=$(table-core $1) || return 1
     [[ "$tables" =~ $tbl ]] && return

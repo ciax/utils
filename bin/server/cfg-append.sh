@@ -1,10 +1,10 @@
 #!/bin/bash
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Description: append stdin to config file which is included in stdin as a comment
 #              and ignore existent line
 # Usage: cfg-append < cfgfile
 # Example: cfg-hosts | cfg-append
-. func.temp
+. func.getpar
 _usage "<newcfg>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#/" )

@@ -5,24 +5,28 @@
 #  set opt-?() or xopt-?() functions,
 #  _usage()
 #  _exe_opt()
-
-shopt -s nullglob
-# Description: Print message to stderr
-_msg(){ echo "$C2$*$C0" 1>&2; }
-# Description: Print message to stderr
-_warn(){ echo "$C3$*$C0" 1>&2; }
-# Description: Print alert to stderr
-_alert(){ echo "$C1$*$C0" 1>&2; }
-# Desctiption: Abort with message
-# Usage: _abort [message]
-_abort(){ _alert "$*";exit 1; }
-
+. func.temp
 # Description: show folded list
 _list_cols(){
-    while read line;do
-        [[ "$line" =~ , ]] && line="$C2${line/,/$C0: }"
-        echo "$line"
-    done|while read line;do echo -e "\t$line";done
+    size=0
+    _temp tmplist
+    while read item;do
+	[ "${#item}" -gt $size ] && size="${#item}"
+	echo "$item"
+    done > $tmplist
+    while read item;do
+        [[ "$item" =~ , ]] && item="$C2${item/,/$C0: }"
+	while [ ${#item} -lt $size ]; do
+	    item="$item "
+	done
+	line="$line\t$item"
+	if [ "${#line}" -gt 40 ] ; then
+	    echo -e "${line% *}"
+	    unset line
+	fi
+    done < $tmplist
+    [ "$line" ] && echo -e "$line"
+    
 }
 # Description: show lined list
 _list_line(){

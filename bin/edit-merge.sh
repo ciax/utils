@@ -1,9 +1,9 @@
 #!/bin/bash
 # Required packages: nkf
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Description: merge files with sorting and remove duplicated lines
 #   If no changes, then no rewrite
-. func.temp
+. func.getpar
 _usage "[file] (input)"
 file=$1;shift
 [ -f "$file" ] || touch $file

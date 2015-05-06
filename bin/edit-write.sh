@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias wri
-# Required scripts: func.temp
+# Required scripts: func.getpar
 # Description: Overwrite if these are different.
-. func.temp
+. func.getpar
 _usage "[file] < (input)"
 file=$1;shift
 _temp temp

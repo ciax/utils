@@ -4,7 +4,7 @@
 # Description: generate bootp config
 # Usage: cfg-bootp (subnet) > /etc/bootptab
 . func.getpar
-_usage "(subnet)" <(db-list subnet)
+_usage "(subnet)" < <(db-list subnet)
 echo "#/etc/bootptab"
 net=${1:-$(net-name)}
 db-exec <<EOF

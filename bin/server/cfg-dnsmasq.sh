@@ -4,7 +4,7 @@
 # Description: generate dnsmasq config
 # Usage: cfg-dnsmasq (subnet) > /etc/dnsmasq.conf
 . func.getpar
-_usage "(subnet)" <(db-list subnet)
+_usage "(subnet)" < <(db-list subnet)
 echo "#/etc/dnsmasq.conf"
 net=${1:-$(net-name)}
 db-exec <<EOF

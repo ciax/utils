@@ -1,16 +1,16 @@
 #!/bin/bash
 #alias ivpn
 # Required packages(Debian,Raspbian): vpnc
-# Required scripts: func.temp cfg-ipsec
+# Required scripts: func.getpar cfg-ipsec
 # Description: vpn client of ipsec
-. func.temp
+. func.getpar
 opt-d(){ #disconnect
     sudo vpnc-disconnect && echo "IPsec VPN Terminated"
     exit
 }
 
 PATH+=:/usr/sbin
-_usage "[vpnhost]" <(db-list vpn)
+_usage "[vpnhost]" < <(db-list vpn)
 _exe_opt
 _temp cfgfile
 cfg-ipsec $* > $cfgfile

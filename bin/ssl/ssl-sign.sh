@@ -6,7 +6,7 @@
 ##@ CA
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 . func.ssl
-. func.temp
+. func.getpar
 # Options
 opt-s(){ role+="nsCertType=server\n"; } #server
 opt-c(){ role+="nsCertType=client\n"; } #client

@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.temp func.query file-linkbin file-clean
+# Required scripts: func.getpar func.query file-linkbin file-clean
 # Description: replace string in files
-. func.temp
+. func.getpar
 _usage "[oldstr] [newstr] (ext)
 \tENV{files} for target
 \tENV{ex} for exclude line

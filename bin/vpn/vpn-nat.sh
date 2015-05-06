@@ -26,7 +26,7 @@ setnat(){
 natstat(){
     sudo iptables -t nat -L
 }
-_usage "[command]" <(_caselist)
+_usage "[command]" < <(_caselist)
 case "$1" in
     clr) #Clear the table
         clrtbl;;

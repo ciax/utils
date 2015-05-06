@@ -1,8 +1,8 @@
 #!/bin/bash
 #alias recall
-# Required scripts: func.temp info-dist bkup-stash bkup-exec
+# Required scripts: func.getpar info-dist bkup-stash bkup-exec
 # Description: recall latest backed up file
-. func.temp
+. func.getpar
 write(){
     mv $content $file
     mode=$(bkup-exec "select mode from content where id == '$fid';")
