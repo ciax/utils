@@ -35,6 +35,10 @@ gr(){
         grep -irn "$*" *
     fi
 }
+# Switch user
+sb(){
+    sudo -s ${1:+-u $1}
+}
 
 ## Aliasing
 # General Commands
@@ -47,7 +51,6 @@ alias eg='env|grep -i'
 alias sg='set|grep "^[a-zA-Z]"'
 alias psg='ps -ef|grep -i'
 alias kilg='sudo killall -i -I -r'
-alias sb='sudo bash'
 alias ae=e-alias
 alias bogo='dmesg|grep Bogo'
 
