@@ -8,7 +8,7 @@ PATH=$HOME/bin:$PATH
 . ~/utils/func.msg.sh
 . ~/utils/func.link.sh
 . ~/utils/func.dirs.sh
-echo $C3"File Registering (~/bin)"$C0
+_warn "File Registering (~/bin)"
 for i in ~/utils $*;do
     pushd $i >/dev/null
     _subdirs _binreg
