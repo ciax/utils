@@ -22,7 +22,7 @@ self-alias(){
 # File registration
 reg(){
     file-clean ~/bin
-    file-linkbin $(git-dirs) $*
+    setup-links $(git-dirs) $*
     file-linkcfg ~/cfg.*
     self-alias
 }
