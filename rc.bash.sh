@@ -9,9 +9,7 @@ complete -r
 addpath(){
     IFS=": "
     for j; do
-        [ -d "$j" ] || continue
-	[[ "$list" =~ :$j[:$] ]] && continue
-	list+=":$j"
+        [ -d "$j" ] && [[ ! "$list" =~ :$j[:$] ]] && list+=":$j"
     done
     echo "${list#:}"
 }
