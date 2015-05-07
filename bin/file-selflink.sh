@@ -5,7 +5,7 @@
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 . func.link
 . func.temp
-echo $C3"File Self Registering"$C0
+_warn "File Self Registering"
 _temp linklist
 egrep -Hr "^[#;]link(\(.*,?$DIST,?.*\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
 

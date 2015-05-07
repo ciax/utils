@@ -6,7 +6,7 @@
 . func.ssl
 _usage "[site]"
 if [ -s "$site.key" ] ;then
-    echo $C3"$site.key exists"$C0
+    _warn "$site.key exists"
 else
     openssl genrsa 2048 > $site.key
 fi

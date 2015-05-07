@@ -2,17 +2,17 @@
 #alias clr
 # Required scripts: func.dirs
 # Description: File clean up (remove backup,unlinked files)
+. func.msg
 . func.dirs
-shopt -s nullglob
 chkdir(){
     [ -h "$1" ] && return 1
     [ -d "$1" ] && return
-    [ -e "$1" ] && { echo $C1"Not a directory $1"$C0;return 1; }
+    [ -e "$1" ] && { _alert "Not a directory $1";return 1; }
     mkdir "$1"
 }
 nouse(){
     local tsh=~/.trash
-    [ -d $tsh ] || mkdir $tsh || { echo "Can't make $tsh"; exit 1; }
+    [ -d $tsh ] || mkdir $tsh || _abort "Can't make $tsh"
     [ "$1" ] || return
     sudo mv -fb "$@" $tsh
     ls -aF --color
@@ -21,7 +21,7 @@ nolink(){
     for i ; do
         [ -L "$i" -a ! -e "$i" ] || continue
         rm "$i"
-        echo $C3"[${i##*/}] is not linked"$C0
+        _warn "[${i##*/}] is not linked"
     done
 }
 clrdir(){
@@ -37,4 +37,4 @@ for i in ${*:-.};do
     _subdirs clrdir
     popd >/dev/null
 done
-echo $C3"File Cleaning ($_dirlist)"$C0
+_warn "File Cleaning ($_dirlist)"

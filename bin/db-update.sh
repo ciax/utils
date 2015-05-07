@@ -2,6 +2,7 @@
 # Required scripts: sql-make db-exec
 # Required tables: mac ssl ssh
 # Description: update databases
+. func.msg
 set - $(table-ends)
-echo $C3"Database update for $*"$C0
+_warn "Database update for $*"
 sql-make $*|db-exec

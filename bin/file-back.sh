@@ -11,4 +11,4 @@ elif [ -e ~/.trash/$1 ]; then
 else
     exit
 fi
-echo $C3"File $1 restored"$C0
+_warn "File $1 restored"

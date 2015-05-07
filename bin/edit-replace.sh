@@ -15,7 +15,7 @@ ext="$3"
 echo "OLDSTR=$oldstr, NEWSTR=$newstr"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
-    echo $C2"#### File:[$orgfile] ####"$C0
+    _msg "#### File:[$orgfile] ####"
     if [ "$newstr" ] && grep "$newstr" "$orgfile" ; then
         _al "might conflict with ($oldstr -> $newstr)!"
     else
@@ -42,7 +42,7 @@ done
 oldfn="$oldstr.$ext"
 newfn="$newstr.$ext"
 if [ -e "$oldfn" ] ; then
-    echo $C2"#### Rename:[$oldfn] ####"$C0
+    _msg "#### Rename:[$oldfn] ####"
     if [ -e "$newfn" ] ; then
         _al "newfn aleady exists"
     else

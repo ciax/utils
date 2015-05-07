@@ -14,14 +14,14 @@ split_sheet(){
     egrep -h "^%" $dlfile | cut -d, -f2- > $dbfile
     [ -s $dbfile ] || { _alert "No index line in $sheet"; return 1;}
     file="db-$sheet.csv"
-    _overwrite $dbfile ~/utils/db/$file && echo "Update $file"
+    _overwrite $dbfile ~/utils/db/$file && _msg "Update $file"
     # Contents
     for d in ~/cfg.*;do
         sfx=${d#*.}
         egrep -h "^$sfx," $dlfile|cut -d, -f2-|sort > $dbfile
         if [ -s $dbfile ] ;then
             file="db-$sheet-$sfx.csv"
-            _overwrite $dbfile $d/db/$file && echo "Update $file"
+            _overwrite $dbfile $d/db/$file && _msg "Update $file"
         fi
     done
 }
@@ -33,7 +33,7 @@ key=$(db-exec "select key from gdocs where id == '$1';")
 dldir=~/.var/download
 while read line;do
     read sheet gid <<< "${line//|/ }"
-    echo $C3"Retrieving $sheet"$C0
+    _warn "Retrieving $sheet"
     url="$site$key/export?format=csv&id=$key&gid=$gid"
     wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
     [ -d $dldir ] || mkdir -p $dldir

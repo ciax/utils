@@ -4,7 +4,7 @@
 # Desctiption: setup ssh files 
 # Usage: ${0##*/} (-r:remove keys)
 . func.getpar
-echo $C5"Initializing SSH"$C0
+_warn "Initializing SSH"
 ath=~/.ssh/authorized_keys
 inv=~/.ssh/invalid_keys
 sec=~/.ssh/id_rsa
