@@ -1,6 +1,7 @@
 #!/bin/bash
 # Required scripts: func.getpar
 # Description: run daemon
+#alias daemon
 . func.getpar
 # functions
 try(){
