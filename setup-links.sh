@@ -1,6 +1,5 @@
 #!/bin/bash
 # Description: Dir setup and File registration
-#alias reg
 for dir in bin .var .trash; do
     [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"
 done
