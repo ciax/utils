@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: git-dirs file-linkbin
+# Required scripts: git-dirs file-selflink
 # Description: update git repositories
 dirs="$(git-dirs)"
 for i in $dirs;do
@@ -9,4 +9,4 @@ for i in $dirs;do
     popd >/dev/null
 done
 file-clean ~/bin
-file-linkbin $dirs
+file-selflink $dirs

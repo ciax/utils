@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias rep
-# Required scripts: func.getpar func.query file-linkbin file-clean
+# Required scripts: func.getpar func.query file-selflink file-clean
 # Description: replace string in files
 . func.getpar
 _usage "[oldstr] [newstr] (ext)
@@ -51,4 +51,4 @@ if [ -e "$oldfn" ] ; then
     fi
 fi
 file-clean ~/bin
-file-linkbin
+file-selflink

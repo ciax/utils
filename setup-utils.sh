@@ -2,7 +2,7 @@
 # Description: install utils (need to re-login for environment effective)
 echo "Setting up utils"
 . ~/utils/setup-links.sh
-file-linkcfg
+file-selflink
 pkg init
 db-update
 bashrc-setup

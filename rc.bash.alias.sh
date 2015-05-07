@@ -23,7 +23,7 @@ self-alias(){
 reg(){
     file-clean ~/bin
     setup-links $(git-dirs) $*
-    file-linkcfg ~/cfg.*
+    file-selflink
     self-alias
 }
 # Grep recursive
