@@ -18,6 +18,7 @@ _abspath(){ # absdir filename
 }
 # _mklink src dstdir dstfile
 _mklink(){
+    [ "$link" ] || declare -gA link
     local src="$1";shift
     local dir="$1";shift
     local dst="$1";shift
@@ -31,11 +32,13 @@ _mklink(){
         fi
     fi
     user=$(stat -c %U $dir)
-    sudo -u $user ln -sf $src $dir/$dst && link+=" $dst"
+    sudo -u $user ln -sf $src $dir/$dst && link[$dir]+=" $dst"
 }
 _showlink(){
-    [ "$link" ] && echo "[$link ] -> $C1${1:-~/bin}$C0"
-    link=
+    for dir in ${!link[*]}; do
+	echo "[${link[$dir]} ] -> $C1$dir$C0"
+    done
+    unset link
 }
 _binreg(){
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
@@ -44,7 +47,3 @@ _binreg(){
     done
     _showlink
 }
-shopt -s nullglob
-[ -d "$HOME/bin" ] || mkdir "$HOME/bin"
-PATH=$HOME/bin:$PATH
-_binreg
