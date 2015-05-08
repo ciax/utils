@@ -7,6 +7,8 @@ setup(){
     fi
 }
 
-setup profile login
+profile=profile
+[ -e ~/.bash_profile ] && profile=bash_profile
+setup $profile login
 setup bashrc bash
 setup bash_logout logout
