@@ -3,7 +3,6 @@
 echo "Setting up utils"
 . ~/utils/setup-links.sh
 file-selflink
-pkg init
 db-update
 bashrc-setup
 bkup-init
