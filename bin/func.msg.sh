@@ -36,5 +36,4 @@ _func_list(){
     INDENT=$'\t'
     grep "^[_a-z]\+(.*#" $0|while read l;do _item "${l%%(*}" "${l#*#}";done
 }
-echo "loading func.msg"
 _func_list func.msg
