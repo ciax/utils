@@ -7,14 +7,15 @@ complete -r
 # Set environment for login
 # For PATH setting without duplication
 addpath(){
-    IFS=": "
-    for j; do
-        [ -d "$j" ] && [[ ! "$list" =~ :$j[:$] ]] && list+=":$j"
+    local key=$1;shift
+    IFS=': '
+    for j in $* ${!key}; do
+        [ -d "$j" ] && [[ ! "$list" =~ (^|:)$j: ]] && list+="$j:"
     done
-    echo "${list#:}"
+    unset IFS
+    eval "export $key=${list%:}"
 }
-PATH=$(addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin} $PATH)
-unset -f addpath
+addpath PATH {~,/opt,/usr{/local,},}/{lib,sbin,bin}
 # Other Environments
 GREP_OPTIONS='--color=auto'
 # PROMPT
