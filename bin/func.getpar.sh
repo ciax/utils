@@ -6,8 +6,7 @@
 #  _usage()
 #  _exe_opt()
 . func.temp
-# Description: show folded list
-_list_cols(){
+_list_cols(){ # Show folded list
     size=0
     _temp tmplist
     while read item;do
@@ -28,15 +27,13 @@ _list_cols(){
     [ "$line" ] && echo -e "$line"
     
 }
-# Description: show lined list
-_list_line(){
+_list_line(){ # Show lined list (a,b,c..)
     while read line;do
         list="${list:+$list,}$line"
     done
     echo "${list:+($list) }"
 }
-# Description: list of case option
-_caselist(){
+_caselist(){ # List of case option
     egrep '^ +[a-z]+\)' $0 |\
     while read line;do
         arg="${line%%)*}"
@@ -44,8 +41,7 @@ _caselist(){
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
     done
 }
-# Description: list of options with opt-?() functions
-_optlist(){
+_optlist(){ # List of options with opt-?() functions
     egrep '^x?opt-' $0|\
     while read line;do
         fnc="${line%%(*}"
@@ -53,16 +49,14 @@ _optlist(){
         echo $C2"${fnc#*opt}$C0${desc/:=/=}"
     done
 }
-# Description: check options
-_chkopt(){
+_chkopt(){ # Check options
     for i in ${OPT[*]};do
         type -t "opt${i%%=*}" &>/dev/null && continue
         _alert "Invalid option ($i)"
         return 1
     done
 }
-# Description: exclusive option handling
-_exe_xopt(){
+_exe_xopt(){ # Exclusive option handling
     for i in ${OPT[*]};do
         if type -t "xopt${i%%=*}" &>/dev/null; then
             xopt${i//=/ }
@@ -70,15 +64,13 @@ _exe_xopt(){
         fi
     done
 }
-# Description: check the argument count
-_chkargc(){
+_chkargc(){ # Check the argument count
     local reqp="$1"
     local reqc="$(IFS=[;set - $reqp;echo $(($#-1)))"
     [[ "$reqp" =~ '<' ]] && [ -t 0 ] && reqc=$(($reqc+1))
     [ "$ARGC" -ge "$reqc" ] || { _alert "Short Argument"; return 1; }
 }
-# Description: check the argument value
-_chkargv(){
+_chkargv(){ # Check the argument value
     local i=0
     for file;do
         grep -q "${ARGV[$i]}" "$file" || {
@@ -89,9 +81,7 @@ _chkargv(){
     done
 }
 
-# Usage: _exe_opt
-# Description: option handling, don't forget to execute after _usage
-_exe_opt(){
+_exe_opt(){ # Option handling, don't forget to execute after _usage
     local _executed=1
     for i in ${OPT[*]};do
         type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
@@ -115,8 +105,7 @@ _exe_opt(){
 #   optional parameters => enclosed by "()"
 # List file format: (csv)
 #   parameter,desctiption
-_usage(){
-    # Show usage
+_usage(){ # Show usage
     local reqp=$1;shift
     _exe_xopt
     _chkopt && _chkargc "$reqp" && _chkargv "$@" && return 0
@@ -137,3 +126,4 @@ for i;do
 done
 ARGC=${#ARGV[@]}
 set - "${ARGV[@]}"
+_func_list func.getpar

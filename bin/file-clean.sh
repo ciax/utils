@@ -2,7 +2,6 @@
 # Required scripts: func.msg func.dirs
 # Description: File clean up (remove backup,unlinked files)
 #alias clr
-. func.msg
 . func.dirs
 chkdir(){
     [ -h "$1" ] && return 1

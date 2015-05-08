@@ -2,7 +2,7 @@
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 . func.msg
-_temp(){
+_temp(){ # Make temp file [name] ..
     local trp="rm -f -- "
     local i=
     for i ; do
@@ -13,8 +13,7 @@ _temp(){
     trap "$trp$_tmplist" EXIT
 }
 
-# Show file/dir owner
-_fuser(){
+_fuser(){ # Show file/dir owner [path]
     dir=$1
     until [ -e "$dir" ] ; do
         cdir="${dir%/*}"
@@ -23,9 +22,8 @@ _fuser(){
     done && echo $(stat -c %U $dir)
 }
 
-# Description: Overwrite if these are different.
-# Usage: _overwrite [src_file] [dst_file]
-_overwrite(){
+# Usage: _overwrite 
+_overwrite(){ # Overwrite if these are different. [src_file] [dst_file]
     user=$(_fuser $2)
     if [ ! -e $2 ] ; then
         sudo mv $1 $2
@@ -41,3 +39,4 @@ _overwrite(){
         sudo chown $user $2
     fi
 }
+_func_list func.temp

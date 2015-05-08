@@ -1,8 +1,13 @@
 #!/bin/bash
 # Description: query function
-_al(){ echo -e "\t"$C1"$*"$C0; }
-_hl(){ echo -e "\t"$C2"$*"$C0; }
-_query(){
+. func.msg
+_al(){ # Alert
+    echo -e "\t"$C1"$*"$C0
+}
+_hl(){ # Highlight
+    echo -e "\t"$C2"$*"$C0
+}
+_query(){ # Interactive query
     [ "$ALL" ] && return
     [ "$tty" ] || tty=`tty`
     echo -en "\tOK? $C3[A/Y/N/Q]$C0"
@@ -14,3 +19,4 @@ _query(){
         * ) echo "Skip";return 1;;
     esac
 }
+_func_list func.query
