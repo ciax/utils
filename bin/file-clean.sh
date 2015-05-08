@@ -1,7 +1,7 @@
 #!/bin/bash
-#alias clr
-# Required scripts: func.dirs
+# Required scripts: func.msg func.dirs
 # Description: File clean up (remove backup,unlinked files)
+#alias clr
 . func.msg
 . func.dirs
 chkdir(){

@@ -21,9 +21,7 @@ self-alias(){
 }
 # File registration
 reg(){
-    file-clean ~/bin
     file-register $*
-    file-selflink
     self-alias
 }
 # Grep recursive
