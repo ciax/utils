@@ -10,8 +10,8 @@ cd ~/utils/bin
 . ./func.link.sh
 _binreg
 cd
-file-selflink
-db-update
-bashrc-setup
-bkup-init
+. file-selflink
+. db-update
+. bashrc-setup
+. bkup-init
 exec bash

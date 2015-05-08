@@ -10,4 +10,4 @@ for i in ~/utils/bin $*;do
     popd >/dev/null
 done
 _showlink
-file-selflink
+. file-selflink
