@@ -12,12 +12,28 @@ if [ -t 2 ] ; then
     done
     C0=$'\e[0m'
 fi
-# Description: Print message to stderr
-_msg(){ echo "$C2$*$C0" 1>&2; }
-# Description: Print message to stderr
-_warn(){ echo "$C3$*$C0" 1>&2; }
-# Description: Print alert to stderr
-_alert(){ echo "$C1$*$C0" 1>&2; }
-# Desctiption: Abort with message
-# Usage: _abort [message]
-_abort(){ _alert "$*";exit 1; }
+
+_msg(){ # Print message to stderr
+    echo "$C2$*$C0" 1>&2
+}
+_warn(){ # Print message to stderr
+    echo "$C3$*$C0" 1>&2
+}
+
+_alert(){ # Print alert to stderr
+    echo "$C1$*$C0" 1>&2
+}
+
+_abort(){ # Abort with message
+    _alert "$*";exit 1
+}
+_item(){ # Show Items
+    echo "   $C2$1$C0 : $2" 1>&2
+}
+# Show function list
+_func_list(){
+    [[ $0 == *$1 ]] || return
+    echo "${0##*/} contains"
+    grep "^[_a-z]\+(.*#" $0|while read l;do _item "${l%(*}" "${l#*#}";done
+}
+_func_list func.msg
