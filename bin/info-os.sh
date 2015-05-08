@@ -4,7 +4,7 @@
 case $(uname) in
     Linux)
 	echo -n "Linux/"
-	exp="Debian|Ubuntu|CentOS|QNAP"
+	exp="Debian|Raspbian|Ubuntu|CentOS|QNAP"
 	egrep -ho "$exp" /etc/*{release,issue}* /proc/version|head -1
 	;;
     *)
