@@ -2,11 +2,13 @@
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 . func.msg
+_tmplist=''
 _temp(){ # Make temp file [name] ..
     local trp="rm -f -- "
-    local i=
+    local i
+    local tmp
     for i ; do
-        local tmp=$(mktemp) || _abort "Can't make mktemp"
+        tmp=$(mktemp) || _abort "Can't make mktemp"
         _tmplist="$_tmplist $tmp"
         eval "$i=$tmp"
     done
@@ -14,7 +16,8 @@ _temp(){ # Make temp file [name] ..
 }
 
 _fuser(){ # Show file/dir owner [path]
-    dir=$1
+    local dir=$1
+    local cdir
     until [ -e "$dir" ] ; do
         cdir="${dir%/*}"
         [ "$cdir" = "$dir" ] && return 1
@@ -24,7 +27,7 @@ _fuser(){ # Show file/dir owner [path]
 
 # Usage: _overwrite 
 _overwrite(){ # Overwrite if these are different. [src_file] [dst_file]
-    user=$(_fuser $2)
+    local user=$(_fuser $2)
     if [ ! -e $2 ] ; then
         sudo mv $1 $2
         sudo chown $user $2

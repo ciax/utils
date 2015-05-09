@@ -7,7 +7,10 @@
 #  _exe_opt()
 . func.temp
 _list_cols(){ # Show folded list
-    size=0
+    local size=0
+    local tmplist
+    local item
+    local line
     _temp tmplist
     while read item;do
 	[ "${#item}" -gt $size ] && size="${#item}"
@@ -28,12 +31,16 @@ _list_cols(){ # Show folded list
     
 }
 _list_line(){ # Show lined list (a,b,c..)
+    local line
+    local list
     while read line;do
         list="${list:+$list,}$line"
     done
     echo "${list:+($list) }"
 }
 _caselist(){ # List of case option
+    local line
+    local arg
     egrep '^ +[a-z]+\)' $0 |\
     while read line;do
         arg="${line%%)*}"
@@ -42,6 +49,9 @@ _caselist(){ # List of case option
     done
 }
 _optlist(){ # List of options with opt-?() functions
+    local line
+    local fnc
+    local desc
     egrep '^x?opt-' $0|\
     while read line;do
         fnc="${line%%(*}"
@@ -50,6 +60,7 @@ _optlist(){ # List of options with opt-?() functions
     done
 }
 _chkopt(){ # Check options
+    local i
     for i in ${OPT[*]};do
         type -t "opt${i%%=*}" &>/dev/null && continue
         _alert "Invalid option ($i)"
@@ -57,6 +68,7 @@ _chkopt(){ # Check options
     done
 }
 _exe_xopt(){ # Exclusive option handling
+    local i
     for i in ${OPT[*]};do
         if type -t "xopt${i%%=*}" &>/dev/null; then
             xopt${i//=/ }
@@ -72,6 +84,7 @@ _chkargc(){ # Check the argument count
 }
 _chkargv(){ # Check the argument value
     local i=0
+    local file
     for file;do
         grep -q "${ARGV[$i]}" "$file" || {
             _alert "Invalid argument (${ARGV[$i]})"

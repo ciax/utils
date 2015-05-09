@@ -2,6 +2,7 @@
 # Description: make links of files
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
+declare -gA link
 _absdir(){
     local dir="${1%/*}"
     [ -d "$dir" ] || mkdir -p "$dir"
@@ -18,7 +19,6 @@ _abspath(){ # absdir filename
 }
 # _mklink src dstdir dstfile
 _mklink(){
-    [ "$link" ] || declare -gA link
     local src="$1";shift
     local dir="$1";shift
     local dst="$1";shift
@@ -31,16 +31,18 @@ _mklink(){
             return 1
         fi
     fi
-    user=$(stat -c %U $dir)
+    local user=$(stat -c %U $dir)
     sudo -u $user ln -sf $src $dir/$dst && link[$dir]+=" $dst"
 }
 _showlink(){
+    local dir
     for dir in ${!link[*]}; do
 	echo "[${link[$dir]} ] -> $C1$dir$C0"
     done
     unset link
 }
 _binreg(){
+    local i
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
         _mklink "$(pwd -P)/$i" "$HOME/bin" "${i%.*}"

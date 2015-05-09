@@ -1,6 +1,7 @@
 #!/bin/bash
 # Description: query function
 . func.msg
+ALL=
 _al(){ # Alert
     echo -e "\t"$C1"$*"$C0
 }
@@ -9,9 +10,9 @@ _hl(){ # Highlight
 }
 _query(){ # Interactive query
     [ "$ALL" ] && return
-    [ "$tty" ] || tty=`tty`
     echo -en "\tOK? $C3[A/Y/N/Q]$C0"
-    read -e ans < $tty
+    local ans
+    read -e ans < $(tty)
     case "$ans" in
         [Aa]*) echo "All Accept!";ALL=1;;
         [Yy]*) echo "Accept!";;
