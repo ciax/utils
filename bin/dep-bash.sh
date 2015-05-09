@@ -6,7 +6,7 @@ core(){
     echo "${base%.*}"
 }
 
-while read line; do
+for line in ${*:-*.sh}; do
     shared=$(core $line)
     echo "$shared"
     for user in $(grep -rl "$shared" *);do
@@ -14,4 +14,4 @@ while read line; do
         user=$(core $user)
         [ "$user" = "$shared" ] || echo "$shared $user"
     done
-done < <(find "${1:-.}" -name '*.sh'|sort)
+done
