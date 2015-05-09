@@ -19,4 +19,4 @@ _query(){ # Interactive query
         * ) echo "Skip";return 1;;
     esac
 }
-_func_list func.query
+_chkfunc $*

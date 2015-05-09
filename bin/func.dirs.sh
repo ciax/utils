@@ -22,4 +22,4 @@ _subdirs(){ # Scan SubDir and Exec Cmd there
         popd >/dev/null
     done
 }
-_func_list func.dirs
+_chkfunc $*

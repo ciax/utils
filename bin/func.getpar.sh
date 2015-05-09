@@ -113,7 +113,7 @@ _usage(){ # Show usage
     [ -t 0 ] || _list_cols 1>&2
     exit 2
 }
-
+_chkfunc $*
 # Option Parser
 declare -a ARGV
 declare -a OPT
@@ -126,4 +126,3 @@ for i;do
 done
 ARGC=${#ARGV[@]}
 set - "${ARGV[@]}"
-_func_list func.getpar

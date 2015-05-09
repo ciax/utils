@@ -39,4 +39,4 @@ _overwrite(){ # Overwrite if these are different. [src_file] [dst_file]
         sudo chown $user $2
     fi
 }
-_func_list func.temp
+_chkfunc $*

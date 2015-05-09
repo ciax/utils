@@ -30,10 +30,17 @@ _item(){ # Show Items
     echo "$INDENT$C2$1$C0 : $2" 1>&2
 }
 # Show function list [self file name]
-_func_list(){
-    [[ $0 == *$1 ]] || return
-    echo "${0##*/} contains"
-    INDENT=$'\t'
-    grep "^[_a-z]\+(.*#" $0|while read l;do _item "${l%%(*}" "${l#*#}";done
+_chkfunc(){
+    [[ $0 == ${BASH_SOURCE[1]} ]] || return
+    if [[ $(type $1) =~ function ]] ; then
+	$*
+    else
+	echo "${0##*/} contains"
+	INDENT=$'\t'
+	grep "^[_a-z]\+(.*#" $0|\
+	    while read l;do
+		_item "${l%%(*}" "${l#*#}"
+	    done
+    fi
 }
-_func_list func.msg
+_chkfunc $*
