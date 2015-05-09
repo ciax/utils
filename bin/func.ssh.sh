@@ -12,10 +12,11 @@ INV=.ssh/invalid_keys
 SEC=.ssh/id_rsa
 PUB=.ssh/id_rsa.pub
 _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
-    ath=${1:-~/$ATH}
-    pub=~/$PUB
+    local ath=${1:-~/$ATH}
+    local pub=~/$PUB
     [ -f $ath -a -f $pub ] || _abort "No ssh files"
     read rsa mykey me < $pub
+    local tath
     _temp tath
     while read line; do
 	set - $line
@@ -26,9 +27,12 @@ _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
 }
 # Required scripts: edit-cutout line-dup edit-write
 _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
-    ath=${1:-~/$ATH}
-    inv=${2:-~/$INV}
+    local ath=${1:-~/$ATH}
+    local inv=${2:-~/$INV}
     # Split file into invalid_keys by #headed line
+    local tath
+    local tinv
+    local tdup
     _temp tath tinv tdup
     cp $ath $tath
     ## For invalid_keys (increase only -> merge)
