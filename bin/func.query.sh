@@ -2,6 +2,7 @@
 # Description: query function
 . func.msg
 ALL=
+TTY=$(tty)
 _al(){ # Alert
     echo -e "\t"$C1"$*"$C0
 }
@@ -12,7 +13,7 @@ _query(){ # Interactive query
     [ "$ALL" ] && return
     echo -en "\tOK? $C3[A/Y/N/Q]$C0"
     local ans
-    read -e ans < $(tty)
+    read -e ans < $TTY
     case "$ans" in
         [Aa]*) echo "All Accept!";ALL=1;;
         [Yy]*) echo "Accept!";;
