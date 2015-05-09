@@ -1,7 +1,8 @@
 #!/bin/bash
-# Required scripts: func.getpar setup-ssh ssh-mark ssh-trim
+# Required scripts: func.getpar func.ssh
 # Desctiption: share authorized keys with remote host (Accepts join)
 . func.getpar
+. func.ssh
 getrem(){
     scp $sshopt -pq ${port:+-P $port} $rhost:$1 $2
 }
@@ -30,8 +31,8 @@ for url;do
     cat $rath $lath > $tath
     cat $rinv $linv > $tinv
 # Trimming
-    ssh-mark $tath
-    ssh-trim $tath $tinv >/dev/null
+    _ssh-mark $tath
+    _ssh-trim $tath $tinv >/dev/null
 # Put files back to remote
     putrem $tath $rath $ath
     putrem $tinv $rinv $inv

@@ -36,7 +36,7 @@ _chkfunc(){
     elif [ $0 == ${BASH_SOURCE[1]} ] ; then
 	echo "$self contains"
 	INDENT=$'\t'
-	grep "^[_a-z]\+(.*#" $0|\
+	grep "^_[-a-z]\+(.*#" $0|\
 	    while read l;do
 		_item "${l%%(*}" "${l#*#}"
 	    done

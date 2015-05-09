@@ -26,7 +26,8 @@ git clone https://git.hub/ciax/cfg.(proj).git
 ############# Local Rules ###############
 
 ### Command usage
-  func.*: should be sourced for loading functions;
+  func.*: should be sourced for loading functions
+  function names defined in func.* should have '_' prefix
 
 ### Relevant Dirs
   App Dirs    :  ~/utils

@@ -1,7 +1,8 @@
 #!/bin/bash
-# Required scripts: func.getpar setup-ssh ssh-mark ssh-trim
+# Required scripts: func.getpar setup-ssh func.ssh
 # Desctiption: impose self trust to the object host (push pub-key anonymously)
 . func.getpar
+. func.ssh
 getrem(){
     scp $sshopt -pq $rhost:$1 $2
 }
@@ -28,8 +29,8 @@ for rhost;do
     cut -d' ' -f1-2 $lath >> $tath
     cat $rinv $linv > $tinv
 # Trimming
-    ssh-mark $tath
-    ssh-trim $tath $tinv >/dev/null
+    _ssh-mark $tath
+    _ssh-trim $tath $tinv >/dev/null
 # Put files back to remote
     putrem $tath $rath $ath
     putrem $tinv $rinv $inv
