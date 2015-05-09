@@ -1,6 +1,6 @@
 #!/bin/bash
 # Display Message Module
-[ "$C0" ] && return
+type _chkfunc >/dev/null 2>&1 && return
 shopt -s nullglob
 # Coloring for Console
 #  ESC[(A);(B)(C)m # A: 0=dark 1=light # B: 3=FG 4=BG # C: 1=R 2=G 4=B
@@ -18,24 +18,23 @@ _msg(){ # Print message to stderr
 _warn(){ # Print message to stderr
     echo "$INDENT$C3$*$C0" 1>&2
 }
-
 _alert(){ # Print alert to stderr
     echo "$INDENT$C1$*$C0" 1>&2
 }
-
 _abort(){ # Abort with message
     _alert "$*";exit 1
 }
-_item(){ # Show Items
+_item(){ # Show Items [title] [description]
     echo "$INDENT$C2$1$C0 : $2" 1>&2
 }
-# Show function list [self file name]
+# Show function list
 _chkfunc(){
-    [[ $0 == ${BASH_SOURCE[1]} ]] || return
-    if [[ $(type $1) =~ function ]] ; then
-	$*
-    else
-	echo "${0##*/} contains"
+    local self="${0##*/}"
+    # If this is symlinked to func name without '_', executed as func
+    if [[ $(type _$self 2>&1) =~ function ]] ; then
+	_$self $*
+    elif [ $0 == ${BASH_SOURCE[1]} ] ; then
+	echo "$self contains"
 	INDENT=$'\t'
 	grep "^[_a-z]\+(.*#" $0|\
 	    while read l;do
