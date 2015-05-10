@@ -23,11 +23,11 @@ _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
     _temp tath
     local line
     grep -v $mykey $ath|\
-	while read line; do
-	    set - $line
-	    [ "$3" = "$me" ] && echo -n '#'
-	    echo "$line"
-	done > $tath
+        while read line; do
+            set - $line
+            [ "$3" = "$me" ] && echo -n '#'
+           echo "$line"
+        done > $tath
     sort -u $pub $tath | edit-write $ath && _warn "Invalid keys are marked"
 }
 # Required scripts: edit-cutout line-dup edit-write
@@ -42,13 +42,13 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     cp $ath $tath
     ## For invalid_keys (increase only -> merge)
     edit-cutout "^#" $tath;cat $inv|\
-	while read line;do
-	    if [ ${#line} -gt 32 ]; then 
-		md5sum <<< $line | cut -c-32
-	    else
-		echo $line
-	    fi
-	done |sort -u > $tinv
+        while read line;do
+            if [ ${#line} -gt 32 ]; then 
+                md5sum <<< $line | cut -c-32
+            else
+                echo $line
+            fi
+        done |sort -u > $tinv
     _overwrite $tinv $inv
     ## For authorized_keys (can be reduced -> _overwrite)
     #  exclude duplicated keys
@@ -57,9 +57,9 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     #  exculde invalid keys
     local line
     while read line;do
-	grep -q "$line" $tdup && continue
-	grep -q $(md5sum <<< $line | cut -c-32) $inv && continue
-	echo "$line"
+        grep -q "$line" $tdup && continue
+        grep -q $(md5sum <<< $line | cut -c-32) $inv && continue
+        echo "$line"
     done < $tinv > $tath
     edit-write $ath $tath && _warn "authorized_key was updated"
 }
@@ -75,5 +75,6 @@ _ssh-perm(){ # Set ssh related file permission
     chmod 700 .
     local i
     for i in $ATH $INV $SEC $PUB;do [ -f "$i" ] && chmod 600 $i; done
+    _warn "correct permission for ssh files"
 }
 _chkfunc $*
