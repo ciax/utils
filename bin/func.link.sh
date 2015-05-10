@@ -2,7 +2,7 @@
 # Description: make links of files
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
-declare -gA link
+declare -gA LINKS
 _absdir(){
     local dir="${1%/*}"
     [ -d "$dir" ] || mkdir -p "$dir"
@@ -32,14 +32,13 @@ _mklink(){
         fi
     fi
     local user=$(stat -c %U $dir)
-    sudo -u $user ln -sf $src $dir/$dst && link[$dir]+=" $dst"
+    sudo -u $user ln -sf $src $dir/$dst && LINKS[$dir]+=" $dst"
 }
 _showlink(){
     local dir
-    for dir in ${!link[*]}; do
-	echo "[${link[$dir]} ] -> $C1$dir$C0"
+    for dir in ${!LINKS[*]}; do
+        echo "[${LINKS[$dir]} ] -> $C1$dir$C0"
     done
-    unset link
 }
 _binreg(){
     local i
