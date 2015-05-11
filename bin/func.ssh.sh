@@ -7,6 +7,7 @@
 #link ssh-mates
 #link ssh-perm
 . func.temp
+. func.attr
 ATH=.ssh/authorized_keys
 INV=.ssh/invalid_keys
 SEC=.ssh/id_rsa
@@ -35,9 +36,7 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     local ath=${1:-~/$ATH}
     local inv=${2:-~/$INV}
     # Split file into invalid_keys by #headed line
-    local tath
-    local tinv
-    local tdup
+    local tath tinv tdup
     _temp tath tinv tdup
     cp $ath $tath
     ## For invalid_keys (increase only -> merge)
@@ -64,17 +63,16 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     edit-write $ath $tath && _warn "authorized_key was updated"
 }
 _ssh-mates(){ # List the mate accounts in authorized_keys
-    local dmy
-    local me
+    local dmy me
     read dmy dmy me < ~/$PUB
     cut -d' ' -f3 ~/$ATH|grep @|grep -v $me
 }
 _ssh-perm(){ # Set ssh related file permission
-    cd;chmod 755 .
-    [ -d ~/.ssh ] && cd ~/.ssh || exit
-    chmod 700 .
-    local i
-    for i in $ATH $INV $SEC $PUB;do [ -f "$i" ] && chmod 600 $i; done
-    _warn "correct permission for ssh files"
+    cd
+    _setp 755 .
+    [ -d ~/.ssh ] || exit
+    _warn "Correcting permission for ssh files"
+    _setp 700 ~/.ssh
+    _setp 600 ~/.ssh/*
 }
 _chkfunc $*
