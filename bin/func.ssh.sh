@@ -16,13 +16,9 @@ _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
     local ath=${1:-~/$ATH}
     local pub=~/$PUB
     [ -f $ath -a -f $pub ] || _abort "No ssh files"
-    local rsa
-    local mykey
-    local me
+    local rsa mykey me tath line
     read rsa mykey me < $pub
-    local tath
     _temp tath
-    local line
     grep -v $mykey $ath|\
         while read line; do
             set - $line
