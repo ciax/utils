@@ -20,4 +20,4 @@ for file;do
         args="$file $args"
     fi
 done
-sudo -u $user emacs -nw $args
+sudo -eu $user $args
