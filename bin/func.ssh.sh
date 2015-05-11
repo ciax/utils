@@ -8,6 +8,7 @@
 #link ssh-perm
 . func.temp
 . func.attr
+. func.text
 ATH=.ssh/authorized_keys
 INV=.ssh/invalid_keys
 SEC=.ssh/id_rsa
@@ -49,7 +50,7 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     ## For authorized_keys (can be reduced -> _overwrite)
     #  exclude duplicated keys
     sort -u $tath> $tinv
-    cut -d' ' -f1-2 $tinv|line-dup > $tdup
+    cut -d' ' -f1-2 $tinv|_text-dup > $tdup
     #  exculde invalid keys
     local line
     while read line;do

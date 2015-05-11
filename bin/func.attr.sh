@@ -12,7 +12,7 @@ _chx(){ #file owner will be uniformed under the current or specified dir tree
         sudo chown -R $ug $dir
     done
 }
-_setp(){ # Set permission
+_setp(){ # Set permission [oct] [files..]
     local oct=$1 pm file;shift
     for file; do
         [ -e $file ] || continue
