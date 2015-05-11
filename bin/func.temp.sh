@@ -42,4 +42,12 @@ _overwrite(){ # Overwrite if these are different. [src_file] [dst_file]
         sudo chown $user $2
     fi
 }
+
+_cutout(){ # cutoutt matched lines from file and display [expression] [file]
+    local remain exp="$1" file="$2"
+    _temp remain
+    egrep -v "$exp" $file > $remain
+    egrep "$exp" $file
+    _overwrite $remain $file
+}
 _chkfunc $*

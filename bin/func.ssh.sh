@@ -28,7 +28,7 @@ _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
         done > $tath
     sort -u $pub $tath | edit-write $ath && _warn "Invalid keys are marked"
 }
-# Required scripts: edit-cutout line-dup edit-write
+# Required scripts: line-dup edit-write
 _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     local ath=${1:-~/$ATH}
     local inv=${2:-~/$INV}
@@ -37,7 +37,7 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     _temp tath tinv tdup
     cp $ath $tath
     ## For invalid_keys (increase only -> merge)
-    edit-cutout "^#" $tath;cat $inv|\
+    _cutout "^#" $tath;cat $inv|\
         while read line;do
             if [ ${#line} -gt 32 ]; then 
                 md5sum <<< $line | cut -c-32
