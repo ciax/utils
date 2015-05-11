@@ -6,7 +6,7 @@
 _warn "File Registering ($HOME/bin)"
 for i in ~/utils/bin $*;do
     pushd $i >/dev/null
-    _subdirs _binreg
+    _subdirs _setup
     popd >/dev/null
 done
 _showlink

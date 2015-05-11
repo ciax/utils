@@ -27,19 +27,18 @@ _abort(){ # Abort with message
 _item(){ # Show Items [title] [description]
     echo "$INDENT$C2$1$C0 : $2" 1>&2
 }
-# Show function list
-_chkfunc(){
+_chkfunc(){ # Show function list
     local self="${0##*/}"
     # If this is symlinked to func name without '_', executed as func
     if [[ $(type _$self 2>&1) =~ function ]] ; then
-	_$self $*
+        _$self $*
     elif [ $0 == ${BASH_SOURCE[1]} ] ; then
-	echo "$self contains"
-	INDENT=$'\t'
-	grep "^_[-a-z]\+(.*#" $0|\
-	    while read l;do
-		_item "${l%%(*}" "${l#*#}"
-	    done
+        echo "$self contains"
+        INDENT=$'\t'
+        grep "^_[-a-z]\+(.*#" $0|\
+            while read l;do
+                _item "${l%%(*}" "${l#*#}"
+            done
     fi
 }
 _chkfunc $*
