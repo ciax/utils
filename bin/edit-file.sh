@@ -6,13 +6,13 @@
 . func.getpar
 _usage "[file] (line) .."
 args=''
+cmd=$EDITOR
 for file;do
     if [ -s "$file" ];then
         user=$(stat -c %U $file)
         cp -pub $file ~/.trash/
         bkup-stash $file
-    else
-        user=$LOGNAME
+	[ $LOGNAME != $user ] && cmd="sudo -eu $user"
     fi
     if [[ "$file" =~ ^[0-9]+$ ]] ; then
         args="+$file $args"
@@ -20,4 +20,4 @@ for file;do
         args="$file $args"
     fi
 done
-sudo -eu $user $args
+$cmd $args
