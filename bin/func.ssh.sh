@@ -12,6 +12,7 @@ ATH=.ssh/authorized_keys
 INV=.ssh/invalid_keys
 SEC=.ssh/id_rsa
 PUB=.ssh/id_rsa.pub
+CFG=.ssh/config
 _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
     local ath=${1:-~/$ATH}
     local pub=~/$PUB
@@ -64,11 +65,20 @@ _ssh-mates(){ # List the mate accounts in authorized_keys
     cut -d' ' -f3 ~/$ATH|grep @|grep -v $me
 }
 _ssh-perm(){ # Set ssh related file permission
-    cd
-    _setp 755 .
+    _setp 755 ~
     [ -d ~/.ssh ] || exit
     _warn "Correcting permission for ssh files"
-    _setp 700 ~/.ssh
-    _setp 600 ~/.ssh/*
+    cd ~/.ssh
+    _setp 700 .
+    _setp 600 id_rsa gpgpass
+    _setp 644 !(id_rsa|gpgpass)
+}
+_ssh-setup(){ # Setup ssh
+    type ssh > /dev/null || _abort "No ssh installed"
+    [ -e ~/$SEC ] || ssh-keygen
+    [ -e ~/$PUB ] || ssh-keygen -y -f ~/$SEC > ~/$PUB
+    [ -e ~/$INV ] || touch ~/$INV
+    [ -e ~/$ATH ] || cp ~/$PUB ~/$ATH
+    grep -q "$(< ~/$PUB)" ~/$ATH || cat ~/$PUB >> ~/$ATH
 }
 _chkfunc $*

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Display Message Module
 type _chkfunc >/dev/null 2>&1 && return
-shopt -s nullglob
+shopt -s nullglob extglob
 # Coloring for Console
 #  ESC[(A);(B)(C)m # A: 0=dark 1=light # B: 3=FG 4=BG # C: 1=R 2=G 4=B
 #  environment variable "C?" are provided
