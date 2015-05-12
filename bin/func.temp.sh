@@ -1,6 +1,7 @@
 #!/bin/bash
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
+#link overwrite
 . func.msg
 _tmplist=''
 _temp(){ # Make temp file [name] ..
@@ -25,12 +26,13 @@ _fuser(){ # Show file/dir owner [path]
 
 # Usage: _overwrite 
 _overwrite(){ # Overwrite if these are different. [dst_file] < STDIN
-    local user=$(_fuser $1) tmpfile
+    local tmpfile user dir
     _temp tmpfile
     cat > $tmpfile
     if [ ! -e $1 ] ; then
-        local dir="$(dirname $1)"
-        [ -e "$dir" ] || sudo -u $user mkdir -p "$dir"
+        dir=$(dirname $1)
+	user=$(_fuser $dir)
+	sudo -u $user mkdir -p "$dir"
         sudo mv $tmpfile $1
         sudo chown $user $1
     elif sudo cmp -s $tmpfile $1 ; then
