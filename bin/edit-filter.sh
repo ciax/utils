@@ -7,4 +7,4 @@ _usage "[file] [filter] (par)"
 file=$1;shift
 _temp temp
 $* $file > $temp
-_overwrite $temp $file
+_overwrite $file < $temp

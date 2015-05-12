@@ -9,7 +9,7 @@ file=$2
 _temp tmp1
 <$file awk -F "\t" "BEGIN{ OFS=FS; }{ print $order; }" > $tmp1
 if [ "$3" = "-w" ] ; then
-    _overwrite $tmp1 $file
+    _overwrite $file < $tmp1
 else
     cat $tmp1
 fi

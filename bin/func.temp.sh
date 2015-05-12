@@ -4,9 +4,7 @@
 . func.msg
 _tmplist=''
 _temp(){ # Make temp file [name] ..
-    local trp="rm -f -- "
-    local i
-    local tmp
+    local trp="rm -f -- " tmp i
     for i ; do
         tmp=$(mktemp) || _abort "Can't make mktemp"
         _tmplist="$_tmplist $tmp"
@@ -26,20 +24,22 @@ _fuser(){ # Show file/dir owner [path]
 }
 
 # Usage: _overwrite 
-_overwrite(){ # Overwrite if these are different. [src_file] [dst_file]
-    local user=$(_fuser $2)
-    if [ ! -e $2 ] ; then
-        sudo mv $1 $2
-        sudo chown $user $2
-    elif sudo cmp -s $1 $2 ; then
-        rm $1;return 1
-    else
-        local dir="$(dirname $2)"
+_overwrite(){ # Overwrite if these are different. [dst_file] < STDIN
+    local user=$(_fuser $1) tmpfile
+    _temp tmpfile
+    cat > $tmpfile
+    if [ ! -e $1 ] ; then
+        local dir="$(dirname $1)"
         [ -e "$dir" ] || sudo -u $user mkdir -p "$dir"
+        sudo mv $tmpfile $1
+        sudo chown $user $1
+    elif sudo cmp -s $tmpfile $1 ; then
+        return 1
+    else
         [ -d ~/.trash ] || mkdir -p ~/.trash
-        chmod --reference=$2 $1
-        sudo mv -b $2 ~/.trash/ && sudo mv $1 $2
-        sudo chown $user $2
+        chmod --reference=$1 $tmpfile
+        sudo mv -b $1 ~/.trash/ && sudo mv $tmpfile $1
+        sudo chown $user $1
     fi
 }
 
@@ -48,6 +48,6 @@ _cutout(){ # cutoutt matched lines from file and display [expression] [file]
     _temp remain
     egrep -v "$exp" $file > $remain
     egrep "$exp" $file
-    _overwrite $remain $file
+    _overwrite $file < $remain
 }
 _chkfunc $*

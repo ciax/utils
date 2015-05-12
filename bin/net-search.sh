@@ -18,7 +18,7 @@ opt-s(){ #Set to /etc/hosts
     else
 	msg="Delete from /etc/hosts"
     fi
-    _overwrite $hosts /etc/hosts || msg="No changes on /etc/hosts"
+    _overwrite /etc/hosts < $hosts || msg="No changes on /etc/hosts"
     _msg "$msg"
 }
 alist=~/.var/arplist.txt

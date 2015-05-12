@@ -37,6 +37,6 @@ for url;do
     putrem $tath $rath $ath
     putrem $tinv $rinv $inv
 # Renew local files
-    _overwrite $tath $lath
-    _overwrite $tinv $linv
+    _overwrite $lath < $tath
+    _overwrite $linv < $tinv
 done

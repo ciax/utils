@@ -7,7 +7,7 @@
 xopt-s(){ #Set to /etc/hosts
     _temp thost
     $0 > $thost
-    _overwrite $thost /etc/hosts
+    _overwrite /etc/hosts < $thost || _warn "No changes on /etc/hosts"
 }
 _usage "(subnet)" < <(db-list subnet)
 echo "#/etc/hosts"

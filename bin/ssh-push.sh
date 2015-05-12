@@ -35,5 +35,5 @@ for rhost;do
     putrem $tath $rath $ath
     putrem $tinv $rinv $inv
 # Renew local files
-    _overwrite $tinv $linv
+    _overwrite $linv < $tinv
 done

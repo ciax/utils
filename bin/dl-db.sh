@@ -14,14 +14,14 @@ split_sheet(){
     egrep -h "^%" $dlfile | cut -d, -f2- > $dbfile
     [ -s $dbfile ] || { _alert "No index line in $sheet"; return 1;}
     file="db-$sheet.csv"
-    _overwrite $dbfile ~/utils/db/$file && _msg "Update $file"
+    _overwrite ~/utils/db/$file < $dbfile && _msg "Update $file"
     # Contents
     for d in ~/cfg.*;do
         sfx=${d#*.}
         egrep -h "^$sfx," $dlfile|cut -d, -f2-|sort > $dbfile
         if [ -s $dbfile ] ;then
             file="db-$sheet-$sfx.csv"
-            _overwrite $dbfile $d/db/$file && _msg "Update $file"
+            _overwrite $d/db/$file < $dbfile && _msg "Update $file"
         fi
     done
 }

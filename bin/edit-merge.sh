@@ -8,6 +8,4 @@ _usage "[file] (input)"
 file=$1;shift
 [ -f "$file" ] || touch $file
 [ -w "$file" ] || _abort "Permission denied [$file]"
-_temp temp
-{ nkf -d "$file";cat $1; } | sort -u > $temp
-_overwrite $temp $file && echo "$file was updated"
+{ nkf -d "$file";cat $1; } | sort -u | _overwrite $file && echo "$file was updated"

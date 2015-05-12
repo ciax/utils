@@ -46,7 +46,7 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
                 echo $line
             fi
         done |sort -u > $tinv
-    _overwrite $tinv $inv
+    _overwrite $inv < $tinv
     ## For authorized_keys (can be reduced -> _overwrite)
     #  exclude duplicated keys
     sort -u $tath> $tinv

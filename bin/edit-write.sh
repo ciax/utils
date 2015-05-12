@@ -5,6 +5,4 @@
 . func.getpar
 _usage "[file] < (input)"
 file=$1;shift
-_temp temp
-cat $* > $temp
-_overwrite $temp $file
+cat $* | _overwrite $file
