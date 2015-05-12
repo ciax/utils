@@ -99,7 +99,7 @@ _ssh-fetch(){ # Fetch and merge auth key (user@host:port)
     # Get files from remote
     scp -pq $sshopt $rhost:$ATH $rath
     scp -pq $sshopt $rhost:$INV $rinv
-    # Join with local file
+    # Merge with local file
     cat $rath $LATH > $MATH
     cat $rinv $LINV > $MINV
     cut -d' ' -f1-2 $LATH > $AATH
@@ -115,15 +115,9 @@ _ssh-admit(){
     _overwrite < $LATH.merge $LATH
     _overwrite < $LINV.merge $LINV
 }
-_ssh-anonymous(){
-    local anonymous
-    _temp anonymous
-    cut -d' ' -f1-2 < $LATH.merge > $anonymous
-    _overwrite < $anonymous > $LATH.merge
-}
 _ssh-push-all(){
     scp -pq $sshopt $AATH $rhost:$ATH
-    scp -pq $sshopt $LINV.merge $rhost:$INV
+    scp -pq $sshopt $MINV $rhost:$INV
 }
 _ssh-share(){
     scp -pq $sshopt $LATH $rhost:$ATH
