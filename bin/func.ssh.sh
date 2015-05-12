@@ -3,9 +3,9 @@
 # Description: mark '#' if the line with own name is found in authorized_keys,
 #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
 #link auth-mark
-#link ssh-trim
-#link ssh-mates
-#link ssh-perm
+#link auth-trim
+#link auth-mates
+#link auth-perm
 #link ssh-fetch
 . func.temp
 . func.attr
@@ -36,7 +36,7 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys]
     sort -u $pub $tath | _overwrite $ath && _warn "Invalid keys are marked"
 }
 # Required scripts: line-dup
-_ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
+_auth-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
     # Split file into invalid_keys by #headed line
@@ -64,12 +64,12 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
         fi
     done < $tath | _overwrite $ath && _warn "authorized_key was updated"
 }
-_ssh-mates(){ # List the mate accounts in authorized_keys
+_auth-mates(){ # List the mate accounts in authorized_keys
     local dmy me
     read dmy dmy me < $PUB
     cut -d' ' -f3 $LATH|grep @|grep -v $me
 }
-_ssh-perm(){ # Set ssh related file permission
+_auth-perm(){ # Set ssh related file permission
     _setp 755 ~
     [ -d ~/.ssh ] || exit
     _warn "Correcting permission for ssh files"
@@ -107,8 +107,8 @@ _ssh-fetch(){ # Fetch and merge auth key (user@host:port)
     # Trimming
     _auth-mark $MATH
     _auth-mark $AATH
-    _ssh-trim $MATH $MINV >/dev/null
-    _ssh-trim $AATH $MINV >/dev/null
+    _auth-trim $MATH $MINV >/dev/null
+    _auth-trim $AATH $MINV >/dev/null
 }
 _ssh-admit(){
     _ssh-fetch $1 || return 1

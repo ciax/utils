@@ -32,7 +32,7 @@ for url;do
     cat $rinv $linv > $tinv
 # Trimming
     _ssh-mark $tath
-    _ssh-trim $tath $tinv >/dev/null
+    _auth-trim $tath $tinv >/dev/null
 # Put files back to remote
     putrem $tath $rath $ath
     putrem $tinv $rinv $inv
