@@ -44,8 +44,8 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
         done >> $tinv
     sort -u $tinv | _overwrite $inv
     ## For authorized_keys (can be reduced -> _overwrite)
-    #  exclude duplicated keys
-    grep -v "^#" $ath |sort -u | tee $tath | cut -d' ' -f1-2 | _text-dup > $tdup
+    #  exclude duplicated keys (the key should be treated by the owner)
+    grep -v "^#" $ath | tee $tath | cut -d' ' -f1-2 | _text-dup > $tdup
     #  exculde invalid keys
     local line
     while read line;do
