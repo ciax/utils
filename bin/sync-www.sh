@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # Required packages : wget
 # Description : Repricate web site. The config file is in ~/cfg.*/env.
 proj=$1

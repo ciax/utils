@@ -36,7 +36,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
         fi
         echo "$line" >> "$outtmp"
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
-    _overwrite "$orgfile" < "$outtmp"
+    _overwrite "$orgfile" "$outtmp"
 done
 [ "$ext" ] || exit
 oldfn="$oldstr.$ext"

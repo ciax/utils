@@ -13,12 +13,12 @@ xopt-r(){ #Refresh arp
 opt-s(){ #Set to /etc/hosts
     egrep -v " ($hreg)$" /etc/hosts > $hosts
     if [ -s $hlist ] ; then
-	cat $hlist >> $hosts
-	msg="Add to /etc/hosts"
+        cat $hlist >> $hosts
+        msg="Add to /etc/hosts"
     else
-	msg="Delete from /etc/hosts"
+        msg="Delete from /etc/hosts"
     fi
-    _overwrite /etc/hosts < $hosts || msg="No changes on /etc/hosts"
+    _overwrite /etc/hosts $hosts || msg="No changes on /etc/hosts"
     _msg "$msg"
 }
 alist=~/.var/arplist.txt

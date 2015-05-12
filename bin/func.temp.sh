@@ -24,25 +24,31 @@ _fuser(){ # Show file/parent dir's owner [path]
 }
 
 # Usage: _overwrite 
-_overwrite(){ # Overwrite if these are different. [dst_file] < STDIN
-    [ "$1" ] || _abort "No dst_file"
-    local tmpfile user dir
-    _temp tmpfile
-    cat > $tmpfile
-    if [ ! -e $1 ] ; then
-        dir=$(dirname $1)
-	user=$(_fuser $dir)
-	sudo -u $user mkdir -p "$dir"
-        sudo mv $tmpfile $1
-        sudo chown $user $1
-    elif sudo cmp -s $tmpfile $1 ; then
+_overwrite(){ # Overwrite if these are different. [dst_file] <src_file>
+    local dstfile=$1 srcfile=$2 user dir
+    [ "$dstfile" ] || _abort "No dst_file"
+    if [ ! -t 0 ] ; then
+        _temp srcfile
+        cat > $srcfile
+    elif [ ! "$srcfile" ] ; then
+        _abort "No src_file"
+    fi
+    local srcfile user dir
+    if [ ! -e $dstfile ] ; then
+        dir=$(dirname $dstfile)
+        user=$(_fuser $dir)
+        sudo -u $user mkdir -p "$dir"
+        sudo mv $srcfile $dstfile
+        sudo chown $user $dstfile
+    elif sudo cmp -s $srcfile $dstfile ; then
+        rm $srcfile
         return 1
     else
         [ -d ~/.trash ] || mkdir -p ~/.trash
-	user=$(_fuser $1)
-        chmod --reference=$1 $tmpfile
-        sudo mv -b $1 ~/.trash/ && sudo mv $tmpfile $1
-        sudo chown $user $1
+        user=$(_fuser $dstfile)
+        chmod --reference=$dstfile $srcfile
+        sudo mv -b $dstfile ~/.trash/ && sudo mv $srcfile $dstfile
+        sudo chown $user $dstfile
     fi
 }
 
