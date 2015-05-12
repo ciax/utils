@@ -6,7 +6,7 @@
 #link ssh-trim
 #link ssh-mates
 #link ssh-perm
-#link ssh-pull
+#link ssh-fetch
 . func.temp
 . func.attr
 . func.text
@@ -50,9 +50,13 @@ _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     #  exculde invalid keys
     local line
     while read line;do
-        grep -q "$line" $tdup && continue
-        grep -q $(md5sum <<< $line | cut -c-32) $inv && continue
-        echo "$line"
+        if grep -q "$line" $tdup; then
+	    _warn "Remove Duplicated Key ${line##* }"
+	elif grep $(md5sum <<< $line | cut -c-32) $inv > $tinv; then
+	    _warn "Remove Invalid Key for ${line##* } ($(< $tinv))"
+	else
+            echo "$line"
+	fi
     done < $tath | _overwrite $ath && _warn "authorized_key was updated"
 }
 _ssh-mates(){ # List the mate accounts in authorized_keys
@@ -77,13 +81,13 @@ _ssh-setup(){ # Setup ssh
     [ -e ~/$ATH ] || cp ~/$PUB ~/$ATH
     grep -q "$(< ~/$PUB)" ~/$ATH || cat ~/$PUB >> ~/$ATH
 }
-_ssh-pull(){ # Pull and merge auth key (user@host port)
-    local rhost=$1 port=${2:-22}
-    [[ "$rhost" =~ (`hostname`|localhost) ]] && _abort "Self push"
-    local sshopt="-o StrictHostKeyChecking=no -P $port"
+_ssh-fetch(){ # Fetch and merge auth key (user@host:port)
+    IFS=:;set - $1;local rhost=$1 port=$2;unset IFS
+    [[ "$rhost" =~ (`hostname`|localhost) ]] && { _warn "Self push"; return 1; }
+    local sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
     local rath rinv tath tinv
     _temp rath rinv tath tinv
-    echo "Host $rhost:$port"
+    echo "Host $rhost${port:+:$port}"
     # Get files from remote
     scp -pq $sshopt $rhost:$ATH $rath
     scp -pq $sshopt $rhost:$INV $rinv
@@ -98,5 +102,4 @@ _ssh-pull(){ # Pull and merge auth key (user@host port)
     # Show merged authrized_keys
     cat $tath
 }
-
 _chkfunc $*
