@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.temp edit-write
+# Required scripts: func.temp
 # Description: mark '#' if the line with own name is found in authorized_keys,
 #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
 #link ssh-mark
@@ -27,38 +27,32 @@ _ssh-mark(){ # Mark '#' for own old pubkey [authorized_keys]
             [ "$3" = "$me" ] && echo -n '#'
            echo "$line"
         done > $tath
-    sort -u $pub $tath | edit-write $ath && _warn "Invalid keys are marked"
+    sort -u $pub $tath | _overwrite $ath && _warn "Invalid keys are marked"
 }
-# Required scripts: line-dup edit-write
+# Required scripts: line-dup
 _ssh-trim(){ # Remove dup key [authorized_keys] [invalid_keys]
     local ath=${1:-~/$ATH}
     local inv=${2:-~/$INV}
     # Split file into invalid_keys by #headed line
     local tath tinv tdup
     _temp tath tinv tdup
-    cp $ath $tath
+    cp $inv $tinv
     ## For invalid_keys (increase only -> merge)
-    _cutout "^#" $tath;cat $inv|\
-        while read line;do
-            if [ ${#line} -gt 32 ]; then 
-                md5sum <<< $line | cut -c-32
-            else
-                echo $line
-            fi
-        done |sort -u > $tinv
-    _overwrite $inv < $tinv
+    grep "^#" $ath|\
+	while read line;do
+	    md5sum <<< $line | cut -c-32
+        done >> $tinv
+    sort -u $tinv | _overwrite $inv
     ## For authorized_keys (can be reduced -> _overwrite)
     #  exclude duplicated keys
-    sort -u $tath> $tinv
-    cut -d' ' -f1-2 $tinv|_text-dup > $tdup
+    grep -v "^#" $ath |sort -u | tee $tath | cut -d' ' -f1-2 | _text-dup > $tdup
     #  exculde invalid keys
     local line
     while read line;do
         grep -q "$line" $tdup && continue
         grep -q $(md5sum <<< $line | cut -c-32) $inv && continue
         echo "$line"
-    done < $tinv > $tath
-    edit-write $ath $tath && _warn "authorized_key was updated"
+    done < $tath | _overwrite $ath && _warn "authorized_key was updated"
 }
 _ssh-mates(){ # List the mate accounts in authorized_keys
     local dmy me
