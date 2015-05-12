@@ -81,25 +81,46 @@ _ssh-setup(){ # Setup ssh
     [ -e ~/$ATH ] || cp ~/$PUB ~/$ATH
     grep -q "$(< ~/$PUB)" ~/$ATH || cat ~/$PUB >> ~/$ATH
 }
-_ssh-fetch(){ # Fetch and merge auth key (user@host:port)
-    IFS=:;set - $1;local rhost=$1 port=$2;unset IFS
+_sshopt(){
+    IFS=:;set - $1;rhost=$1;port=$2;unset IFS
     [[ "$rhost" =~ (`hostname`|localhost) ]] && { _warn "Self push"; return 1; }
-    local sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
-    local rath rinv tath tinv
-    _temp rath rinv tath tinv
+    sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
+}
+_ssh-fetch(){ # Fetch and merge auth key (user@host:port)
+    _sshopt $1 || return 1
+    local rath rinv
+    _temp rath rinv
+    local math=~/$ATH.merge
+    local minv=~/$INV.merge
     echo "Host $rhost${port:+:$port}"
     # Get files from remote
     scp -pq $sshopt $rhost:$ATH $rath
     scp -pq $sshopt $rhost:$INV $rinv
     # Join with local file
-    cat $rath ~/$ATH > $tath
-    cat $rinv ~/$INV > $tinv
+    cat $rath ~/$ATH > $math
+    cat $rinv ~/$INV > $minv
     # Trimming
-    _ssh-mark $tath
-    _ssh-trim $tath $tinv >/dev/null
-    # Renew local files
-    _overwrite ~/$INV < $tinv
-    # Show merged authrized_keys
-    cat $tath
+    _ssh-mark $math
+    _ssh-trim $math $minv >/dev/null
+}
+_ssh-admit(){
+    _ssh-fetch $1 || return 1
+    _overwrite < ~/$ATH.merge ~/$ATH
+    _overwrite < ~/$INV.merge ~/$INV
+}
+_ssh-anonymous(){
+    local anonymous
+    _temp anonymous
+    cut -d' ' -f1-2 < ~/$ATH.merge > $anonymous
+    _overwrite < $anonymous > ~/$ATH.merge
+}
+_ssh-push(){
+    scp -pq $sshopt ~/$ATH.merge $rhost:$ATH
+    scp -pq $sshopt ~/$INV.merge $rhost:$INV
+}
+#link ssh-push-inv
+_ssh-push-inv(){
+    _sshopt $1 || return 1
+    scp -pq $sshopt ~/$INV $rhost:$INV
 }
 _chkfunc $*
