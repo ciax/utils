@@ -13,22 +13,21 @@ _list_cols(){ # Show folded list
     local line
     _temp tmplist
     while read item;do
-	[ "${#item}" -gt $size ] && size="${#item}"
-	echo "$item"
+        [ "${#item}" -gt $size ] && size="${#item}"
+        echo "$item"
     done > $tmplist
     while read item;do
         [[ "$item" =~ , ]] && item="$C2${item/,/$C0: }"
-	while [ ${#item} -lt $size ]; do
-	    item="$item "
-	done
-	line="$line\t$item"
-	if [ "${#line}" -gt 40 ] ; then
-	    echo -e "${line% *}"
-	    unset line
-	fi
+        while [ ${#item} -lt $size ]; do
+            item="$item "
+        done
+        line="$line\t$item"
+        if [ "${#line}" -gt 40 ] ; then
+            echo -e "${line% *}"
+            unset line
+        fi
     done < $tmplist
     [ "$line" ] && echo -e "$line"
-    
 }
 _list_line(){ # Show lined list (a,b,c..)
     local line
