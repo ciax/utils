@@ -6,6 +6,7 @@
 #link ssh-trim
 #link ssh-mates
 #link ssh-perm
+#link ssh-pull
 . func.temp
 . func.attr
 . func.text
@@ -76,4 +77,26 @@ _ssh-setup(){ # Setup ssh
     [ -e ~/$ATH ] || cp ~/$PUB ~/$ATH
     grep -q "$(< ~/$PUB)" ~/$ATH || cat ~/$PUB >> ~/$ATH
 }
+_ssh-pull(){ # Pull and merge auth key (user@host port)
+    local rhost=$1 port=${2:-22}
+    [[ "$rhost" =~ (`hostname`|localhost) ]] && _abort "Self push"
+    local sshopt="-o StrictHostKeyChecking=no -P $port"
+    local rath rinv tath tinv
+    _temp rath rinv tath tinv
+    echo "Host $rhost:$port"
+    # Get files from remote
+    scp -pq $sshopt $rhost:$ATH $rath
+    scp -pq $sshopt $rhost:$INV $rinv
+    # Join with local file
+    cat $rath ~/$ATH > $tath
+    cat $rinv ~/$INV > $tinv
+    # Trimming
+    _ssh-mark $tath
+    _ssh-trim $tath $tinv >/dev/null
+    # Renew local files
+    _overwrite ~/$INV < $tinv
+    # Show merged authrized_keys
+    cat $tath
+}
+
 _chkfunc $*

@@ -3,20 +3,19 @@
 # Usage: _temp [varname1] [varname2] ..
 #link overwrite
 . func.msg
-_tmplist=''
+TEMPLIST=''
 _temp(){ # Make temp file [name] ..
     local trp="rm -f -- " tmp i
     for i ; do
         tmp=$(mktemp) || _abort "Can't make mktemp"
-        _tmplist="$_tmplist $tmp"
+        TEMPLIST="$TEMPLIST $tmp"
         eval "$i=$tmp"
     done
-    trap "$trp$_tmplist" EXIT
+    trap "$trp$TEMPLIST" EXIT
 }
 
-_fuser(){ # Show file/dir owner [path]
-    local dir=$1
-    local cdir
+_fuser(){ # Show file/parent dir's owner [path]
+    local dir=$1 cdir
     until [ -e "$dir" ] ; do
         cdir="${dir%/*}"
         [ "$cdir" = "$dir" ] && return 1
@@ -26,6 +25,7 @@ _fuser(){ # Show file/dir owner [path]
 
 # Usage: _overwrite 
 _overwrite(){ # Overwrite if these are different. [dst_file] < STDIN
+    [ "$1" ] || _abort "No dst_file"
     local tmpfile user dir
     _temp tmpfile
     cat > $tmpfile
@@ -39,6 +39,7 @@ _overwrite(){ # Overwrite if these are different. [dst_file] < STDIN
         return 1
     else
         [ -d ~/.trash ] || mkdir -p ~/.trash
+	user=$(_fuser $1)
         chmod --reference=$1 $tmpfile
         sudo mv -b $1 ~/.trash/ && sudo mv $tmpfile $1
         sudo chown $user $1
