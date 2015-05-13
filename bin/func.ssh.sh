@@ -88,7 +88,7 @@ _auth-trim(){
 }
 #link auth-mates
 _auth-mates(){ # List the mate accounts in authorized_keys
-    cut -d' ' -f3 $LATH|grep @|grep -v $(cut -d' ' -f3 $PUB)
+    cut -d' ' -f3 $LATH|tr , $'\n'|grep @|grep -v $(cut -d' ' -f3 $PUB)
 }
 #link auth-perm
 _auth-perm(){ # Set ssh related file permission
