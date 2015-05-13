@@ -6,7 +6,7 @@ _usage "[(user@)host ..]"
 ahost=''
 auser=''
 chkcom(){
-    ssh -q -o "BatchMode=yes" -o "ConnectTimeout=1" $1 : && auser="$auser $1"
+    ssh -q -o "BatchMode=yes" -o "ConnectTimeout=1" -o "StrictHostKeyChecking=no" $1 : && auser="$auser $1"
 }
 for i ; do
     host="${i#*@}"

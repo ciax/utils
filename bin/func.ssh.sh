@@ -106,9 +106,8 @@ _sshopt(){ # Set rhost,sshopt,port
 }
 _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     _sshopt $1 || return 1
-    echo "Host $rhost${port:+:$port}"
+    _warn "Host $rhost${port:+:$port}"
     # Get files from remote
-    echo "scp $sshopt $rhost:.ssh/* ~/.var"
     scp $sshopt $rhost:.ssh/$ATH $rhost:.ssh/$INV  ~/.var
     mv $RATH $RATH.$rhost
     mv $RINV $RINV.$rhost
@@ -119,7 +118,6 @@ _rem-push(){
     cmp -s $RATH $RATH.$rhost || send=$RATH
     cmp -s $RINV $RINV.$rhost || send="$send $RINV"
     if [ "$send" ] ; then
-        echo "scp $sshopt $send $rhost:.ssh/"
         scp -pq $sshopt $send $rhost:.ssh/
         for i in $send;do
             _warn "$i($(stat -c%s $i)) is updated at $rhost"

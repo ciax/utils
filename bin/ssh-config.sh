@@ -16,6 +16,7 @@ site(){
 }
 
 echo "#$HOME/.ssh/config"
+echo "StrictHostKeyChecking no"
 for sid in $(db-list ssh);do
     (site $sid)
 done
