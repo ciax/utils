@@ -4,7 +4,7 @@
 . func.getpar
 . func.ssh
 _usage "[(user@)host(:port)] .."
-setup-ssh
-for rem; do
-    _ssh-fetch $rem # | _overwrite ~/$ATH
+for url;do
+    _rem-fetch $url
 done
+_rem-trim
