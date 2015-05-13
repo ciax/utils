@@ -48,14 +48,21 @@ _auth-setinv(){ # Set Invalid Keys [authorized_keys] [invalid_keys]
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
-    local ath=${1:-$LATH}
+    local ath=${1:-$LATH} pkey phost
     #  remove duplicated keys (compare key without host)
-    uniq -w200 -d $ath |\
-        while read rsa key host;do
-            csv="$(grep $key $ath | cut -d' ' -f3 | _list_csv)"
-            _warn "Remove Duplicated Key ($csv)"
-        done
-    uniq -w200 $ath | _overwrite $ath
+    while read rsa key host;do
+        if [ "$pkey" = "$key" ]; then
+            csv="${csv:+$csv,}$phost"
+        elif [ "$csv" ]; then
+            _warn "Remove Duplicated Key ($csv,$phost)"
+            echo "$rsa $pkey $csv,$phost"
+            unset csv
+        elif [ "$pkey" ]; then
+            echo "$rsa $pkey $phost"
+        fi
+        pkey=$key
+        phost=$host
+    done < <(sort  $ath;echo)| _overwrite $ath
 }
 #link auth-rminv
 _auth-rminv(){
