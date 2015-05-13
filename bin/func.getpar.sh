@@ -29,14 +29,6 @@ _list_cols(){ # Show folded list
     done < $tmplist
     [ "$line" ] && echo -e "$line"
 }
-_list_line(){ # Show lined list (a,b,c..)
-    local line
-    local list
-    while read line;do
-        list="${list:+$list,}$line"
-    done
-    echo "${list:+($list) }"
-}
 _caselist(){ # List of case option
     local line
     local arg

@@ -33,7 +33,6 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>
     elif [ ! "$srcfile" ] ; then
         _abort "No src_file"
     fi
-    local srcfile user dir
     if [ ! -e $dstfile ] ; then
         dir=$(dirname $dstfile)
         user=$(_fuser $dir)

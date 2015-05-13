@@ -27,6 +27,14 @@ _abort(){ # Abort with message
 _item(){ # Show Items [title] [description]
     echo "$INDENT$C2$1$C0 : $2" 1>&2
 }
+_list_line(){ # Show lined list (a,b,c..)
+    local line
+    local list
+    while read line;do
+        list="${list:+$list,}$line"
+    done
+    echo "${list:+($list) }"
+}
 _chkfunc(){ # Show function list
     local self="${0##*/}"
     # If this is symlinked to func name without '_', executed as func
