@@ -44,7 +44,7 @@ _auth-setinv(){ # Set Invalid Keys [authorized_keys] [invalid_keys]
             md5sum <<< $line | cut -c-32
         done >> $tinv
     sort -u $tinv | _overwrite $inv
-    grep -v "^#" $ath | sort | _overwrite $ath
+    grep -v "^#" $ath | sort -r | _overwrite $ath
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
@@ -137,7 +137,12 @@ _rem-trim(){
     cat $RATH.* >> $RATH
     _auth-mark $RATH
     _auth-trim $RATH $RINV >/dev/null
-    [ "$ADMIT" ] && _overwrite $LATH < $RATH
+    if [ "$ADMIT" ] ; then
+        _overwrite $LATH < $RATH
+        cp $RATH $RATH.admit
+    else
+        cp $RATH $RATH.inpose
+    fi
     _overwrite $LINV < $RINV
 }
 #link ssh-push-inv
