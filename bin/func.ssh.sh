@@ -5,15 +5,15 @@
 #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
 . func.temp
 . func.attr
-ATH=.ssh/authorized_keys
-INV=.ssh/invalid_keys
+ATH=authorized_keys
+INV=invalid_keys
 SEC=~/.ssh/id_rsa
 PUB=~/.ssh/id_rsa.pub
 CFG=~/.ssh/config
-LATH=~/$ATH
-LINV=~/$INV
-MATH=~/.ssh/merged.ath
-MINV=~/.ssh/merged.inv
+LATH=~/.ssh/$ATH
+LINV=~/.ssh/$INV
+RATH=~/.var/$ATH
+RINV=~/.var/$INV
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
 #link auth-mark
 _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
@@ -108,33 +108,37 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     _sshopt $1 || return 1
     echo "Host $rhost${port:+:$port}"
     # Get files from remote
-    scp -pq $sshopt $rhost:$ATH $LATH.$rhost
-    scp -pq $sshopt $rhost:$INV $LINV.$rhost
-    # Merge with local file
-    cat $LINV $LINV.$rhost >> $MINV
+    echo "scp $sshopt $rhost:.ssh/* ~/.var"
+    scp $sshopt $rhost:.ssh/$ATH $rhost:.ssh/$INV  ~/.var
+    mv $RATH $RATH.$rhost
+    mv $RINV $RINV.$rhost
 }
 _rem-push(){
     _sshopt $1 || return 1
-    local file
-    for file in $ATH $INV;do
-        cmp -s ~/$file.mrg ~/$file.$rhost && continue
-        scp -pq $sshopt ~/$file.mrg $rhost:$file
-        _warn "${file##*/}($(stat -c%s ~/$file)) is updated at $rhost"
-    done
+    local send i
+    cmp -s $RATH $RATH.$rhost || send=$RATH
+    cmp -s $RINV $RINV.$rhost || send="$send $RINV"
+    if [ "$send" ] ; then
+        echo "scp $sshopt $send $rhost:.ssh/"
+        scp -pq $sshopt $send $rhost:.ssh/
+        for i in $send;do
+            _warn "$i($(stat -c%s $i)) is updated at $rhost"
+        done
+    fi
 }
 _rem-trim(){
+    # Merge with local file
+    cat $LINV $RINV.* > $RINV
     if [ "$ADMIT" ] ; then
-        cp $LATH $MATH
+        cp $LATH $RATH
     else
-        cut -d' ' -f1-2 $LATH > $MATH
+        cut -d' ' -f1-2 $LATH > $RATH
     fi
-    cat $LATH.* >> $MATH
-    _auth-mark $MATH
-    _auth-trim $MATH $MINV >/dev/null
-    if [ "$ADMIT" ] ; then
-        _overwrite $LATH < $MATH
-        _overwrite $LINV < $MINV
-    fi
+    cat $RATH.* >> $RATH
+    _auth-mark $RATH
+    _auth-trim $RATH $RINV >/dev/null
+    [ "$ADMIT" ] && _overwrite $LATH < $RATH
+    _overwrite $LINV < $RINV
 }
 #link ssh-push-inv
 _auth-push-inv(){
