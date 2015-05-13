@@ -52,9 +52,8 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
     #  remove duplicated keys (compare key without host)
     uniq -w200 -d $ath |\
         while read rsa key host;do
-            IFS=,
-            _warn "Remove Duplicated Key $(grep $key $ath | cut -d' ' -f3 | _list_line)"
-            unset IFS
+            csv="$(grep $key $ath | cut -d' ' -f3 | _list_csv)"
+            _warn "Remove Duplicated Key ($csv)"
         done
     uniq -w200 $ath | _overwrite $ath
 }

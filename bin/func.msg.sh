@@ -27,13 +27,12 @@ _abort(){ # Abort with message
 _item(){ # Show Items [title] [description]
     echo "$INDENT$C2$1$C0 : $2" 1>&2
 }
-_list_line(){ # Show lined list (a,b,c..)
-    local line
-    local list
+_list_csv(){ # Show lined list (a,b,c..)
+    local line list
     while read line;do
         list="${list:+$list,}$line"
     done
-    echo "${list:+($list) }"
+    echo "$list"
 }
 _chkfunc(){ # Show function list
     local self="${0##*/}"

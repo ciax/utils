@@ -40,6 +40,7 @@ _showlink(){ # Show links created
     for dir in ${!LINKS[*]}; do
         echo "[${LINKS[$dir]} ] -> $C1$dir$C0"
     done
+    unset LINKS[*]
 }
 _setup(){ # Scripts register to ~/bin
     local i
