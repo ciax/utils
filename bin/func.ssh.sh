@@ -112,6 +112,7 @@ _sshopt(){ # Set rhost,sshopt,port
     [[ "$rhost" =~ (`hostname`|localhost) ]] && { _warn "Self push"; return 1; }
     sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
 }
+#link rem-fetch
 _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     _sshopt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
@@ -120,6 +121,7 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     mv $RATH $RATH.$rhost
     mv $RINV $RINV.$rhost
 }
+#link rem-push
 _rem-push(){
     _sshopt $1 || return 1
     local send i
