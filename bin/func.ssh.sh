@@ -156,4 +156,15 @@ _auth-push-inv(){
     _sshopt $1 || return 1
     scp -pq $sshopt $LINV $rhost:$INV
 }
+#link rem-valid
+_rem-valid(){
+    local i 
+    for i; do
+        ssh -q\
+            -o "BatchMode=yes"\
+            -o "ConnectTimeout=1"\
+            -o "StrictHostKeyChecking=no"\
+            $i : && echo $i
+    done
+}
 _chkfunc $*

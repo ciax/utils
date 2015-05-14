@@ -5,6 +5,4 @@
 #   If no args, then hosts are picked up from authorized_keys
 set -e
 . func.ssh
-mate=$(_auth-mates) || _abort "No members"
-valid=$(ssh-valid $mate) || _abort "No account valid"
-ssh-join $valid
+ssh-join $(_rem-valid $(_auth-mates))
