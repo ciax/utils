@@ -38,7 +38,7 @@ _add_list(){ # Add elemnt to ver without duplication [varname] [elements...]
     # $1 must not be '_k' '_i' '_l' '_e'
     local _k=$1 _i _l _e;shift
     for _i in ${!_k} $*;do
-        if [[ "$_l" =~ (^|' ')$_i' ' ]]; then
+        if [ ! "$_i" ] || [[ "$_l" =~ (^|' ')$_i' ' ]]; then
             _e=1
         else
             _l+="$_i "
