@@ -8,7 +8,7 @@ ADMIT=1
 for url;do
     _rem-fetch $url
 done
-_rem-trim
+_rem-admit
 for url;do
     _rem-push $url
 done

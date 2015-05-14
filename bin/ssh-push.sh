@@ -7,7 +7,7 @@ _usage "[(user@)host(:port)] .."
 for url;do
     _rem-fetch $url
 done
-_rem-trim
+_rem-impose
 for url;do
     _rem-push $url
 done

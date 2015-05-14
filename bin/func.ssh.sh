@@ -12,8 +12,6 @@ PUB=~/.ssh/id_rsa.pub
 CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
 LINV=~/.ssh/$INV
-RATH=~/.var/$ATH
-RINV=~/.var/$INV
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
 #link auth-mark
 _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
@@ -107,6 +105,12 @@ _ssh-setup(){ # Setup ssh
     [ -e $LATH ] || cp $PUB $LATH
     grep -q "$(< $PUB)" $LATH || cat $PUB >> $LATH
 }
+
+### For remote operation ###
+[ -d ~/.var/ssh/admit ] || mkdir -p ~/.var/ssh/admit
+[ -d ~/.var/ssh/impose ] || mkdir -p ~/.var/ssh/impose
+RATH=~/.var/ssh/$ATH
+RINV=~/.var/ssh/$INV
 _sshopt(){ # Set rhost,sshopt,port
     IFS=:;set - $1;rhost=$1;port=$2;unset IFS
     [[ "$rhost" =~ (`hostname`|localhost) ]] && { _warn "Self push"; return 1; }
@@ -117,16 +121,17 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     _sshopt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
     # Get files from remote
-    scp $sshopt $rhost:.ssh/$ATH $rhost:.ssh/$INV  ~/.var
-    mv $RATH $RATH.$rhost
-    mv $RINV $RINV.$rhost
+    cd ~/.var/ssh
+    scp $sshopt $rhost:.ssh/$ATH $rhost:.ssh/$INV  .
+    mv $ATH $ATH.$rhost
+    mv $INV $INV.$rhost
 }
 #link rem-push
 _rem-push(){
     _sshopt $1 || return 1
     local send i
-    cmp -s $RATH $RATH.$rhost || send=$RATH
-    cmp -s $RINV $RINV.$rhost || send="$send $RINV"
+    cmp -s $ATH $ATH.$rhost || send=$ATH
+    cmp -s $RINV $RINV.$rhost || send="$send $INV"
     if [ "$send" ] ; then
         scp -pq $sshopt $send $rhost:.ssh/
         for i in $send;do
@@ -134,29 +139,28 @@ _rem-push(){
         done
     fi
 }
-_rem-trim(){
+_rem-admit(){
+    cat $LINV $RINV.* > $RINV
+    # Merge with local file
+    mv $RATH.* ~/.var/ssh/admit/
+    cd ~/.var/ssh/admit/
+    cat $LATH $ATH.* >> $ATH
+    _auth-mark $ATH
+    _auth-trim $ATH $RINV >/dev/null
+    _overwrite $LINV < $RINV
+    _overwrite $LATH < $ATH
+}
+_rem-impose(){
     # Merge with local file
     cat $LINV $RINV.* > $RINV
-    if [ "$ADMIT" ] ; then
-        cp $LATH $RATH
-    else
-        cut -d' ' -f1-2 $LATH > $RATH
-    fi
-    cat $RATH.* >> $RATH
-    _auth-mark $RATH
-    _auth-trim $RATH $RINV >/dev/null
-    if [ "$ADMIT" ] ; then
-        _overwrite $LATH < $RATH
-        cp $RATH $RATH.admit
-    else
-        cp $RATH $RATH.inpose
-    fi
-    _overwrite $LINV < $RINV
-}
-#link auth-push-inv
-_auth-push-inv(){
-    _sshopt $1 || return 1
-    scp -pq $sshopt $LINV $rhost:$INV
+    # Conceal group members
+    mv $RATH.* ~/.var/ssh/impose/
+    cd ~/.var/ssh/impose/
+    cut -d' ' -f1-2 $LATH >> $ATH
+    cat $ATH.* >> $ATH
+    _auth-mark $ATH
+    _auth-trim $ATH $RINV >/dev/null
+    _overwrite $LINV $RINV
 }
 #link rem-valid
 _rem-valid(){
