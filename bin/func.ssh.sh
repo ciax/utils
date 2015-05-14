@@ -151,7 +151,7 @@ _rem-trim(){
     fi
     _overwrite $LINV < $RINV
 }
-#link ssh-push-inv
+#link auth-push-inv
 _auth-push-inv(){
     _sshopt $1 || return 1
     scp -pq $sshopt $LINV $rhost:$INV
