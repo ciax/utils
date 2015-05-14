@@ -34,6 +34,19 @@ _list_csv(){ # Show lined list (a,b,c..)
     done
     echo "$list"
 }
+_add_list(){ # Add elemnt to ver without duplication [varname] [elements...] 
+    # $1 must not be '_k' '_i' '_l' '_e'
+    local _k=$1 _i _l _e;shift
+    for _i in ${!_k} $*;do
+        if [[ "$_l" =~ (^|' ')$_i' ' ]]; then
+            _e=1
+        else
+            _l+="$_i "
+        fi
+    done
+    eval "$_k=\"${_l% }\""
+    return $_e
+}
 _chkfunc(){ # Show function list
     local self="${0##*/}"
     # If this is symlinked to func name without '_', executed as func
