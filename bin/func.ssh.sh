@@ -52,14 +52,13 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
         if [ "$pkey" = "$key" ]; then
             dup=1
         else
-            echo "${list// /,}"
+            [ "$pkey" ] && echo "${list// /,}"
             [ "$dup" ] && _warn "Put Together Duplicated Key (${list// /,})"
             unset list dup
             [ "$rsa" = ssh-rsa ] && echo -n "$rsa $key "
         fi
         if [ "$host" ] ; then
-            IFS=,;set - $host;unset IFS
-            _add_list list $*
+            _add_list list ${host//,/ }
         fi
         pkey=$key
     done < <(sort $ath;echo) | _overwrite $ath
