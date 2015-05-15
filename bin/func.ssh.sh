@@ -41,8 +41,8 @@ _auth-setinv(){ # Set Invalid Keys [authorized_keys] [invalid_keys]
         while read line;do
             md5sum <<< $line | cut -c-32
         done >> $tinv
-    sort -u $tinv | _overwrite $inv
-    grep -v "^#" $ath | sort -r | _overwrite $ath
+    sort -u $tinv | _overwrite $inv && _warn "invalid_key was updated"
+    grep -v "^#" $ath | sort -r | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
@@ -61,7 +61,7 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
             _add_list list ${host//,/ }
         fi
         pkey=$key
-    done < <(sort $ath;echo) | _overwrite $ath
+    done < <(sort $ath;echo) | _overwrite $ath && _warn "authorized_keys was updated (rm dup)"
 }
 #link auth-rminv
 _auth-rminv(){
@@ -74,7 +74,7 @@ _auth-rminv(){
         else
             echo "$line"
         fi
-    done < $ath | _overwrite $ath && _warn "authorized_key was updated"
+    done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm inv)"
 }
 #link auth-trim
 _auth-trim(){
