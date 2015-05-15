@@ -79,8 +79,8 @@ _auth-rminv(){
 #link auth-trim
 _auth-trim(){
     _auth-setinv $*
-    _auth-rmdup $*
     _auth-rminv $*
+    _auth-rmdup $*
 }
 #link auth-mates
 _auth-mates(){ # List the mate accounts in authorized_keys
