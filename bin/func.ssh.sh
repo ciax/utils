@@ -129,8 +129,8 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
 _rem-push(){
     _sshopt $1 || return 1
     local send i
-    cmp -s $ATH $ATH.$rhost || send=$ATH
-    cmp -s $RINV $RINV.$rhost || send="$send $INV"
+    [ -s $ATH ] && { cmp -s $ATH $ATH.$rhost || send=$ATH; }
+    [ -s $INV ] && { cmp -s $INV $INV.$rhost || send="$send $INV"; }
     if [ "$send" ] ; then
         scp -pq $sshopt $send $rhost:.ssh/
         for i in $send;do
@@ -139,27 +139,27 @@ _rem-push(){
     fi
 }
 _rem-admit(){
-    cat $LINV $RINV.* > $RINV
     # Merge with local file
-    mv $RATH.* ~/.var/ssh/admit/
     cd ~/.var/ssh/admit/
+    mv ../$ATH.* ../$INV.* .
     cat $LATH $ATH.* >> $ATH
+    cat $LINV $INV.* >> $INV
     _auth-mark $ATH
-    _auth-trim $ATH $RINV >/dev/null
-    _overwrite $LINV < $RINV
+    _auth-trim $ATH $INV >/dev/null
+    _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
 }
 _rem-impose(){
     # Merge with local file
-    cat $LINV $RINV.* > $RINV
-    # Conceal group members
-    mv $RATH.* ~/.var/ssh/impose/
     cd ~/.var/ssh/impose/
+    mv ../$ATH.* ../$INV.* .
+    # Conceal group members
     cut -d' ' -f1-2 $LATH >> $ATH
     cat $ATH.* >> $ATH
+    cat $LINV $INV.* >> $INV
     _auth-mark $ATH
-    _auth-trim $ATH $RINV >/dev/null
-    _overwrite $LINV $RINV
+    _auth-trim $ATH $INV >/dev/null
+    rm $INV
 }
 #link rem-valid
 _rem-valid(){
