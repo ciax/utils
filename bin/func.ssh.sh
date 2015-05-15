@@ -112,8 +112,6 @@ _ssh-setup(){ # Setup ssh
 ### For remote operation ###
 [ -d ~/.var/ssh/admit ] || mkdir -p ~/.var/ssh/admit
 [ -d ~/.var/ssh/impose ] || mkdir -p ~/.var/ssh/impose
-RATH=~/.var/ssh/$ATH
-RINV=~/.var/ssh/$INV
 _sshopt(){ # Set rhost,sshopt,port
     IFS=:;set - $1;rhost=$1;port=$2;unset IFS
     [[ "$rhost" =~ (`hostname`|localhost) ]] && { _warn "Self push"; return 1; }
