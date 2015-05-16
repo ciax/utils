@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar setup-ssh func.ssh
+# Required scripts: func.getpar func.ssh
 # Desctiption: impose self trust to the object host (push pub-key anonymously)
 . func.getpar
 . func.ssh
