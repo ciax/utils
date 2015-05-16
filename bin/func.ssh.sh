@@ -23,8 +23,11 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy s
     _temp tath
     grep -v $mykey $ath|\
         while read pre key host; do
-            [ "$host" = "$me" ] && echo -n '#'
-           echo "$pre $key $host"
+            case "$host" in
+                $me) echo "#$pre $key $host" ;;
+                '') echo "$pre $key";;
+                *) echo "$pre $key $host";;
+            esac
         done > $tath
     sort -u $pub $tath | _overwrite $ath && _warn "Invalid keys are marked"
 }
@@ -59,19 +62,20 @@ _auth-rminv(){
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
-    local ath=${1:-$LATH} list dup rsa key host
+    local ath=${1:-$LATH} list dup csv rsa key host
     #  remove duplicated keys (compare key without host)
     while read rsa key host;do
         if [ "$pkey" = "$key" ]; then
             dup=1
         else
-            [ "$pkey" ] && echo "${list// /,}"
-            [ "$dup" ] && _warn "Put Together Duplicated Key (${list// /,})"
-            unset list dup
-            [ "$rsa" = ssh-rsa ] && echo -n "$rsa $key "
+            [ "$pkey" ] && echo "${csv:+ $csv}"
+            [ "$dup" ] && _warn "Put Together Duplicated Key ($csv)"
+            unset list dup csv
+            [ "$rsa" = ssh-rsa ] && echo -n "$rsa $key"
         fi
         if [ "$host" ] ; then
             _add_list list ${host//,/ }
+            csv="${list// /,}"
         fi
         pkey=$key
     done < <(sort $ath;echo) | _overwrite $ath && _warn "authorized_keys was updated (rm dup)"

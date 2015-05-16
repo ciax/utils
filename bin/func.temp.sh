@@ -3,6 +3,7 @@
 # Usage: _temp [varname1] [varname2] ..
 #link overwrite
 . func.msg
+[ -d ~/.trash ] || mkdir -p ~/.trash
 TEMPLIST=''
 _temp(){ # Make temp file [name] ..
     local trp="rm -f -- " tmp i
@@ -39,15 +40,17 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>
         sudo -u $user mkdir -p "$dir"
         sudo mv $srcfile $dstfile
         sudo chown $user $dstfile
+        _warn "$dstfile is created"
     elif sudo cmp -s $srcfile $dstfile ; then
         rm $srcfile
         return 1
     else
-        [ -d ~/.trash ] || mkdir -p ~/.trash
         user=$(_fuser $dstfile)
         chmod --reference=$dstfile $srcfile
-        sudo mv -b $dstfile ~/.trash/ && sudo mv $srcfile $dstfile
+        sudo mv -b $dstfile ~/.trash/ || _warn "Failed backup $dstfile"
+        sudo mv $srcfile $dstfile
         sudo chown $user $dstfile
+        _warn "$dstfile is changed"
     fi
 }
 
