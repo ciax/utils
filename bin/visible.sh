@@ -10,8 +10,10 @@ _exe_opt
 for c in $(od -v -A n -t x1 $*) ; do
     if [ "$c" = '0a' -a "$nl" ] ; then
         echo
-    elif [ "$c" = '09' -a "$nl" ] ; then
+    elif [ "$c" = '09' ] ; then
         echo -en "$C3>$C0\t"
+    elif [ "$c" = '20' ] ; then
+        echo -en "${C3}_$C0"
     elif [ "$c" \< '20' -o "$c" \> '80' ] ; then
         echo -n "$C4($c)$C0"
         unset nl
