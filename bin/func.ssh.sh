@@ -44,7 +44,7 @@ _auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
         while read line;do
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
-    sort -u $tinv | _overwrite $inv && _warn "invalid_key was updated"
+    sort -u $tinv | _overwrite $inv && _warn "invalid_keys was updated"
     grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
 }
 #link auth-rminv
