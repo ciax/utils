@@ -35,14 +35,27 @@ _auth-setinv(){ # Set Invalid Keys [authorized_keys] [invalid_keys]
     # Split file into invalid_keys by #headed line
     local tinv
     _temp tinv
-    cp $inv $tinv
+    grep '^.\{32\}$' $inv > $tinv
     ## For invalid_keys (increase only -> merge)
     grep "^#" $ath |\
         while read line;do
-            md5sum <<< $line | cut -c-32
+            md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
     sort -u $tinv | _overwrite $inv && _warn "invalid_key was updated"
     grep -v "^#" $ath | sort -r | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
+}
+#link auth-rminv
+_auth-rminv(){
+    local ath=${1:-$LATH}
+    local inv=${2:-$LINV}
+    #  exculde invalid keys
+    while read line;do
+        if md="$(grep $(md5sum <<< $line | cut -c-32) $inv)"; then
+            _warn "Remove Invalid Key for ${line##* } ($md)"
+        else
+            echo "$line"
+        fi
+    done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm inv)"
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
@@ -63,21 +76,9 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
         pkey=$key
     done < <(sort $ath;echo) | _overwrite $ath && _warn "authorized_keys was updated (rm dup)"
 }
-#link auth-rminv
-_auth-rminv(){
-    local ath=${1:-$LATH}
-    local inv=${2:-$LINV}
-    #  exculde invalid keys
-    while read line;do
-        if md="$(grep $(md5sum <<< $line | cut -c-32) $inv)"; then
-            _warn "Remove Invalid Key for ${line##* } ($md)"
-        else
-            echo "$line"
-        fi
-    done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm inv)"
-}
 #link auth-trim
 _auth-trim(){
+    _auth-mark $*
     _auth-setinv $*
     _auth-rminv $*
     _auth-rmdup $*
@@ -106,7 +107,7 @@ _ssh-setup(){ # Setup ssh
     [ -e $PUB ] || ssh-keygen -y -f $SEC > $PUB
     [ -e $LINV ] || touch $LINV
     [ -e $LATH ] || cp $PUB $LATH
-    grep -q "$(< $PUB)" $LATH || cat $PUB >> $LATH
+    grep -q "$(< $PUB)" $LATH || grep . $PUB >> $LATH
 }
 
 ### For remote operation ###
@@ -124,17 +125,21 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     # Get files from remote
     cd ~/.var/ssh
     scp $sshopt $rhost:.ssh/$ATH $rhost:.ssh/$INV  .
-    mv $ATH $ATH.$rhost
-    mv $INV $INV.$rhost
+    [ -s $ATH ] && mv $ATH $ATH.$rhost
+    [ -s $INV ] && mv $INV $INV.$rhost
 }
 #link rem-push
 _rem-push(){
     _sshopt $1 || return 1
     local send i
-    [ -s $ATH ] && { cmp -s $ATH $ATH.$rhost || send=$ATH; }
-    [ -s $INV ] && { cmp -s $INV $INV.$rhost || send="$send $INV"; }
+    if [ -s $ATH -a -s $ATH.$rhost ];then
+        cmp -s $ATH $ATH.$rhost || send=$ATH
+    fi
+    if [ -s $INV -a -s $INV.$rhost ];then
+        cmp -s $INV $INV.$rhost || send="$send $INV"
+    fi
     if [ "$send" ] ; then
-        scp -pq $sshopt $send $rhost:.ssh/
+        scp -pq $sshopt $send $rhost:.ssh/ &&\
         for i in $send;do
             _warn "$i($(stat -c%s $i)) is updated at $rhost"
         done
@@ -143,10 +148,9 @@ _rem-push(){
 _rem-admit(){
     # Merge with local file
     cd ~/.var/ssh/admit/
-    mv ../$ATH.* ../$INV.* .
-    cat $LATH $ATH.* >> $ATH
-    cat $LINV $INV.* >> $INV
-    _auth-mark $ATH
+    mv ../*.* .
+    grep -h . $LATH $ATH.* >> $ATH
+    grep -h . $LINV $INV.* >> $INV
     _auth-trim $ATH $INV >/dev/null
     _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
@@ -154,14 +158,11 @@ _rem-admit(){
 _rem-impose(){
     # Merge with local file
     cd ~/.var/ssh/impose/
-    mv ../$ATH.* ../$INV.* .
+    mv ../*.$rhost .
     # Conceal group members
-    cut -d' ' -f1-2 $LATH >> $ATH
-    cat $ATH.* >> $ATH
-    cat $LINV $INV.* >> $INV
-    _auth-mark $ATH
-    _auth-trim $ATH $INV >/dev/null
-    rm $INV
+    cut -d' ' -f1-2 $LATH > $ATH
+    grep -h . $ATH.$rhost >> $ATH
+    _auth-trim $ATH $INV.$rhost >/dev/null
 }
 #link rem-valid
 _rem-valid(){
