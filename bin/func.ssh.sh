@@ -28,8 +28,8 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy s
         done > $tath
     sort -u $pub $tath | _overwrite $ath && _warn "Invalid keys are marked"
 }
-#link auth-setinv
-_auth-setinv(){ # Set Invalid Keys [authorized_keys] [invalid_keys]
+#link auth-rginv
+_auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
     # Split file into invalid_keys by #headed line
@@ -79,7 +79,7 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
 #link auth-trim
 _auth-trim(){
     _auth-mark $*
-    _auth-setinv $*
+    _auth-rginv $*
     _auth-rminv $*
     _auth-rmdup $*
 }
