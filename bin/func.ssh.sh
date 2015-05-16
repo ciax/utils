@@ -42,7 +42,7 @@ _auth-setinv(){ # Set Invalid Keys [authorized_keys] [invalid_keys]
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
     sort -u $tinv | _overwrite $inv && _warn "invalid_key was updated"
-    grep -v "^#" $ath | sort -r | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
+    grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
 }
 #link auth-rminv
 _auth-rminv(){
