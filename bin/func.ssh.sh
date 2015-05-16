@@ -114,8 +114,12 @@ _ssh-setup(){ # Setup ssh
 [ -d ~/.var/ssh/admit ] || mkdir -p ~/.var/ssh/admit
 [ -d ~/.var/ssh/impose ] || mkdir -p ~/.var/ssh/impose
 _sshopt(){ # Set rhost,sshopt,port
-    IFS=:;set - $1;rhost=$1;port=$2;unset IFS
-    [[ "$rhost" =~ (`hostname`|localhost) ]] && { _warn "Self push"; return 1; }
+    [[ "$1" =~ @ ]] || _abort "Not user@host"
+    local host user
+    IFS=:;set - $1;rhost=$1;port=$2
+    IFS=@;set - $1;user=$1;host=$2
+    unset IFS
+    [[ "$host" =~ (`hostname`|localhost) ]] && [ "$user" = $LOGNAME ] && { _warn "Self push"; return 1; }
     sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
 }
 #link rem-fetch
