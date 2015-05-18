@@ -20,7 +20,7 @@ case `uname` in
             White*)
                 echo "redhat-${6%.*}";;
             *QNAP*)
-		echo "qnap";;
+                echo "qnap";;
             *);;
         esac;;
     SunOS)
