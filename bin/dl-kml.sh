@@ -14,15 +14,15 @@ cookie=~/.var/cookie.txt
 outfile="history-$(date +%F)_$days.kml"
 case $(uname) in
     Linux)
-	cookie_dir="$HOME/.mozilla/firefox"
-	user_agent="Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Firefox/31.0"
-	;;
+        cookie_dir="$HOME/.mozilla/firefox"
+        user_agent="Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Firefox/31.0"
+        ;;
     Darwin) # Mac OSX
-	cookie_dir="$HOME/Library/Application\ Support/Firefox/Profiles"
-	user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20100101 Firefox/15.0.1"
-       	;;
+        cookie_dir="$HOME/Library/Application\ Support/Firefox/Profiles"
+        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20100101 Firefox/15.0.1"
+        ;;
     *)
-	exit;;
+        exit;;
 esac
 cookie_file="`echo $cookie_dir/*.default/cookies.sqlite`"
 sqlite3 "$cookie_file" <<EOF > $cookie
