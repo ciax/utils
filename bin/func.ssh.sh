@@ -139,16 +139,14 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
 #link rem-push
 _rem-push(){
     _sshopt $1 || return 1
-    local send i
-    if [ -s $ATH -a -s $ATH.$rhost ];then
-        cmp -s $ATH $ATH.$rhost || send=$ATH
-    fi
-    if [ -s $INV -a -s $INV.$rhost ];then
-        cmp -s $INV $INV.$rhost || send="$send $INV"
-    fi
-    if [ "$send" ] ; then
-        scp -pq $sshopt $send $rhost:.ssh/ &&\
-        for i in $send;do
+    local s1 s2 i
+    [ -s $ATH ] && s1=$ATH
+    [ -s $ATH.$rhost ] && cmp -s $ATH $ATH.$rhost && s1=
+    [ -s $INV ] && s2=$INV
+    [ -s $INV.$rhost ] && cmp -s $INV $INV.$rhost && s2=
+    if [ "$s1$s2" ] ; then
+        scp -pq $sshopt $s1 $s2 $rhost:.ssh/ &&\
+        for i in $s1 $s2;do
             _warn "$i($(stat -c%s $i)) is updated at $rhost"
         done
     fi
@@ -156,7 +154,7 @@ _rem-push(){
 _rem-admit(){
     # Merge with local file
     cd ~/.var/ssh/admit/
-    mv ../*.* .
+    [ ../*.* ] && mv ../*.* .
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
     _auth-trim $ATH $INV >/dev/null
@@ -166,7 +164,7 @@ _rem-admit(){
 _rem-impose(){
     # Merge with local file
     cd ~/.var/ssh/impose/
-    mv ../*.$rhost .
+    [ ../*.$rhost ] && mv ../*.$rhost .
     # Conceal group members
     cut -d' ' -f1-2 $LATH > $ATH
     grep -h . $ATH.$rhost >> $ATH
