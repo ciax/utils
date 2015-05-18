@@ -3,16 +3,16 @@
 # Required scripts: func.getpar bkup-exec
 # Descripton: display backed up files
 . func.getpar
-list(){
+_list(){
     where="where host == '$(hostname)' and dist == '$(info-dist)'"
-    bkup-exec "select dir,name,count(*) from list $where group by name;"|tr , ' '
+    bkup-exec "select dir,name,count(*) from list $where group by name;"
 }
-opt-b(){ #bare output
-    list;exit
+xopt-b(){ #bare output
+    _list
 }
 [ "$(bkup-exec .tables)" ] || bkup-init
 _usage
 _exe_opt
-while read dir name count;do
-    echo -e "$name [$dir] ($count)"
-done < <(list)|column -t
+_list | { IFS=\|; while read d n c;do
+    echo "$n   [$d]   ($c)"
+done }
