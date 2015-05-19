@@ -11,7 +11,7 @@ source ~/cfg.*/env/$proj.env > /dev/null 2>&1 || {
     exit 1
 } 
 dir=~/.var/$proj
-exp=/var/www/$proj
+exp=/var/www/html/$proj
 [ -d $dir ] || mkdir $dir
 [ -h $exp ] || sudo ln -sf $dir $exp
 cd $dir
