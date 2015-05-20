@@ -1,5 +1,4 @@
 #!/bin/bash
-#alias apt
 #link(Debian) pkg
 #link(Ubuntu) pkg
 #link(Raspbian) pkg
@@ -19,9 +18,6 @@ case "$cmd" in
     clean) #clean up pakcages
         sudo -i apt-get autoremove -y
         sudo -i apt-get remove -y --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
-        ;;
-    spy) #apt-spy is not provided in ubuntu
-        sudo -i apt-spy -d stable -a North-America
         ;;
     upd) #update db
         sudo -i apt-get update
