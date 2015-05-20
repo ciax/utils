@@ -154,7 +154,7 @@ _rem-push(){
 _rem-admit(){
     # Merge with local file
     cd ~/.var/ssh/admit/
-    [ ../*.* ] && mv ../*.* .
+    mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
     _auth-trim $ATH $INV >/dev/null
