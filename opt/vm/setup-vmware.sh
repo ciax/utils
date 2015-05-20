@@ -1,5 +1,5 @@
 #!/bin/bash
-#Required packages: kernel-package
+#Required packages: kernel-package linux-libc-dev
 . func.getpar
 cd
 sudo mount /dev/cdrom /media/cdrom0 || _abort "Can't mount cdrom"
