@@ -9,6 +9,6 @@ PATH=$HOME/bin:$PATH
 cd ~/utils/bin
 . func.link.sh
 file-selflink
-db-update
 bashrc-setup
 bkup-init
+echo "You need [pkg init] and [db-update]"
