@@ -4,6 +4,7 @@
 #              and ignore existent line
 # Usage: cfg-append < cfgfile
 # Example: cfg-hosts | cfg-append
+#alias append
 . func.getpar
 _usage "<newcfg>"
 _temp infile outfile
