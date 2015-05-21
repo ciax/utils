@@ -13,19 +13,22 @@ if [ -t 2 ] ; then
 fi
 
 _msg(){ # Print message to stderr
-    echo "$INDENT$C2$*$C0" 1>&2
+    echo "$INDENT$C2$*$C0" >/dev/stderr
 }
 _warn(){ # Print message to stderr
-    echo "$INDENT$C3$*$C0" 1>&2
+    echo "$INDENT$C3$*$C0" >/dev/stderr
 }
 _alert(){ # Print alert to stderr
-    echo "$INDENT$C1$*$C0" 1>&2
+    echo "$INDENT$C1$*$C0" >/dev/stderr
 }
 _abort(){ # Abort with message
     _alert "$*";exit 1
 }
 _item(){ # Show Items [title] [description]
-    echo "$INDENT$C2$1$C0 : $2" 1>&2
+    echo "$INDENT$C2$1$C0 : $2" >/dev/stderr
+}
+_verbose(){ # Show msg when func name is set to VER
+    [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
 }
 _list_csv(){ # Show lined list (a,b,c..)
     local line list

@@ -46,6 +46,7 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>
         return 1
     else
         user=$(_fuser $dstfile)
+        _verbose "file diff" && diff $dstfile $srcfile >/dev/stderr
         chmod --reference=$dstfile $srcfile
         sudo mv -b $dstfile ~/.trash/ || _warn "Failed backup $dstfile"
         sudo mv $srcfile $dstfile
