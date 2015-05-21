@@ -3,7 +3,7 @@
 #link(Ubuntu) pkg
 #link(Raspbian) pkg
 # Required packages(Ubuntu): deborphan apt-file
-# Required packages(Debian,Raspbian): deborphan apt-file apt-spy
+# Required packages(Debian,Raspbian): deborphan apt-file
 # Required scripts: func.getpar show-required
 # Description: Debian package utils
 . func.getpar
