@@ -13,7 +13,6 @@ e-alias(){
 }
 # Generate alias by pick up '#alias XXX' line from each files
 self-alias(){
-    echo "File Self Alias" 2>&1
     grep '^#alias' ~/bin/* > ~/tmpfile
     while read head name par; do
         alias "$name=${head%:*}${par:+ $par}"
