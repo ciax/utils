@@ -40,14 +40,8 @@ _list_csv(){ # Show lined list (a,b,c..)
 _add_list(){ # Add elemnt to ver without duplication [varname] [elements...] 
     # $1 must not be '_k' '_i' '_l' '_e'
     local _k=$1 _i _l _e;shift
-    for _i in ${!_k} $*;do
-        if [ ! "$_i" ] || [[ "$_l" =~ (^|' ')$_i' ' ]]; then
-            _e=1
-        else
-            _l+="$_i "
-        fi
-    done
-    eval "$_k=\"${_l% }\""
+    set - $(for _i in ${!_k} $*;do echo $_i;done|sort -u)
+    eval "$_k=\"$*\""
     return $_e
 }
 _chkfunc(){ # Show function list
