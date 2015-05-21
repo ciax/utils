@@ -64,7 +64,7 @@ _auth-rminv(){
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
-    local ath=${1:-$LATH} list dup csv rsa key host
+    local ath=${1:-$LATH} list dup csv rsa key host i
     #  remove duplicated keys (compare key without host)
     while read rsa key host;do
         if [ "$pkey" = "$key" ]; then
@@ -75,12 +75,12 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
             unset list dup csv
             [ "$rsa" = ssh-rsa ] && echo -n "$rsa $key"
         fi
-        if [ "$host" ] ; then
-            _add_list list ${host//,/ }
-            csv="${list// /,}"
-        fi
+        for i in ${host//,/ }; do
+            _add_list list ${i%:*}
+        done
+        csv="${list// /,}"
         pkey=$key
-    done < <(sort $ath;echo) | _overwrite $ath && _warn "authorized_keys was updated (rm dup)"
+    done < <(sort -u $ath;echo) | _overwrite $ath
 }
 #link auth-trim
 _auth-trim(){
@@ -142,7 +142,8 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     _warn "Host $rhost${port:+:$port}"
     # Get files from remote
     cd ~/.var/ssh
-    scp $sshopt $rhost:.ssh/$ATH $rhost:.ssh/$INV  .
+    scp $sshopt $rhost:.ssh/$ATH .
+    scp $sshopt $rhost:.ssh/$INV .
     [ -s $ATH ] && mv $ATH $ATH.$rhost
     [ -s $INV ] && mv $INV $INV.$rhost
 }
@@ -167,18 +168,18 @@ _rem-admit(){
     mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
-    _auth-trim $ATH $INV >/dev/null
+    _auth-trim $ATH $INV
     _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
 }
 _rem-impose(){
     # Merge with local file
     cd ~/.var/ssh/impose/
-    [ ../*.$rhost ] && mv ../*.$rhost .
+    mv ../*.$rhost . >/dev/null 2>&1
     # Conceal group members
     cut -d' ' -f1-2 $LATH > $ATH
     grep -h . $ATH.$rhost >> $ATH
-    _auth-trim $ATH $INV.$rhost >/dev/null
+    _auth-trim $ATH $INV.$rhost
 }
 #link rem-valid
 _rem-valid(){
