@@ -24,12 +24,14 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy s
     grep -v $mykey $ath|\
         while read pre key host; do
             case "$host" in
-                $me) echo "#$pre $key $host" ;;
+                $me) echo "#$pre $key $host"
+                     _warn "Invalid keys are marked"
+                     ;;
                 '') echo "$pre $key";;
                 *) echo "$pre $key $host";;
             esac
         done > $tath
-    sort -u $pub $tath | _overwrite $ath && _warn "Invalid keys are marked"
+    sort -u $pub $tath | _overwrite $ath
 }
 #link auth-rginv
 _auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
@@ -44,7 +46,7 @@ _auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
         while read line;do
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
-    sort -u $tinv | _overwrite $inv && _warn "invalid_keys was updated"
+    sort -u $tinv | _overwrite $inv 
     grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
 }
 #link auth-rminv
@@ -58,7 +60,7 @@ _auth-rminv(){
         else
             echo "$line"
         fi
-    done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm inv)"
+    done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm by inv)"
 }
 #link auth-rmdup
 _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
@@ -82,10 +84,10 @@ _auth-rmdup(){ # Remove dup key [authorized_keys] [invalid_keys]
 }
 #link auth-trim
 _auth-trim(){
-    _auth-mark $*
+    _auth-mark $1
     _auth-rginv $*
     _auth-rminv $*
-    _auth-rmdup $*
+    _auth-rmdup $1
 }
 #link auth-mates
 _auth-mates(){ # List the mate accounts in authorized_keys

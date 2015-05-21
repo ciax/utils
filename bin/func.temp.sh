@@ -51,7 +51,6 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>
         sudo mv -b $dstfile ~/.trash/ || _warn "Failed backup $dstfile"
         sudo mv $srcfile $dstfile
         sudo chown $user $dstfile
-        _warn "$dstfile is changed"
     fi
 }
 
