@@ -11,3 +11,4 @@ cd ~/utils/bin
 file-selflink
 bashrc-setup
 echo "You need [pkg init], [db-update] and [bkup-init]"
+exec bash
