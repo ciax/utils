@@ -10,5 +10,11 @@ tar xvzf $file
 sudo umount /media/cdrom0
 # install headers
 pkg getheader || exit 1
+# Apply patchies
+git clone https://github.com/rasa/vmware-tools-patches.git
+cd vmware-tools-patches
+./download-tools.sh 6.0.2 # VMware workstation 10.0.1
+./untar-and-patch.sh
 # install vmware tools
-sudo vmware-tools-distrib/vmware-install.pl
+./compile.sh
+#sudo vmware-tools-distrib/vmware-install.pl
