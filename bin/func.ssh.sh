@@ -18,20 +18,16 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy s
     local ath=${1:-$LATH}
     local pub=$PUB
     [ -f $ath -a -f $pub ] || _abort "No ssh files"
-    local rsa mykey me tath pre key host
+    local rsa mykey me key host
     read rsa mykey me < $pub
-    _temp tath
-    grep -v $mykey $ath|\
-        while read pre key host; do
-            case "$host" in
-                $me) echo "#$pre $key $host"
-                     _warn "Invalid keys are marked"
-                     ;;
-                '') echo "$pre $key";;
-                *) echo "$pre $key $host";;
-            esac
-        done > $tath
-    sort -u $pub $tath | _overwrite $ath
+    while read rsa key host; do
+        if [[ "$host" =~ "$me" ]] && [ "$mykey" != "$key" ] ; then
+            echo "#$rsa $key $host"
+            _warn "Invalid keys are marked"
+        else
+            echo "$rsa $key${host:+ $host}"
+        fi
+    done < $ath | sort -u | _overwrite $ath
 }
 #link auth-rginv
 _auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
@@ -162,24 +158,27 @@ _rem-push(){
         done
     fi
 }
-_rem-admit(){
+_rem-admit(){ # Convert keys for admit
     # Merge with local file
     cd ~/.var/ssh/admit/
     mv ../*.* . >/dev/null 2>&1
-    grep -h . $LATH $ATH.* >> $ATH
+    grep -h . $PUB $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
     _auth-trim $ATH $INV
     _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
 }
-_rem-impose(){
+_rem-impose(){ # Convert keys for impose
     # Merge with local file
     cd ~/.var/ssh/impose/
     mv ../*.$rhost . >/dev/null 2>&1
     # Conceal group members
     cut -d' ' -f1-2 $LATH > $ATH
-    grep -h . $ATH.$rhost >> $ATH
+    set - $(cut -d' ' -f3 $LATH|sort -u)
+    IFS='|';local exp="($*)";unset IFS
+    egrep -hv "$exp" $ATH.$rhost >> $ATH
     _auth-trim $ATH $INV.$rhost
+
 }
 #link rem-valid
 _rem-valid(){
