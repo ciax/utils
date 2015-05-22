@@ -45,17 +45,22 @@ _add_list(){ # Add elemnt to ver without duplication [varname] [elements...]
     return $_e
 }
 _chkfunc(){ # Show function list
-    local self="${0##*/}"
+    local self="${0##*/}" i v
     # If this is symlinked to func name without '_', executed as func
     if [[ $(type _$self 2>&1) =~ function ]] ; then
         _$self $*
     elif [ $0 == ${BASH_SOURCE[1]} ] ; then
-        echo "$self contains"
-        INDENT=$'\t'
-        grep "^_[-a-z]\+(.*#" $0|\
-            while read l;do
-                _item "${l%%(*}" "${l#*#}"
-            done
+        local cmd="$1";shift
+        if [[ $(type "_$cmd" 2>&1) =~ function ]] ; then
+            _$cmd $*
+        else
+            echo "$self contains"
+            INDENT=$'\t'
+            grep "^_[-a-z]\+(.*#" $0|\
+                while read i v;do
+                    _item "${i%(*}" "${v#*#}"
+                done
+        fi
     fi
 }
 _chkfunc $*
