@@ -1,8 +1,6 @@
 #!/bin/bash
 # Required scripts: func.temp
-# Required environment var: ADMIT
-# Description: mark '#' if the line with own name is found in authorized_keys,
-#   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
+# Description: Mark '#' at the head of a line in authorized_keys to reserve for registration to the invalid_keys.
 . func.temp
 . func.attr
 ATH=authorized_keys
@@ -15,6 +13,7 @@ LINV=~/.ssh/$INV
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
 #link auth-mark
 _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
+    #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
     local ath=${1:-$LATH}
     local pub=$PUB
     [ -f $ath -a -f $pub ] || _abort "No ssh files"
@@ -46,7 +45,7 @@ _auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
     grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
 }
 #link auth-rminv
-_auth-rminv(){
+_auth-rminv(){ # Remove keys in authorized_keys according to invalid_keys
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
     #  exculde invalid keys
@@ -133,7 +132,7 @@ _sshopt(){ # Set rhost,sshopt,port
     rhost="$user@$host"
 }
 #link rem-fetch
-_rem-fetch(){ # Fetch and merge auth key (user@host:port)
+_rem-fetch(){ # Fetch remote auth key (user@host:port)
     _sshopt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
     # Get files from remote
@@ -144,7 +143,7 @@ _rem-fetch(){ # Fetch and merge auth key (user@host:port)
     [ -s $INV ] && mv $INV $INV.$rhost
 }
 #link rem-push
-_rem-push(){
+_rem-push(){ # Push auth key to remote (user@host:port)
     _sshopt $1 || return 1
     local s1 s2 i
     [ -s $ATH ] && s1=$ATH
@@ -181,7 +180,7 @@ _rem-impose(){ # Convert keys for impose
 
 }
 #link rem-valid
-_rem-valid(){
+_rem-valid(){ # Check remote availability
     local i 
     for i; do
         ssh -q\
