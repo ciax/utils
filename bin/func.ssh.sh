@@ -161,7 +161,7 @@ _rem-admit(){ # Convert keys for admit
     # Merge with local file
     cd ~/.var/ssh/admit/
     mv ../*.* . >/dev/null 2>&1
-    grep -h . $PUB $LATH $ATH.* >> $ATH
+    grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
     _auth-trim $ATH $INV
     _overwrite $LINV < $INV
