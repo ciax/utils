@@ -13,6 +13,12 @@ echo "IPSec secret $password"
 #Uncomment line below for ver.5.3 usage
 echo "Vendor netscreen"
 # IKE Authmode hybrid
+eval "$(db-trace $LOGNAME auth)"
+if [ "$password" ]; then
+    pw=$(crypt-de <<< "$password")
+else
+    pw=$1
+fi
 echo "Xauth username $LOGNAME"
 echo "Xauth password $1"
 #Xauth password <password>
