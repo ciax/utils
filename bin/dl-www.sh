@@ -18,6 +18,7 @@ cd $dir
 if [ "$index" ]; then
     [ -e $index ] && rm $index
     wget $url/$index
+    echo "Retriving files in $index"
     while read line; do
         file=${line#*=}
         [ -e $file ] || wget $url/$file
