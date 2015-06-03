@@ -4,14 +4,14 @@
 usage(){
     #Show Usage and List
     while read cfg; do
-        str="$str $(basename $cfg .env)"
-    done < <(ls ~/cfg.*/env/*.env)
+        str="$str $(basename $cfg .wget)"
+    done < <(ls ~/cfg.*/etc/*.wget)
     echo "Usage: ${0##*/} [project]"
     echo "  $str"
     exit 1
 }
 proj=$1
-source ~/cfg.*/env/$proj.env 2> /dev/null || usage
+source ~/cfg.*/etc/$proj.wget 2> /dev/null || usage
 dir=~/.var/$proj
 exp=/var/www/html/$proj
 [ -d $dir ] || mkdir $dir
