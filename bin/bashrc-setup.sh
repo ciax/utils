@@ -2,7 +2,7 @@
 # Description: setup rc files
 setup(){
     if ! grep -q '#initrc' ~/.$1 ; then
-        echo "shopt -s nullglob;for i in ~/bin/rc.$2*;do . \$i;done #initrc" >> ~/.$1
+        echo "source ~/bin/rc.$2 #initrc" >> ~/.$1
         echo "Add line to $1"
     fi
 }

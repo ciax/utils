@@ -23,3 +23,8 @@ PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
 # SET Dist
 os=$(info-os)
 export DIST=${os#*/}
+# Boot strap
+shopt -s nullglob
+for i in ~/bin/rc.bash.*;do
+    source $i
+done
