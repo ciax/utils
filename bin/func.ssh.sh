@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required scripts: func.temp
 # Description: Mark '#' at the head of a line in authorized_keys to reserve for registration to the invalid_keys.
-. func.temp
+. func.list
 . func.attr
 ATH=authorized_keys
 INV=invalid_keys

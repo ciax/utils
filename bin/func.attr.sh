@@ -3,7 +3,7 @@
 #link setp
 # Usage file-owner [dir..]
 . func.msg
-_chx(){ #file owner will be uniformed under the current or specified dir tree
+_chx(){ # File owner will be uniformed under the current or specified dir tree
     _warn "Uniform The Owner"
     for dir in ${*:-.}; do
         [ -d "$dir" ] || continue

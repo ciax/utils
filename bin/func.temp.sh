@@ -2,6 +2,7 @@
 # Desctiption: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 #link overwrite
+type _temp >/dev/null 2>&1 && return
 . func.msg
 [ -d ~/.trash ] || mkdir -p ~/.trash
 TEMPLIST=''

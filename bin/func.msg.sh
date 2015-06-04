@@ -1,6 +1,6 @@
 #!/bin/bash
 # Display Message Module
-type _chkfunc >/dev/null 2>&1 && return
+type _msg >/dev/null 2>&1 && return
 shopt -s nullglob extglob
 # Coloring for Console
 #  ESC[(A);(B)(C)m # A: 0=dark 1=light # B: 3=FG 4=BG # C: 1=R 2=G 4=B
@@ -30,20 +30,6 @@ _item(){ # Show Items [title] [description]
 _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
 }
-_list_csv(){ # Show lined list (a,b,c..)
-    local line list
-    while read line;do
-        list="${list:+$list,}$line"
-    done
-    echo "$list"
-}
-_add_list(){ # Add elemnt to ver without duplication [varname] [elements...] 
-    # $1 must not be '_k' '_i' '_l' '_e'
-    local _k=$1 _i _l _e;shift
-    set - $(for _i in ${!_k} $*;do echo $_i;done|sort -u)
-    eval "$_k=\"$*\""
-    return $_e
-}
 _chkfunc(){ # Show function list
     local self="${0##*/}" i v
     # If this is symlinked to func name without '_', executed as func
@@ -56,7 +42,7 @@ _chkfunc(){ # Show function list
         else
             echo "$self contains"
             INDENT=$'\t'
-            grep "^_[-a-z]\+(.*#" $0|\
+            grep "^_[-a-z_]\+(.*#" $0|\
                 while read i v;do
                     _item "${i%(*}" "${v#*#}"
                 done
