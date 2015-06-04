@@ -6,7 +6,7 @@
 #  _usage()
 #  _exe_opt()
 . func.temp
-_list_cols(){ # Show folded list
+_list_cols(){ # Show folded list from StdIn
     local size=0 tmplist item line
     _temp tmplist
     while read item;do
@@ -68,13 +68,12 @@ _chkargc(){ # Check the argument count
     [ "$ARGC" -ge "$reqc" ] || { _alert "Short Argument"; return 1; }
 }
 _chkargv(){ # Check the argument value
-    local i=0 file
-    for file;do
-        grep -q "${ARGV[$i]}" "$file" || {
-            _alert "Invalid argument (${ARGV[$i]})"
+    local file="$1" i=0 exp
+    for exp in ${ARGV[*]} ;do
+        cut -d, -f1 $file| grep -q "^$exp$" || {
+            _alert "Invalid argument ($exp)"
             return 1
         }
-        i=$(($i+1))
     done
 }
 
@@ -103,13 +102,22 @@ _exe_opt(){ # Option handling, don't forget to execute after _usage
 # List file format: (csv)
 #   parameter,desctiption
 _usage(){ # Show usage
-    local reqp=$1;shift
+    local reqp=$1 arglist;shift
+    if [ ! -t 0 ] ; then
+        _temp arglist
+        cat > $arglist
+    fi
     _exe_xopt
-    _chkopt && _chkargc "$reqp" && _chkargv "$@" && return 0
+    _chkopt && _chkargc "$reqp" &&\
+        if [ "$arglist" ]; then
+            _chkargv "$arglist" && return 0
+        else
+            return 0
+        fi
     local opt=$(_optlist|_list_csv)
     opt="${opt:+ ($opt)}"
     echo -e "Usage: $C3${0##*/}$C0$opt $reqp" 1>&2
-    [ -t 0 ] || _list_cols 1>&2
+    [ "$arglist" ] && _list_cols < $arglist 1>&2
     exit 2
 }
 _chkfunc $*
