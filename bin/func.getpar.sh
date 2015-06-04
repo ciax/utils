@@ -7,10 +7,7 @@
 #  _exe_opt()
 . func.temp
 _list_cols(){ # Show folded list
-    local size=0
-    local tmplist
-    local item
-    local line
+    local size=0 tmplist item line
     _temp tmplist
     while read item;do
         [ "${#item}" -gt $size ] && size="${#item}"
@@ -30,8 +27,7 @@ _list_cols(){ # Show folded list
     [ "$line" ] && echo -e "$line"
 }
 _caselist(){ # List of case option
-    local line
-    local arg
+    local line arg
     egrep '^ +[a-z]+\)' $0 |\
     while read line;do
         arg="${line%%)*}"
@@ -40,9 +36,7 @@ _caselist(){ # List of case option
     done
 }
 _optlist(){ # List of options with opt-?() functions
-    local line
-    local fnc
-    local desc
+    local line fnc desc
     egrep '^x?opt-' $0|\
     while read line;do
         fnc="${line%%(*}"
@@ -74,8 +68,7 @@ _chkargc(){ # Check the argument count
     [ "$ARGC" -ge "$reqc" ] || { _alert "Short Argument"; return 1; }
 }
 _chkargv(){ # Check the argument value
-    local i=0
-    local file
+    local i=0 file
     for file;do
         grep -q "${ARGV[$i]}" "$file" || {
             _alert "Invalid argument (${ARGV[$i]})"
