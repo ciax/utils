@@ -4,20 +4,6 @@
 # Get KML by Firefox (Need firefox)
 # Darwin is Mac OS-X
 #alias kml
-conv_cookie(){ # display cookie
-    case $os in
-        Linux) cookie_dir="$HOME/.mozilla/firefox";;
-        Darwin) cookie_dir="$HOME/Library/Application\ Support/Firefox/Profiles";;
-    esac
-    cookie_file="`echo $cookie_dir/*.default/cookies.sqlite`"
-    [ -s "$cookie_filie" ] || { echo "No cookie file" 1>&2; exit 1; }
-    sqlite3 "$cookie_file" <<EOF
-.mode tabs
-select host, case when host glob '.*' then 'TRUE' else 'FALSE' end,
-path, case when isSecure then 'TRUE' else 'FALSE' end, 
-expiry, name, value from moz_cookies;
-EOF
-}
 conv_duration(){ # print 20XX-XX-XX startsec endsec
     local dur=$1
     local day=${2:-$(date +%d)}
@@ -44,9 +30,9 @@ site="https://maps.google.com/locationhistory/b/0/kml"
 set - $(conv_duration $*)
 outfile=~/.var/history-$1.kml
 url="$site?startTime=${2}000&endTime=${3}000"
+echo $url
 # Convert cookie
-[ -d ~/.var ] || mkdir ~/.var
 cookie=~/.var/cookie.txt
-conv_cookie > $cookie
+[ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
 # Get file
 curl -b $cookie -A "$user_agent" -o $outfile $url
