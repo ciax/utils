@@ -54,6 +54,7 @@ for top in $all;do
     dep_dig "$top"
 done
 dep_stack
+echo $C5"* = independent"$C0
 for top in $all;do
     if [ "${sub0[$top]}" ] ; then
         echo $C3"$top"$C0
