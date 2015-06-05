@@ -8,6 +8,7 @@
 . func.getpar
 _usage "[file]"
 [ -s "$1" ] || _abort "No such file"
+bkup-init
 host=$(hostname)
 fid=$(md5sum $1|head -c10)
 dir=$(cd $(dirname $1);pwd -P)
