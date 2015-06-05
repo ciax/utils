@@ -2,42 +2,51 @@
 # Original script to get content using Firefox cookies. by Jean-Sebastien Morisset (http://surniaulula.com/)
 # Required packages: sqlite3 curl
 # Get KML by Firefox (Need firefox)
-# 
+# Darwin is Mac OS-X
 #alias kml
-[ "$1" ]||{ echo "Usage: dl-kml [days] [day] [month]"; exit; }
-dur=$1
-day=${2:-$(date +%d)}
-mon=${3:-$(date +%m)}
-site="https://maps.google.com/locationhistory/b/0/kml"
-case $(uname) in
-    Linux)
-        startday="-d $mon/$day"
-        cookie_dir="$HOME/.mozilla/firefox"
-        user_agent="Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Firefox/31.0"
-        ;;
-    Darwin) # Mac OSX
-        startday="-j $(printf %02d%02d0000 $mon $day)"
-        cookie_dir="$HOME/Library/Application\ Support/Firefox/Profiles"
-        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20100101 Firefox/15.0.1"
-        ;;
-    *)
-        exit;;
-esac
-# Make URL and DL file name
-filedate="$(date $startday +%F)" # 20XX-XX-XX
-startsec=$(date $startday +%s)
-endsec=$(( startsec + 86400*dur )) #One Day is 86400sec
-url="$site?startTime=${startsec}000&endTime=${endsec}000"
-# Convert cookie
-cookie_file="`echo $cookie_dir/*.default/cookies.sqlite`"
-[ -s "$cookie_filie" ] || { echo "No cookie file"; exit 1; }
-[ -d ~/.var ] || mkdir ~/.var
-cookie=~/.var/cookie.txt
-sqlite3 "$cookie_file" <<EOF > $cookie
+conv_cookie(){ # display cookie
+    case $os in
+        Linux) cookie_dir="$HOME/.mozilla/firefox";;
+        Darwin) cookie_dir="$HOME/Library/Application\ Support/Firefox/Profiles";;
+    esac
+    cookie_file="`echo $cookie_dir/*.default/cookies.sqlite`"
+    [ -s "$cookie_filie" ] || { echo "No cookie file" 1>&2; exit 1; }
+    sqlite3 "$cookie_file" <<EOF
 .mode tabs
 select host, case when host glob '.*' then 'TRUE' else 'FALSE' end,
 path, case when isSecure then 'TRUE' else 'FALSE' end, 
 expiry, name, value from moz_cookies;
 EOF
+}
+conv_duration(){ # print 20XX-XX-XX startsec endsec
+    local dur=$1
+    local day=${2:-$(date +%d)}
+    local mon=${3:-$(date +%m)}
+    case $os in
+        Linux) startday="-d $mon/$day";;
+        Darwin) startday="-j $(printf %02d%02d0000 $mon $day)";;
+    esac
+    local start=$(date $startday +%s)
+    local end=$(( start + 86400*dur )) #One Day is 86400sec
+    local day=$(date $startday +%F) # 20XX-XX-XX
+    echo "${day}_$dul $start $end"
+
+}
+[ "$1" ]||{ echo "Usage: dl-kml [days] [day] [month]"; exit; }
+os=$(uname)
+case $os in
+    Linux) user_agent="Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Firefox/31.0";;
+    Darwin) user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20100101 Firefox/15.0.1";;
+    *) echo "No OS" 1>&2; exit;;
+esac
+# Make URL and DL file name
+site="https://maps.google.com/locationhistory/b/0/kml"
+set - $(conv_duration $*)
+outfile=~/.var/history-$1.kml
+url="$site?startTime=${2}000&endTime=${3}000"
+# Convert cookie
+[ -d ~/.var ] || mkdir ~/.var
+cookie=~/.var/cookie.txt
+conv_cookie > $cookie
 # Get file
 curl -b $cookie -A "$user_agent" -o $outfile $url
