@@ -5,8 +5,8 @@
 . func.getpar
 _usage "[period]" hourly daily weekly
 per=$1
-log=~/.var/cron.$per.log
 cmd=cron.$per.$HOSTNAME
-date >> $log
-type -t $cmd >/dev/null 2>&1 || { _alert "No exec file" |tee -a $log; exit 1; }
-$cmd >> $log 2>&1
+type -t $cmd >/dev/null 2>&1 || exit
+log=~/.var/cron.$per.log
+date > $log
+$cmd 2>&1 | tee -a $log 
