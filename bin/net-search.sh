@@ -39,7 +39,7 @@ done
 _temp hlist hosts
 while read ip type mac other ; do
     host=${hos[$mac]}
-    echo "Find $ip for $host ($mac)" >/dev/stderr
+    echo "Find $ip for $host ($mac)" 1>&2
     echo "$ip    $host" >> $hlist 
 done < <(egrep -i "($mreg)" $alist)
 _exe_opt
