@@ -2,6 +2,7 @@
 # Required scripts: func.getpar
 # Description: display invisible chars in files
 #  option (-n): no folding by return code but show (0a)
+#alias vis
 . func.getpar
 nl='0a'
 opt-n(){ nl=; } #no fold

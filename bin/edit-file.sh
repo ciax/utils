@@ -1,8 +1,8 @@
 #!/bin/bash
-#alias e
 # Required packages: emacs
 # Required scripts: func.getpar
 # Description: edit file with emacs as its owner
+#alias e
 . func.getpar
 _usage "[file] (line) .."
 args=''

@@ -1,7 +1,8 @@
 #!/bin/bash
 # Required commands: mawk
 # Required scripts: func.getpar
-# Description: reorder columns of the file
+# Description: reorder columns of the csv file
+#alias swcol
 . func.getpar
 _usage "[order(1,2,3..)] [file] (-w)"
 order="\$${1//,/,\$}"
