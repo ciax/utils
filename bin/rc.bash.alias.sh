@@ -13,11 +13,11 @@ e-alias(){
 }
 # Generate alias by pick up '#alias XXX' line from each files
 self-alias(){
-    grep '^#alias' ~/bin/* > ~/.var/temp
+    grep '^#alias' ~/bin/* > ~/.var/tempfile
     while read head name par; do
         eval "alias $name='${head%:*}${par:+ $par}'"
-    done < ~/.var/temp
-    rm ~/.var/temp
+    done < ~/.var/tempfile
+    rm ~/.var/tempfile
 }
 # File registration
 reg(){
