@@ -10,5 +10,5 @@ cd ~/utils/bin
 . func.link.sh
 file-selflink
 bashrc-setup
-echo "You need [pkg init], [db-update] and [bkup-init]"
+echo "You need [pkg init] and [db-update]"
 exec bash

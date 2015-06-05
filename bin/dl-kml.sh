@@ -1,7 +1,7 @@
 #!/bin/sh
 # Original script to get content using Firefox cookies. by Jean-Sebastien Morisset (http://surniaulula.com/)
-# Required packages: firefox sqlite3 curl
-# Get KML by Firefox
+# Required packages: sqlite3 curl
+# Get KML by Firefox (Need firefox)
 # 
 #alias kml
 [ "$1" ]||{ echo "Usage: dl-kml [days] [day] [month]"; exit; }

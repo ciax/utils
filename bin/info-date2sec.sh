@@ -1,5 +1,4 @@
 #!/bin/bash
-# Required packages: date
 # Description: Convert Date to Unix Second
 # Usage: info-date2sec [month] (day)
 #alias d2s
