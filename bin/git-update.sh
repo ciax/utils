@@ -10,3 +10,4 @@ for i in $dirs;do
     popd >/dev/null
 done
 file-register $dirs
+bashrc-setup

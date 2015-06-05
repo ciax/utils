@@ -1,9 +1,13 @@
 #!/bin/bash
 # Description: setup rc files
 setup(){
-    grep -v '#initrc' ~/.$1 > ~/.var/tmpfile
-    mv ~/.var/tmpfile ~/.$1
-    echo "source ~/bin/rc.$2 #initrc" >> ~/.$1
+    local file=~/.$1
+    local line=". ~/bin/rc.$2 #initrc"
+    grep -q "$line" "$file" && return
+    local tmp=~/.var/tmpfile
+    grep -v "$line" "$file" > "$tmp"
+    mv "$tmp" "$file"
+    echo "$line" >> "$file"
     echo "Update .$1"
 }
 
