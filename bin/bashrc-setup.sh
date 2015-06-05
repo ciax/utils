@@ -1,10 +1,10 @@
 #!/bin/bash
 # Description: setup rc files
 setup(){
-    if ! grep -q '#initrc' ~/.$1 ; then
-        echo "source ~/bin/rc.$2 #initrc" >> ~/.$1
-        echo "Add line to $1"
-    fi
+    grep -v '#initrc' ~/.$1 > ~/.var/tmpfile
+    mv ~/.var/tmpfile ~/.$1
+    echo "source ~/bin/rc.$2 #initrc" >> ~/.$1
+    echo "Update .$1"
 }
 
 profile=profile
