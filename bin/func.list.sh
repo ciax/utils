@@ -18,10 +18,10 @@ _add_list(){ # Add elemnt to ver without duplication [varname] [elements...]
     eval "$_k=\"$*\""
     return $_e
 }
-_colm(){ # Show folded list from argv
+_colm(){ # Convert csv to folded list from STDIN
     local size=0 tmplist item line
     _temp tmplist
-    for item;do
+    while read item;do
         [ "${#item}" -gt $size ] && size="${#item}"
         echo "$item"
     done > $tmplist
@@ -39,13 +39,16 @@ _colm(){ # Show folded list from argv
     [ "$line" ] && echo -e "$line"
 }
 _caselist(){ # List of case option
+    egrep -o '^ +[a-z]+\)' $0|tr -d ' )'
+}
+_disp-case(){ # Display case list and exit
     local line arg
     egrep '^ +[a-z]+\)' $0 |\
     while read line;do
         arg="${line%%)*}"
         echo -n "${arg#* }"
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
-    done
+    done | _colm
 }
 _optlist(){ # List of options with opt-?() functions
     local line fnc desc

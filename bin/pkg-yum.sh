@@ -5,7 +5,6 @@
 . func.getpar
 which yum >/dev/null || _abort "This might not RedHat"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-_usage "[option]" < <(_caselist)
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
@@ -38,5 +37,9 @@ case "$cmd" in
     info) #show package info
         _usage "[$cmd] [package]"
         rpm -qi "$1";;
-    *);;
+    *)
+        _disp_usage "[option]"
+        _disp-case
+        exit 1
+    ;;
 esac
