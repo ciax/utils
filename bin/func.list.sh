@@ -18,10 +18,10 @@ _add_list(){ # Add elemnt to ver without duplication [varname] [elements...]
     eval "$_k=\"$*\""
     return $_e
 }
-_list_cols(){ # Show folded list from StdIn
+_colm(){ # Show folded list from argv
     local size=0 tmplist item line
     _temp tmplist
-    while read item;do
+    for item;do
         [ "${#item}" -gt $size ] && size="${#item}"
         echo "$item"
     done > $tmplist

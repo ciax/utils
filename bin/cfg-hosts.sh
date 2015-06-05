@@ -7,7 +7,7 @@
 xopt-s(){ #Set to /etc/hosts
     $0 | _overwrite /etc/hosts || _warn "No changes on /etc/hosts"
 }
-_usage "(subnet)" < <(db-list subnet)
+_usage "(subnet)" $(db-list subnet)
 echo "#/etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"

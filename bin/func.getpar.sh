@@ -6,14 +6,6 @@
 #  _usage()
 #  _exe_opt()
 . func.list
-_chkopt(){ # Check options
-    local i
-    for i in ${OPT[*]};do
-        type -t "opt${i%%=*}" &>/dev/null && continue
-        _alert "Invalid option ($i)"
-        return 1
-    done
-}
 _exe_xopt(){ # Exclusive option handling
     local i
     for i in ${OPT[*]};do
@@ -23,6 +15,14 @@ _exe_xopt(){ # Exclusive option handling
         fi
     done
 }
+_chkopt(){ # Check options
+    local i
+    for i in ${OPT[*]};do
+        type -t "opt${i%%=*}" &>/dev/null && continue
+        _alert "Invalid option ($i)"
+        return 1
+    done
+}
 _chkargc(){ # Check the argument count
     local reqp="$1"
     local reqc="$(IFS=[;set - $reqp;echo $(($#-1)))"
@@ -30,15 +30,19 @@ _chkargc(){ # Check the argument count
     [ "$ARGC" -ge "$reqc" ] || { _alert "Short Argument"; return 1; }
 }
 _chkargv(){ # Check the argument value
-    local file="$1" i=0 exp
-    for exp in ${ARGV[*]} ;do
-        cut -d, -f1 $file| grep -q "^$exp$" || {
-            _alert "Invalid argument ($exp)"
+    [ "$1" ] || return 0
+    local _i
+    for _i in ${ARGV[*]} ;do
+        local ng=1 ex
+        for ex; do
+            [ $_i = $ex ] && unset ng
+        done
+        if [ "$ng" ]; then
+            _alert "Invalid argument ($_i)"
             return 1
-        }
+        fi
     done
 }
-
 _exe_opt(){ # Option handling, don't forget to execute after _usage
     local _executed=1
     for i in ${OPT[*]};do
@@ -48,39 +52,33 @@ _exe_opt(){ # Option handling, don't forget to execute after _usage
     return $_executed
 }
 
-# Usage: _usage [parlist] (list files)
+# Usage: _usage (-n) [partxt] (arg list)
 # Desctiption
 #   1. Execute xopt-?() and exit as an exclusive function if exist.
 #   2. Check the single options that provided as opt-?() or xopt-?() functions.
 #   3. Check the number of arguments (ARGC >= The count of '[' in parlist)
-#   4. Check the value of argument whether it is in list file
-#   5. Execute opt-?() functions.
-# Parameter List format:
+#   4. Check the value of argument whether it is in args following parlist 
+#   5. Execute opt-?() functions at _exe_opt().
+# Parameter Text format:
 #   option is automatically printed as "(-x,-y..)"
 #   option with parameter => -x=par
 #   mandatory parameters => enclosed by "[]"
 #   file name replaceable with stdin => enclosed by "<>"
 #   optional parameters => enclosed by "()"
-# List file format: (csv)
-#   parameter,desctiption
+# -n: No display valid pars and return only 
 _usage(){ # Show usage
-    local reqp=$1 arglist;shift
-    if [ ! -t 0 ] ; then
-        _temp arglist
-        cat > $arglist
-    fi
+    [ "$1" = -n ] && {
+        local noexit=1;shift
+    }
+    local reqp=$1;shift
     _exe_xopt
-    _chkopt && _chkargc "$reqp" &&\
-        if [ "$arglist" ]; then
-            _chkargv "$arglist" && return 0
-        else
-            return 0
-        fi
+    _chkopt && _chkargc "$reqp" && _chkargv $* && return 0
     local opt=$(_optlist|_list_csv)
     opt="${opt:+ ($opt)}"
     echo -e "Usage: $C3${0##*/}$C0$opt $reqp" 1>&2
-    [ "$arglist" ] && _list_cols < $arglist 1>&2
-    exit 2
+    [ "$noexit" ] && return 1
+    _colm $*
+    exit 1
 }
 _chkfunc $*
 # Option Parser
@@ -95,3 +93,4 @@ for i;do
 done
 ARGC=${#ARGV[@]}
 set - "${ARGV[@]}"
+

@@ -3,7 +3,7 @@
 # Required tables: *
 # Desctiption: show table list or table entry
 . func.getpar
-_usage "[table] (field(=cond))" < <(db-tables)
+_usage "[table] (field(=cond))" $(db-tables)
 tbl=$1;shift
 _temp _tmp_tbl
 db-exec "select id from $tbl;"|grep . > $_tmp_tbl || { db-tables; exit 1; }

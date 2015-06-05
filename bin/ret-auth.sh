@@ -5,7 +5,7 @@
 # Required tables: auth
 # Description: Get auth info
 . func.getpar
-_usage "[id]" < <(db-list auth)
+_usage "[id]" $(db-list auth)
 id=$1;shift
 [ "$id" ] && eval "$(db-trace $id auth)"
 crypt-init

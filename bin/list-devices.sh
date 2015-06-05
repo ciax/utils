@@ -4,7 +4,7 @@
 # Description: show device list with mac
 #alias devices
 . func.getpar
-_usage "[subnet]" < <(db-list subnet)
+_usage "[subnet]" $(db-list subnet)
 db-exec -c <<EOF
 select
     host.host_ip,
