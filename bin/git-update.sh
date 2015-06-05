@@ -9,5 +9,4 @@ for i in $dirs;do
     git pull
     popd >/dev/null
 done
-file-clean ~/bin
-file-selflink $dirs
+file-register $dirs
