@@ -4,7 +4,7 @@
 #alias rwx
 . func.msg
 _warn "Set File Permissions"
-regexp='.*\.(sh|pl|py|rb|exp|js)$'
-sudo find . -regex '.*\.git' -prune -o -regextype posix-awk -type f \
-\( ! -regex $regexp -exec chmod -c 644 {} \; \) , \
-\( -regex $regexp -exec chmod -c 755 {} \; \)
+shopt -s globstar
+for i in **/;do chmod 755 $i;done
+chmod 644 **/*.*
+chmod 755 **/*.{sh,rb,py,pl,js,exp}
