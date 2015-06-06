@@ -7,4 +7,4 @@ _warn "Set File Permissions"
 shopt -s globstar
 for i in **/;do chmod 755 $i;done
 chmod 644 **/*.*
-chmod 755 **/*.{sh,rb,py,pl,js,exp}
+chmod 755 **/*.{sh,rb,py,pl,exp}
