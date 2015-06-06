@@ -15,6 +15,7 @@ crypt-init
 [[ "$password" == jA0EA* ]] && password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
 if [ "$host" ]; then
+    echo "Found in DB"
     batch="-o BatchMode=yes"
     [ "$port" ] && sshopt="$sshopt -p $port"
     ssharg="$sshopt ${user:+$user@}$host"
@@ -28,6 +29,12 @@ if [ "$host" ]; then
     [ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
     echo "interact" >> $expfile
     expect $expfile
+elif grep -q $id ~/.ssh/config; then
+    echo "Found in sshconfig"
+    ssh $id
+elif usr=$(cut -d' ' -f3 ~/.ssh/authorized_keys|tr , $'\n'|grep "@$id$"); then
+    echo "Found in Authrizedkeys"
+    ssh $usr
 else
     echo "telnet $id"
     telnet $id
