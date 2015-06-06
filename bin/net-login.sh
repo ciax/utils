@@ -8,7 +8,7 @@
 _usage "[host] (command)"
 id=$1;shift
 if egrep -q "Host $id$" ~/.ssh/config; then
-    echo "Found in sshconfig"
+    _warn "Found in sshconfig"
     ssh $id
     exit
 fi
@@ -20,7 +20,7 @@ crypt-init
 [[ "$password" == jA0EA* ]] && password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
 if [ "$host" ]; then
-    echo "Found in DB"
+    _warn "Found in DB"
     batch="-o BatchMode=yes"
     [ "$port" ] && sshopt="$sshopt -p $port"
     ssharg="$sshopt ${user:+$user@}$host"
@@ -35,9 +35,9 @@ if [ "$host" ]; then
     echo "interact" >> $expfile
     expect $expfile
 elif usr=$(cut -d' ' -f3 ~/.ssh/authorized_keys|tr , $'\n'|grep "@$id$"); then
-    echo "Found in Authrizedkeys"
+    _warn "Found in Authrizedkeys"
     ssh $usr
 else
-    echo "telnet $id"
+    _warn "telnet $id"
     telnet $id
 fi
