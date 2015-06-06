@@ -15,7 +15,7 @@ conv_duration(){ # print 20XX-XX-XX startsec endsec
     local start=$(date $startday +%s)
     local end=$(( start + 86400*dur )) #One Day is 86400sec
     local day=$(date $startday +%F) # 20XX-XX-XX
-    echo "${day}_$dul $start $end"
+    echo "${day}_$dur $start $end"
 
 }
 [ "$1" ]||{ echo "Usage: dl-kml [days] [day] [month]"; exit; }
