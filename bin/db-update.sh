@@ -3,10 +3,10 @@
 # Required tables: mac ssl ssh
 # Description: update databases
 . func.msg
-latest-csv(){
+latest-tsv(){
     local file
     shopt -s nullglob
-    for file in ~/{cfg.*,utils}/db/db-$base*.csv;do
+    for file in ~/{cfg.*,utils}/db/db-$base*.tsv;do
         stat -c%Y $file
     done|sort|tail -1
 }
@@ -17,7 +17,7 @@ oldest-db(){
     done|sort|head -1
 }
 dt=$(oldest-db)
-ct=$(latest-csv)
+ct=$(latest-tsv)
 [ "$dt" -gt "$ct" ] && exit
 _warn "DB($(date -d@$dt)) is older than CSV($(date -d@$ct))"
 set - $(table-ends)

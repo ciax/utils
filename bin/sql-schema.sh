@@ -4,7 +4,7 @@
 # Description: generate sql statement for create table
 
 # CSV file rule:
-#  The file location:  ~/utils/db/db-(table name).csv
+#  The file location:  ~/utils/db/db-(table name).tsv
 #  Field string format: !name(table:key)
 #    ! : if the field string has '!', it is 'primary key'.
 #    name : treated as field name, if this matches with 'table name' of another file,
@@ -22,7 +22,7 @@ schema(){
     local pkeys=''
     local fkeys=''
     _temp tmpline
-    egrep "^!" db-$tbl.csv|head -1|tr ",\t" "\n" > $tmpline
+    egrep "^!" db-$tbl.tsv|head -1|tr ",\t" "\n" > $tmpline
     while read col; do
         local field="${col%(*}"
         if [[ $field =~ '!' ]] ; then

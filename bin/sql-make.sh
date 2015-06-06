@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar sql-schema sql-insert
-# Description: make sqlite3 database from csv file
+# Description: make sqlite3 database from tsv file
 . func.getpar
 _usage "[tables]"
 _temp sch
@@ -14,3 +14,5 @@ for tbl in $(grep '^drop' $sch|tr -d ';'|cut -d' ' -f5);do
     done
 done
 echo "commit;"
+
+sql-insert ssl

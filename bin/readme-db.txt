@@ -1,5 +1,5 @@
 ## CSV DB file format ##
-   a. the db file is named as "db-(table name)-(project).csv
+   a. the db file is named as "db-(table name)-(project).tsv
    b. the line which begins with '#' is ignored
    c. the index line begins with '!'
    d. the field whose name has '!' will be primary key (defalut is 'id' but multiple keys are allowed)
@@ -14,10 +14,10 @@
    a. the fist column of index will have '%' which contains project
    b. each line will be splitted into the sorted dbs based on the first column
    c. the fist column is removed in the sorted db
-   d. index line will be stored into ~/utils/db/db-(table).csv
+   d. index line will be stored into ~/utils/db/db-(table).tsv
    e. the sorted dbs will be stored into ~/cfg.(project)/db
 
-## Procedure for translation from csv to sqlite3 ##
- 1. export csv file from spread sheet as exp-db
+## Procedure for translation from tsv to sqlite3 ##
+ 1. export tsv file from spread sheet as exp-db
  2. split the exp-db by project into files which is stored in /cfg.(project) (command: db-split)
  3. update sqlite3 rdb (command: db-update) 

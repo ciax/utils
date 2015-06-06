@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Desctiption: pick up the table names from file name(db-*.csv)
+# Desctiption: pick up the table names from file name(db-*.tsv)
 . func.getpar
 tblcore(){
     local r=${1#*-}
@@ -13,7 +13,7 @@ for i;do
         tblcore $i
         err=0
     else
-        for j in db-$i*.csv;do
+        for j in db-$i*.tsv;do
             echo $i
             err=0
             break
