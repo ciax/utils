@@ -5,7 +5,7 @@
 . func.getpar
 site(){
     eval "$(db-trace $1 ssh)"
-    [ ! "$password" ] || [ "$proxy" ] || return
+    [ "$auth" ] || [ "$proxy" ] || return
     eval "$(db-trace $host host)"
     echo "Host $1"
     if [ "$assign" = "ddns" ]; then
