@@ -6,8 +6,13 @@
 # Description: login command
 . func.getpar
 _usage "[host] (command)"
-sshopt="-o StrictHostKeyChecking=no -t"
 id=$1;shift
+if egrep -q "Host $id$" ~/.ssh/config; then
+    echo "Found in sshconfig"
+    ssh $id
+    exit
+fi
+sshopt="-o StrictHostKeyChecking=no -t"
 eval "$(db-trace $id ssh)"
 eval "$(db-trace $id host)"
 [ "$auth" ] && eval "$(db-trace $auth auth)"
@@ -29,9 +34,6 @@ if [ "$host" ]; then
     [ "$rcmd" ] && echo "expect -re \".+ \"  { send \"$rcmd\n\" }" >> $expfile
     echo "interact" >> $expfile
     expect $expfile
-elif grep -q $id ~/.ssh/config; then
-    echo "Found in sshconfig"
-    ssh $id
 elif usr=$(cut -d' ' -f3 ~/.ssh/authorized_keys|tr , $'\n'|grep "@$id$"); then
     echo "Found in Authrizedkeys"
     ssh $usr
