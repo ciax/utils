@@ -1,6 +1,7 @@
 #!/bin/bash
 id=$1
 urlfile=~/cfg.*/etc/cookie_location.$1.txt
+agentfile=~/cfg.*/etc/user_agent.$1.txt
 sqlfile=~/.var/cookie.$id.sq3
 cookie=~/.var/cookie.$id.txt
 [ -s $urlfile ] || {
@@ -18,4 +19,5 @@ select host, case when host glob '.*' then 'TRUE' else 'FALSE' end,
 path, case when isSecure then 'TRUE' else 'FALSE' end, 
 expiry, name, value from moz_cookies;
 EOF
-ln -sf $cookie ~/.var/cookie.txt
+[ -s $cookie ] && ln -sf $cookie ~/.var/cookie.txt
+[ -s $agentfile ] && ln -sf $agentfile ~/.var/user_agent.txt

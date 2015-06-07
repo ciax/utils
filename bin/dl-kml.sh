@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Original script to get content using Firefox cookies. by Jean-Sebastien Morisset (http://surniaulula.com/)
 # Required packages: sqlite3 curl
 # Get KML by Firefox (Need firefox)
@@ -19,20 +19,18 @@ conv_duration(){ # print 20XX-XX-XX startsec endsec
 
 }
 [ "$1" ]||{ echo "Usage: dl-kml [days] [day] [month]"; exit; }
-os=$(uname)
-case $os in
-    Linux) user_agent="Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Firefox/31.0";;
-    Darwin) user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:15.0) Gecko/20100101 Firefox/15.0.1";;
-    *) echo "No OS" 1>&2; exit;;
-esac
 # Make URL and DL file name
 site="https://maps.google.com/locationhistory/b/0/kml"
 set - $(conv_duration $*)
 outfile=~/.var/history-$1.kml
-url="$site?startTime=${2}000&endTime=${3}000"
-echo $url
 # Convert cookie
 cookie=~/.var/cookie.txt
 [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
+# Convert user agent
+user_agent=~/.var/user_agent.txt
+[ -s $user_agent ]|| { echo "No user agent file" 1>&2; exit; }
 # Get file
-curl -b $cookie -A "$user_agent" -o $outfile $url
+url="$site?startTime=${2}000&endTime=${3}000"
+cat <<EOF
+curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
+EOF
