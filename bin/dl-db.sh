@@ -43,5 +43,5 @@ db-update
 for d in ~/cfg.*;do
     cd $d
     file-clean
-#    git commit -a -m "expand gsheet and update db"
+    git commit -a -m "expand gsheet and update db"
 done
