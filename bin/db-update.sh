@@ -18,8 +18,11 @@ oldest-db(){
 }
 dt=$(oldest-db)
 ct=$(latest-tsv)
-[ "$dt" -gt "$ct" ] && exit
-_warn "DB($(date -d@$dt)) is older than CSV($(date -d@$ct))"
-set - $(table-ends)
-_warn "Database update for $*"
-sql-make $*|db-exec
+if [ "$dt" -gt "$ct" ]; then
+    _warn "DB is up to date"
+else
+    _warn "DB($(date -d@$dt)) is older than TSV($(date -d@$ct))"
+    set - $(table-ends)
+    _warn "Database update for $*"
+    sql-make $*|db-exec
+fi
