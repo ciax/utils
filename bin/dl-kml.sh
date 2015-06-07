@@ -1,5 +1,4 @@
 #!/bin/bash
-# Original script to get content using Firefox cookies. by Jean-Sebastien Morisset (http://surniaulula.com/)
 # Required packages: sqlite3 curl
 # Required scripts: info-date2sec
 # Get KML by Firefox (Need firefox)

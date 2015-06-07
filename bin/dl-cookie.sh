@@ -1,4 +1,5 @@
 #!/bin/bash
+# Original script to get content using Firefox cookies. by Jean-Sebastien Morisset (http://surniaulula.com/)
 id=$1
 urlfile=~/cfg.*/etc/cookie_location.$1.txt
 agentfile=~/cfg.*/etc/user_agent.$1.txt
