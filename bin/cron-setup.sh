@@ -1,7 +1,8 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: execute scripts which is listed in cfg.*/etc/$HOSTNAME.period.cron
-# Usage: cron-exec [daily|weekly]
+# Description: Print crontab setting for cfg.*/etc/cron.period.$HOSTNAME
+#              Option (-t) gives two minutes later crontab for testing. 
+# Usage: cron-setup (-t) [hourly|daily|weekly]
 . func.getpar
 opt-t(){ # Test mode (exec two munites later)
     m=$(( $(date +%M) + 2 ))
