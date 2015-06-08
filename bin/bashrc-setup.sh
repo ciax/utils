@@ -11,8 +11,9 @@ setup(){
     echo "Update .$1"
 }
 
-profile=profile
-[ -e ~/.bash_profile ] && profile=bash_profile
+for profile in bash_profile bash_login profile;do
+    [ -e ~/.$profile ] && break
+done
 setup $profile login
 setup bashrc bash
 setup bash_logout logout
