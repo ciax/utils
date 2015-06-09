@@ -14,11 +14,4 @@ cookie=~/.var/cookie.$id.txt
     exit
 }
 scp "$(< $urlfile)" $sqlfile
-sqlite3 $sqlfile <<EOF > $cookie
-.mode tabs
-select host, case when host glob '.*' then 'TRUE' else 'FALSE' end,
-path, case when isSecure then 'TRUE' else 'FALSE' end, 
-expiry, name, value from moz_cookies;
-EOF
-[ -s $cookie ] && ln -sf $cookie ~/.var/cookie.txt
-[ -s $agentfile ] && ln -sf $agentfile ~/.var/user_agent.txt
+conv-cookie $sqlfile > $cookie
