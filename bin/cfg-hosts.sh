@@ -15,7 +15,7 @@ net=${1:-$(net-name)}
 IFS='|'
 db-exec <<EOF | while read a b c sub ip host domain; do echo "$a.$b.$(($c+$sub)).$ip    $host   $host.$domain";done
 select
-    replace(subnet.network,'.','|'),host.sub_ip,host.host_ip,host.id,domain.name
+    replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name
 from host
     inner join subnet on host.subnet=subnet.id
     inner join domain on subnet.domain=domain.id

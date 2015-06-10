@@ -6,7 +6,7 @@
 _usage "[host]"
 set - $(db-exec <<EOF
 select
-    replace(subnet.network,'.',' ')||' '||host.sub_ip||' '||host.host_ip
+    replace(subnet.network,'.',' ')||' '||subnet.sub_ip||' '||host.host_ip
 from host
     inner join subnet on host.subnet=subnet.id
 where
