@@ -1,7 +1,15 @@
 #!/bin/bash
-### Set alias for login
-## Commands manupulating shell variables
-e-alias(){
+### Set alias/func for human interface
+# Generate alias by pick up '#alias XXX' line from each files
+self-alias(){
+    grep '^#alias' ~/bin/* > ~/.var/tempfile
+    while read head name par; do
+        eval "alias $name='${head%:*}${par:+ $par}'"
+    done < ~/.var/tempfile
+    rm ~/.var/tempfile
+}
+# Edit this file and update alias/func
+ae(){
     file=rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
@@ -10,14 +18,6 @@ e-alias(){
     source $file
     unset file
     popd >/dev/null
-}
-# Generate alias by pick up '#alias XXX' line from each files
-self-alias(){
-    grep '^#alias' ~/bin/* > ~/.var/tempfile
-    while read head name par; do
-        eval "alias $name='${head%:*}${par:+ $par}'"
-    done < ~/.var/tempfile
-    rm ~/.var/tempfile
 }
 # File registration
 reg(){
@@ -37,6 +37,19 @@ gr(){
 sb(){
     sudo -s ${1:+-u $1}
 }
+# Search alias/func
+ag(){
+    alias|grep -i ${1:-.}
+    set|egrep "^[-_a-zA-Z]+\(\)"|grep -i ${1:-.}
+}
+# Search env/var
+eg(){
+    (set;env)|egrep "^[-_a-zA-Z]+="|sort -u|grep -i ${1:-.}
+}
+# Search process
+psg(){
+    ps -ef|grep -i ${1:-.}
+}
 
 ## Aliasing
 # General Commands
@@ -44,12 +57,7 @@ alias update='git-update;db-update'
 alias mo='more'
 alias ls='ls -AF --color'
 alias v='ls -l'
-alias ag='alias|grep -i'
-alias eg='env|grep -i'
-alias sg='set|egrep "^[-_a-zA-Z]+="'
-alias psg='ps -ef|grep -i'
 alias kilg='sudo killall -i -I -r'
-alias ae=e-alias
 alias bogo='dmesg|grep Bogo'
 
 # For GIT
