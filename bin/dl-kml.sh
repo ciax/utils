@@ -14,7 +14,13 @@ outfile=~/.var/history-$tag-$date.kml
 # Check cookie
 cookie=~/.var/cookie.$tag.txt
 [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
-user_agent=~/cfg.*/etc/user_agent.$tag.txt
+user_agent=~/.var/user_agent.txt
+for file in ~/cfg.*/etc/user_agent.$tag.txt; do
+    if [ -s $file ]; then
+        ln -sf $file $user_agent
+        break
+    fi
+done
 # Check user_agent
 [ -s $user_agent ]|| { echo "No user agent file" 1>&2; exit; }
 # Get file
