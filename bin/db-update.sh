@@ -2,7 +2,8 @@
 # Required scripts: sql-make db-exec
 # Required tables: mac ssl ssh
 # Description: update databases
-. func.msg
+. func.getpar
+opt-f(){ get=1; } # force mode
 latest-tsv(){
     local file
     shopt -s nullglob
@@ -16,13 +17,18 @@ oldest-db(){
         stat -c%Y $file
     done|sort|head -1
 }
-dt=$(oldest-db)
-ct=$(latest-tsv)
-if [ "$dt" -gt "$ct" ]; then
-    _warn "DB is up to date"
-else
-    _warn "DB($(date -d@$dt)) is older than TSV($(date -d@$ct))"
-    set - $(table-ends)
-    _warn "Database update for $*"
-    sql-make $*|db-exec
+_usage
+_exe_opt
+if [ ! "$get" ] ; then 
+    dt=$(oldest-db)
+    ct=$(latest-tsv)
+    if [ "$dt" -gt "$ct" ]; then
+        _warn "DB is up to date"
+        exit
+    else
+        _warn "DB($(date -d@$dt)) is older than TSV($(date -d@$ct))"
+    fi
 fi
+set - $(table-ends)
+_warn "Database update for $*"
+sql-make $*|db-exec
