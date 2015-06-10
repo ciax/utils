@@ -3,7 +3,7 @@
 ## Commands manupulating shell variables
 e-alias(){
     file=rc.bash.alias.sh
-    pushd ~/utils >/dev/null
+    pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
     emacs $file
@@ -46,7 +46,7 @@ alias ls='ls -AF --color'
 alias v='ls -l'
 alias ag='alias|grep -i'
 alias eg='env|grep -i'
-alias sg='set|grep "^[a-zA-Z]"'
+alias sg='set|egrep "^[-_a-zA-Z]+="'
 alias psg='ps -ef|grep -i'
 alias kilg='sudo killall -i -I -r'
 alias ae=e-alias
