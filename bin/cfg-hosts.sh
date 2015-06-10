@@ -20,7 +20,7 @@ from host
     inner join subnet on host.subnet=subnet.id
     inner join domain on subnet.domain=domain.id
 where
-    host.assign == 'static' or host.assign == 'wan'
+    host.resolv == 'hosts'
 order by subnet.network,
       length(host.host_ip),
       host.host_ip
