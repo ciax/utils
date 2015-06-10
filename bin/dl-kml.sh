@@ -12,9 +12,9 @@ site="https://maps.google.com/locationhistory/b/0/kml"
 url="$site?startTime=${sec}000&endTime=$(( sec + 86400 ))000" # 1day=86400sec
 outfile=~/.var/history-$tag-$date.kml
 # Check cookie
-cookie=~/.var/cookie-$tag.txt
+cookie=~/.var/cookie.$tag.txt
 [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
-user_agent=~/.var/user_agent-$tag.txt
+user_agent=~/cfg.*/etc/user_agent.$tag.txt
 # Check user_agent
 [ -s $user_agent ]|| { echo "No user agent file" 1>&2; exit; }
 # Get file
