@@ -12,5 +12,7 @@ cookie=~/.var/cookie.$id.txt
     done
     exit
 }
+
 scp "$(< $urlfile)" $sqlfile
+[ -s $sqlfile ] || { echo "Download failed $sqlfile"; exit; }
 conv-cookie $sqlfile > $cookie
