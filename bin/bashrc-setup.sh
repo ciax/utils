@@ -5,7 +5,7 @@ setup(){
     local line=". ~/bin/rc.$2 #initrc"
     grep -q "$line" "$file" && return
     local tmp=~/.var/tmpfile
-    grep -v "$line" "$file" > "$tmp"
+    grep -v "#initrc" "$file" > "$tmp"
     mv "$tmp" "$file"
     echo "$line" >> "$file"
     echo "Update .$1"
