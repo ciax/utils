@@ -20,7 +20,7 @@ from host
     inner join subnet on host.subnet=subnet.id
     inner join domain on subnet.domain=domain.id
 where
-    host.resolv == 'hosts'
+    host.resolv == 'hosts' or (host.subnet != '$net' and host.resolv == 'dns')
 order by subnet.network,
       length(host.host_ip),
       host.host_ip
