@@ -8,7 +8,7 @@ site(){
     [ "$auth" -o "$proxy" ] && return
     eval "$(db-trace $host host)"
     echo "Host $1"
-    if [ "$assign" = "ddns" ]; then
+    if [ "$resolv" = "ddns" ]; then
         name=$(db-exec "select fdqn from ddns where host='$host';"|head -1)
     else
         name="$(search-ip $host)"
