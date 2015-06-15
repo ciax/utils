@@ -1,16 +1,16 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: append stdin to config file which is included in stdin as a comment
-#              and ignore existent line
-# Usage: cfg-append < cfgfile
-# Example: cfg-hosts | cfg-append
+# Description: Append STDIN to a file which is described as a comment in it.
+#              No overwrite if the line exists.
+# Usage: text-append < file
+# Example: cfg-hosts | text-append (STDIN indludes output file name "#/etc/hosts")
 #alias append
 . func.getpar
-_usage "<newcfg>"
+_usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#/" )
 file=${rem#*#}
-[ "$file" ] || _abort "No cfg file name"
+[ "$file" ] || _abort "No output file name"
 cat $file > $outfile
 while read line; do
     [ "$line" ] || continue
