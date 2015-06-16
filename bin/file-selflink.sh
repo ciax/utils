@@ -3,17 +3,22 @@
 # Description: make links to the specific dirs categorized by file type 
 # Desctiption: Files in cfg.*/ utils/ and current dirs will be classified into 'bin','db' ..
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
+#alias slink
 . func.link
 . func.temp
 _warn "File Self Registering"
 _temp linklist
-egrep -Hr "^[#;]link(\($DIST\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
+egrep -Hr "^[#;]link(\(($DIST|$HOSTNAME)\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
+exit
 while read spath dpath;do
     set - $(_abspath ${spath%:*})
     sdir=$1;src=$2
-    set - $(_abspath $dpath)
-    ddir=$1;dst=$2
-    [[ $src =~ \.(sh|pl|py|rb|awk|exp|js)$ ]] && ddir=~/bin
+    dst=$(basename $dpath)
+    if [[ $src =~ \.(sh|pl|py|rb|awk|exp|js)$ ]]; then
+        ddir=~/bin
+    else
+        ddir=$(eval "cd $(dirname $dpath)";pwd -P);
+    fi
     _mklink $sdir/$src $ddir ${dst:-$src}
 done < $linklist
 _showlink
