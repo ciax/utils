@@ -9,7 +9,8 @@ TEMPLIST=''
 _temp(){ # Make temp file [name] ..
     local trp="rm -f -- " tmp i
     for i ; do
-        tmp=$(mktemp) || _abort "Can't make mktemp"
+        local tmp=$(mktemp) || _abort "Can't make mktemp"
+        chmod 644 $tmp
         TEMPLIST="$TEMPLIST $tmp"
         eval "$i=$tmp"
     done
