@@ -9,7 +9,6 @@
 _warn "File Self Registering"
 _temp linklist
 egrep -Hr "^[#;]link(\(($DIST|$HOSTNAME)\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
-exit
 while read spath dpath;do
     set - $(_abspath ${spath%:*})
     sdir=$1;src=$2
