@@ -22,26 +22,25 @@ _abspath(){ # Show Abs file path
 _mklink(){ # Make links with abspath
     local src="$1";shift
     local dir="$1";shift
-    local dst="$1";shift
+    local file="$1";shift
+    local dst=$dir/$file
     local user=$(stat -c %U $dir)
     if [ -h $src ]; then
         echo $C1"Alert: $src is symbolic link"$C0
         return 1
-    elif [ -e $dir/$dst ] ; then
-	if [ -h $dir/$dst ]; then
-	    if [ "$src" = $(readlink $dir/$dst) ]; then
-		return 1
-	    else
-		echo $C3"Warning: link of $dir/$dst is different from $src"$C0
-	    fi
-	else
-	    sudo -u $user mv $dir/$dst $dir/$dst.org
-            echo $C3"Warning: Backup $dir/$dst with .org"$C0
-	fi
-    else
-	echo "NO $dir/$dst"
+    elif [ -e $dst ] ; then
+        if [ -h $dst ]; then
+            if [ "$src" = $(readlink $dst) ]; then
+                return 1
+            else
+                echo $C3"Warning: link of $dst is different from $src"$C0
+            fi
+        else
+            sudo -u $user mv $dst $dst.org
+            echo $C3"Warning: Backup $dst with .org"$C0
+        fi
     fi
-    sudo -u $user ln -sf $src $dir/$dst && LINKS[$dir]+=" $dst"
+    sudo -u $user ln -sf $src $dst && LINKS[$dir]+=" $file"
 }
 _showlink(){ # Show links created
     local dir
