@@ -27,12 +27,19 @@ _mklink(){ # Make links with abspath
     if [ -h $src ]; then
         echo $C1"Alert: $src is symbolic link"$C0
         return 1
-    elif [ -h $dir/$dst ]; then
-        [ "$src" = $(readlink $dir/$dst) ] && return 1
-        echo $C3"Warning: link of $dir/$dst is different from $src"$C0
     elif [ -e $dir/$dst ] ; then
-        sudo -u $user mv $dir/$dst $dir/$dst.org
-        echo $C3"Warning: Backup $dir/$dst with .org"$C0
+	if [ -h $dir/$dst ]; then
+	    if [ "$src" = $(readlink $dir/$dst) ]; then
+		return 1
+	    else
+		echo $C3"Warning: link of $dir/$dst is different from $src"$C0
+	    fi
+	else
+	    sudo -u $user mv $dir/$dst $dir/$dst.org
+            echo $C3"Warning: Backup $dir/$dst with .org"$C0
+	fi
+    else
+	echo "NO $dir/$dst"
     fi
     sudo -u $user ln -sf $src $dir/$dst && LINKS[$dir]+=" $dst"
 }
