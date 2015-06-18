@@ -8,16 +8,12 @@
 . func.temp
 _warn "File Self Registering"
 _temp linklist
-egrep -Hr "^[#;]link(\(($DIST|$HOSTNAME)\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
-while read spath dpath;do
-    set - $(_abspath ${spath%:*})
-    sdir=$1;src=$2
-    dst=$(basename $dpath)
+egrep -Hr "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
+while read spath dst;do
+    src=$(realpath ${spath%:*})
     if [[ $src =~ \.(sh|pl|py|rb|awk|exp|js)$ ]]; then
-        ddir=~/bin
-    else
-        ddir=$(eval "cd $(dirname $dpath)";pwd -P);
+        dst=~/bin/$(basename $dst)
     fi
-    _mklink $sdir/$src $ddir ${dst:-$src}
+    _mklink $src $dst
 done < $linklist
 _showlink

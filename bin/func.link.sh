@@ -18,13 +18,10 @@ _abspath(){ # Show Abs file path
         echo "$(pwd -P) ${apath##*/}"
     fi
 }
-# _mklink src dstdir dstfile
+# _mklink srcfile dstfile
 _mklink(){ # Make links with abspath
     local src="$1";shift
-    local dir="$1";shift
-    local file="$1";shift
-    local dst=$dir/$file
-    local user=$(stat -c %U $dir)
+    eval "dst=$1";shift #dst could include '~'
     if [ -h $src ]; then
         echo $C1"Alert: $src is symbolic link"$C0
         return 1
@@ -40,7 +37,9 @@ _mklink(){ # Make links with abspath
             echo $C3"Warning: Backup $dst with .org"$C0
         fi
     fi
-    sudo -u $user ln -sf $src $dst && LINKS[$dir]+=" $file"
+    local dir=$(_absdir $dst)
+    local user=$(stat -c %U $dir)
+    sudo -u $user ln -sf $src $dst && LINKS[$dir]+=" $(basename $dst)"
 }
 _showlink(){ # Show links created
     local dir
@@ -53,7 +52,7 @@ _setup(){ # Scripts register to ~/bin
     local i
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
-        _mklink "$(pwd -P)/$i" "$HOME/bin" "${i%.*}"
+        _mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
     done
 }
 _chkfunc $*
