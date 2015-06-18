@@ -40,7 +40,8 @@ git clone https://git.hub/ciax/cfg.(proj).git
  # Required scripts: *    <------- Script file list for dependency check
  #alias *                 <------- Alias name for the script file
  #link  *                 <------- Symbolic link name for the script file
- #link(DIST,..) *         <------- Link if distribution is matched
+ #link(DIST,..) *         <------- Link if distribution matches
+ #link(HOST,..) *         <------- Link if hostname matches
 
 ############### General information ################
 
