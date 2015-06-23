@@ -55,6 +55,7 @@ psg(){
 # General Commands
 alias update='git-update;db-update'
 alias mo='more'
+alias mroe='more'
 alias ls='ls -AF --color'
 alias v='ls -l'
 alias kilg='sudo killall -i -I -r'
