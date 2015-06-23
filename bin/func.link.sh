@@ -48,11 +48,14 @@ _showlink(){ # Show links created
     done
     unset LINKS[*]
 }
+_linkbin(){ # Scripts register to ~/bin
+    [ -d "$1" -o ! -e "$1" -o -h "$1" -o ! -x "$1" ] && return
+    _mklink "$(pwd -P)/$1" "$HOME/bin/${i%.*}"
+}
 _setup(){ # Scripts register to ~/bin
     local i
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
-        [ -d "$i" -o ! -e "$i" -o -h "$i" -o ! -x "$i" ] && continue
-        _mklink "$(pwd -P)/$i" "$HOME/bin/${i%.*}"
+        _linkbin $i
     done
 }
 _chkfunc $*
