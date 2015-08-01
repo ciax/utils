@@ -35,7 +35,9 @@ while read line;do
     read sheet gid <<< "${line//|/ }"
     _warn "Retrieving $sheet"
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
-    wget -q --progress=dot -O $dlfile "$url" && split_sheet $sheet
+    wget -q --progress=dot -O $dlfile "$url" || continue
+    nkf -d --in-place $dlfile
+    split_sheet $sheet
     [ -d $dldir ] || mkdir -p $dldir
     cp $dlfile ~/.var/download/$sheet.tsv
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")

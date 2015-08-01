@@ -3,7 +3,7 @@
 # Required scripts: func.getpar table-core
 # Description: generate sql statement for create table
 
-# CSV file rule:
+# TSV file rule:
 #  The file location:  ~/utils/db/db-(table name).tsv
 #  Field string format: !name(table:key)
 #    ! : if the field string has '!', it is 'primary key'.
