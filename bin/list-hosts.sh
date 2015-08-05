@@ -8,9 +8,11 @@ opt-d(){
 }
 subnet="${1:-$(net-name)}"
 _exe_opt
-db-exec <<EOF
+for net in $subnet; do
+    db-exec <<EOF
 select id from host where hub in (
-  select id from hub where subnet == '$subnet' $rstr
+  select id from hub where subnet == '$net' $rstr
 )
 ;
 EOF
+done
