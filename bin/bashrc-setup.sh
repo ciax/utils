@@ -2,6 +2,7 @@
 # Description: setup rc files
 setup(){
     local file=~/.$1
+    [ -e $file ] || touch $file
     local line=". ~/bin/rc.$2 #initrc"
     grep -q "$line" "$file" && return
     local tmp=~/.var/tmpfile
