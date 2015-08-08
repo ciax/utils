@@ -13,3 +13,8 @@
 # Command for Bluetooth
  hciconfig
  hcitool
+
+# Git remote branch removal
+ git branch -d xxx
+ git push origin :xxx
+ 
