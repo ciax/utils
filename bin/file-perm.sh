@@ -6,5 +6,5 @@
 _warn "Set File Permissions"
 shopt -s globstar
 for i in **/;do chmod 755 $i;done
-chmod 644 **/*.*
-chmod 755 **/*.{sh,rb,py,pl,exp}
+for i in **/*.*;do chmod 644 $i;done 
+for i in **/*.{sh,rb,py,pl,exp};do chmod 755 $i;done 
