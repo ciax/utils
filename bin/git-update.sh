@@ -1,11 +1,11 @@
 #!/bin/bash
-# Required scripts: git-dirs file-selflink
+# Required scripts: file-selflink
 # Description: update git repositories
 . func.msg
-dirs="$(git-dirs)"
-for i in $dirs;do
-    _warn "Git update for $i"
+for i in ~/*/.git;do
     pushd $i >/dev/null
+    cd ..
+    _warn "Git update for $PWD"
     git pull
     popd >/dev/null
 done
