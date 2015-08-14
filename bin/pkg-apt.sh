@@ -23,6 +23,8 @@ case "$cmd" in
         ;;
     upg) #upgrade packages
         sudo -i apt-get upgrade -y
+        ;;
+    dist) #upgrade distribution
         sudo -i apt-get dist-upgrade -y
         ;;
     list) #list installed packages
