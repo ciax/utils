@@ -20,6 +20,7 @@ alias gir='git checkout -f'
 alias girr='git reset --hard HEAD~;git log -1|cat'
 alias gis='git branch -a;git log -1|cat;git status'
 alias giu='git checkout'
+alias gip='git remote prune origin'
 
 # For package admin
 alias pks='pkg search'
