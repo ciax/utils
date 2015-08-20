@@ -10,7 +10,9 @@ eval "$(info-date2sec ${1:-0})"
 # Make URL and DL file name
 site="https://maps.google.com/locationhistory/b/0/kml"
 url="$site?startTime=${sec}000&endTime=$(( sec + 86400 ))000" # 1day=86400sec
-outfile=~/.var/history-$tag-$date.kml
+dir=${STORE:-~/.var}
+[ -d $dir/location ] || mkdir $dir/location
+outfile=$dir/location/history-$tag-$date.kml
 # Check cookie
 cookie=~/.var/cookie.$tag.txt
 [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
