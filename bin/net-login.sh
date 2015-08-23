@@ -20,6 +20,7 @@ crypt-init
 [[ "$password" == jA0EA* ]] && password=$(crypt-de <<< "$password")
 [ "$1" ] && rcmd="$*"
 if [ "$host" ]; then
+    # For SSH password login
     _warn "Found in DB"
     batch="-o BatchMode=yes"
     [ "$port" ] && sshopt="$sshopt -p $port"
@@ -35,8 +36,12 @@ if [ "$host" ]; then
     echo "interact" >> $expfile
     expect $expfile
 elif usr=$(cut -d' ' -f3 ~/.ssh/authorized_keys|tr , $'\n'|grep "@$id$"); then
+    # For SSH public key login
     _warn "Found in Authrizedkeys"
     ssh $usr
+elif type "login-$id"; then
+    # For host which has specific login command file
+    login-$id
 else
     _warn "telnet $id"
     telnet $id
