@@ -13,7 +13,7 @@ site="https://www.google.com/maps/timeline"
 url="$site?authuser=0&$time"
 dir=${STORE:-~/.var}
 [ -d $dir/location ] || mkdir $dir/location
-outfile=$dir/location/history-$tag-$date.kml
+outfile=$dir/location/history-$tag-$date.html
 # Check cookie
 cookie=~/.var/cookie.$tag.txt
 [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
