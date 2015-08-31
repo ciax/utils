@@ -8,8 +8,11 @@
 tag=$1;shift
 eval "$(info-date ${1:-0})"
 # Make URL and DL file name
-site="https://maps.google.com/locationhistory/b/0/kml"
-url="$site?startTime=${sec}000&endTime=$(( sec + 86400 ))000" # 1day=86400sec
+#site="https://maps.google.com/locationhistory/b/0/kml"
+#url="$site?startTime=${sec}000&endTime=$(( sec + 86400 ))000" # 1day=86400sec
+site="https://www.google.com/maps/timeline/kml"
+opt="authuser=0&pb=!1m8!1m3${gdate}!2m3$gdate"
+url="$site?$opt"
 dir=${STORE:-~/.var}
 [ -d $dir/location ] || mkdir $dir/location
 outfile=$dir/location/history-$tag-$date.kml
@@ -26,6 +29,7 @@ done
 # Check user_agent
 [ -s $user_agent ]|| { echo "No user agent file" 1>&2; exit; }
 # Get file
+echo "Getting: $url"
 curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
 
 
