@@ -1,12 +1,12 @@
 #!/bin/bash
 # Required packages: sqlite3 curl
-# Required scripts: info-date2sec conv-cookie
+# Required scripts: info-date conv-cookie
 # Get KML by Firefox (Need firefox)
 # Darwin is Mac OS-X
 #alias kml
 [ "$1" ]||{ echo "Usage: dl-timeline [tag] ((month/)day|-day)"; exit; }
 tag=$1;shift
-eval "$(info-date2sec ${1:-0})"
+eval "$(info-date ${1:-0})"
 # Make URL and DL file name
 time="startTime=${sec}000&endTime=$(( sec + 86400 ))000" # 1day=86400sec
 site="https://www.google.com/maps/timeline"
