@@ -48,6 +48,7 @@ eg(){
 }
 # Search process
 psg(){
-    ps -ef|grep -i ${1:-.}
+    cmd="grep -i ${1:-.}"
+    ps -ef|$cmd|grep -v "$cmd"
 }
 self-alias
