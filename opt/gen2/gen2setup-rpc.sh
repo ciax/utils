@@ -15,8 +15,9 @@ setdef(){
     echo 'OPTIONS="-w -i"' |sudo tee $default
 }
 
-if ps -ef|grep -v grep|grep rpcbind; then
+if ps -ef|grep -v grep|grep -q rpcbind; then
     echo "rpcbind is running"
 else
-    echo "rpcbind is not running"
+    echo "rpcbind is not running, exit"
+    exit 1
 fi
