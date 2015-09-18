@@ -7,7 +7,7 @@ complete -r
 # Set environment for login
 # For PATH setting without duplication
 addpath(){
-    local key=$1;shift
+    local key=$1 list j;shift
     IFS=': '
     for j in $* ${!key}; do
         [ -d "$j" ] && [[ ! "$list" =~ (^|:)$j: ]] && list+="$j:"

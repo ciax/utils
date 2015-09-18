@@ -2,6 +2,7 @@
 ### Set func for human interface
 # Generate alias by pick up '#alias XXX' line from each files
 self-alias(){
+    local head name par
     grep '^#alias' ~/bin/* > ~/.var/tempfile
     while read head name par; do
         eval "alias $name='${head%:*}${par:+ $par}'"
@@ -10,7 +11,7 @@ self-alias(){
 }
 # Edit this file and update alias/func
 ae(){
-    file=rc.bash.alias.sh
+    local file=rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
@@ -48,7 +49,7 @@ eg(){
 }
 # Search process
 psg(){
-    cmd="grep -i ${1:-.}"
+    local cmd="grep -i ${1:-.}"
     ps -ef|$cmd|grep -v "$cmd"
 }
 self-alias
