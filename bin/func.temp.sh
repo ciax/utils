@@ -27,7 +27,7 @@ _fuser(){ # Show file/parent dir's owner [path]
 }
 
 # Usage: _overwrite 
-_overwrite(){ # Overwrite if these are different. [dst_file] <src_file>
+_overwrite(){ # Overwrite if these are different. [dst_file] <src_file>, return 1 if no changes
     local dstfile=$1 srcfile=$2 user dir
     [ "$dstfile" ] || _abort "No dst_file"
     if [ ! -t 0 ] ; then

@@ -50,5 +50,5 @@ if [ -e "$oldfn" ] ; then
         _query && git mv $oldfn $newfn
     fi
 fi
-file-clean ~/bin
-file-selflink
+file-register .
+
