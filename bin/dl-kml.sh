@@ -31,5 +31,7 @@ done
 # Get file
 echo "Getting: $url"
 curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
-
+if [ -e $outfile ] ; then
+    echo "Downloaded $outfile"
+fi
 
