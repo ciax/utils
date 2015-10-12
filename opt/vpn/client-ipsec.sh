@@ -4,7 +4,7 @@
 # Required scripts: func.getpar cfg-ipsec
 # Description: vpn client of ipsec
 . func.getpar
-opt-d(){ #disconnect
+xopt-d(){ #disconnect
     sudo vpnc-disconnect && echo "IPsec VPN Terminated"
     exit
 }
