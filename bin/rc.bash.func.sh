@@ -41,7 +41,7 @@ sb(){
 # Search alias/func
 ag(){
     alias|grep -i ${1:-.}
-    set|egrep "^[-_a-zA-Z]+\(\)"|grep -i ${1:-.}
+    set|egrep -v '^_'|egrep "^[-_a-zA-Z]+ \(\)"|grep -i ${1:-.}
 }
 # Search env/var
 eg(){
