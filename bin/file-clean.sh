@@ -20,7 +20,7 @@ _nolink(){
     for i ; do
         [ -L "$i" -a ! -e "$i" ] || continue
         rm "$i"
-        _warn "[${i##*/}] is not linked"
+        _alert "[${i##*/}] is not linked"
     done
 }
 _clrdir(){
