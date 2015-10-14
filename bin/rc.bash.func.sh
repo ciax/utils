@@ -4,10 +4,14 @@
 self-alias(){
     local head name par
     grep '^#alias' ~/bin/* > ~/.var/tempfile
+    echo -n "Setting alias:"
     while read head name par; do
-        eval "alias $name='${head%:*}${par:+ $par}'"
+        cmd="alias $name='${head%:*}${par:+ $par}'"
+        dup=$(alias $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
+        eval $cmd && echo -n " $name"
     done < ~/.var/tempfile
     rm ~/.var/tempfile
+    echo
 }
 # Edit this file and update alias/func
 ae(){
@@ -52,4 +56,4 @@ psg(){
     local cmd="grep -i ${1:-.}"
     ps -ef|$cmd|grep -v "$cmd"
 }
-self-alias
+self-alias >/dev/null
