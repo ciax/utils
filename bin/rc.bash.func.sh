@@ -38,6 +38,12 @@ gr(){
         grep -irn "$*" *
     fi
 }
+grb(){
+    [ "$1" ] || return
+    local opt=rn
+    [[ "$1" =~ [A-Z] ]] || opt=i$opt
+    egrep -$opt "^ *[^#]*$*" *.rb
+}
 # Switch user
 sb(){
     sudo -s ${1:+-u $1}
