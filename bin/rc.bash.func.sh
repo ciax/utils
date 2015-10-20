@@ -29,16 +29,8 @@ reg(){
     file-register $*
     self-alias
 }
-# Grep recursive
+# Grep recursive for ruby
 gr(){
-    [ "$1" ] || return
-    if [[ "$1" =~ [A-Z] ]]; then
-        grep -rn "$*" *
-    else
-        grep -irn "$*" *
-    fi
-}
-grb(){
     [ "$1" ] || return
     local opt=rn
     [[ "$1" =~ [A-Z] ]] || opt=i$opt
