@@ -32,6 +32,7 @@ _clrdir(){
     fi
 }
 for i in ${*:-.};do
+    [[ $PWD =~ $HOME/ ]] || continue
     pushd $i >/dev/null
     _subdirs _clrdir
     popd >/dev/null
