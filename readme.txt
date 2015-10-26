@@ -43,6 +43,9 @@ git clone https://git.hub/ciax/cfg.(proj).git
  #link(DIST,..) *         <------- Link if distribution matches
  #link(HOST,..) *         <------- Link if hostname matches
 
+### Comment in generated text
+ #file /*/*/filename         <--- file name for generated text
+
 ############### General information ################
 
 ### rcfile priority (bash executes just one of them)
