@@ -33,13 +33,12 @@ _mklink(){ # Make links with abspath
                 echo $C3"Warning: link of $dst is different from $src"$C0
             fi
         else
-            sudo -u $user mv $dst $dst.org
+            mv $dst $dst.org
             echo $C3"Warning: Backup $dst with .org"$C0
         fi
     fi
     local dir=$(_absdir $dst)
-    local user=$(stat -c %U $dir)
-    sudo -u $user ln -sf $src $dst && LINKS[$dir]+=" $(basename $dst)"
+    ln -sf $src $dst && LINKS[$dir]+=" $(basename $dst)"
 }
 _showlink(){ # Show links created
     local dir

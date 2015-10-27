@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description : Export dir as link
 #alias lnw
-[ "$1" ] || { echo "Usage: ln-www [dir]"; exit 1; }
+[ "$1" ] || { echo "Usage: link-www [dir]"; exit 1; }
 dir=$1
 exp=/var/www/html/$dir
 if [ ! -d $dir ] ; then
