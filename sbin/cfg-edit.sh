@@ -1,8 +1,8 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: Comment out lines in original file and append new line which is listed in STDIN
+# Description: Remove comment lines in original file and append new line which is listed in STDIN
 #              No overwrite if the line exists in original file.
-# Usage: text-cmtout < file
+# Usage: cfg-rmcmt < listfile
 #alias cfgedit
 . func.getpar
 _usage "<input>"

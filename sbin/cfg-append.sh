@@ -2,7 +2,7 @@
 # Required scripts: func.getpar
 # Description: Append STDIN to an original file which is described as a comment in it.
 #              No overwrite if the line exists in original file.
-# Usage: text-append < file
+# Usage: cfg-append < file
 # Example: cfg-hosts | text-append (STDIN indludes output file name "#file /etc/hosts")
 #alias append
 . func.getpar
