@@ -13,7 +13,7 @@ _nouse(){
     local tsh=~/.trash
     [ -d $tsh ] || mkdir $tsh || _abort "Can't make $tsh"
     [ "$1" ] || return
-    sudo mv -fb "$@" $tsh
+    mv -fb "$@" $tsh
     ls -aF --color
 }
 _nolink(){
