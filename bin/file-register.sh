@@ -14,4 +14,4 @@ for i in ~/utils/bin $*;do
     fi
 done
 _showlink
-file-selflink
+link-self
