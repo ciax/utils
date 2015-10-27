@@ -13,9 +13,7 @@ usage(){
 proj=$1
 source ~/cfg.*/etc/$proj.wget 2> /dev/null || usage
 dir=~/.var/$proj
-exp=/var/www/html/$proj
 [ -d $dir ] || mkdir $dir
-[ -h $exp ] || sudo ln -sf $dir $exp
 cd $dir
 if [ "$index" ]; then
     wget -N $url/$index
