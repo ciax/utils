@@ -2,7 +2,6 @@
 # Required scripts: func.temp
 # Description: Mark '#' at the head of a line in authorized_keys to reserve for registration to the invalid_keys.
 . func.list
-. func.attr
 ATH=authorized_keys
 INV=invalid_keys
 SEC=~/.ssh/id_rsa
@@ -11,6 +10,17 @@ CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
 LINV=~/.ssh/$INV
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
+# Set permission [oct] [files..]
+_setp(){
+    local oct=$1 pm file;shift
+    for file; do
+        [ -e $file ] || continue
+        if [ $(stat -c%a $file) != "$oct" ]; then
+            chmod $oct $file
+            _warn "Permission for $file is changed to $oct"
+        fi
+    done
+}
 #link auth-mark
 _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
     #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
