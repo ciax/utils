@@ -3,6 +3,9 @@
 # Required tables: ssh(host,user,auth,port,proxy)
 # Description: generate ~/.ssh/config
 . func.getpar
+# Set to $HOME/.ssh
+xopt-s(){ $0 | cfg-install; }
+_usage
 site(){
     eval "$(db-trace $1 ssh)"
     [ "$auth" -o "$proxy" ] && return
@@ -19,7 +22,7 @@ site(){
     [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $proxy"
 }
 
-echo "#$HOME/.ssh/config"
+echo "#file $HOME/.ssh/config"
 echo "StrictHostKeyChecking no"
 for sid in $(db-list ssh);do
     (site $sid)
