@@ -5,9 +5,9 @@
 . func.getpar
 _usage "[file]"
 if [ -e "$1~" ] ; then
-    sudo /bin/mv "$1~" $1
+    mv "$1~" $1
 elif [ -e ~/.trash/$1 ]; then
-    sudo /bin/mv ~/.trash/$1 $1
+    mv ~/.trash/$1 $1
 else
     exit
 fi
