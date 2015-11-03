@@ -8,7 +8,8 @@ for i in ~/*/.git;do
     _warn "Git update for $PWD"
     git remote update -p origin
     git pull
+    dir="$dir $PWD"
     popd >/dev/null
 done
-file-register $dirs
+file-register $dir
 bashrc-setup
