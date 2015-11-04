@@ -3,11 +3,12 @@
 # Description: lantronix configulator
 # use nc for input to lantronix (i.e. ltcfg id | nc host 23)
 . func.getpar
-opt-r(){ : ;}
-_usage "[id] (range)" < <(db-exec "select distinct host from lantronix;")
+_login(){ echo "s";echo "su";echo "system"; }
+_reboot(){ echo "initialize server delay 0"; }
+xopt-r(){ _login; _reboot; }
+_usage "[id] (range)" $(db-exec "select distinct host from lantronix;")
 IFS='|'
-echo "s";echo "su";echo "system"
-_exe_opt || {
+_login
 while read port protocol; do
     for i in $2; do
         [ "${i%-*}" -le "$port" -a "${i#*-}" -ge "$port" ] && break
@@ -24,5 +25,4 @@ while read port protocol; do
     echo "define service rs_$port port $port en"
     echo "define port $port dedicated service rs_$port"
 done < <(db-exec "select port,protocol from lantronix where host == '$1';")
-}
-echo "initialize server delay 0"
+_reboot
