@@ -2,6 +2,7 @@
 # Required scripts: func.getpar db-exec
 # Description: lantronix configulator
 # use nc for input to lantronix (i.e. ltcfg id | nc host 23)
+#alias ltcfg
 . func.getpar
 _login(){ echo "s";echo "su";echo "system"; }
 _reboot(){ echo "initialize server delay 0"; }
