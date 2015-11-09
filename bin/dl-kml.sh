@@ -33,5 +33,8 @@ echo "Getting: $url"
 curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
 if [ -e $outfile ] ; then
     echo "Downloaded $outfile"
+else
+    dl-cookie $tag
+    curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
 fi
 
