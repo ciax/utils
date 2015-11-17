@@ -1,5 +1,6 @@
 #!/bin/bash
 ### Set alias for human interface
+unalias -a
 # General Commands
 alias update='git-update;db-update'
 alias mo='more'
