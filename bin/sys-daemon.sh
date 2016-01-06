@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar
+# Required scripts: func.getpar, git-tag
 # Description: run daemon
 #alias daemon
 . func.getpar
@@ -48,4 +48,5 @@ done < <(eval $check)
 $exit
 echo -n "  Starting "
 try "($exe)" 3
-git tag -afm "[$tag] at $(hostname) / $(date)" "run@$(date +%y%m%d)" >/dev/null 2>&1
+git-tag run
+
