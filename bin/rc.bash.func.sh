@@ -32,9 +32,10 @@ reg(){
 # Grep recursive for ruby
 gr(){
     [ "$1" ] || return
-    local opt=rn
-    [[ "$1" =~ [A-Z] ]] || opt=i$opt
-    egrep -$opt "^ *[^#]*$*" *.rb
+    local reg="$1"
+    [[ "$reg" =~ [A-Z] ]] || opt=-i
+    shift
+    egrep -vrn "^ *#" ${*:-*.rb}|egrep $opt ":.*($reg)"|egrep --color $opt "$reg"
 }
 # Switch user
 sb(){
