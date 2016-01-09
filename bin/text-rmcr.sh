@@ -6,6 +6,6 @@
 _usage "[files]"
 _temp temp
 for i; do
-    sed -e 's/\r\n/\n/' -e '/\r/d' $i > $temp
+    tr -d $'\r' < $i > $temp
     _overwrite $i < $temp
 done
