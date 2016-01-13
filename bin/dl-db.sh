@@ -33,8 +33,8 @@ key=$(db-exec "select key from gdocs where id == '$1';")
 dldir=~/.var/download
 while read line;do
     read sheet gid <<< "${line//|/ }"
-    _warn "Retrieving $sheet"
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
+    _warn "Retrieving $sheet($url)"
     wget -q --progress=dot -O $dlfile "$url" || continue
     nkf -d --in-place $dlfile
     split_sheet $sheet

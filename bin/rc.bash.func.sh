@@ -14,7 +14,7 @@ self-alias(){
     echo
 }
 # Edit this file and update alias/func
-ae(){
+edit-alias(){
     local file=rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
@@ -23,6 +23,12 @@ ae(){
     source $file
     unset file
     popd >/dev/null
+}
+# Edit functions
+edit-func(){
+    local file=rc.bash.func.sh
+    emacs $file
+    source $file
 }
 # File registration
 reg(){
@@ -35,7 +41,8 @@ gr(){
     local reg="$1"
     [[ "$reg" =~ [A-Z] ]] || opt=-i
     shift
-    egrep -vrn "^ *#" ${*:-*.rb}|egrep $opt ":.*($reg)"|egrep --color $opt "$reg"
+    local files="${*:-*.rb}"
+    egrep -vrn "^ *#" ${files:-*} |egrep $opt ":.*($reg)"|egrep --color $opt "$reg"
 }
 # Switch user
 sb(){
