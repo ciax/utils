@@ -1,1 +1,1 @@
-!id	host	user	auth	port	proxy	rcmd
+!id	*host	user	*auth	port	*proxy	rcmd
