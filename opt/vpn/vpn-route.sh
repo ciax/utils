@@ -5,7 +5,7 @@
 . func.getpar
 mode="add"
 opt-r(){ mode="del"; } #remove
-_usage "[vpnhost]" < <(db-list vpn)
+_usage "[vpnhost]" $(db-list vpn)
 _exe_opt
 db-exec <<EOF
 select

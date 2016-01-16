@@ -10,7 +10,7 @@ xopt-d(){ #disconnect
 }
 
 PATH+=:/usr/sbin
-_usage "[vpnhost]" < <(db-list vpn)
+_usage "[vpnhost]" $(db-list vpn)
 _exe_opt
 _temp cfgfile
 cfg-ipsec $* > $cfgfile

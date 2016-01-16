@@ -4,9 +4,9 @@
 # Description: generate dnsmasq config
 # Usage: cfg-dnsmasq (subnet) > /etc/dnsmasq.conf
 . func.getpar
-_usage "(subnet)" < <(db-list subnet)
-echo "#/etc/dnsmasq.conf"
+_usage "(subnet)" $(db-list subnet)
 net=${1:-$(net-name)}
+echo "#/etc/dnsmasq.conf"
 db-exec <<EOF
 select
   'dhcp-host='||mac.id||','||host.id

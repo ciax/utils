@@ -4,9 +4,9 @@
 # Description: generate bootp config
 # Usage: cfg-bootp (subnet) > /etc/bootptab
 . func.getpar
-_usage "(subnet)" < <(db-list subnet)
-echo "#/etc/bootptab"
+_usage "(subnet)" $(db-list subnet)
 net=${1:-$(net-name)}
+echo "#/etc/bootptab"
 db-exec <<EOF
 select
   host.id||':ha='||replace(mac.id,':','')
