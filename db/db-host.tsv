@@ -1,1 +1,1 @@
-!id	*subnet	host_ip	*resolv	*assign	*hub	alive	description
+!id	*subnet	*assign	*resolv	*hub	host_ip	alive	description

@@ -25,7 +25,7 @@ if [ ! -e $dstfile ] ; then
 elif sudo cmp -s $srcfile $dstfile ; then
     rm $srcfile
     _warn "No changes on $dstfile"
-    return 1
+    exit 1
 else
     user=$(_fuser $dstfile)
     _verbose "file diff" && diff $dstfile $srcfile 1>&2
