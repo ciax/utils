@@ -44,10 +44,6 @@ gr(){
     local files="${*:-*.rb}"
     egrep -vrn "^ *#" ${files:-*} |egrep $opt ":.*($reg)"|egrep --color $opt "$reg"
 }
-# Switch user
-sb(){
-    sudo -i ${1:+-u $1}
-}
 # Search alias/func
 ag(){
     alias|grep -i ${1:-.}
@@ -62,4 +58,17 @@ psg(){
     local cmd="grep -i ${1:-.}"
     ps -ef|$cmd|grep -v "$cmd"
 }
+# Switch user
+sb(){
+    sudo -i ${1:+-u $1}
+}
+# Switch user by name
+user_alias(){
+    pushd /home
+    for i in *; do
+        alias $i="sudo -iu $i"
+    done
+    popd
+}
 self-alias >/dev/null
+user_alias >/dev/null
