@@ -46,7 +46,7 @@ gr(){
 }
 # Switch user
 sb(){
-    sudo -s ${1:+-u $1}
+    sudo -i ${1:+-u $1}
 }
 # Search alias/func
 ag(){
