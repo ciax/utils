@@ -4,6 +4,29 @@
 # Get KML by Firefox (Need firefox)
 # Darwin is Mac OS-X
 #alias kml
+dl_url(){
+    curl -v -c $jar -b $gcookie -A "$(<$user_agent)" -o $outfile $url
+}
+mk_cookie(){
+    # Check cookie
+    cookie=~/.var/cookie.$tag.txt
+    [ -s $cookie ] || dl-cookie $tag
+    [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
+    gcookie=~/.var/google.$tag.txt
+    grep ' / ' $cookie|egrep '^.google.com' > $gcookie
+    grep SID $gcookie > /dev/null 2>&1 || { echo "No SID in cookie file" 1>&2; exit; }
+}
+mk_uagent(){
+    user_agent=~/.var/user_agent.txt
+    for file in ~/cfg.*/etc/user_agent.$tag.txt; do
+        if [ -s $file ]; then
+            ln -sf $file $user_agent
+            break
+        fi
+    done
+    # Check user_agent
+    [ -s $user_agent ]|| { echo "No user agent file" 1>&2; exit; }
+}
 [ "$1" ]||{ echo "Usage: dl-kml [tag] ((month/)day|-day)"; exit; }
 tag=$1;shift
 eval "$(info-date ${1:-0})"
@@ -16,25 +39,16 @@ url="$site?$opt"
 dir=${STORE:-~/.var}
 [ -d $dir/location ] || mkdir $dir/location
 outfile=$dir/location/history-$tag-$date.kml
-# Check cookie
-cookie=~/.var/cookie.$tag.txt
-[ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
-user_agent=~/.var/user_agent.txt
-for file in ~/cfg.*/etc/user_agent.$tag.txt; do
-    if [ -s $file ]; then
-        ln -sf $file $user_agent
-        break
-    fi
-done
-# Check user_agent
-[ -s $user_agent ]|| { echo "No user agent file" 1>&2; exit; }
+jar=~/.var/cookie_jar.$tag.txt
+mk_uagent
+mk_cookie
 # Get file
 echo "Getting: $url"
-curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
+dl_url
 if [ -e $outfile ] ; then
     echo "Downloaded $outfile"
 else
     dl-cookie $tag
-    curl -b $cookie -A "$(<$user_agent)" -o $outfile $url
+    mk_cookie
+    dl_url
 fi
-
