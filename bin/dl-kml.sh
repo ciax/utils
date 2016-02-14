@@ -5,7 +5,7 @@
 # Darwin is Mac OS-X
 #alias kml
 dl_url(){
-    curl -v -c $jar -b $gcookie -A "$(<$user_agent)" -o $outfile $url
+    curl -c $jar -b $gcookie -A "$(<$user_agent)" -o $outfile $url
 }
 mk_cookie(){
     # Check cookie
@@ -13,7 +13,7 @@ mk_cookie(){
     [ -s $cookie ] || dl-cookie $tag
     [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
     gcookie=~/.var/google.$tag.txt
-    grep ' / ' $cookie|egrep '^.google.com' > $gcookie
+    grep $'\t'/$'\t' $cookie|egrep '^.google.com' > $gcookie
     grep SID $gcookie > /dev/null 2>&1 || { echo "No SID in cookie file" 1>&2; exit; }
 }
 mk_uagent(){
