@@ -5,7 +5,15 @@
 # Darwin is Mac OS-X
 #alias kml
 dl_url(){
-    curl -c $jar -b $gcookie -A "$(<$user_agent)" -o $outfile $url
+    curl -c $jar -b $gcookie -A "$(<$user_agent)" -o $tmpfile $url
+    [ -s $tmpfile ] || { echo "Failed"; return; }
+    if [ -s $outfile ]; then
+        set - $( stat -c%s $tmpfile $outfile)
+        [ $1 -gt $2 ] || { echo "No cange"; exit; }
+    fi
+    mv $tmpfile $outfile
+    echo "Downloaded $outfile"
+    exit
 }
 mk_cookie(){
     # Check cookie
@@ -39,16 +47,13 @@ url="$site?$opt"
 dir=${STORE:-~/.var}
 [ -d $dir/location ] || mkdir $dir/location
 outfile=$dir/location/history-$tag-$date.kml
+tmpfile=~/.var/temp-$date.kml
 jar=~/.var/cookie_jar.$tag.txt
 mk_uagent
 mk_cookie
 # Get file
 echo "Getting: $url"
 dl_url
-if [ -e $outfile ] ; then
-    echo "Downloaded $outfile"
-else
-    dl-cookie $tag
-    mk_cookie
-    dl_url
-fi
+rm $cookie
+mk_cookie
+dl_url
