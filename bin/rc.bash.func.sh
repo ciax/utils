@@ -62,13 +62,12 @@ psg(){
 sb(){
     sudo -i ${1:+-u $1}
 }
-# Switch user by name
+# Switch user by name (GID = 100)
 user_alias(){
-    pushd /home
-    for i in *; do
+    for l in $(cut -d: -f1,4 /etc/passwd|grep ':100$'); do
+        i=${l%:*}
         alias $i="sudo -iu $i"
     done
-    popd
 }
 self-alias >/dev/null
 user_alias >/dev/null
