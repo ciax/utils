@@ -12,4 +12,3 @@ for i in ~/*/.git;do
     popd >/dev/null
 done
 file-register $dir
-bashrc-setup
