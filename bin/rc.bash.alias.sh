@@ -7,8 +7,10 @@ alias mo='more'
 alias mroe='more'
 alias ls='ls -AF --color'
 alias v='ls -l'
+alias r='rubocop -a'
 alias kilg='sudo killall -i -I -r'
-alias bogo='dmesg|grep Bogo'
+alias bogo='grep bogomips /proc/cpuinfo'
+alias ae='edit-alias'
 
 # For GIT
 alias gia='git add . */'

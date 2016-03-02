@@ -23,6 +23,7 @@ edit-alias(){
     source $file
     unset file
     popd >/dev/null
+    self-alias
 }
 # Edit functions
 edit-func(){
