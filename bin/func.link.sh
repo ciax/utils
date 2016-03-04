@@ -3,7 +3,7 @@
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
 . ~/utils/bin/func.msg.sh
-declare -gA LINKS
+# declare -gA LINKS # for Bash 4 or later
 _absdir(){ # Show Abs Dir
     local dir="${1%/*}"
     [ -d "$dir" ] || mkdir -p "$dir"
@@ -38,14 +38,24 @@ _mklink(){ # Make links with abspath
         fi
     fi
     local dir=$(_absdir $dst)
-    ln -sf $src $dst && LINKS[$dir]+=" $(basename $dst)"
+    ln -sf $src $dst && _addlink $dir $(basename $dst)
+}
+_addlink(){
+    eval "LINKS${1//\//_}+=' $2'"
+    #LINKS[$1]+=" $2" # For Bash 4 or later
 }
 _showlink(){ # Show links created
-    local dir
-    for dir in ${!LINKS[*]}; do
-        echo "[${LINKS[$dir]} ] -> $C1$dir$C0"
+    local dir links
+    for links in ${!LINKS_*};do
+        dir=${links#LINKS}
+        echo "[${!links} ] -> $C1${dir//_/\/}$C0"
+        unset $links
     done
-    unset LINKS[*]
+    # For Bash 4 or later
+    # for dir in ${!LINKS[*]}; do
+    #     echo "[${LINKS[$dir]} ] -> $C1$dir$C0"
+    # done
+    # unset LINKS[*]
 }
 _linkbin(){ # Scripts register to ~/bin
     [ -d "$1" -o ! -e "$1" -o -h "$1" -o ! -x "$1" ] && return
