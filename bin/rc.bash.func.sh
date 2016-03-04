@@ -1,7 +1,7 @@
 #!/bin/bash
 ### Set func for human interface
 # Generate alias by pick up '#alias XXX' line from each files
-self-alias(){
+self_alias(){
     local head name par
     grep '^#alias' ~/bin/* > ~/.var/tempfile
     echo -n "Setting alias:"
@@ -14,7 +14,7 @@ self-alias(){
     echo
 }
 # Edit this file and update alias/func
-edit-alias(){
+edit_alias(){
     local file=rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
@@ -23,10 +23,10 @@ edit-alias(){
     source $file
     unset file
     popd >/dev/null
-    self-alias
+    self_alias
 }
 # Edit functions
-edit-func(){
+edit_func(){
     local file=rc.bash.func.sh
     emacs $file
     source $file
@@ -34,7 +34,7 @@ edit-func(){
 # File registration
 reg(){
     file-register $*
-    self-alias
+    self_alias
 }
 # Grep recursive for ruby
 gr(){
@@ -70,5 +70,5 @@ user_alias(){
         alias $i="sudo -iu $i"
     done
 }
-self-alias >/dev/null
+self_alias >/dev/null
 user_alias >/dev/null
