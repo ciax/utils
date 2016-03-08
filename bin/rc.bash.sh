@@ -5,26 +5,26 @@ umask 022
 shopt -s nullglob
 complete -r
 # Set environment for login
-# For PATH setting without duplication
-addpath(){
-    local key=$1 list j;shift
-    IFS=': '
-    for j in $* ${!key}; do
-        [ -d "$j" ] && [[ ! "$list" =~ (^|:)$j: ]] && list+="$j:"
+# Remove duplicated env var
+uniqenv(){
+    local i j list
+    for i; do
+        list=$(IFS=:; for j in ${!i}; do echo $j;done|awk -v ORS=: '!x[$0]++')
+        eval "$i=${list%:}"
     done
-    unset IFS
-    eval "export $key=${list%:}"
 }
-addpath PATH {~,/opt,/usr{/local,},}/{lib,sbin,bin}
+for i in {~,/opt,/usr{/local,},}/{lib,sbin,bin}; do
+    pushd $i >/dev/null 2>&1 && PATH=$PATH:$PWD && popd >/dev/null
+done
 # Other Environments
 GREP_OPTIONS='--color=auto'
 # PROMPT
-PS1="\[\033[01;31m\][$SHLVL]\[\033[00m\]$PS1"
+i="\[\033[01;31m\][$SHLVL]\[\033[00m\]"
+PS1=$i${PS1//"$i"/}
 # SET Dist
-os=$(info-os)
-export DIST=${os#*/}
+i=$(info-os)
+export DIST=${i#*/}
 # Boot strap
-shopt -s nullglob
-for i in ~/bin/rc.bash.*;do
-    source $i
-done
+for i in ~/bin/rc.bash.*;do . $i;done
+uniqenv PATH RUBYLIB
+unset i
