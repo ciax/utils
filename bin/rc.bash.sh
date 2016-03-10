@@ -6,6 +6,11 @@ shopt -s nullglob
 complete -r
 # Set environment for login
 # Remove duplicated env var
+addpath(){
+    for i ; do
+        pushd $i >/dev/null 2>&1 && PATH=$PATH:$PWD && popd >/dev/null
+    done
+}
 uniqenv(){
     local i j list
     for i; do
@@ -13,9 +18,7 @@ uniqenv(){
         eval "$i=${list%:}"
     done
 }
-for i in {~,/opt,/usr{/local,},}/{lib,sbin,bin}; do
-    pushd $i >/dev/null 2>&1 && PATH=$PATH:$PWD && popd >/dev/null
-done
+addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin}
 # Other Environments
 GREP_OPTIONS='--color=auto'
 # PROMPT
