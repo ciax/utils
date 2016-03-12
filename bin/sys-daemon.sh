@@ -25,8 +25,9 @@ opt-t(){ tag=$1; } #=tag:set tag
 # main
 _usage "[cmd]"
 _exe_opt
-type $1 >/dev/null 2>&1 || _abort "No such command [$1]"
-cd $(dirname $1)
+cmd=$1
+type $cmd >/dev/null 2>&1 || _abort "No such command [$cmd]"
+cd $(dirname $cmd)
 line="setsid $* </dev/null 2>&1 "
 logging="setsid logger -p user.err -t '${tag:=$line}' >/dev/null"
 check="ps -eo pid,args|egrep -v 'grep|$0'|grep '$line\$'"
@@ -47,6 +48,4 @@ while read pid cmd ; do
 done < <(eval $check)
 $exit
 echo -n "  Starting "
-try "($exe)" 3
-git-tag run
-
+try "($exe)" 3 && ~/bin/git-tag run
