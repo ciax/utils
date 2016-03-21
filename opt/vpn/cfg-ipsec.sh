@@ -7,7 +7,8 @@ _usage "[vpn] (pw)" $(db-list vpn)
 vid=$1;shift
 eval "$(db-trace $vid vpn)"
 [ "$id" ] || _abort "No such id"
-echo "IPSec gateway $(search-ip $host)"
+eval "$(db-trace $ddns ddns)"
+echo "IPSec gateway $ip"
 echo "IPSec ID $user"
 echo "IPSec secret $(search-auth $auth)"
 #Uncomment line below for ver.5.3 usage
