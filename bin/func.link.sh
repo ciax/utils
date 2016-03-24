@@ -32,6 +32,9 @@ _mklink(){ # Make links with abspath
             else
                 echo $C3"Warning: link of $dst is different from $src"$C0
             fi
+        elif [ -d $dst ] ; then
+            echo $C1"Alert: $dst must not directory"$C0
+            return 1
         else
             mv $dst $dst.org
             echo $C3"Warning: Backup $dst with .org"$C0

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: xmllint
+# Required packages: libxml2-utils
 # Required scripts: func.getpar
 # Description: Overwrite if these are different.
 #alias fmt
