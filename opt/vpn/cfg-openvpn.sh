@@ -10,9 +10,9 @@ _usage "[vpnhost]" $(db-list vpn)
 vardir=$HOME/.var
 ssldir=$vardir/ssl
 myhost=`hostname`
-eval "$(db-trace $1 vpn)"
-static_ip="$(search-ip $host)"
-[ "$static_ip" ] || _abort "No such host in DB"
+eval "$(db-trace $1 vpn ddns)"
+dst="${fdqn:-$ip}"
+[ "$dst" ] || _abort "No such host in DB"
 cat <<EOF
 verb 3
 script-security 2
@@ -27,7 +27,7 @@ persist-tun
 float
 daemon
 keepalive 15 60
-remote $static_ip 1194
+remote $dst 1194
 ca $ssldir/rootca.crt
 cert $ssldir/$myhost.crt
 key $ssldir/$myhost.key
