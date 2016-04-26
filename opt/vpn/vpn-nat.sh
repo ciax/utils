@@ -18,9 +18,10 @@ clrtbl(){
     echo "IP table cleared"
 }
 setnat(){
-    set - $(ifconfig|grep eth)
+    set - $(ifconfig|grep eth); out=$1
+    src=172.16.0.0/16
     sudo sysctl -w net.ipv4.ip_forward=1
-    sudo iptables -t nat -A POSTROUTING -o $1 -j MASQUERADE --modprobe=/sbin/modprobe
+    sudo iptables -t nat -A POSTROUTING -o $out -s $src -j MASQUERADE --modprobe=/sbin/modprobe
     echo "NAT setting done at $HOSTNAME($1)"
 }
 natstat(){
