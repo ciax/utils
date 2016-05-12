@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: emacs
+# Required packages: emacs mmm-mode
 # Required scripts: func.getpar
 # Description: edit file with emacs as its owner
 #alias e
