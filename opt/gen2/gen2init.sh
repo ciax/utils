@@ -1,5 +1,5 @@
 #!/bin/bash
-. gen2setup-rpc
-. gen2startupsvc
+. gen2init-rpc
+. gen2init-svc
 sleep 3
-. gen2prep4ciax
+. gen2init-ciax

@@ -19,5 +19,5 @@ else
     cd $HOME/gen2
     $bmsrv || { echo "Boot Manager Startup Error"; exit 1; }
     sleep 3
-    gen2setrunlevel
+    gen2init-runlevel
 fi

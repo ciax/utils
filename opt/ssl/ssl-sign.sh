@@ -1,9 +1,9 @@
 #!/bin/bash
 # Required scripts: func.ssl ssl-request
 ## SSL files (Server vs CA vs Client)
-##@ Server Site
+##@ Server Site (Site as a server)
 ##  csr(Signning Request file) -> Submit to CA
-##@ CA
+##@ CA (Certificate Authority) = Site of Issuing Certificate (Derived)
 ## csr -> (Convert with ca.key) -> crt(Certificate) -> Send back to Server
 . func.ssl
 . func.getpar
