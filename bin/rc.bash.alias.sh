@@ -11,7 +11,6 @@ alias r='rubocop -a'
 alias kilg='sudo killall -i -I -r'
 alias bogo='grep bogomips /proc/cpuinfo'
 alias ae='edit_alias'
-alias js='fixjsstyle *.js'
 
 # For GIT
 alias gia='git add . */'
