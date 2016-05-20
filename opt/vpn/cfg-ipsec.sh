@@ -13,10 +13,11 @@ echo "IPSec ID $user"
 echo "IPSec secret $(search-auth $auth)"
 #Uncomment line below for ver.5.3 usage
 echo "Vendor netscreen"
-# IKE Authmode hybrid
+echo "IKE Authmode psk"
 echo "Xauth username $LOGNAME"
 echo "Xauth password $(search-auth $vid-$LOGNAME)"
 #Xauth password <password>
 set - $(route-ipsec $route)
 #echo "Target Networks $*"
 echo "Nat Traversal Mode natt"
+echo "local port 0"
