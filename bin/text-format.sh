@@ -9,7 +9,8 @@ _temp temp
 for file ;do
     ext=${file#*.}
     case $ext in
-        xml)
+        html|xml)
+            echo "Processing"
             xmllint --format $file > $temp
             _overwrite $file < $temp && _msg "Update $file"
             ;;

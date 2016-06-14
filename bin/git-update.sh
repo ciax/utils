@@ -2,9 +2,8 @@
 # Required scripts: file-selflink
 # Description: update git repositories
 . func.msg
-for i in ~/*/.git;do
+for i in ~/cfg.* ~/utils;do
     pushd $i >/dev/null
-    cd ..
     _warn "Git update for $PWD"
     git remote update -p origin
     git pull
