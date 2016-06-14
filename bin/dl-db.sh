@@ -42,7 +42,7 @@ while read line;do
     cp $dlfile ~/.var/download/$sheet.tsv
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
 db-update
-for d in ~/cfg.*;do
+for d in ~/cfg.* ~/utils/db;do
     cd $d
     file-clean
     git commit -a -m "expand gsheet and update db"
