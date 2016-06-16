@@ -40,8 +40,9 @@ reg(){
 }
 # Grep recursive for ruby
 gr(){
+    local opt;
     [ "$1" ] || return
-    while [[ "$1" =~ -* ]]; do
+    while [[ "$1" == -* ]]; do
         opt="$opt $1"
         shift
     done
