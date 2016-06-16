@@ -15,7 +15,7 @@ self_alias(){
 }
 # Edit this file and update alias/func
 edit_alias(){
-    local file=rc.bash.alias.sh
+    local file=~/utils/bin/rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
@@ -25,12 +25,14 @@ edit_alias(){
     popd >/dev/null
     self_alias
 }
+alias ea=edit_alias
 # Edit functions
 edit_func(){
-    local file=rc.bash.func.sh
+    local file=~/utils/bin/rc.bash.func.sh
     emacs $file
     source $file
 }
+alias ef=edit_func
 # File registration
 reg(){
     file-register $*
@@ -39,9 +41,12 @@ reg(){
 # Grep recursive for ruby
 gr(){
     [ "$1" ] || return
-    local reg="$1"
-    [[ "$reg" =~ [A-Z] ]] || opt=-i
-    shift
+    while [[ "$1" =~ -* ]]; do
+        opt="$opt $1"
+        shift
+    done
+    local reg="$1";shift
+    [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
     local files="${*:-*.rb}"
     egrep -vrn "^ *#" ${files:-*} |egrep $opt ":.*($reg)"|egrep --color $opt "$reg"
 }
