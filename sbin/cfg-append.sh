@@ -18,9 +18,9 @@ while read line; do
     echo "$line" >> $outfile
 done < <(egrep -v "^#" $infile)
 if cmp -s $outfile $orgfile ; then
+    _msg "No changes on $orgfile"
+else
     user=$(_fuser $orgfile)
     sudo install -o $user $outfile $orgfile
     _msg "Add to $orgfile"
-else
-    _msg "No changes on $orgfile"
 fi
