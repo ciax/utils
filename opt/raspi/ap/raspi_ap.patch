@@ -1,0 +1,37 @@
+diff -ur /etc/default/hostapd ./default/hostapd
+--- /etc/default/hostapd	2016-09-16 13:46:29.926700595 -1000
++++ ./default/hostapd	2016-09-16 13:05:52.818060930 -1000
+@@ -18,3 +18,4 @@
+ # configured by the init.d script and must not be added to DAEMON_OPTS.
+ #
+ #DAEMON_OPTS=""
++DAEMON_CONF="/etc/hostapd/hostapd.conf"
+diff -ur /etc/dhcpcd.conf ./dhcpcd.conf
+--- /etc/dhcpcd.conf	2016-09-16 13:46:30.606697425 -1000
++++ ./dhcpcd.conf	2016-09-16 12:10:30.523547469 -1000
+@@ -39,3 +39,7 @@
+ # A hook script is provided to lookup the hostname if not set by the DHCP
+ # server, but it should not be run by default.
+ nohook lookup-hostname
++
++# AP setting
++     denyinterfaces wlan0
++     
+diff -ur /etc/dnsmasq.conf ./dnsmasq.conf
+--- /etc/dnsmasq.conf	2015-05-04 23:17:08.000000000 -1000
++++ ./dnsmasq.conf	2016-09-16 13:45:01.807111356 -1000
+@@ -645,4 +645,12 @@
+ #conf-dir=/etc/dnsmasq.d,.bak
+ 
+ # Include all files in a directory which end in .conf
+-#conf-dir=/etc/dnsmasq.d/*.conf
+\ No newline at end of file
++#conf-dir=/etc/dnsmasq.d/*.conf
++
++interface=wlan0      # Use interface wlan0
++listen-address=172.16.30.1 # Explicitly specify the address to listen on
++bind-interfaces      # Bind to the interface to make sure we aren't sending things elsewhere
++server=8.8.8.8       # Forward DNS requests to Google DNS
++domain-needed        # Don't forward short names
++bogus-priv           # Never forward addresses in the non-routed address spaces.
++dhcp-range=172.16.30.50,172.16.30.150,12h # Assign IP addresses between 172.16.30.50 and 172.16.30.150 with a 12 hour lease time
