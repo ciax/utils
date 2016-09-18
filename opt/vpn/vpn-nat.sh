@@ -25,7 +25,7 @@ setnat(){
     echo "NAT setting done at $HOSTNAME($1)"
 }
 natstat(){
-    sudo iptables -t nat -L
+    sudo iptables -t nat -vL
 }
 _usage "[command]" $(_caselist)
 case "$1" in
