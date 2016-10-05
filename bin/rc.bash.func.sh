@@ -61,6 +61,7 @@ eg(){
 # Search process
 psg(){
     local cmd="grep -i ${1:-.}"
+    ps aux|head -1
     ps aux|$cmd|grep -v "$cmd"
 }
 # Switch user
