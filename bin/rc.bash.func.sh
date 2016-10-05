@@ -25,14 +25,12 @@ edit_alias(){
     popd >/dev/null
     self_alias
 }
-alias ea=edit_alias
 # Edit functions
 edit_func(){
     local file=~/utils/bin/rc.bash.func.sh
     emacs $file
     source $file
 }
-alias ef=edit_func
 # File registration
 reg(){
     file-register $*
@@ -63,7 +61,7 @@ eg(){
 # Search process
 psg(){
     local cmd="grep -i ${1:-.}"
-    ps -ef|$cmd|grep -v "$cmd"
+    ps aux|$cmd|grep -v "$cmd"
 }
 # Switch user
 sb(){

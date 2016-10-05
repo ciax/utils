@@ -10,7 +10,8 @@ alias v='ls -l'
 alias r='rubocop -a'
 alias kilg='sudo killall -i -I -r'
 alias bogo='grep bogomips /proc/cpuinfo'
-alias ae='edit_alias'
+alias ea=edit_alias
+alias ef=edit_func
 
 # For GIT
 alias gia='git add . */'
