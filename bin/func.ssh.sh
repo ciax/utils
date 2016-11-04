@@ -29,10 +29,11 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy s
     [ -f $ath -a -f $pub ] || _abort "No ssh files"
     local rsa mykey me key host
     read rsa mykey me < $pub
+    [ "$me" ]  || return
     while read rsa key host; do
         if [[ "$host" =~ "$me" ]] && [ "$mykey" != "$key" ] ; then
             echo "#$rsa $key $host"
-            _warn "Invalid keys are marked"
+            _warn "Invalid keys are marked for $host <=> $me"
         else
             echo "$rsa $key${host:+ $host}"
         fi
