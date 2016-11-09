@@ -37,7 +37,7 @@ else
     create_userpassfile
 fi
 
-#download_vpngate_csv
+download_vpngate_csv
 
 # Show Server List
 #cat $VPNGATE_CSV | cut -d ',' -f 1-10 | column -s, -t  | less -#2 -N -S
@@ -50,5 +50,7 @@ pidof openvpn > /dev/null ; if [ $? -eq 0 ]; then sudo killall openvpn ; sleep 5
 sudo rm -f $VPNGATE_CONF
 while read;do
     mkconf
-    exec sudo openvpn ${OPT_DAEMON} --config $VPNGATE_CONF --connect-retry-max 1
+    exec sudo openvpn --daemon --config $VPNGATE_CONF --connect-retry-max 1 && break
 done < $VPNGATE_CSV
+sudo iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+
