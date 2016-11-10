@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.link file-clean file-selflink
+# Required scripts: func.link file-clean link-self
 # Description: Script file registration to ~/bin
 . file-clean ~/bin
 . func.link
