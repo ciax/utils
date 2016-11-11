@@ -10,4 +10,3 @@ for i in ~/cfg.* ~/utils;do
     dir="$dir $PWD"
     popd >/dev/null
 done
-file-register $dir
