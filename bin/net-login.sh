@@ -9,6 +9,7 @@ _usage "[host] (command)"
 id=$1;shift
 if egrep -q "Host $id$" ~/.ssh/config; then
     _warn "Found in sshconfig"
+    _msg $(egrep -A3 "Host $id$" ~/.ssh/config|grep -v "Host ")
     ssh $id
     exit
 fi
@@ -23,10 +24,11 @@ if [ "$host" ]; then
     # For SSH password login
     _warn "Found in DB"
     batch="-o BatchMode=yes"
-    [ "$port" ] && sshopt="$sshopt -p $port"
-    ssharg="$sshopt ${user:+$user@}$host"
-    [ "$VER" ] && echo "ssh $ssharg $rcmd"
-    echo "ssh $batch $ssharg $rcmd"
+    uri="${user:+$user@}$host"
+    ssharg="$sshopt $uri"
+    [ "$port" ] && { sshopt="$sshopt -p $port"; uri="$uri:$port"; }
+    [ "$VER" ] && echo "ssh $batch $ssharg $rcmd"
+    _msg "$uri"
     ssh $batch $ssharg $rcmd && exit
     _temp expfile
     echo "set timeout 10" > $expfile
