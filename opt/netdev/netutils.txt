@@ -4,3 +4,4 @@
 - iptables
 - tc (Trafic control for QoS)
 - iperf (Throughput)
+- bmon (realtime bandwidth)

@@ -32,9 +32,12 @@ _clrdir(){
     fi
 }
 for i in ${*:-.};do
-    [[ $PWD =~ $HOME/ ]] || continue
-    pushd $i >/dev/null
-    _subdirs _clrdir
-    popd >/dev/null
+    if [[ $PWD =~ $HOME/ ]] ; then
+        pushd $i >/dev/null
+        _subdirs _clrdir
+        popd >/dev/null
+    else
+        _warn "Not under home dir"
+    fi
 done
 _warn "File Cleaning ($_dirlist)"
