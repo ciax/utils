@@ -14,7 +14,10 @@ NUM=3
 if [ ! -z $CMD ] ; then
     if [ $CMD == "update" ] ; then OPT_UPDATE=update ; fi
     if [ $CMD == "clean" ] ; then sudo rm $USER_VPNGATE $VPNGATE_CSV $VPNGATE_CONF; echo cleaned ; exit ; fi
-    if [ $CMD -gt 0 ] ; then NUM=$(( $NUM + $CMD)); fi
+    if [ $CMD -gt 0 ] ; then
+        NUM=$(( $NUM + $CMD));
+        echo "Takes $NUM lines or later"
+    fi
 fi
 
 
@@ -29,7 +32,14 @@ function download_vpngate_csv() {
 }
 
 mkconf(){
-    cut -d ',' -f 15 | base64 -d | sed -e "s/#auth-user-pass/auth-user-pass\ \/${USER_VPNGATE//\//\\\/}/g" | sudo tee $VPNGATE_CONF > /dev/null
+    head -1 $VPNGATE_CSV | cut -d ',' -f 15 | base64 -d | sed -e "s/#auth-user-pass/auth-user-pass\ \/${USER_VPNGATE//\//\\\/}/g" | sudo tee $VPNGATE_CONF > /dev/null
+}
+kilvpn(){
+    pidof openvpn > /dev/null
+    if [ $? -eq 0 ]; then
+        sudo killall openvpn
+        sleep 5
+    fi
 }
 
 #
@@ -39,7 +49,7 @@ else
     create_userpassfile
 fi
 
-pidof openvpn > /dev/null ; if [ $? -eq 0 ]; then sudo killall openvpn ; sleep 5; fi
+kilvpn
 
 download_vpngate_csv
 
@@ -52,9 +62,20 @@ download_vpngate_csv
 # openvpn is running ???
 
 sudo rm -f $VPNGATE_CONF
-while read;do
-    mkconf
-    exec sudo openvpn --daemon --config $VPNGATE_CONF --connect-retry-max 1 && break
-done < $VPNGATE_CSV
-sudo iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
-
+mkconf
+sudo openvpn --daemon --config $VPNGATE_CONF --connect-retry-max 1 || exit
+for (( i=0; i < 10; i++));do
+    set - $(ifconfig |grep tun)
+    if [[ $1 =~ tun ]]; then
+        export TUN=$1
+        echo "TUN interface is $TUN"
+        sudo iptables -t nat -A POSTROUTING -o $TUN -j MASQUERADE
+        exit
+    else
+        echo -n '.'
+        sleep 1
+    fi
+done
+echo "Tun doesn't exist"
+kilvpn
+exit 1
