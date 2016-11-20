@@ -9,10 +9,12 @@ USER_VPNGATE=/etc/openvpn/user_vpngate.txt
 VPNGATE_CSV=~/.vpngate.csv
 CMD=$1
 CMD=${CMD,,} #lowercase
+NUM=3
 
 if [ ! -z $CMD ] ; then
     if [ $CMD == "update" ] ; then OPT_UPDATE=update ; fi
     if [ $CMD == "clean" ] ; then sudo rm $USER_VPNGATE $VPNGATE_CSV $VPNGATE_CONF; echo cleaned ; exit ; fi
+    if [ $CMD -gt 0 ] ; then NUM=$(( $NUM + $CMD)); fi
 fi
 
 
@@ -22,7 +24,7 @@ function create_userpassfile() {
 }
 
 function download_vpngate_csv() {
-    wget http://www.vpngate.net/api/iphone/ -O - | tail -n +3 | grep Japan > $VPNGATE_CSV
+    wget http://www.vpngate.net/api/iphone/ -O - | tail -n +$NUM | grep Japan > $VPNGATE_CSV
     return 0
 }
 
@@ -37,6 +39,8 @@ else
     create_userpassfile
 fi
 
+pidof openvpn > /dev/null ; if [ $? -eq 0 ]; then sudo killall openvpn ; sleep 5; fi
+
 download_vpngate_csv
 
 # Show Server List
@@ -46,7 +50,7 @@ download_vpngate_csv
 #echo -n "Enter #"
 #read
 # openvpn is running ???
-pidof openvpn > /dev/null ; if [ $? -eq 0 ]; then sudo killall openvpn ; sleep 5; fi
+
 sudo rm -f $VPNGATE_CONF
 while read;do
     mkconf
