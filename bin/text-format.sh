@@ -12,7 +12,9 @@ for file ;do
         html|xml)
             echo "XML Processing"
             xmllint --format $file > $temp
-            _overwrite $file < $temp && _msg "Update $file"
+            if [ -s $temp ] ; then
+                _overwrite $file < $temp && _msg "Update $file"
+            fi
             ;;
         js)
             echo "JS Processing"
