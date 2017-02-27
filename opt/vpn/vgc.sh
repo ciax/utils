@@ -9,13 +9,13 @@ USER_VPNGATE=/etc/openvpn/user_vpngate.txt
 VPNGATE_CSV=~/.vpngate.csv
 CMD=$1
 CMD=${CMD,,} #lowercase
-NUM=3
+NUM=1
 
 if [ ! -z $CMD ] ; then
     if [ $CMD == "update" ] ; then OPT_UPDATE=update ; fi
     if [ $CMD == "clean" ] ; then sudo rm $USER_VPNGATE $VPNGATE_CSV $VPNGATE_CONF; echo cleaned ; exit ; fi
     if [ $CMD -gt 0 ] ; then
-        NUM=$(( $NUM + $CMD));
+        NUM=$CMD
         echo "Takes $NUM lines or later"
     fi
 fi
@@ -27,12 +27,12 @@ function create_userpassfile() {
 }
 
 function download_vpngate_csv() {
-    wget http://www.vpngate.net/api/iphone/ -O - | tail -n +$NUM | grep Japan > $VPNGATE_CSV
+    wget http://www.vpngate.net/api/iphone/ -O - > $VPNGATE_CSV
     return 0
 }
 
 mkconf(){
-    head -1 $VPNGATE_CSV | cut -d ',' -f 15 | base64 -d | sed -e "s/#auth-user-pass/auth-user-pass\ \/${USER_VPNGATE//\//\\\/}/g" | sudo tee $VPNGATE_CONF > /dev/null
+    grep Japan $VPNGATE_CSV | sed -n ${NUM}p | cut -d ',' -f 15 | base64 -d | sed -e "s/#auth-user-pass/auth-user-pass\ ${USER_VPNGATE//\//\\\/}/g" | sudo tee $VPNGATE_CONF > /dev/null
 }
 kilvpn(){
     pidof openvpn > /dev/null
@@ -51,7 +51,7 @@ fi
 
 kilvpn
 
-download_vpngate_csv
+[ -s $VPNGATE_CSV -a $NUM -gt 1 ] || download_vpngate_csv
 
 # Show Server List
 #cat $VPNGATE_CSV | cut -d ',' -f 1-10 | column -s, -t  | less -#2 -N -S
@@ -61,8 +61,8 @@ download_vpngate_csv
 #read
 # openvpn is running ???
 
-sudo rm -f $VPNGATE_CONF
 mkconf
+grep remote $VPNGATE_CONF
 sudo openvpn --daemon --config $VPNGATE_CONF --connect-retry-max 1 || exit
 for (( i=0; i < 10; i++));do
     set - $(ifconfig |grep tun)
