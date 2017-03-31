@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias l
-# Required packages: expect
+# Required packages: expect net-tools
 # Required scripts: func.getpar db-list db-trace
 # Required tables: login(user,password,host,rcmd)
 # Description: login command
