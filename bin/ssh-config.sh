@@ -8,7 +8,7 @@ xopt-s(){ $0 | cfg-install; }
 _usage
 site(){
     eval "$(db-trace $1 ssh)"
-    [ "$auth" -o "$proxy" ] && return
+    [[ "$auth" =~ - ]] && return
     eval "$(db-trace $host host)"
     echo "Host $1"
     if [ "$resolv" = "ddns" ]; then

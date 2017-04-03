@@ -16,9 +16,12 @@ fi
 sshopt="-o StrictHostKeyChecking=no -t"
 eval "$(db-trace $id ssh)"
 eval "$(db-trace $id host)"
-[ "$auth" ] && eval "$(db-trace $auth auth)"
+eval "$(db-trace $auth auth)"
 crypt-init
-[[ "$password" == jA0EA* ]] && password=$(crypt-de <<< "$password")
+if [[ "$password" == jA0EA* ]]; then
+    password=$(crypt-de <<< "$password")
+    _warn "Using Password $password"
+fi
 [ "$1" ] && rcmd="$*"
 if [ "$host" ]; then
     # For SSH password login
