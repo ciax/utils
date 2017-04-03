@@ -10,6 +10,7 @@ site(){
     eval "$(db-trace $1 ssh)"
     [[ "$auth" =~ - ]] && return
     eval "$(db-trace $host host)"
+    eval "$(db-trace $auth auth)"
     echo "Host $1"
     if [ "$resolv" = "ddns" ]; then
         name=$(db-exec "select fdqn from ddns where host='$host';"|head -1)
