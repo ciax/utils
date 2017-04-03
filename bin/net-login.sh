@@ -27,7 +27,7 @@ if [ "$host" ]; then
     # For SSH password login
     _warn "Found in DB"
     batch="-o BatchMode=yes"
-    uri="${user:+'$user'@}$host"
+    uri="${user:+$user@}$host"
     ssharg="$sshopt $uri"
     [ "$port" ] && { sshopt="$sshopt -p $port"; uri="$uri:$port"; }
     [ "$VER" ] && echo "ssh $batch $ssharg $rcmd"
