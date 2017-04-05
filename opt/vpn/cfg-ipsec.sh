@@ -8,14 +8,16 @@ vid=$1;shift
 eval "$(db-trace $vid vpn)"
 [ "$id" ] || _abort "No such id"
 eval "$(db-trace $ddns ddns)"
+eval "$(db-trace $auth auth)"
 echo "IPSec gateway $ip"
 echo "IPSec ID $user"
-echo "IPSec secret $(search-auth $auth)"
+echo "IPSec secret $(crypt-de <<< $password)"
 #Uncomment line below for ver.5.3 usage
+eval "$(db-trace $LOGNAME-pw-$vid auth)"
 echo "Vendor netscreen"
 echo "IKE Authmode psk"
-echo "Xauth username $LOGNAME"
-echo "Xauth password $(search-auth $vid-$LOGNAME)"
+echo "Xauth username $user"
+echo "Xauth password $(crypt-de <<< $password)"
 #Xauth password <password>
 set - $(route-ipsec $route)
 #echo "Target Networks $*"
