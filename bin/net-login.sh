@@ -18,10 +18,6 @@ eval "$(db-trace $id ssh)"
 eval "$(db-trace $id host)"
 eval "$(db-trace $auth auth)"
 crypt-init
-if [[ "$password" == jA0EA* ]]; then
-    password=$(crypt-de <<< "$password")
-    _warn "Using Password $password"
-fi
 [ "$1" ] && rcmd="$*"
 if [ "$host" ]; then
     # For SSH password login
@@ -34,6 +30,10 @@ if [ "$host" ]; then
     _msg "$uri"
     ssh $batch $ssharg $rcmd && exit
     _temp expfile
+    if [[ "$password" == jA0EA* ]]; then
+        password=$(crypt-de <<< "$password")
+        _warn "Using Password ($password)"
+    fi
     echo "set timeout 10" > $expfile
     echo "spawn -noecho ssh $ssharg" >> $expfile
     echo "expect word: { send $password\n };" >> $expfile
