@@ -7,7 +7,8 @@
 . func.getpar
 _usage "[host] (command)"
 id=$1;shift
-if egrep -q "Host $id$" ~/.ssh/config; then
+sshlist=$(egrep -A2 -q "Host $id$" ~/.ssh/config)
+if [ "$sshlist" ] && [[ ! $sshlist =~ Proxy ]]; then
     _warn "Found in sshconfig"
     _msg $(egrep -A3 "Host $id$" ~/.ssh/config|grep -v "Host ")
     ssh $id
