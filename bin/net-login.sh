@@ -33,7 +33,9 @@ if [ "$host" ]; then
     _temp expfile
     if [[ "$password" == jA0EA* ]]; then
         password=$(crypt-de <<< "$password")
-        _warn "Using Password ($password)"
+        mid=${password:1:-1}
+        ast=${mid//?/*}
+        _warn "Using Password (${password/$mid/$ast})"
     fi
     echo "set timeout 10" > $expfile
     echo "spawn -noecho ssh $ssharg" >> $expfile
