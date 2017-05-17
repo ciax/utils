@@ -14,5 +14,3 @@ for tbl in $(grep '^drop' $sch|tr -d "';"|cut -d' ' -f5);do
     done
 done
 echo "commit;"
-
-sql-insert ssl
