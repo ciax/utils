@@ -24,6 +24,10 @@ for file ;do
             xmllint --html $file > $temp
             safe_ow $temp $file
             ;;
+        json)
+            echo "JSON Processing"
+            python -m json.tool $file
+            ;;
         js)
             echo "JS Processing"
             fixjsstyle $file
