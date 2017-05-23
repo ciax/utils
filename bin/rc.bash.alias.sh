@@ -12,7 +12,8 @@ alias kilg='sudo killall -i -I -r'
 alias bogo='grep bogomips /proc/cpuinfo'
 alias ea=edit_alias
 alias ef=edit_func
-alias jf='python -m json.tool'
+alias fmj='python -m json.tool'
+alias fmx='xmllint --format'
 
 # For GIT
 alias gia='git add . */'
