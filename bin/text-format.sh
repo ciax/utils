@@ -26,11 +26,13 @@ for file ;do
             ;;
         json)
             echo "JSON Processing"
-            python -m json.tool $file
+            python -m json.tool $file > $temp
+            safe_ow $temp $file
             ;;
         js)
             echo "JS Processing"
-            fixjsstyle $file
+            fixjsstyle $file > $temp
+            safe_ow $temp $file
             ;;
         *);;
     esac
