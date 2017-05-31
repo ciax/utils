@@ -52,7 +52,7 @@ _disp-case(){ # Display case list and exit
 }
 _optlist(){ # List of options with opt-?() functions
     local line fnc desc
-    egrep '^x?opt-' $0|\
+    egrep '^x?opt-.\(\)\{' $0|\
     while read line;do
         fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
