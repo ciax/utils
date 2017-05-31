@@ -1,5 +1,5 @@
 #!/bin/bash
-# Description: Listting functions 
+# Description: Listing from script files
 type _list_csv >/dev/null 2>&1 && return
 . func.temp
 #type -t _list_csv >/dev/null 2>&1 && return
@@ -57,6 +57,12 @@ _optlist(){ # List of options with opt-?() functions
         fnc="${line%%(*}"
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
         echo $C2"${fnc#*opt}$C0${desc/:=/=}"
+    done
+}
+_basename_list(){ # List of file basename
+    for i ;do
+        f=${i##*/}
+        echo -n "${f%.*} "
     done
 }
 _chkfunc $*
