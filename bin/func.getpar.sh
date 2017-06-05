@@ -25,7 +25,7 @@ _exe_opt(){ # Option handling, don't forget to execute after _usage
     return $_executed
 }
 _ver_func(){ # Verify function
-    if egrep -q "opt-.\(\)\{" $0 && ! egrep -q "_exe_opt" $0; then
+    if egrep -q "^opt-.\(\)\{" $0 && ! egrep -q "_exe_opt" $0; then
         _alert "_exe_opt() is missing!"
         return 1
     fi
