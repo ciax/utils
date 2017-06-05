@@ -24,6 +24,12 @@ _exe_opt(){ # Option handling, don't forget to execute after _usage
     done
     return $_executed
 }
+_ver_func(){ # Verify function
+    if egrep -q "opt-.\(\)\{" $0 && ! egrep -q "_exe_opt" $0; then
+        _alert "_exe_opt() is missing!"
+        return 1
+    fi
+}
 # Check Arguments
 _chk_opt(){ # Check options
     local i
@@ -55,7 +61,7 @@ _chk_argv(){ # Check the argument value
 }
 _chk_all(){ # Check all argument
     local reqp=$1;shift
-    _chk_opt && _chk_argc "$reqp" && _chk_argv $* && return
+    _ver_func && _chk_opt && _chk_argc "$reqp" && _chk_argv $* && return
 }
 # Show Usage
 _disp_usage(){
