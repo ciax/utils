@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: emacs mmm-mode
+# Required packages: emacs mmm-mode php-elisp
 # Required scripts: func.getpar
 # Description: edit file with emacs as its owner
 #alias e
