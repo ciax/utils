@@ -8,7 +8,7 @@ opt-a(){ #Show all list
     where="host.host_ip != ''"
 }
 xopt-s(){ #Set to /etc/hosts
-    $0 | cfg-install
+    $0 $1| cfg-install
 }
 _usage "(subnet)" $(db-list subnet)
 _exe_opt
