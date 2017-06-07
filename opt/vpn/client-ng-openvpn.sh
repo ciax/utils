@@ -16,7 +16,6 @@ exe_vpn(){
     cd ${1%/*}
     sudo openvpn --daemon --config $sel.conf --pull 2>/dev/null|tee -a ~/.var/ngvpn-$sel.log || return 1
     if _wait_if tun ; then
-        export TUNGW=${IFADDR%.*}.1
         sudo iptables -t nat -A POSTROUTING -o $INTERFACE -j MASQUERADE
     else
         xopt-d
