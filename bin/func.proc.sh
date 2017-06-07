@@ -1,5 +1,5 @@
 #!/bin/bash
-# Description: process control
+# Description: control process/interface
 . func.msg
 _retry(){ # Retry func until success with counter (<20) [func name]
     for (( i=0; i < 20; i++));do
@@ -18,9 +18,10 @@ _wait_kill(){ # ll proc with counter [proc name]
     _retry _no_proc $1 && echo "$1 was killed"
 }
 _get_if(){ # True if interface exists. $INTERFACE will be set
-    act=$(ifconfig |egrep "^$1") || return 1
+    act=$(ifconfig |egrep -A 2 "^$1") || return 1
     set - $act
     export INTERFACE=$1
+    export IFADDR=${7#*:}
 }
 _wait_if(){ # Wait until $INTERFACE appears [if name]
     if _retry _get_if $1 ; then
