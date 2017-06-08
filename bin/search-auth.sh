@@ -12,4 +12,8 @@ _usage "[id]" $(db-list auth)
 id=$1;shift
 [ "$id" ] && eval "$(db-trace $id auth)"
 crypt-init
-echo $password | show
+password=$(echo $password | show)
+mid=${password:1:-1}
+ast=${mid//?/*}
+_warn "Using Password (${password/$mid/$ast})"
+echo $password
