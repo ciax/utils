@@ -44,7 +44,7 @@ _mklink(){ # Make links with abspath
     ln -sf $src $dst && _addlink $dir $(basename $dst)
 }
 _addlink(){
-    eval "LINKS${1//\//_}+=' $2'"
+    eval "LINKS${1//[\/.]/_}+=' $2'"
     #LINKS[$1]+=" $2" # For Bash 4 or later
 }
 _showlink(){ # Show links created
