@@ -5,9 +5,11 @@
 # Required tables: auth
 # Description: Get auth info
 . func.getpar
+show(){
+    [[ "$password" == jA0EA* ]] && crypt-de || cat
+}
 _usage "[id]" $(db-list auth)
 id=$1;shift
 [ "$id" ] && eval "$(db-trace $id auth)"
 crypt-init
-[[ "$password" == jA0EA* ]] && password=$(crypt-de <<< "$password")
-echo $password
+echo $password | show
