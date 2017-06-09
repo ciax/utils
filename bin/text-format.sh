@@ -1,11 +1,14 @@
 #!/bin/bash
 # Required packages: libxml2-utils closure-linter
-# Required scripts: func.getpar
+# Required scripts: func.getpar bkup-stash
 # Description: Overwrite if these are different.
 #alias fm
 safe_ow(){
     if [ -s $1 ] ; then
-        _overwrite $2 < $1 && _msg "Update $2"
+        if _overwrite $2 < $1 ; then
+            bkup-stash $2
+            _msg "Update $2"
+        fi
     fi
 }
 . func.getpar
@@ -31,8 +34,8 @@ for file ;do
             ;;
         js)
             echo "JS Processing"
-            fixjsstyle $file > $temp
-            safe_ow $temp $file
+            # Overwrites by itself
+            fixjsstyle $file
             ;;
         *);;
     esac

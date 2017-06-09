@@ -5,6 +5,7 @@
 # Required table: content list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid
+# Description: Ignore same file
 . func.getpar
 _usage "[file]"
 [ -s "$1" ] || _abort "No such file"

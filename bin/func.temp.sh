@@ -48,7 +48,6 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>, return 
         _verbose "file diff" && diff $dstfile $srcfile 1>&2
         chmod --reference=$dstfile $srcfile
         mv -b $dstfile ~/.trash/ || _warn "Failed backup $dstfile"
-        bkup-stash $dstfile
         mv $srcfile $dstfile
     fi
 }
