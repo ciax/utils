@@ -2,7 +2,8 @@
 # Required scripts: link-self
 # Description: update git repositories
 . func.msg
-for i in ~/cfg.* ~/utils;do
+echo "args $*"
+for i in ~/utils ${*:-~/cfg.*};do
     pushd $i >/dev/null
     _warn "Git update for $PWD"
     git remote update -p origin
