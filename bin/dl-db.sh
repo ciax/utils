@@ -37,6 +37,7 @@ while read line;do
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
     _warn "Retrieving $sheet($url)"
     wget -q --progress=dot -O $dlfile "$url" || continue
+    grep "'" $dlfile && { _alert "Field includes ' -> reject"; continue; }
     nkf -d --in-place $dlfile
     split_sheet $sheet
     [ -d $dldir ] || mkdir -p $dldir
