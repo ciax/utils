@@ -57,6 +57,7 @@ show_tree(){
             echo -n "$c${C1}X$c"
         fi
         echo "${title[$i]}"$C0
+        # Recursive call
         if [ "$i" = "$last" ];then
             show_tree $i "$ind "
         else

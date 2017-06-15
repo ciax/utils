@@ -10,6 +10,6 @@ xopt-s(){
         _warn "Wake on lan is set"
     fi
 }
-_usage "(-s) [host]" $(list-hosts)
+_usage "[host]" $(list-hosts)
 
 wakeonlan $(search-mac $1)
