@@ -54,7 +54,7 @@ show_tree(){
             echo -n "$c$c$c"
             [[ $i == *: ]] && echo -n $C4 || echo -n $C2
         else
-            echo -n "$c${C1}X$c"
+            echo -n "$c${D1}X$c"
         fi
         echo "${title[$i]}"$C0
         # Recursive call
@@ -89,6 +89,7 @@ done
 get_hosts
 echo -n "$nl"
 for i;do
-    echo " $i"
+    eval $(db-trace $i subnet)
+    echo "$D3$description$C0"
     show_tree $i
 done
