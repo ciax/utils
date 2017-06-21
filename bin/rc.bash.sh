@@ -20,7 +20,6 @@ uniqenv(){
 }
 addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin}
 # Other Environments
-export GREP_OPTIONS='--color=auto'
 export VERSION_CONTROL=t
 # PROMPT
 i="\[\033[01;31m\][$SHLVL]\[\033[00m\]"
