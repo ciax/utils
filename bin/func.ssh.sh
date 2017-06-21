@@ -9,6 +9,7 @@ PUB=~/.ssh/id_rsa.pub
 CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
 LINV=~/.ssh/$INV
+ME=$(logname)@$(hostname)
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
 # Set permission [oct] [files..]
 _setp(){
@@ -29,11 +30,12 @@ _auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy s
     [ -f $ath -a -f $pub ] || _abort "No ssh files"
     local rsa mykey me key host
     read rsa mykey me < $pub
-    [ "$me" ]  || return
+    me=${me:-$ME}
     while read rsa key host; do
-        if [[ "$host" =~ "$me" ]] && [ "$mykey" != "$key" ] ; then
+        if [[ ! "$rsa" =~ "#" ]] && [[ "$host" =~ "$me" ]] && [ "$mykey" != "$key" ] ; then
             echo "#$rsa $key $host"
-            _warn "Invalid keys are marked for $host <=> $me"
+            _warn "Old key is marked for $host"
+            echo "$rsa $mykey $me"
         else
             echo "$rsa $key${host:+ $host}"
         fi
@@ -53,7 +55,7 @@ _auth-rginv(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
     sort -u $tinv | _overwrite $inv 
-    grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm #)"
+    grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm # line)"
 }
 #link auth-rminv
 _auth-rminv(){ # Remove keys in authorized_keys according to invalid_keys
@@ -96,7 +98,7 @@ _auth-trim(){
     _auth-rmdup $1
 }
 #link auth-mates
-_auth-mates(){ # List the mate accounts in authorized_keys
+_auth-mates(){ # List the mate accounts except myself in authorized_keys
     grep -v '^#' $LATH|\
         cut -d' ' -f3|\
         tr , $'\n'|\
