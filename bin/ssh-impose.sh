@@ -5,9 +5,9 @@
 . func.ssh
 _usage "[(user@)host(:port)] .."
 for url;do
-    _rem-fetch $url
+    _ssh-rem-fetch $url
 done
-_rem-impose
+_ssh-rem-impose
 for url;do
-    _rem-push $url
+    _ssh-rem-push $url
 done

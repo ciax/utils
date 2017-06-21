@@ -7,6 +7,6 @@ set -e
 . func.ssh
 cd ~/.var/ssh/admit
 cp $LATH $ATH
-for rem in $(_rem-valid $(_auth-mates));do
-    _rem-push $rem
+for rem in $(_ssh-rem-validate $(_ssh-auth-mates));do
+    _ssh-rem-push $rem
 done
