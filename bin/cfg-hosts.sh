@@ -36,3 +36,5 @@ order by subnet.network,
       host.host_ip
 ;
 EOF
+db-exec 'select ip,id,fdqn from ddns;' | while read ip id fdqn; do [ "$ip" ] || continue; echo "$ip    $id    $fdqn";done
+
