@@ -41,7 +41,7 @@ _ssh-auth-mark-old(){ # Mark '#' for own old pubkey [authorized_keys] (You can m
         fi
     done < $ath | sort -u | _overwrite $ath
 }
-#link ssh-auth-reg-invalid
+#link ssh-auth-to-invalid
 _ssh-auth-to-invalid(){ # Register marked line in [authorized_keys] to [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
@@ -57,14 +57,14 @@ _ssh-auth-to-invalid(){ # Register marked line in [authorized_keys] to [invalid_
     sort -u $tinv | _overwrite $inv 
     grep -v "^#" $ath | _overwrite $ath && _msg "authorized_keys was updated (rm marked line)"
 }
-#link ssh-auth-rm-invalid
+#link ssh-auth-by-invalid
 _ssh-auth-by-invalid(){ # Remove keys from [authorized_keys] by [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
     #  exculde invalid keys
     while read line;do
         if md="$(grep $(md5sum <<< $line | cut -c-32) $inv)"; then
-            _warn "Remove Invalid Key for ${line##* } ($md)"
+            _warn "Removed Invalid Key for ${line##* } ($md)"
         else
             echo "$line"
         fi
@@ -101,8 +101,8 @@ _ssh_auth-trim(){ # Trim authrized_keys and update invalid_keys
 _ssh-auth-mates(){ # List the mate accounts except myself in authorized_keys
     grep -v '^#' $LATH | grep -v $(cut -d' ' -f2 $PUB) | cut -d' ' -f3 | tr , $'\n' | grep @ 
 }
-#link ssh-auth-perm
-_ssh-file_perm(){ # Set ssh related file permission
+#link ssh-file-perm
+_ssh-file-perm(){ # Set ssh related file permission
     _setp 755 ~
     [ -d ~/.ssh ] || exit
     _msg "Correcting permission for ssh files"
@@ -157,9 +157,15 @@ _ssh-push(){ # Push auth key to remote [user@host:port]
     _ssh-opt $1 || return 1
     local s1 s2 i
     [ -s $ATH ] && s1=$ATH
-    [ -s $ATH.$rhost ] && cmp -s $ATH $ATH.$rhost && s1=
+    if [ -s $ATH.$rhost ] ; then
+        cmp -s $ATH $ATH.$rhost && s1=
+        rm $ATH.$rhost
+    fi
     [ -s $INV ] && s2=$INV
-    [ -s $INV.$rhost ] && cmp -s $INV $INV.$rhost && s2=
+    if [ -s $INV.$rhost ] ; then
+        cmp -s $INV $INV.$rhost && s2=
+        rm $INV.$rhost
+    fi
     if [ "$s1$s2" ] ; then
         scp -pq $sshopt $s1 $s2 $rhost:.ssh/ &&\
         for i in $s1 $s2;do
@@ -191,7 +197,6 @@ _ssh-impose(){
     IFS='|';local exp="($*)";unset IFS
     egrep -hv "$exp" $ATH.$rhost >> $ATH
     _ssh_auth-trim $ATH $INV.$rhost
-
 }
 #link ssh-validate
 _ssh-validate(){ # Check remote availability [site]
