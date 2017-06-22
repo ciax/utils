@@ -166,7 +166,7 @@ _ssh-push(){ # Push auth key to remote [user@host:port]
             _msg "$i($(stat -c%s $i)) is updated at $C2$rhost"
         done
     else
-        _msg "Files are identical"
+        _msg "Files are identical with $C2$rhost"
     fi
 }
 # Convert keys for accept (merge files)

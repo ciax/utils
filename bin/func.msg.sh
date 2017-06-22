@@ -16,7 +16,7 @@ fi
 _msg(){ # Print message to stderr
     echo "$INDENT$C0$*$C0" 1>&2
 }
-_warn(){ # Print message to stderr
+_warn(){ # Print warning to stderr
     echo "$INDENT$C3$*$C0" 1>&2
 }
 _alert(){ # Print alert to stderr
