@@ -99,11 +99,7 @@ _ssh_auth-trim(){ # Trim authrized_keys and update invalid_keys
 }
 #link ssh-auth-mates
 _ssh-auth-mates(){ # List the mate accounts except myself in authorized_keys
-    grep -v '^#' $LATH|\
-        cut -d' ' -f3|\
-        tr , $'\n'|\
-        grep @|\
-        grep -v $(cut -d' ' -f3 $PUB)
+    grep -v '^#' $LATH | grep -v $(cut -d' ' -f2 $PUB) | cut -d' ' -f3 | tr , $'\n' | grep @ 
 }
 #link ssh-auth-perm
 _ssh-file_perm(){ # Set ssh related file permission
