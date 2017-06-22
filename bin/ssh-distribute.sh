@@ -5,7 +5,7 @@
 #   If no args, then hosts are picked up from authorized_keys
 set -e
 . func.ssh
-cd ~/.var/ssh/admit
+cd ~/.var/ssh/accept
 cp $LATH $ATH
 for rem in $(_ssh-rem-validate $(_ssh-auth-mates));do
     _ssh-rem-push $rem

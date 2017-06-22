@@ -14,7 +14,7 @@ if [ -t 2 ] ; then
 fi
 
 _msg(){ # Print message to stderr
-    echo "$INDENT$C2$*$C0" 1>&2
+    echo "$INDENT$C0$*$C0" 1>&2
 }
 _warn(){ # Print message to stderr
     echo "$INDENT$C3$*$C0" 1>&2

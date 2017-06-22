@@ -55,7 +55,7 @@ _ssh-auth-reg-invalid(){ # Register Invalid Keys [authorized_keys] [invalid_keys
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
     sort -u $tinv | _overwrite $inv 
-    grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm marked line)"
+    grep -v "^#" $ath | _overwrite $ath && _msg "authorized_keys was updated (rm marked line)"
 }
 #link ssh-auth-rm-invalid
 _ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_keys
@@ -68,7 +68,7 @@ _ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_ke
         else
             echo "$line"
         fi
-    done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm by inv)"
+    done < $ath | _overwrite $ath && _msg "authorized_keys was updated (rm by inv)"
 }
 #link ssh-auth-rm-dup
 _ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys] [invalid_keys]
@@ -109,7 +109,7 @@ _ssh-auth-mates(){ # List the mate accounts except myself in authorized_keys
 _ssh-auth-perm(){ # Set ssh related file permission
     _setp 755 ~
     [ -d ~/.ssh ] || exit
-    _warn "Correcting permission for ssh files"
+    _msg "Correcting permission for ssh files"
     cd ~/.ssh
     _setp 700 .
     _setp 600 id_rsa gpgpass
@@ -125,7 +125,7 @@ _ssh-setup(){ # Setup ssh
 }
 
 ### For remote operation ###
-[ -d ~/.var/ssh/admit ] || mkdir -p ~/.var/ssh/admit
+[ -d ~/.var/ssh/accept ] || mkdir -p ~/.var/ssh/accept
 [ -d ~/.var/ssh/impose ] || mkdir -p ~/.var/ssh/impose
 _ssh-opt(){ # Set rhost,sshopt,port
     local site host user
@@ -166,13 +166,15 @@ _ssh-rem-push(){ # Push auth key to remote (user@host:port)
     if [ "$s1$s2" ] ; then
         scp -pq $sshopt $s1 $s2 $rhost:.ssh/ &&\
         for i in $s1 $s2;do
-            _warn "$i($(stat -c%s $i)) is updated at $rhost"
+            _msg "$i($(stat -c%s $i)) is updated at $C2$rhost"
         done
+    else
+        _msg "Files are identical"
     fi
 }
-_ssh-rem-admit(){ # Convert keys for admit
+_ssh-rem-accept(){ # Convert keys for accept
     # Merge with local file
-    cd ~/.var/ssh/admit/
+    cd ~/.var/ssh/accept/
     mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV

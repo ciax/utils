@@ -7,7 +7,7 @@ _usage "[(user@)host(:port)] .."
 for url;do
     _ssh-rem-fetch $url
 done
-_ssh-rem-admit
+_ssh-rem-accept
 for url;do
     _ssh-rem-push $url
 done
