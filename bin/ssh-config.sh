@@ -14,7 +14,8 @@ site(){
     echo "Host $1"
     [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $proxy"
     if [ "$resolv" = "ddns" ]; then
-        name=$(db-exec "select fdqn from ddns where host='$host';"|head -1)
+        eval "$(db-trace $host ddns)"
+        name=${fdqn:-$ip}
     else
         name="$(search-ip $host)"
     fi
