@@ -23,7 +23,7 @@ _setp(){
     done
 }
 #link ssh-auth-mark
-_ssh-auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
+_ssh-auth-mark-old(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
     #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
     local ath=${1:-$LATH}
     local pub=$PUB
@@ -42,7 +42,7 @@ _ssh-auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manua
     done < $ath | sort -u | _overwrite $ath
 }
 #link ssh-auth-reg-invalid
-_ssh-auth-reg-invalid(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
+_ssh-auth-to-invalid(){ # Register marked line in [authorized_keys] to [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
     # Split file into invalid_keys by #headed line
@@ -58,7 +58,7 @@ _ssh-auth-reg-invalid(){ # Register Invalid Keys [authorized_keys] [invalid_keys
     grep -v "^#" $ath | _overwrite $ath && _msg "authorized_keys was updated (rm marked line)"
 }
 #link ssh-auth-rm-invalid
-_ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_keys
+_ssh-auth-by-invalid(){ # Remove keys from [authorized_keys] by [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
     #  exculde invalid keys
@@ -71,7 +71,7 @@ _ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_ke
     done < $ath | _overwrite $ath && _msg "authorized_keys was updated (rm by inv)"
 }
 #link ssh-auth-rm-dup
-_ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys] [invalid_keys]
+_ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys]
     local ath=${1:-$LATH} list dup csv rsa key host i
     #  remove duplicated keys (compare key without host)
     while read rsa key host;do
@@ -92,9 +92,9 @@ _ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys] [invalid_keys]
 }
 #link ssh-auth-trim
 _ssh_auth-trim(){ # Trim authrized_keys and update invalid_keys
-    _ssh-auth-mark $1
-    _ssh-auth-reg-invalid $*
-    _ssh-auth-rm-invalid $*
+    _ssh-auth-mark-old $1
+    _ssh-auth-to-invalid $*
+    _ssh-auth-by-invalid $*
     _ssh-auth-rm-dup $1
 }
 #link ssh-auth-mates
@@ -106,7 +106,7 @@ _ssh-auth-mates(){ # List the mate accounts except myself in authorized_keys
         grep -v $(cut -d' ' -f3 $PUB)
 }
 #link ssh-auth-perm
-_ssh-auth-perm(){ # Set ssh related file permission
+_ssh-file_perm(){ # Set ssh related file permission
     _setp 755 ~
     [ -d ~/.ssh ] || exit
     _msg "Correcting permission for ssh files"
@@ -127,7 +127,8 @@ _ssh-setup(){ # Setup ssh
 ### For remote operation ###
 [ -d ~/.var/ssh/accept ] || mkdir -p ~/.var/ssh/accept
 [ -d ~/.var/ssh/impose ] || mkdir -p ~/.var/ssh/impose
-_ssh-opt(){ # Set rhost,sshopt,port
+# Set rhost,sshopt,port
+_ssh-opt(){
     local site host user
     if [[ "$1" =~ @ ]] ; then
         IFS=':@';set - $1;unset IFS
@@ -137,7 +138,7 @@ _ssh-opt(){ # Set rhost,sshopt,port
         IFS=':';set - $1;unset IFS
         host=$1;port=$2
     else
-        _warn "No site"
+        _warn "No [site]"
         return 1
     fi
     [[ "$host" =~ (`hostname`|localhost) ]] && [ "$user" = $LOGNAME ] && { _warn "Self push"; return 1; }
@@ -145,7 +146,7 @@ _ssh-opt(){ # Set rhost,sshopt,port
     rhost="$user@$host"
 }
 #link ssh-rem-fetch
-_ssh-rem-fetch(){ # Fetch remote auth key (user@host:port)
+_ssh-fetch(){ # Fetch remote auth key [user@host:port]
     _ssh-opt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
     # Get files from remote
@@ -156,7 +157,7 @@ _ssh-rem-fetch(){ # Fetch remote auth key (user@host:port)
     [ -s $INV ] && mv $INV $INV.$rhost
 }
 #link ssh-rem-push
-_ssh-rem-push(){ # Push auth key to remote (user@host:port)
+_ssh-push(){ # Push auth key to remote [user@host:port]
     _ssh-opt $1 || return 1
     local s1 s2 i
     [ -s $ATH ] && s1=$ATH
@@ -172,7 +173,8 @@ _ssh-rem-push(){ # Push auth key to remote (user@host:port)
         _msg "Files are identical"
     fi
 }
-_ssh-rem-accept(){ # Convert keys for accept
+# Convert keys for accept (merge files)
+_ssh-accept(){
     # Merge with local file
     cd ~/.var/ssh/accept/
     mv ../*.* . >/dev/null 2>&1
@@ -182,7 +184,8 @@ _ssh-rem-accept(){ # Convert keys for accept
     _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
 }
-_ssh-rem-impose(){ # Convert keys for impose
+# Convert keys for impose (remove site name)
+_ssh-impose(){
     # Merge with local file
     cd ~/.var/ssh/impose/
     mv ../*.$rhost . >/dev/null 2>&1
@@ -195,7 +198,8 @@ _ssh-rem-impose(){ # Convert keys for impose
 
 }
 #link ssh-rem-validate
-_ssh-rem-validate(){ # Check remote availability
+_ssh-validate(){ # Check remote availability [site]
+    [ "$1" ] || { _warn "No [site]"; return 1; }
     local i 
     for i; do
         ssh -q\

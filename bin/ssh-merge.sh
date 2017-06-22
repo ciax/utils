@@ -5,4 +5,4 @@
 #   If no args, then hosts are picked up from authorized_keys
 set -e
 . func.ssh
-ssh-join $(_ssh-rem-validate $(_ssh-auth-mates))
+ssh-join $(_ssh-validate $(_ssh-auth-mates))
