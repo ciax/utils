@@ -2,7 +2,7 @@
 Here is the utilities of bash script.
 
 Features:
- - All scripts are put into '~/bin' as a symbolic link. 
+ - All scripts are put into '~/bin' as symbolic links. 
  - All variable or temporaly data are put into '~/.var'.
  - All configurations are stored in RDB (using sqlite3).
 
@@ -20,14 +20,21 @@ Copyright (c) 2014 Koji Omata (MIT License)
  4. Install ssh,git
  
 ### Setup at Home Dir
-git clone https://git.hub/ciax/cfg.(proj).git
-~/cfg.(proj)/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
+> git clone https://git.hub/ciax/cfg.(proj).git
+> ~/cfg.(proj)/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
+> pkg-(apt|yum) init
+> db-update -f
 
 ############# Local Rules ###############
 
 ### Command usage
   func.*: should be sourced for loading functions
   function names defined in func.* should have '_' prefix
+  function will be executed if func.* is linked to the function name.
+  function will be executed if the first arg of func.* is the function name.
+  Public function: function names followed by their comments in the same line.
+    It will be listed when func.* is invoked
+    It will be appeared in ~/bin as the link of their original func.* file.
 
 ### Relevant Dirs
   App Dirs    :  ~/utils
