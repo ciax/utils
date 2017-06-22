@@ -55,7 +55,7 @@ _ssh-auth-reg-invalid(){ # Register Invalid Keys [authorized_keys] [invalid_keys
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
     sort -u $tinv | _overwrite $inv 
-    grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm # line)"
+    grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm marked line)"
 }
 #link ssh-auth-rm-invalid
 _ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_keys
