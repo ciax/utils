@@ -141,7 +141,7 @@ _ssh-opt(){
     sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
     rhost="$user@$host"
 }
-#link ssh-rem-fetch
+#link ssh-fetch
 _ssh-fetch(){ # Fetch remote auth key [user@host:port]
     _ssh-opt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
@@ -152,7 +152,7 @@ _ssh-fetch(){ # Fetch remote auth key [user@host:port]
     [ -s $ATH ] && mv $ATH $ATH.$rhost
     [ -s $INV ] && mv $INV $INV.$rhost
 }
-#link ssh-rem-push
+#link ssh-push
 _ssh-push(){ # Push auth key to remote [user@host:port]
     _ssh-opt $1 || return 1
     local s1 s2 i
@@ -193,7 +193,7 @@ _ssh-impose(){
     _ssh_auth-trim $ATH $INV.$rhost
 
 }
-#link ssh-rem-validate
+#link ssh-validate
 _ssh-validate(){ # Check remote availability [site]
     [ "$1" ] || { _warn "No [site]"; return 1; }
     local i 
