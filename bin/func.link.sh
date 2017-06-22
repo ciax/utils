@@ -62,7 +62,7 @@ _showlink(){ # Show links created
 }
 _linkbin(){ # Scripts register to ~/bin
     [ -d "$1" -o ! -e "$1" -o -h "$1" -o ! -x "$1" ] && return
-    _mklink "$(pwd -P)/$1" "$HOME/bin/${i%.*}"
+    _mklink "$(pwd -P)/$1" "$HOME/bin/${1%.*}"
 }
 _setup(){ # Scripts register to ~/bin
     local i

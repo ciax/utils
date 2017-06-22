@@ -22,7 +22,7 @@ _setp(){
         fi
     done
 }
-#link auth-mark
+#link ssh-auth-mark
 _ssh-auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manualy set)
     #   maching own id_rsa.pub and the line, otherwise move older one to invalid_keys
     local ath=${1:-$LATH}
@@ -41,7 +41,7 @@ _ssh-auth-mark(){ # Mark '#' for own old pubkey [authorized_keys] (You can manua
         fi
     done < $ath | sort -u | _overwrite $ath
 }
-#link auth-rginv
+#link ssh-auth-reg-invalid
 _ssh-auth-reg-invalid(){ # Register Invalid Keys [authorized_keys] [invalid_keys]
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
@@ -57,7 +57,7 @@ _ssh-auth-reg-invalid(){ # Register Invalid Keys [authorized_keys] [invalid_keys
     sort -u $tinv | _overwrite $inv 
     grep -v "^#" $ath | _overwrite $ath && _warn "authorized_keys was updated (rm # line)"
 }
-#link auth-rminv
+#link ssh-auth-rm-invalid
 _ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_keys
     local ath=${1:-$LATH}
     local inv=${2:-$LINV}
@@ -70,7 +70,7 @@ _ssh-auth-rm-invalid(){ # Remove keys in authorized_keys according to invalid_ke
         fi
     done < $ath | _overwrite $ath && _warn "authorized_keys was updated (rm by inv)"
 }
-#link auth-rmdup
+#link ssh-auth-rm-dup
 _ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys] [invalid_keys]
     local ath=${1:-$LATH} list dup csv rsa key host i
     #  remove duplicated keys (compare key without host)
@@ -90,14 +90,14 @@ _ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys] [invalid_keys]
         pkey=$key
     done < <(sort -u $ath;echo) | _overwrite $ath
 }
-#link auth-trim
-_auth-trim(){
+#link ssh-auth-trim
+_ssh_auth-trim(){ # Trim authrized_keys and update invalid_keys
     _ssh-auth-mark $1
     _ssh-auth-reg-invalid $*
     _ssh-auth-rm-invalid $*
     _ssh-auth-rm-dup $1
 }
-#link auth-mates
+#link ssh-auth-mates
 _ssh-auth-mates(){ # List the mate accounts except myself in authorized_keys
     grep -v '^#' $LATH|\
         cut -d' ' -f3|\
@@ -105,7 +105,7 @@ _ssh-auth-mates(){ # List the mate accounts except myself in authorized_keys
         grep @|\
         grep -v $(cut -d' ' -f3 $PUB)
 }
-#link auth-perm
+#link ssh-auth-perm
 _ssh-auth-perm(){ # Set ssh related file permission
     _setp 755 ~
     [ -d ~/.ssh ] || exit
@@ -144,7 +144,7 @@ _ssh-opt(){ # Set rhost,sshopt,port
     sshopt="-o StrictHostKeyChecking=no ${port:+-P $port}"
     rhost="$user@$host"
 }
-#link rem-fetch
+#link ssh-rem-fetch
 _ssh-rem-fetch(){ # Fetch remote auth key (user@host:port)
     _ssh-opt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
@@ -155,7 +155,7 @@ _ssh-rem-fetch(){ # Fetch remote auth key (user@host:port)
     [ -s $ATH ] && mv $ATH $ATH.$rhost
     [ -s $INV ] && mv $INV $INV.$rhost
 }
-#link rem-push
+#link ssh-rem-push
 _ssh-rem-push(){ # Push auth key to remote (user@host:port)
     _ssh-opt $1 || return 1
     local s1 s2 i
@@ -176,7 +176,7 @@ _ssh-rem-admit(){ # Convert keys for admit
     mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
-    _auth-trim $ATH $INV
+    _ssh_auth-trim $ATH $INV
     _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
 }
@@ -189,10 +189,10 @@ _ssh-rem-impose(){ # Convert keys for impose
     set - $(cut -d' ' -f3 $LATH|sort -u)
     IFS='|';local exp="($*)";unset IFS
     egrep -hv "$exp" $ATH.$rhost >> $ATH
-    _auth-trim $ATH $INV.$rhost
+    _ssh_auth-trim $ATH $INV.$rhost
 
 }
-#link rem-valid
+#link ssh-rem-validate
 _ssh-rem-validate(){ # Check remote availability
     local i 
     for i; do
