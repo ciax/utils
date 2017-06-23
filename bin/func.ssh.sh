@@ -91,7 +91,7 @@ _ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys]
     done < <(sort -u $ath;echo) | _overwrite $ath
 }
 #link ssh-auth-trim
-_ssh_auth-trim(){ # Trim authrized_keys and update invalid_keys
+_ssh-auth-trim(){ # Trim authrized_keys and update invalid_keys
     _ssh-auth-mark-old $1
     _ssh-auth-to-invalid $*
     _ssh-auth-by-invalid $*
@@ -182,7 +182,7 @@ _ssh-accept(){
     mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
-    _ssh_auth-trim $ATH $INV
+    _ssh-auth-trim $ATH $INV
     _overwrite $LINV < $INV
     _overwrite $LATH < $ATH
 }
@@ -196,7 +196,7 @@ _ssh-impose(){
     set - $(cut -d' ' -f3 $LATH|sort -u)
     IFS='|';local exp="($*)";unset IFS
     egrep -hv "$exp" $ATH.$rhost >> $ATH
-    _ssh_auth-trim $ATH $INV.$rhost
+    _ssh-auth-trim $ATH $INV.$rhost
 }
 #link ssh-validate
 _ssh-validate(){ # Check remote availability [site]

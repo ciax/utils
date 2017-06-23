@@ -32,11 +32,13 @@ _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
 }
 _chkfunc(){ # Show function list
+    # Execute last one
+    [ $0 == ${BASH_SOURCE[1]} ] || return
     local self="${0##*/}" i v
     # If this is symlinked to func name without '_', executed as func
     if [[ $(type _$self 2>&1) =~ function ]] ; then
         _$self $*
-    elif [ $0 == ${BASH_SOURCE[1]} ] ; then
+    else
         local cmd="$1";shift
         if [[ $(type "_$cmd" 2>&1) =~ function ]] ; then
             _$cmd $*
