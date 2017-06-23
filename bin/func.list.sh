@@ -4,7 +4,7 @@ type _list_csv >/dev/null 2>&1 && return
 . func.temp
 #type -t _list_csv >/dev/null 2>&1 && return
 shopt -s nullglob extglob
-_list_csv(){ # Show lined list (a,b,c..)
+_list_csv(){ # Connect each line with ',' to csv line (a,b,c..) from <stdin>
     local line list
     while read line;do
         list="${list:+$list,}$line"
@@ -18,7 +18,19 @@ _add_list(){ # Add elemnt to ver without duplication [varname] [elements...]
     eval "$_k=\"$*\""
     return $_e
 }
-_colm(){ # Convert csv to folded list from STDIN
+_uniq(){ # Show uniq folded list without marked line from args
+    local _i _ex tmplist
+    _temp tmplist
+    for _i ; do
+        if [[ $_i =~ ^# ]] ; then
+            _ex="$_ex|^${_i#\#}$"
+        else
+            echo $_i
+        fi
+    done > $tmplist
+    egrep -v "${_ex#\|}" $tmplist | sort -u
+}
+_colm(){ # Convert csv to folded list from <stdin>
     local size=0 tmplist item line
     _temp tmplist
     while read item;do
