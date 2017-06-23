@@ -23,12 +23,16 @@ _uniq(){ # Show uniq folded list without marked line from args
     _temp tmplist
     for _i ; do
         if [[ $_i =~ ^# ]] ; then
-            _ex="$_ex|^${_i#\#}$"
+            _ex="${_ex:+$ex|}${_i#\#}"
         else
             echo $_i
         fi
     done > $tmplist
-    egrep -v "${_ex#\|}" $tmplist | sort -u
+    if [ "$_ex" ] ; then
+        egrep -v "^($_ex)$" $tmplist | sort -u
+    else
+        sort -u $tmplist
+    fi
 }
 _colm(){ # Convert csv to folded list from <stdin>
     local size=0 tmplist item line
