@@ -72,21 +72,18 @@ _ssh-auth-by-invalid(){ # Remove keys from [authorized_keys] by [invalid_keys]
 }
 #link ssh-auth-rm-dup
 _ssh-auth-rm-dup(){ # Remove duplicated keys [authorized_keys]
-    local ath=${1:-$LATH} list dup csv rsa key host i
+    local ath=${1:-$LATH} list dup rsa key host i
     #  remove duplicated keys (compare key without host)
     while read rsa key host;do
-        if [ "$pkey" = "$key" ]; then
+        if [ "$pkey" = "$key" ]; then # Duplicated line
             dup=1
-        else
-            [ "$pkey" ] && echo "${csv:+ $csv}"
-            [ "$dup" ] && _warn "Put Together Duplicated Key ($csv)"
-            unset list dup csv
-            [ "$rsa" = ssh-rsa ] && echo -n "$rsa $key"
+        elif [ "$pkey" ] ; then # Normal line
+            list=$( _uniq $list | _list_csv )
+            echo "ssh-rsa $pkey${list:+ $list}"
+            [ "$dup" ] && _warn "Put Together Duplicated Key ($list)"
+            unset list dup
         fi
-        for i in ${host//,/ }; do
-            _add_list list ${i%:*}
-        done
-        csv="${list// /,}"
+        list="$list ${host//,/ }"
         pkey=$key
     done < <(sort -u $ath;echo) | _overwrite $ath
 }
@@ -159,12 +156,12 @@ _ssh-push(){ # Push auth key to remote [user@host:port]
     [ -s $ATH ] && s1=$ATH
     if [ -s $ATH.$rhost ] ; then
         cmp -s $ATH $ATH.$rhost && s1=
-        rm $ATH.$rhost
+        mv $ATH.$rhost old.$ATH.$rhost
     fi
     [ -s $INV ] && s2=$INV
     if [ -s $INV.$rhost ] ; then
         cmp -s $INV $INV.$rhost && s2=
-        rm $INV.$rhost
+        mv $INV.$rhost  old.$INV.$rhost
     fi
     if [ "$s1$s2" ] ; then
         scp -pq $sshopt $s1 $s2 $rhost:.ssh/ &&\
