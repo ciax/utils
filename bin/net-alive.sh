@@ -13,12 +13,12 @@ chk_host(){
     else
         return
     fi
-    #echo -n '.' 1>&2
     if ping -c1 -w1 "$site" &>/dev/null; then
-        _msg "$network.$host_ip $id -> ${C2}o"
+        res="${C2}o"
     else
-        _msg "$network.$host_ip $id -> ${C1}x"
+        res="${C1}x"
     fi
+    _msg "$network.$host_ip\t$id\t-> $res"
 }
 
 # Options
