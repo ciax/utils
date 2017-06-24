@@ -7,7 +7,7 @@
 opt-r(){ #Refresh arp
     eval "$(info-net)"
     _msg "Scannig network ($cidr)"
-    nmap -sn $cidr > /dev/null 2>&1
+    nmap -n -sn $cidr > /dev/null 2>&1
     arp -n|grep -v incomplete > $alist
 }
 opt-s(){ hset=1; } #Set to /etc/hosts
