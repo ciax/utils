@@ -1,5 +1,6 @@
 #!/bin/bash
-# Required scripts: func.getpar db-exec
+# Required packages: nmap
+# Required scripts: func.getpar func.temp db-exec
 # Required tables: host hub subnet
 # Description: show network tree
 . func.getpar
@@ -11,29 +12,24 @@ open_super(){
 }
 
 get_hubs(){
-    while read self sup wire desc; do
+    while read self_hub sup wire desc; do
         sup="${sup:-$1}"
-        sub[$sup]+="|$self" # add itself to parent var
-        super[$self]="$sup"
-        [ "$wire" = opt ] && fiber[$self]=true
-        title[$self]="$desc"
-        eval $(db-trace $self hub subnet)
+        sub[$sup]+="|$self_hub" # add itself to parent var
+        super[$self_hub]="$sup"
+        [ "$wire" = opt ] && fiber[$self_hub]=true
+        title[$self_hub]="$desc"
+        eval $(db-trace $self_hub hub subnet)
     done < <(db-exec "select id,super,wire,description from hub where subnet == '$1';"|sort)
     network=${network%.0}
 }
 
 get_hosts(){
     for sup in ${!title[*]};do
-        while read self host_ip; do
-            sub[$sup]+="|$self:"
-            super[$self:]="$sup"
-            title[$self:]="$self"
-            if [ "$host_ip" ] ; then
-                site="$network.$host_ip"
-            else
-                site="$self"
-            fi
-            ${cmd:-true} "$site" && open_super $self:
+        while read self_host host_ip; do
+            sub[$sup]+="|$self_host:"
+            super[$self_host:]="$sup"
+            title[$self_host:]="$self_host"
+            ${cmd:-true} && open_super $self_host:
         done < <(db-exec "select id,host_ip from host where hub == '$sup';")
     done
 }
@@ -66,22 +62,48 @@ show_tree(){
     done
 }
 
+top_tree(){
+    eval $(db-trace $1 subnet)
+    echo "$D3$description$C0"
+    show_tree $1
+}
+
 chk_host(){
+    if [ "$host_ip" ] ; then
+        site="$network.$host_ip"
+    else
+        site="$self_host"
+    fi
     echo -n '.'
-    ping -c1 -w1 "$1" &>/dev/null
+    ping -c1 -w1 "$site" &>/dev/null
+}
+
+chk_mac(){
+    [[ $(search-mac $self_host) =~ $exp ]]
 }
 
 # Options
-opt-p(){ echo -n "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
+opt-p(){ echo "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
+xopt-l(){ # check local net
+    eval $(info-net)
+    echo "NET=$cidr"
+    exp="^($(sudo nmap -n -sn $cidr | grep MAC | cut -d ' ' -f 3 | tr '\n' '|'))$"
+    cmd="chk_mac"
+    local mynet=$(net-name)
+    IFS='|'
+    get_hubs $mynet
+    get_hosts
+    top_tree $mynet
+}
 
 ### main ###
-_usage "[subnet]" $(db-list subnet)
-_exe_opt
 declare -A sub
 declare -A super
 declare -A title
 declare -A fiber
 declare -A connect
+_usage "[subnet]" $(db-list subnet)
+_exe_opt
 IFS='|'
 for i;do
     get_hubs $i
@@ -89,7 +111,5 @@ done
 get_hosts
 echo -n "$nl"
 for i;do
-    eval $(db-trace $i subnet)
-    echo "$D3$description$C0"
-    show_tree $i
+    top_tree $i
 done
