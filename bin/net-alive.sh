@@ -1,10 +1,9 @@
 #!/bin/bash
 # Required packages: nmap
-# Required scripts: func.getpar func.temp db-exec
-# Required tables: host hub subnet
-# Description: show network tree
+# Required scripts: func.getpar db-exec db-trace db-list
+# Required tables: mac host subnet
+# Description: show alive devices
 . func.getpar
-. func.temp
 
 chk_host(){
     if [ "$host_ip" ] ; then
@@ -22,15 +21,9 @@ chk_host(){
     fi
 }
 
-chk_mac(){
-    search-mac $self $tempfile
-    grep $(search-mac $self) $tempfile &>/dev/null
-}
-
 # Options
 xopt-l(){ # check local net
     eval $(info-net)
-    _temp tempfile
     while read mac; do
         unset device if host description
         eval $(db-trace $mac mac)
