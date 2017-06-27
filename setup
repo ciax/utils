@@ -10,5 +10,5 @@ cd ~/utils/bin
 . func.link.sh
 link-self
 bashrc-setup
-echo "You need [pkg init] and [db-update]"
+echo "You need [pkg init] and [db-update -f]"
 exec bash
