@@ -17,11 +17,11 @@ Basic information scripts
 
 Procedure for generating files ( All files are stored in ~/.var/ssl )
 
- 1.Make root CA certificate (Just one time)
-  ssl-rootca.sh [root site] -> rootca files (.key,.crt) (.csr isn't needed any more)
+ 1.Make root CA certificate (Just for first time)
+  ssl-rootca.sh [root site] -> rootca files (.key,.crt) (.csr won't be needed any more)
  2.Make server private key and request (make it at each server)
   ssl-request [server site]  -> csr file (.csr)
- 3.Make server certificate
+ 3.Make server certificate (Submit to CA)
   ssl-sign [rootca] [server site] -> server crt file (.crt)
 
 Procedure for installation
