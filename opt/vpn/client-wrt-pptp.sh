@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias pvpn
 # Required packages(Debian,Raspbian): pptp-linux
-# Required scripts: func.getpar db-list db-trace cfg-ppp
+# Required scripts: func.getpar db-list db-trace vpn-client-cfg-pptp
 # Description: client for dd-wrt pptp server
 . func.getpar
 # Options
@@ -18,6 +18,6 @@ user="--username $user"
 [ "$password" ] && pw="--password $password"
 opt="--encrypt"
 cmd="sudo pptpsetup $id $host $user $pw $opt --start"
-cfg-ppp -i
+vpn-client-cfg-pptp -i
 echo $cmd
 $cmd && ln -sf $(readlink $0) ~/bin/vpn
