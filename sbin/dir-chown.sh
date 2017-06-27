@@ -1,5 +1,5 @@
 #!/bin/bash
-#link chx
+#alias chx
 # Usage dir-chown [dir..]
 # Description: File owner will be uniformed under the current or specified dir tree
 source func.msg

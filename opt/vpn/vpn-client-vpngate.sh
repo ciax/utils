@@ -1,6 +1,7 @@
 #!/bin/bash
 # http://qiita.com/mt08/items/9f357be12c126d8976b3
 # git clone https://github.com/mt08xx/vgc.git
+#alias vgc
 
 OPT_DAEMON= #--daemon
 

@@ -35,6 +35,7 @@ _chkfunc(){ # Show function list
     # Execute last one
     [ $0 == ${BASH_SOURCE[1]} ] || return
     local self="${0##*/}" i v
+    echo $self
     # If this is symlinked to func name without '_', executed as func
     if [[ $(type _$self 2>&1) =~ function ]] ; then
         _$self $*
@@ -43,6 +44,7 @@ _chkfunc(){ # Show function list
         if [[ $(type "_$cmd" 2>&1) =~ function ]] ; then
             _$cmd $*
         else
+            # function list
             echo "$self contains"
             INDENT=$'\t'
             grep "^_[-a-z_]\+(.*#" $0|\

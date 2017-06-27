@@ -1,6 +1,5 @@
 #!/bin/bash
 # Desctiption: overwrite config file from stdin
-#link cfginst
 source func.getpar
 if [ ! -t 0 ] ; then
     _temp srcfile
