@@ -176,6 +176,7 @@ _ssh-push(){ # Push auth key to remote [user@host:port]
 _ssh-accept(){
     # Merge with local file
     cd ~/.var/ssh/accept/
+    rm $ATH* $INV*
     mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
@@ -187,6 +188,7 @@ _ssh-accept(){
 _ssh-impose(){
     # Merge with local file
     cd ~/.var/ssh/impose/
+    rm $ATH* $INV*
     mv ../*.$rhost . >/dev/null 2>&1
     # Conceal group members
     cut -d' ' -f1-2 $LATH > $ATH
