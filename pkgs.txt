@@ -1,2 +1,3 @@
 # Recommended Packages
 htop
+telnet
