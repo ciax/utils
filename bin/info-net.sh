@@ -2,10 +2,14 @@
 # Required commands: ip netstat
 # Recommended app: ipcalc
 shopt -s nullglob
-set - $(ip route|sort -r)
-gw=$3
-cidr=$6
-netif=$8
+while read h x t x i x; do
+    if [ "$h" = default -a ! "$netif" ] ; then
+        gw=$t
+        netif=$i
+    elif [ "$t" = "$netif" -a ! "$cidr" ] ; then
+        cidr=$h
+    fi
+done < <(ip route)
 set - $(ifconfig $netif | egrep '(inet |ether)')
 echo "netif=$netif"
 echo "hostip=$2"
