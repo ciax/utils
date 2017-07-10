@@ -41,7 +41,8 @@ _mklink(){ # Make links with abspath
         fi
     fi
     local dir=$(_absdir $dst)
-    ln -sf $src $dst && _addlink $dir $(basename $dst)
+    local sud="sudo -u $(stat -c %U $dir)"
+    $sud ln -sf $src $dst && _addlink $dir $(basename $dst)
 }
 _addlink(){
     eval "LINKS${1//[\/.]/_}+=' $2'"
