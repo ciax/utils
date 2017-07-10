@@ -10,7 +10,7 @@ while read h x t x i x; do
         cidr=$h
     fi
 done < <(ip route)
-set - $(ifconfig $netif | egrep '(inet |ether)')
+set - $(ifconfig $netif | egrep 'inet ')
 echo "netif=$netif"
 echo "hostip=$2"
 echo "subnet=${cidr%/*}"
@@ -18,4 +18,4 @@ echo "netmask=$4"
 echo "cidr=$cidr"
 echo "bcast=$6"
 echo "gw=$gw"
-echo "mac=$8"
+echo "mac=$(ifconfig | egrep -o '(\w{2}:){5}\w{2}')"
