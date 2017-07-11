@@ -1,7 +1,8 @@
 #!/bin/bash
 # Reference: https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/
 # Router Setting
-# Required packages: dnsmasq
+# Required packages: hostapd dnsmasq
+# Recommended packages: squid openvpn
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 pidof hostapd || sudo /usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
 sudo systemctl restart dnsmasq
