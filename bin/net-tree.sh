@@ -79,7 +79,9 @@ chk_host(){
 }
 
 chk_mac(){
-    [[ $(hostname) =~ $self_host ]] || [[ $(search-mac $self_host) =~ $exp ]]
+    [[ $(hostname) =~ $self_host ]] && return 1
+    local mac=$(search-mac $self_host)
+    [ "$mac" ] && [[ $mac =~ $exp ]]
 }
 
 # Options
