@@ -1,7 +1,7 @@
 #!/bin/bash
-# Required scripts: link-self
-# Description: update git repositories
-for i in $(git branch|grep -v '*');do
+# Required scripts: git-updall
+# Description: merge other branchies to HEAD
+. git-updall
+for i in $others; do
     git merge $i
 done
-
