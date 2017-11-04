@@ -8,8 +8,7 @@ core(){
 
 for line in ${*:-*.sh}; do
     shared=$(core $line)
-    echo "$shared"
-    for user in $(grep -rl "$shared" *);do
+    for user in $(grep -rl "\b$shared\b" *);do
         [[ $user == *.sh ]] || continue
         user=$(core $user)
         [ "$user" = "$shared" ] || echo "$shared $user"
