@@ -14,8 +14,9 @@ addpath(){
 uniqenv(){
     local i j list
     for i; do
-        list=$(IFS=:; for j in ${!i}; do echo $j;done|awk -v ORS=: '!x[$0]++')
-        eval "$i=${list%:}"
+        # dir name can contain '()' in windows system
+        list="$(IFS=:; for j in ${!i}; do echo $j;done|awk -v ORS=: '!x[$0]++')"
+        eval "$i='${list%:}'"
     done
 }
 addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin}
