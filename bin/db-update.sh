@@ -15,12 +15,12 @@ oldest-db(){
     local file
     for file in ~/.var/db-*.sq3;do
         stat -c%Y $file
-    done|sort|head -1
+    done|sort|head -1|grep .
 }
 _usage
 _exe_opt
+dt=$(oldest-db) || get=1
 if [ ! "$get" ] ; then 
-    dt=$(oldest-db)
     ct=$(latest-tsv)
     if [ "$dt" -gt "$ct" ]; then
         _warn "DB is up to date"
