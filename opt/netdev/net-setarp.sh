@@ -7,13 +7,13 @@ opt-r(){ # arping only(root)
     sudo arping $mac;echo OK
 }
 opt-l(){ # setip for Lantronix/APC PDU
-    sudo arp -s $ip $mac
-    ping $ip -s 113
+    sudo arp -s $host $mac
+    ping -s 113 $host
 }
 opt-p(){ # setip for PLIZZI
-    sudo arp -s $ip $mac
-    telnet $ip 1 >& /dev/null
-    telnet $ip 9999
+    sudo arp -s $host $mac
+    telnet $host 1 >& /dev/null
+    telnet $host 9999
 }
 _usage "[hosts]"
 IFS='|'
