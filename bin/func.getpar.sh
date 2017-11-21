@@ -71,7 +71,7 @@ _mk_optlist(){ # List of options with opt-?() functions
         [[ "$line" =~ '#' ]] && desc=":${line#*#}"
         opt=${fnc#*opt-}
         opts=$opts$opt
-        items=$items$C2"$opt$C0${desc/:=/=}\n"
+        items=$items$C2"-$opt$C0${desc/:=/=}\n"
     done < <(egrep '^x?opt-.\(\)\{' $0)
 }
 # Show Usage

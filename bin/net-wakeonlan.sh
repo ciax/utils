@@ -4,7 +4,7 @@
 # Required scripts: func.getpar search-mac
 # Description: make network devices wake up
 . func.getpar
-xopt-s(){
+xopt-s(){ # set wakeon lan feature to localhost
     if sudo ethtool eth0 | grep -q 'Wake-on: d' ; then
         sudo ethtool -s eth0 wol g
         _warn "Wake on lan is set"
