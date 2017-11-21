@@ -66,15 +66,6 @@ _disp-case(){ # Display case list and exit
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
     done | _colm
 }
-_optlist(){ # List of options with opt-?() functions
-    local line fnc desc
-    egrep '^x?opt-.\(\)\{' $0|\
-    while read line;do
-        fnc="${line%%(*}"
-        [[ "$line" =~ '#' ]] && desc=":${line#*#}"
-        echo $C2"${fnc#*opt}$C0${desc/:=/=}"
-    done
-}
 _basename_list(){ # List of file basename
     for i ;do
         f=${i##*/}

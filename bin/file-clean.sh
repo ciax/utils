@@ -37,7 +37,7 @@ for i in ${*:-.};do
         _subdirs _clrdir
         popd >/dev/null
     else
-        _warn "Not under home dir"
+        _warn "Under another user's dir"
     fi
 done
 _warn "File Cleaning ($_dirlist)"

@@ -2,6 +2,7 @@
 # Display Message Module
 type _msg >/dev/null 2>&1 && return
 shopt -s nullglob extglob
+INDENT=$'\t'
 # Coloring for Console
 #  ESC[(A);(B)(C)m # A: 0=dark 1=light # B: 3=FG 4=BG # C: 1=R 2=G 4=B
 #  environment variable "C?","D?" are provided
@@ -12,21 +13,25 @@ if [ -t 2 ] ; then
     done
     C0=$'\e[0m'
 fi
-
+_indent(){ # Indent each line
+    while read line; do
+        echo "$INDENT$line" 1>&2
+    done
+}
 _msg(){ # Print message to stderr
-    echo -e "$INDENT$C0$*$C0" 1>&2
+    echo -e "$C0$*$C0" | _indent
 }
 _warn(){ # Print warning to stderr
-    echo "$INDENT$C3$*$C0" 1>&2
+    echo -e "$C3$*$C0" | _indent
 }
 _alert(){ # Print alert to stderr
-    echo "$INDENT$C1$*$C0" 1>&2
+    echo -e "$C1$*$C0" | _indent
 }
 _abort(){ # Abort with message
     _alert "$*";exit 1
 }
 _item(){ # Show Items [title] [description]
-    echo "$INDENT$C2$1$C0 : $2" 1>&2
+    echo -e "$C2$1$C0 : $2" | _indent
 }
 _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
@@ -46,7 +51,6 @@ _chkfunc(){ # Show function list
         else
             # function list
             echo "$self contains"
-            INDENT=$'\t'
             grep "^_[-a-z_]\+(.*#" $0|\
                 while read i v;do
                     _item "${i%(*}" "${v#*#}"

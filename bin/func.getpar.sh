@@ -63,12 +63,25 @@ _chk_all(){ # Check all argument
     local reqp=$1;shift
     _ver_func && _chk_opt && _chk_argc "$reqp" && _chk_argv $* && return
 }
+# Option List (set to $opts and $items)
+_mk_optlist(){ # List of options with opt-?() functions
+    local line fnc opt desc
+    while read line;do
+        fnc="${line%%(*}"
+        [[ "$line" =~ '#' ]] && desc=":${line#*#}"
+        opt=${fnc#*opt-}
+        opts=$opts$opt
+        items=$items$C2"$opt$C0${desc/:=/=}\n"
+    done < <(egrep '^x?opt-.\(\)\{' $0)
+}
 # Show Usage
 _disp_usage(){
-    local opt=$(_optlist|_list_csv)
-    echo -e "Usage: $C3${0##*/}$C0${opt:+ ($opt)} $1" 1>&2
+    local opts items
+    _mk_optlist
+    echo -e "Usage: $C3${0##*/}$C0${opts:+ (-$opts)} $1" 1>&2
+    echo -e $items|grep .|_indent
 }
-# Usage: _usage [partxt] (arg list)
+# Usage: _usage [par_txt] (arg list)
 # Desctiption
 #   1. Execute xopt-?() and exit as an exclusive function if exist.
 #   2. Check the single options that provided as opt-?() or xopt-?() functions.
