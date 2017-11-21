@@ -32,3 +32,5 @@ fi
 set - $(table-ends)
 _warn "Database update for $*"
 sql-make $*|db-exec
+cfg-hosts -s
+ssh-config -s
