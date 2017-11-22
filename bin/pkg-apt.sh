@@ -72,7 +72,7 @@ case "$cmd" in
         dpkg -l "$1";;
     *)
         _disp_usage "[command]"
-        _disp-case 1>&2
+        _caseitem | _colm 1>&2
         exit 1
         ;;
 esac

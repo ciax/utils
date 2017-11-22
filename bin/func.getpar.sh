@@ -63,27 +63,43 @@ _chk_all(){ # Check all argument
     local reqp=$1;shift
     _ver_func && _chk_opt && _chk_argc "$reqp" && _chk_argv $* && return
 }
-# Option List (set to $opts and $items)
-_mk_optlist(){ # List of options with opt-?() functions
-    local line fnc opt desc par
+# Option List
+_optlist(){ # Pack of option letters of opt-?() functions
+    local line fnc
     while read line;do
-        fnc="${line%%(*}"
-        [[ "$line" =~ '#' ]] && desc="${line#*#}"
-        opt=${fnc#*opt-}
-        opts=$opts$opt
-        if [[ $desc =~ : ]]; then
-            par="${desc%:*}"
-            desc="${desc#*:}"
-        fi
-        items=$items"-$opt$par,$desc\n"
+        fnc=${line#*-}
+        echo -n "${fnc%%(*}"
     done < <(egrep '^x?opt-.\(\)\{' $0)
 }
-# Show Usage
-_disp_usage(){
-    local opts items
-    _mk_optlist
-    echo -e "Usage: $C3${0##*/}$C0${opts:+ (-$opts)} $1" 1>&2
-    echo -en $items| _colm
+_optitem(){ # List of option description
+    local line fnc
+    while read line;do
+        fnc=${line#*-}
+        echo -n "-${fnc%%(*}"
+        __optdesc "$fnc"
+    done < <(egrep '^x?opt-.\(\)\{' $0)
+}
+__optdesc(){
+    local desc
+    [[ "$1" =~ '#' ]] && desc="${1#*#}"
+    if [[ $desc =~ : ]]; then
+        echo -n "${desc%:*}"
+        desc="${desc#*:}"
+    fi
+    echo ",$desc"
+}
+# Case List
+_caselist(){ # List of case option
+    egrep -o '^ +[a-z]+\)' $0|tr -d ' )'
+}
+_caseitem(){ # List of case desctiption
+    local line arg
+    egrep '^ +[a-z]+\)' $0 |\
+    while read line;do
+        arg="${line%%)*}"
+        echo -n "${arg#* }"
+        [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
+    done
 }
 # Usage: _usage [par_txt] (arg list)
 # Desctiption
@@ -99,12 +115,18 @@ _disp_usage(){
 #   file name replaceable with stdin => enclosed by "<>"
 #   optional parameters => enclosed by "()"
 # -n: No display valid pars and return only 
-_usage(){ # Show usage
+_usage(){ # Check and show usage
     _exe_xopt
     _chk_all "$@" && return # because it includes '[]'
     _disp_usage "$1";shift
     for i;do echo $i;done | _colm 40 1>&2
     exit 1
+}
+_disp_usage(){ # Show Usage
+    local opts items
+    opts=$(_optlist)
+    echo -e "Usage: $C3${0##*/}$C0${opts:+ (-$opts)} $1" 1>&2
+    _optitem | _colm 1>&2
 }
 _chkfunc $*
 # Option Parser

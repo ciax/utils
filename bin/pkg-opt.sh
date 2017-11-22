@@ -14,9 +14,8 @@
 #  - Edit /etc/sudoers to access root by %users with no password 
 #  - Install openssh by ipkg for login by general user account
 . func.getpar
-which ipkg >/dev/null || _abort "This might not have Optware"
+#which ipkg >/dev/null || _abort "This might not have Optware"
 which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-_caselist | _usage "[option]"
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
@@ -49,5 +48,9 @@ case "$cmd" in
     info) #show package info
         _usage "[$cmd] [package]"
         sudo ipkg info "$1";;
-    *);;
+    *)
+        _disp_usage "[command]"
+        _caseitem | _colm 1>&2
+        exit 1
+        ;;
 esac

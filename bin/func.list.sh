@@ -62,18 +62,6 @@ _colm(){ # Convert (item,desc) to folded list from <stdin>
     done < $tmplist
     [ "$line" ] && echo -e "$line"
 }
-_caselist(){ # List of case option
-    egrep -o '^ +[a-z]+\)' $0|tr -d ' )'
-}
-_disp-case(){ # Display case list and exit
-    local line arg
-    egrep '^ +[a-z]+\)' $0 |\
-    while read line;do
-        arg="${line%%)*}"
-        echo -n "${arg#* }"
-        [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
-    done | _colm 40
-}
 _basename_list(){ # List of file basename
     for i ;do
         f=${i##*/}

@@ -38,8 +38,8 @@ case "$cmd" in
         _usage "[$cmd] [package]"
         rpm -qi "$1";;
     *)
-        _disp_usage "[option]"
-        _disp-case
+        _disp_usage "[command]"
+        _caseitem | _colm 1>&2
         exit 1
     ;;
 esac
