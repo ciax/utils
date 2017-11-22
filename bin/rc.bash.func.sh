@@ -36,7 +36,7 @@ reg(){
     file-register $*
     self_alias
 }
-# Grep recursive for ruby
+# Grep recursive
 gr(){
     local opt;
     [ "$1" ] || return
@@ -46,8 +46,7 @@ gr(){
     done
     local reg="$1";shift
     [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-    local files="${*:-*.rb}"
-    egrep -vrn "^ *#" ${files:-*} |egrep $opt ":.*($reg)"|egrep --color $opt "$reg"
+    egrep -rn $opt --exclude-dir=.git "$reg"|egrep -v '^.+:[0-9]+: *#'|egrep --color $opt "$reg"
 }
 # Search alias/func
 ag(){
