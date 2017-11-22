@@ -65,13 +65,17 @@ _chk_all(){ # Check all argument
 }
 # Option List (set to $opts and $items)
 _mk_optlist(){ # List of options with opt-?() functions
-    local line fnc opt desc
+    local line fnc opt desc par
     while read line;do
         fnc="${line%%(*}"
-        [[ "$line" =~ '#' ]] && desc=":${line#*#}"
+        [[ "$line" =~ '#' ]] && desc="${line#*#}"
         opt=${fnc#*opt-}
         opts=$opts$opt
-        items=$items$C2"-$opt$C0${desc/:=/=}\n"
+        if [[ $desc =~ : ]]; then
+            par="${desc%:*}"
+            desc="${desc#*:}"
+        fi
+        items=$items"-$opt$par,$desc\n"
     done < <(egrep '^x?opt-.\(\)\{' $0)
 }
 # Show Usage
@@ -79,7 +83,7 @@ _disp_usage(){
     local opts items
     _mk_optlist
     echo -e "Usage: $C3${0##*/}$C0${opts:+ (-$opts)} $1" 1>&2
-    echo -e $items|grep .|_indent
+    echo -en $items| _colm
 }
 # Usage: _usage [par_txt] (arg list)
 # Desctiption
@@ -89,7 +93,7 @@ _disp_usage(){
 #   4. Check the value of argument whether it is in args following parlist 
 #   5. Execute opt-?() functions at _exe_opt().
 # Parameter Text format:
-#   option is automatically printed as "(-x,-y..)"
+#   option is automatically printed as "(-xy..)"
 #   option with parameter => -x=par
 #   mandatory parameters => enclosed by "[]"
 #   file name replaceable with stdin => enclosed by "<>"
@@ -99,7 +103,7 @@ _usage(){ # Show usage
     _exe_xopt
     _chk_all "$@" && return # because it includes '[]'
     _disp_usage "$1";shift
-    for i;do echo $i;done | _colm 1>&2
+    for i;do echo $i;done | _colm 40 1>&2
     exit 1
 }
 _chkfunc $*

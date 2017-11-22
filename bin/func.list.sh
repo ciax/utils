@@ -34,22 +34,30 @@ _uniq(){ # Show uniq folded list without marked line from args
         sort -u $tmplist
     fi
 }
-_colm(){ # Convert csv to folded list from <stdin>
+_colm(){ # Convert (item,desc) to folded list from <stdin>
+    # if max width $1 is set, print multi column
     local size=0 tmplist item line
+    local width=$1
     _temp tmplist
+    # Get max line length
     while read item;do
         [ "${#item}" -gt $size ] && size="${#item}"
         echo "$item"
     done > $tmplist
+    # Print lines
     while read item;do
         [[ "$item" =~ , ]] && item="$C2${item/,/$C0: }"
         while [ ${#item} -lt $size ]; do
             item="$item "
         done
-        line="$line\t$item"
-        if [ "${#line}" -gt 40 ] ; then
-            echo -e "${line% *}"
-            unset line
+        if [ "$width" ]; then
+            line="$line\t$item"
+            if [ "${#line}" -gt $width ] ; then
+                echo -e "${line% *}"
+                unset line
+            fi
+        else
+            echo -e "\t$item"
         fi
     done < $tmplist
     [ "$line" ] && echo -e "$line"
@@ -64,7 +72,7 @@ _disp-case(){ # Display case list and exit
         arg="${line%%)*}"
         echo -n "${arg#* }"
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
-    done | _colm
+    done | _colm 40
 }
 _basename_list(){ # List of file basename
     for i ;do

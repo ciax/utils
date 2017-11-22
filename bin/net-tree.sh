@@ -85,7 +85,7 @@ chk_mac(){
 }
 
 # Options
-opt-p(){ echo "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
+opt-p(){ echo "Checking ";nl=$'\n';cmd="chk_host"; } # ping check
 xopt-l(){ # check local net
     eval $(info-net)
     echo "NET=$cidr"

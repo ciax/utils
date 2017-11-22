@@ -2,7 +2,6 @@
 # Display Message Module
 type _msg >/dev/null 2>&1 && return
 shopt -s nullglob extglob
-INDENT=$'\t'
 # Coloring for Console
 #  ESC[(A);(B)(C)m # A: 0=dark 1=light # B: 3=FG 4=BG # C: 1=R 2=G 4=B
 #  environment variable "C?","D?" are provided
@@ -45,6 +44,7 @@ _chkfunc(){ # Show function list
     if [[ $(type _$self 2>&1) =~ function ]] ; then
         _$self $*
     else
+        INDENT=$'\t'
         local cmd="$1";shift
         if [[ $(type "_$cmd" 2>&1) =~ function ]] ; then
             _$cmd $*
