@@ -2,7 +2,7 @@
 #alias stash
 # Required packages: gzip
 # Required scripts: func.getpar info-dist bkup-exec
-# Required table: content list
+# Required tables: content list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid
 # Description: Never stash past recorded file (by hash id)

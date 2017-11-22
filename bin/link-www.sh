@@ -1,5 +1,5 @@
 #!/bin/bash
-# Description : Export dir as link
+# Description: Export dir as link
 #alias lnw
 [ "$1" ] || { echo "Usage: link-www [dir]"; exit 1; }
 dir=$1

@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required packages : wget nkf
-# Description : Repricate web site. The config file is in ~/cfg.*/env.
+# Required packages: wget nkf
+# Description: Repricate web site. The config file is in ~/cfg.*/env.
 usage(){
     #Show Usage and List
     while read cfg; do

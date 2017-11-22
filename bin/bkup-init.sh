@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: bkup-exec
-# Required table: content list
+# Required tables: content list
 #   content: fid(md5),name,mode,date,base64(gziped)
 #   list: id(date),host,dist,owner,dir,fid
 # option (-r) : reset data
