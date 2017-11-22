@@ -30,7 +30,7 @@ _abort(){ # Abort with message
     _alert "$*";exit 1
 }
 _item(){ # Show Items [title] [description]
-    echo -e "$C2$1$C0 : $2" | _indent
+    echo -en "$C2$1$C0 : $*"
 }
 _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
@@ -53,7 +53,7 @@ _chkfunc(){ # Show function list
             echo "$self contains"
             grep "^_[-a-z_]\+(.*#" $0|\
                 while read i v;do
-                    _item "${i%(*}" "${v#*#}"
+                    _item "${i%(*}" "${v#*#}\n" | _indent
                 done
         fi
     fi
