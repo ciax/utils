@@ -46,7 +46,7 @@ _colm(){ # Convert (item,desc) to folded list from <stdin>
     done > $tmplist
     # Print lines
     while read item;do
-        [[ "$item" =~ , ]] && item=$(_item ${item/,/ })
+        [[ "$item" =~ , ]] && item=$(_item "$item")
         while [ ${#item} -lt $size ]; do
             item="$item "
         done
