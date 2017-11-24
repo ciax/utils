@@ -12,14 +12,14 @@ open_super(){
 }
 
 get_hubs(){
-    while read self_hub sup wire desc; do
+    while read self_hub sup wire desc host; do
         sup="${sup:-$1}"
         sub[$sup]+="|$self_hub" # add itself to parent var
         super[$self_hub]="$sup"
         [ "$wire" = opt ] && fiber[$self_hub]=true
-        title[$self_hub]="$desc"
+        title[$self_hub]="$desc${host:+ $C4($host)}"
         eval $(db-trace $self_hub hub subnet)
-    done < <(db-exec "select id,super,wire,description from hub where subnet == '$1';"|sort)
+    done < <(db-exec "select id,super,wire,description,host from hub where subnet == '$1';"|sort)
     network=${network%.0}
 }
 
