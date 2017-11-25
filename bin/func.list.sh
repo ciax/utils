@@ -36,8 +36,8 @@ _uniq(){ # Show uniq folded list without marked line from args
 }
 _colm(){ # Convert (item,desc) to folded list from <stdin>
     # if max width $1 is set, print multi column
-    local size=0 tmplist item line
-    local width=$1
+    local size=0 tmplist item
+    local width=$1 len=0
     _temp tmplist
     # Get max line length
     while read item;do
@@ -47,20 +47,19 @@ _colm(){ # Convert (item,desc) to folded list from <stdin>
     # Print lines
     while read item;do
         [[ "$item" =~ , ]] && item=$(_item "$item")
-        while [ ${#item} -lt $size ]; do
-            item="$item "
-        done
         if [ "$width" ]; then
-            line="$line $item"
-            if [ "${#line}" -gt $width ] ; then
-                echo -e "\t$line"
-                unset line
+            [ $len = 0 ]  && echo -en "\t"
+            printf "%-${size}s " "$item"
+            len=$(( $len + $size ))
+            if [ $len -gt $width ] ; then
+                echo
+                len=0
             fi
         else
             echo -e "\t$item"
         fi
     done < $tmplist
-    [ "$line" ] && echo -e "\t$line"
+    [ $len -gt 0 ] && echo
 }
 _basename_list(){ # List of file basename
     for i ;do
