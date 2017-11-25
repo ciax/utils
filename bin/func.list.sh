@@ -51,16 +51,16 @@ _colm(){ # Convert (item,desc) to folded list from <stdin>
             item="$item "
         done
         if [ "$width" ]; then
-            line="$line\t$item"
+            line="$line $item"
             if [ "${#line}" -gt $width ] ; then
-                echo -e "${line% *}"
+                echo -e "\t$line"
                 unset line
             fi
         else
             echo -e "\t$item"
         fi
     done < $tmplist
-    [ "$line" ] && echo -e "$line"
+    [ "$line" ] && echo -e "\t$line"
 }
 _basename_list(){ # List of file basename
     for i ;do
