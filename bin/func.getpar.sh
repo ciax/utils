@@ -65,29 +65,20 @@ _chk_all(){ # Check all argument
 }
 # Option List
 _optlist(){ # Pack of option letters of opt-?() functions
-    local line fnc
+    local line fnc opts
     while read line;do
         fnc=${line#*-}
-        echo -n "${fnc%%(*}"
+        opts+="${fnc%%(*}"
+        OPTDEF+=("$(__optdesc "$fnc")")
     done < <(egrep '^x?opt-.\(\)\{' $0)
-}
-_optitem(){ # List of option description
-    local line fnc
-    while read line;do
-        fnc=${line#*-}
-        echo -n "-${fnc%%(*}"
-        __optdesc "$fnc"
-    done < <(egrep '^x?opt-.\(\)\{' $0)
+    echo -n "${opts:+ (-$opts)}" 1>&2
 }
 __optdesc(){
     local desc
-    [[ "$1" =~ '#' ]] && desc="${1#*#}"
+    desc="-${1/\(*#/,}"
     # pre colon gets into key (i.e. -o{ #=tag:desc -> -o=tag,desc) 
-    if [[ $desc =~ : ]]; then
-        echo -n "${desc%:*}"
-        desc="${desc#*:}"
-    fi
-    echo ",$desc"
+    [[ $desc =~ ,=(.+): ]] &&  desc=${desc/,=*:/=${BASH_REMATCH[1]},}
+    echo -n "$desc"
 }
 # Case List
 _caselist(){ # List of case option
@@ -123,16 +114,20 @@ _usage(){ # Check and show usage
     for i;do echo $i;done | _colm 40 1>&2
     exit 1
 }
-_disp_usage(){ # Show Usage
-    local opts items
-    opts=$(_optlist)
-    echo -e "Usage: $C3${0##*/}$C0${opts:+ (-$opts)} $1" 1>&2
-    _optitem | _colm 1>&2
+_disp_usage(){
+    echo -en "Usage: $C3${0##*/}$C0" 1>&2
+    _optlist
+    echo -e " $1" 1>&2
+    shift
+    for i in "${OPTDEF[@]}";do echo "$i";done | _colm 1>&2
 }
+
+
 _chkfunc $*
 # Option Parser
 declare -a ARGV
 declare -a OPT
+declare -a OPTDEF
 for i;do
     case "$ARGV$i" in
         -*) OPT=("${OPT[@]}" "$i");;
