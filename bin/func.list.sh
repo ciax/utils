@@ -36,31 +36,28 @@ _uniq(){ # Show uniq folded list without marked line from args
 }
 _colm(){ # Convert (item,desc) to folded list from <stdin>
     # if max width $1 is set, print multi column
-    local size=0 tmplist item
-    local width=$1 len=0
-    _temp tmplist
+    local size=0 width=${1:-1} item row
     # Get max line length
-    while read item;do
-        [ "${#item}" -gt $size ] && size="${#item}"
-        echo "$item"
-    done > $tmplist
+    mapfile -C __max -c 1 -t
+    (( $size > 0 )) || return
     # Print lines
-    while read item;do
-        [[ "$item" =~ , ]] && item=$(_item "$item")
-        if [ "$width" ]; then
-            [ $len = 0 ]  && echo -en "\t"
+    row=$(( $width / $size + 1 ))
+    set - "${MAPFILE[@]}"
+    while (( $# > 0 )); do
+        echo -en "\t"
+        for (( i=0 ; i < $row && $# > 0 ; i++ )); do
+            item=$1;shift
+            [[ "$item" =~ , ]] && item=$(_item "$item")
             printf "%-${size}s " "$item"
-            len=$(( $len + $size ))
-            if [ $len -gt $width ] ; then
-                echo
-                len=0
-            fi
-        else
-            echo -e "\t$item"
-        fi
-    done < $tmplist
-    [ $len -gt 0 ] && echo
+        done
+        echo
+    done
 }
+
+__max(){
+    (( ${#2} > $size )) && size=${#2}
+}
+
 _basename_list(){ # List of file basename
     for i ;do
         f=${i##*/}
