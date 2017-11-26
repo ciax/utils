@@ -85,8 +85,8 @@ chk_mac(){
 }
 
 # Options
-opt-p(){ echo "Checking ";nl=$'\n';cmd="chk_host"; } # ping check
-xopt-l(){ # check local net
+opt-p(){ echo "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
+xopt-l(){ #check local net
     eval $(info-net)
     echo "NET=$cidr"
     exp="^($(sudo nmap -n -sn $cidr | grep MAC | cut -d ' ' -f 3 | tr '\n' '|'))$"

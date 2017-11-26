@@ -29,8 +29,11 @@ _alert(){ # Print alert to stderr
 _abort(){ # Abort with message
     _alert "$*";exit 1
 }
-_item(){ # Show Items [caption,description]
-    [[ "$1" =~ , ]] && echo -en "$C2${1%%,*}$C0: "
+_item(){ # Show Items [caption,description,caption-length]
+    if [[ "$1" =~ , ]] ; then
+        cap=$(printf "%-${2:-1}s" "${1%%,*}")
+        echo -en "$C2$cap$C0 : "
+    fi
     echo -en "${1#*,}"
 }
 _verbose(){ # Show msg when func name is set to VER
