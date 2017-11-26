@@ -82,6 +82,7 @@ _optitem(){ # List of option description
 __optdesc(){
     local desc
     [[ "$1" =~ '#' ]] && desc="${1#*#}"
+    # pre colon gets into key (i.e. -o{ #=tag:desc -> -o=tag,desc) 
     if [[ $desc =~ : ]]; then
         echo -n "${desc%:*}"
         desc="${desc#*:}"

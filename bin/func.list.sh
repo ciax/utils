@@ -36,7 +36,7 @@ _uniq(){ # Show uniq folded list without marked line from args
 }
 _colm(){ # Convert (item,desc) to folded list from <stdin>
     # if max width $1 is set, print multi column
-    local size=0 width=${1:-1} item row
+    local size=0 width=${1:-1} row
     # Get max line length
     mapfile -C __max -c 1 -t
     (( $size > 0 )) || return
@@ -46,9 +46,8 @@ _colm(){ # Convert (item,desc) to folded list from <stdin>
     while (( $# > 0 )); do
         echo -en "\t"
         for (( i=0 ; i < $row && $# > 0 ; i++ )); do
-            item=$1;shift
-            [[ "$item" =~ , ]] && item=$(_item "$item")
-            printf "%-${size}s " "$item"
+            printf "%-${size}s " "$(_item "$1")"
+            shift
         done
         echo
     done

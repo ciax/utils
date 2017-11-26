@@ -30,9 +30,8 @@ _abort(){ # Abort with message
     _alert "$*";exit 1
 }
 _item(){ # Show Items [caption,description]
-    cap=${1%%,*}
-    des=${1#*,}
-    echo -en "$C2$cap$C0 : $des"
+    [[ "$1" =~ , ]] && echo -en "$C2${1%%,*}$C0: "
+    echo -en "${1#*,}"
 }
 _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
