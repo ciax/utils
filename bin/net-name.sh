@@ -8,6 +8,6 @@ db-exec <<EOF
 select id
 from subnet
 where
-  network == '${subnet%.*}'
+  network == '${hostip%.*}'
 ;
 EOF
