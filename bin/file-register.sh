@@ -8,7 +8,7 @@ for i in ${*:-~/utils/bin};do
     if [ -d "$i" ]; then
         pushd $i >/dev/null
         _warn "  Registering ($PWD)"
-        _subdirs _setup
+        _subdirs _setup_link
         popd >/dev/null
     else
         _linkbin "$i"

@@ -9,7 +9,7 @@ PATH=$HOME/bin:$PATH
 cd ~/utils/bin
 . func.link.sh
 _setup
+. rc.bash
 link-self
 bashrc-setup
 echo "You need [pkg init] and [db-update -f]"
-exec bash
