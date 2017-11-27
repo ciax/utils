@@ -7,7 +7,7 @@ shopt -s nullglob extglob
 _list_csv(){ # Connect each line with ',' to csv line (a,b,c..) from <stdin>
     local line list
     while read line;do
-        list="${list:+$list,}$line"
+        list+="${list:+,}$line"
     done
     echo "$list"
 }
