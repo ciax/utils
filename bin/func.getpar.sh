@@ -130,11 +130,10 @@ declare -a OPT
 declare -a OPTDEF
 for i;do
     case "$ARGV$i" in
-        -*) OPT=("${OPT[@]}" "$i");;
-        *) ARGV=("${ARGV[@]}" "$i");;
+        -*) OPT+=("$i");;
+        *) ARGV+=("$i");;
     esac
     shift
 done
 ARGC=${#ARGV[@]}
 set - "${ARGV[@]}"
-
