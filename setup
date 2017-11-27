@@ -8,7 +8,7 @@ done
 PATH=$HOME/bin:$PATH
 cd ~/utils/bin
 . func.link.sh
-_setup
+_setup_link
 . rc.bash
 link-self
 bashrc-setup
