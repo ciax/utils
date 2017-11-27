@@ -21,7 +21,7 @@ Copyright (c) 2014 Koji Omata (MIT License)
  
 ### Setup at Home Dir
 > git clone https://git.hub/ciax/cfg.(proj).git
-> ~/cfg.(proj)/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
+> source ~/cfg.(proj)/setup-cfg-(proj).sh  <--- automatically retrieves dependent apps
 > pkg-(apt|yum) init
 > db-update -f
 
