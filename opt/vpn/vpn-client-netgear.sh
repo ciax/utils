@@ -5,7 +5,7 @@
 # Description: client for netgear router openvpn
 . func.getpar
 . func.proc
-xopt-d(){
+xopt-d(){ #disconnect
     act=$(ifconfig|grep ^tun) || return
     set - $act
     sudo iptables -t nat -D POSTROUTING -o $1 -j MASQUERADE

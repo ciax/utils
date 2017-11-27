@@ -3,11 +3,9 @@
 # Required scripts: func.getpar
 # Description: transaction for db file
 # Usage: db-exec (opt) (sql)
-#        -i:ini (a=b) style
-#        -c:csv with header
 . func.getpar
-opt-i(){ opt=-line; }
-opt-c(){ opt="-csv -header"; }
+opt-i(){ opt=-line; } #ini (a=b) style
+opt-c(){ opt="-csv -header"; } #csv with header
 _usage "(statement)"
 _exe_opt
 [ -d ~/.var ] || mkdir ~/.var

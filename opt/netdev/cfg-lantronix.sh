@@ -6,7 +6,7 @@
 . func.getpar
 _login(){ echo "s";echo "su";echo "system"; }
 _reboot(){ echo "initialize server delay 0"; }
-xopt-r(){ _login; _reboot; }
+xopt-r(){ _login; _reboot; } #reboot
 _usage "[id] (range)" $(db-exec "select distinct host from lantronix;")
 IFS='|'
 _login

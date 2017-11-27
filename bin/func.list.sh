@@ -60,9 +60,7 @@ __max(){
 }
 
 _basename_list(){ # List of file basename
-    for i ;do
-        f=${i##*/}
-        echo -n "${f%.*} "
-    done
+    set - "${@##*/}"
+    echo -n "${@%.*}"
 }
 _chkfunc $*

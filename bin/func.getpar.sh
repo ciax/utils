@@ -2,7 +2,7 @@
 # Option parse module
 # Usage:
 #  souce $0 at head of file,
-#  set opt-?() or xopt-?() functions,
+#  set option functions [opt-?() or xopt-?()],
 #  _usage()
 #  _exe_opt()
 . func.list
@@ -100,6 +100,7 @@ _caseitem(){ # List of case desctiption
 #   3. Check the number of arguments (ARGC >= The count of '[' in parlist)
 #   4. Check the value of argument whether it is in args following parlist 
 #   5. Execute opt-?() functions at _exe_opt().
+#   6. Option function name will be followed by a comment to show description.
 # Parameter Text format:
 #   option is automatically printed as "(-xy..)"
 #   option with parameter => -x=par
