@@ -9,7 +9,11 @@ PUB=~/.ssh/id_rsa.pub
 CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
 LINV=~/.ssh/$INV
+SSHVAR=~/.var/cache/ssh
 ME=$(logname)@$(hostname)
+### For remote operation ###
+[ -d $SSHVAR/accept ] || mkdir -p $SSHVAR/accept
+[ -d $SSHVAR/impose ] || mkdir -p $SSHVAR/impose
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
 # Set permission [oct] [files..]
 _setp(){
@@ -117,9 +121,6 @@ _ssh-setup(){ # Setup ssh
     grep -q "$(< $PUB)" $LATH || grep . $PUB >> $LATH
 }
 
-### For remote operation ###
-[ -d ~/.var/ssh/accept ] || mkdir -p ~/.var/ssh/accept
-[ -d ~/.var/ssh/impose ] || mkdir -p ~/.var/ssh/impose
 # Set rhost,sshopt,port
 _ssh-opt(){
     local site host user
@@ -143,7 +144,7 @@ _ssh-fetch(){ # Fetch remote auth key [user@host:port]
     _ssh-opt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
     # Get files from remote
-    cd ~/.var/ssh
+    cd $SSHVAR
     scp $sshopt $rhost:.ssh/$ATH .
     scp $sshopt $rhost:.ssh/$INV .
     [ -s $ATH ] && mv $ATH $ATH.$rhost
@@ -175,8 +176,8 @@ _ssh-push(){ # Push auth key to remote [user@host:port]
 # Convert keys for accept (merge files)
 _ssh-accept(){
     # Merge with local file
-    cd ~/.var/ssh/accept/
-    rm $ATH* $INV*
+    cd $SSHVAR/accept/
+    rm -f $ATH* $INV*
     mv ../*.* . >/dev/null 2>&1
     grep -h . $LATH $ATH.* >> $ATH
     grep -h . $LINV $INV.* >> $INV
@@ -187,8 +188,8 @@ _ssh-accept(){
 # Convert keys for impose (remove site name)
 _ssh-impose(){
     # Merge with local file
-    cd ~/.var/ssh/impose/
-    rm $ATH* $INV*
+    cd $SSHVAR/impose/
+    rm -f $ATH* $INV*
     mv ../*.$rhost . >/dev/null 2>&1
     # Conceal group members
     cut -d' ' -f1-2 $LATH > $ATH
