@@ -54,11 +54,10 @@ _chkfunc(){ # Show function list
             _$cmd $*
         else
             # function list
-            echo "$self contains"
-            grep "^_[-a-z_]\+(.*#" $0|\
-                while read i v;do
-                    _item "${i%(*},${v#*#}\n" | _indent
-                done
+            while read i v;do
+                [[ $i =~ ^_(.+)\( ]] &&
+                    _item "${BASH_REMATCH[1]},${v#*#}\n" | _indent
+            done < <(grep "^_[-a-z_]\+(.*#" $0)
         fi
     fi
 }
