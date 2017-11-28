@@ -2,7 +2,7 @@
 # Description: uninstall utils environment
 bashrc-reset
 cd
-for i in bin .trash;do
+for i in bin .trash .var/cache;do
     [ -d $i ] && rm -rf $i
 done
 echo "Unsetup complete!"
