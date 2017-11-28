@@ -203,11 +203,19 @@ _ssh-validate(){ # Check remote availability [site]
     [ "$1" ] || { _warn "No [site]"; return 1; }
     local i 
     for i; do
-        ssh -q\
+        # execute dummy command ':'
+        if ssh -q\
             -o "BatchMode=yes"\
             -o "ConnectTimeout=1"\
             -o "StrictHostKeyChecking=no"\
-            $i : && echo $i
+            $i :
+        then
+            echo -n '*' 1>&2
+            echo $i
+        else
+            echo -n '.' 1>&2
+        fi
     done
+    echo  1>&2
 }
 _chkfunc $*
