@@ -66,19 +66,15 @@ _chk_all(){ # Check all argument
 # Option List
 _optlist(){ # Pack of option letters of opt-?() functions
     local line fnc opts
-    while read line;do
-        fnc=${line#*-}
-        opts+="${fnc%%(*}"
-        OPTDEF+=("$(__optdesc "$fnc")")
+    while IFS='-(#' read _ opt _ desc;do
+        opts+=$opt
+        OPTDEF+=("-$opt$(__optdesc "$desc")")
     done < <(egrep '^x?opt-.\(\)\{' $0)
     echo -n "${opts:+ (-$opts)}" 1>&2
 }
 __optdesc(){
-    local desc
-    desc="-${1/\(*#/,}"
     # pre colon gets into key (i.e. -o{ #=tag:desc -> -o=tag,desc) 
-    [[ $desc =~ ,=(.+): ]] &&  desc=${desc/,=*:/=${BASH_REMATCH[1]},}
-    echo -n "$desc"
+    [[ $1 =~ =(.+): ]] &&  echo -n ${1/=*:/=${BASH_REMATCH[1]},} || echo -n ",$1"
 }
 # Case List
 _caselist(){ # List of case option

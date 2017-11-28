@@ -39,9 +39,6 @@ _item(){ # Show Items [caption,description,caption-length]
 _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*"
 }
-_separate(){ # Separate line with token from stdin
-    IFS="$1" read -a SEPARATE
-}
 _chkfunc(){ # Show function list in self file
     # Execute last one
     [ $0 == ${BASH_SOURCE[1]} ] || return
@@ -57,8 +54,8 @@ _chkfunc(){ # Show function list in self file
             _$cmd $*
         else
             # function list
-            while _separate '_(#';do
-                _item "${SEPARATE[1]},${SEPARATE[3]}\n" | _indent
+            while IFS='(#' read cap _ desc;do
+                _item "${cap#_},$desc\n" | _indent
             done < <(grep "^_[-a-z_]\+(.*#" $0)
         fi
     fi
