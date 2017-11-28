@@ -31,6 +31,6 @@ if [ ! "$get" ] ; then
 fi
 set - $(table-ends)
 _warn "Database update for $*"
-sql-make $*|db-exec
+sql-make $* gdocs|db-exec
 cfg-hosts -s
 ssh-config -s
