@@ -7,9 +7,9 @@
 [ "$1" ]||{ echo "Usage: url-cookie [tag]"; exit; }
 tag=$1;shift
 # Check cookie
-cookie=~/.var/cookie.$tag.txt
+cookie=~/.var/cache/cookie.$tag.txt
 [ -s $cookie ] || { echo "No cookie file" 1>&2; exit; }
-user_agent=~/.var/user_agent.txt
+user_agent=~/.var/cache/user_agent.txt
 for file in ~/cfg.*/etc/user_agent.$tag.txt; do
     if [ -s $file ]; then
         ln -sf $file $user_agent

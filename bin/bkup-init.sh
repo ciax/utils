@@ -5,7 +5,7 @@
 #   list: id(date),host,dist,owner,dir,fid
 # option (-r) : reset data
 . func.msg
-[ -s ~/.var/bkup.sq3 -a "$1" != -r ] && exit
+[ -s ~/.var/log/bkup.sq3 -a "$1" != -r ] && exit
 bkup-exec <<EOF
 drop table if exists content;
 drop table if exists list;

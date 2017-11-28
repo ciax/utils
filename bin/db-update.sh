@@ -13,7 +13,7 @@ latest-tsv(){
 }
 oldest-db(){
     local file
-    for file in ~/.var/db-*.sq3;do
+    for file in ~/.var/cache/db-*.sq3;do
         stat -c%Y $file
     done|sort|head -1|grep .
 }

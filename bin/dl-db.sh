@@ -31,7 +31,8 @@ _temp dlfile dbfile
 site="https://docs.google.com/spreadsheets/d/"
 key=$(db-exec "select key from gdocs where id == '$1';")
 [ "$key" ] || _abort "No gdocs key in db"
-dldir=~/.var/download
+dldir=~/.var/cache/download
+mkdir -p $dldir
 while read line;do
     read sheet gid <<< "${line//|/ }"
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
@@ -40,8 +41,7 @@ while read line;do
     grep "'" $dlfile && { _alert "Field includes ' -> reject"; continue; }
     nkf -d --in-place $dlfile
     split_sheet $sheet
-    [ -d $dldir ] || mkdir -p $dldir
-    cp $dlfile ~/.var/download/$sheet.tsv
+    cp $dlfile $dldir/$sheet.tsv
 done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
 db-update
 for d in ~/cfg.*/db ~/utils/db;do

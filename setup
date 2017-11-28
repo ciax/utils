@@ -2,8 +2,8 @@
 # Description: install utils (need to re-login for environment effective)
 echo "Setting up utils"
 # Description: Dir setup and File registration
-for dir in bin .var .trash; do
-    [ -d "$HOME/$dir" ] || mkdir -p "$HOME/$dir"
+for dir in bin .var/cache .var/log .trash; do
+    mkdir -p "$HOME/$dir"
 done
 PATH=$HOME/bin:$PATH
 cd ~/utils/bin

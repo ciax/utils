@@ -6,7 +6,7 @@
 # declare -gA LINKS # for Bash 4 or later
 _absdir(){ # Show Abs Dir
     local dir="${1%/*}"
-    [ -d "$dir" ] || mkdir -p "$dir"
+    mkdir -p "$dir"
     cd "$dir";pwd -P
 }
 _abspath(){ # Show Abs file path

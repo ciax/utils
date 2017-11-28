@@ -4,7 +4,7 @@
 #link overwrite
 type _temp >/dev/null 2>&1 && return
 source func.msg
-[ -d ~/.trash ] || mkdir -p ~/.trash
+mkdir -p ~/.trash
 TEMPLIST=''
 _temp(){ # Make temp file [name] ..
     local trp="rm -f -- " tmp i
@@ -42,7 +42,7 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>, return 
         mv $srcfile $dstfile
         _warn "$dstfile is created"
     elif cmp -s $srcfile $dstfile ; then
-        rm $srcfile
+        rm -f $srcfile
         return 1
     else
         _verbose "file diff" && diff $dstfile $srcfile 1>&2

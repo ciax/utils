@@ -11,7 +11,7 @@ _chkdir(){
 }
 _nouse(){
     local tsh=~/.trash
-    [ -d $tsh ] || mkdir $tsh || _abort "Can't make $tsh"
+    mkdir -p $tsh || _abort "Can't make $tsh"
     [ "$1" ] || return
     mv -fb "$@" $tsh
     ls -aF --color
@@ -19,7 +19,7 @@ _nouse(){
 _nolink(){
     for i ; do
         [ -L "$i" -a ! -e "$i" ] || continue
-        rm "$i"
+        rm -f "$i"
         _alert "[${i##*/}] is not linked"
     done
 }

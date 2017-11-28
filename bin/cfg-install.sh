@@ -22,7 +22,7 @@ if [ ! -e $dstfile ] ; then
     sudo chown $user $dstfile
     _warn "$dstfile is created"
 elif sudo cmp -s $srcfile $dstfile ; then
-    rm $srcfile
+    rm -f $srcfile
     _warn "No changes on $dstfile"
     exit 1
 else

@@ -11,7 +11,7 @@ opt-r(){ #Refresh arp
     arp -n|grep -v incomplete > $alist
 }
 opt-s(){ hset=1; } #Set to /etc/hosts
-alist=~/.var/arplist.txt
+alist=~/.var/cache/arplist.txt
 _usage "[host].."
 _exe_opt
 declare -A hos

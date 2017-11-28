@@ -12,8 +12,8 @@ usage(){
 }
 proj=$1
 source ~/cfg.*/etc/$proj.wget 2> /dev/null || usage
-dir=~/.var/$proj
-[ -d $dir ] || mkdir $dir
+dir=~/.var/cache/$proj
+mkdir -p $dir
 cd $dir
 if [ "$index" ]; then
     wget -N $url/$index

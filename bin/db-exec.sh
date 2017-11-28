@@ -8,7 +8,6 @@ opt-i(){ opt=-line; } #ini (a=b) style
 opt-c(){ opt="-csv -header"; } #csv with header
 _usage "(statement)"
 _exe_opt
-[ -d ~/.var ] || mkdir ~/.var
 [[ "$VER" == *sql* ]] && opt+=" -echo"
-db=~/.var/db-device.sq3
+db=~/.var/cache/db-device.sq3
 sqlite3 $opt $db ${1:+"$1"}

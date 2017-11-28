@@ -5,7 +5,8 @@ setup(){
     [ -e $file ] || touch $file
     local line=". ~/bin/rc.$2 #initrc"
     grep -q "$line" "$file" && return
-    local tmp=~/.var/tmpfile
+    local tmp=~/.var/cache/bashrc.tmp
+    mkdir -p ${tmp%/*}
     grep -v "#initrc" "$file" > "$tmp"
     mv "$tmp" "$file"
     echo "$line" >> "$file"

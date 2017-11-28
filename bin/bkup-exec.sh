@@ -5,5 +5,5 @@
 # Usage: bkup-exec (separator)
 . func.getpar
 _usage "(statement)"
-db=~/.var/bkup.sq3
+db=~/.var/log/bkup.sq3
 sqlite3 $db ${1:+"$1"}

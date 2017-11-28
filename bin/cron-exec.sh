@@ -4,7 +4,7 @@
 per=$1
 PATH=~/bin:$PATH
 cmd=cron.$per.$HOSTNAME
-log=~/.var/cron.$per.log
+log=~/.var/log/cron.$per.log
 echo "###### $(date) ######">$log
 echo "## Set ##" >> $log
 set >> $log

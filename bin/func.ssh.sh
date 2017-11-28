@@ -12,8 +12,8 @@ LINV=~/.ssh/$INV
 SSHVAR=~/.var/cache/ssh
 ME=$(logname)@$(hostname)
 ### For remote operation ###
-[ -d $SSHVAR/accept ] || mkdir -p $SSHVAR/accept
-[ -d $SSHVAR/impose ] || mkdir -p $SSHVAR/impose
+mkdir -p $SSHVAR/accept
+mkdir -p $SSHVAR/impose
 ## For manipulating authorized_keys (can be reduced -> _overwrite)
 # Set permission [oct] [files..]
 _setp(){

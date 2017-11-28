@@ -7,4 +7,4 @@
 passfile="$HOME/.ssh/gpgpass"
 salt="--passphrase-file $passfile"
 _usage "<file>"
-base64 -d|gpg --no-tty -qd $salt || rm $passfile
+base64 -d|gpg --no-tty -qd $salt || rm -f $passfile
