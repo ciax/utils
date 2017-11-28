@@ -12,7 +12,7 @@ if [ -t 2 ] ; then
     done
     C0=$'\e[0m'
 fi
-_indent(){ # Indent each line
+_indent(){ # Indent multiple lines
     while read line; do
         echo "$INDENT$line" 1>&2
     done
@@ -37,9 +37,12 @@ _item(){ # Show Items [caption,description,caption-length]
     echo -en "${1#*,}"
 }
 _verbose(){ # Show msg when func name is set to VER
-    [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*" || return 1
+    [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*"
 }
-_chkfunc(){ # Show function list
+_separate(){ # Separate line with token from stdin
+    IFS="$1" read -a SEPARATE
+}
+_chkfunc(){ # Show function list in self file
     # Execute last one
     [ $0 == ${BASH_SOURCE[1]} ] || return
     local self="${0##*/}" i v
@@ -54,9 +57,8 @@ _chkfunc(){ # Show function list
             _$cmd $*
         else
             # function list
-            while read i v;do
-                [[ $i =~ ^_(.+)\( ]] &&
-                    _item "${BASH_REMATCH[1]},${v#*#}\n" | _indent
+            while _separate '_(#';do
+                _item "${SEPARATE[1]},${SEPARATE[3]}\n" | _indent
             done < <(grep "^_[-a-z_]\+(.*#" $0)
         fi
     fi
