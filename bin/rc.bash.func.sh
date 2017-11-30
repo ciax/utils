@@ -14,6 +14,7 @@ self_alias(){
     echo
 }
 # Edit this file and update alias/func
+alias ea='edit_alias'
 edit_alias(){
     local file=~/utils/bin/rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
@@ -26,18 +27,21 @@ edit_alias(){
     self_alias
 }
 # Edit functions
+alias ef='edit_func'
 edit_func(){
     local file=~/utils/bin/rc.bash.func.sh
     emacs $file
     source $file
 }
 # File registration
-reg(){
+alias reg='register_all'
+register_all(){
     file-register $*
     self_alias
 }
 # Grep recursive
-gr(){
+alias gr='grep_recursive'
+grep_recursive(){
     local opt;
     [ "$1" ] || return
     while [[ "$1" == -* ]]; do
@@ -48,22 +52,26 @@ gr(){
     [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
     egrep -rn $opt --exclude-dir=.git "$reg"|egrep -v '^.+:[0-9]+: *#'|egrep --color $opt "$reg"
 }
-# Search alias/func
-ag(){
+# Grep alias/func
+alias ag='alias_grep'
+alias_grep(){
     alias|grep -i ${1:-.}
     set|egrep -v '^_'|egrep "^[-_a-zA-Z]+ \(\)"|grep -i ${1:-.}
 }
-# Search env/var
-eg(){
+# Grep env/var
+alias eg='env_grep'
+env_grep(){
     (set;env)|egrep "^[-_a-zA-Z]+="|sort -u|grep -i ${1:-.}
 }
-# Search process
-psg(){
+# Grep process
+alias psg='ps_grep'
+ps_grep(){
     local exp="^UID${1:+|$1}"
     ps -ef | grep -v "$$ .* grep" | egrep -i "$exp"
 }
-# Switch user
-sb(){
+# Switch user (alternative to su)
+alias sb='switch_user'
+switch_user(){
     sudo -i ${1:+-u $1}
 }
 # Switch user by name (GID = 100)

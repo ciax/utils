@@ -11,8 +11,6 @@ alias v='ls -l'
 alias r='rubocop -a'
 alias kilg='sudo killall -i -I -r'
 alias bogo='grep bogomips /proc/cpuinfo'
-alias ea=edit_alias
-alias ef=edit_func
 alias fmj='python -m json.tool'
 alias fmx='xmllint --format'
 
