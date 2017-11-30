@@ -59,9 +59,8 @@ eg(){
 }
 # Search process
 psg(){
-    local cmd="grep -i ${1:-.}"
-    ps aux|head -1
-    ps aux|$cmd|grep -v "$cmd"
+    local exp="^UID${1:+|$1}"
+    ps -ef | grep -v "$$ .* grep" | egrep -i "$exp"
 }
 # Switch user
 sb(){
