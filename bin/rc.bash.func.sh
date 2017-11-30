@@ -39,19 +39,6 @@ register_all(){
     file-register $*
     self_alias
 }
-# Grep recursive
-alias gr='grep_recursive'
-grep_recursive(){
-    local opt;
-    [ "$1" ] || return
-    while [[ "$1" == -* ]]; do
-        opt="$opt $1"
-        shift
-    done
-    local reg="$1";shift
-    [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-    egrep -rn $opt --exclude-dir=.git "$reg"|egrep -v '^.+:[0-9]+: *#'|egrep --color $opt "$reg"
-}
 # Grep alias/func
 alias ag='alias_grep'
 alias_grep(){
