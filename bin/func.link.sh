@@ -23,21 +23,21 @@ _mklink(){ # Make links with abspath
     local src="$1";shift
     eval "dst=$1";shift #dst could include '~'
     if [ -h $src ]; then
-        echo $C1"Alert: $src is symbolic link"$C0
+        _alert "Alert: $src is symbolic link"
         return 1
     elif [ -e $dst ] ; then
         if [ -h $dst ]; then
             if [ "$src" = $(readlink $dst) ]; then
                 return 1
             else
-                echo $C3"Warning: link of $dst is different from $src"$C0
+                _warn "Warning: link of $dst is different from $src"
             fi
         elif [ -d $dst ] ; then
-            echo $C1"Alert: $dst must not directory"$C0
+            _alert "Alert: $dst must not directory"
             return 1
         else
             mv $dst $dst.org
-            echo $C3"Warning: Backup $dst with .org"$C0
+            _warn "Warning: Backup $dst with .org"
         fi
     fi
     local dir=$(_absdir $dst)
