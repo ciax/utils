@@ -2,15 +2,13 @@
 ### Set func for human interface
 # Generate alias by pick up '#alias XXX' line from each files
 self_alias(){
-    local head name par tempfile=~/.var/cache/tempfile
-    grep '^#alias' ~/bin/* > $tempfile
+    local head name par
     echo -n "Setting alias:"
-    while read head name par; do
-        cmd="alias $name='${head%:*}${par:+ $par}'"
-        dup=$(alias $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
+    while read head al name par; do
+        cmd="$al $name='${head%:*}${par:+ $par}'"
+        dup=$($al $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
         eval $cmd && echo -n " $name"
-    done < $tempfile
-    rm -f $tempfile
+    done < <(grep '^# *alias' ~/bin/* | tr '#' ' ')
     echo
 }
 # Edit this file and update alias/func
