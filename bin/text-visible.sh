@@ -15,7 +15,7 @@ for c in $(od -v -A n -t x1 $*) ; do
         echo -en "$C3>$C0\t"
     elif [ "$c" = '20' ] ; then
         echo -en "${C3}_$C0"
-    elif [ "$c" \< '20' -o "$c" \> '80' ] ; then
+    elif (( 16#$c < 16#20 || 16#$c > 16#7f )) ; then
         echo -n "$C4($c)$C0"
         unset nl
     else
