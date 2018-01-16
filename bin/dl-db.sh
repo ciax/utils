@@ -48,4 +48,5 @@ for d in ~/cfg.*/db ~/utils/db;do
     cd $d
     file-clean
     git commit *.tsv -m "expand gsheet and update db"
+    git push
 done
