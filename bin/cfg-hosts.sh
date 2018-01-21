@@ -22,7 +22,7 @@ echo "#file /etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"
 IFS='|'
-db-exec <<EOF | while read a b c sub ip host domain; do echo "$a.$b.$(($c+$sub)).$ip    $host   $host.$domain";done
+db-exec <<EOF | while read a b c sub ip host domain; do [ "$ip" ] &&  echo "$a.$b.$(($c+$sub)).$ip    $host   $host.$domain";done
 select
     replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name
 from host
