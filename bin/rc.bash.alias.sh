@@ -3,6 +3,7 @@
 unalias -a
 # General Commands
 alias update='git-update;db-update'
+alias updev='dl-db device;cfg-hosts -s;ssh-config -s'
 alias mo='more'
 alias mroe='more'
 alias ls='ls -AF --color'
