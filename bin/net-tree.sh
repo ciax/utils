@@ -12,14 +12,14 @@ open_super(){
 }
 
 get_hubs(){
-    while read self_hub sup wire desc; do
+    while read self_hub sup po desc; do
         sup="${sup:-$1}"
         sub[$sup]+="|$self_hub" # add itself to parent var
         super[$self_hub]="$sup"
-        [ "$wire" = opt ] && fiber[$self_hub]=true
+        port[$self_hub]="$po"
         title[$self_hub]="$desc"
         eval $(db-trace $self_hub hub subnet)
-    done < <(db-exec "select id,super,wire,description from hub where subnet == '$1';"|sort)
+    done < <(db-exec "select id,super,port,description from hub where subnet == '$1';"|sort)
     network=${network%.0}
 }
 
@@ -37,15 +37,19 @@ get_hosts(){
 show_tree(){
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     last="${sub[$1]##*|}"
-    local ind="$2   "
+    local p ind="$2   "
     for i in ${sub[$1]#*|};do
         echo -n "${ind}|"
-        if [ "${fiber[$i]}" ] ; then
-            c='='
-            echo -n $C3
-        else
-            c='-'
-        fi
+        p="${port[$i]}"
+        case "$p" in
+            opt)
+                c='='
+                echo -n $C3;;
+            e*)
+                echo -n "${p#e}";;
+            *)
+                c='-';;
+        esac
         if [ "${connect[$i]}" ] ; then
             echo -n "$c$c$c"
             [[ $i == *: ]] && echo -n $C4 || echo -n $C2
@@ -102,7 +106,7 @@ xopt-l(){ #check local net
 declare -A sub
 declare -A super
 declare -A title
-declare -A fiber
+declare -A port
 declare -A connect
 _usage "[subnet]" $(db-list subnet)
 _exe_opt
