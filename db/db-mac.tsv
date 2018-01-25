@@ -1,1 +1,1 @@
-!id	*device	if	*host	description	GL/IG
+!id	*device	if	*netport	*host	description	GL/IG
