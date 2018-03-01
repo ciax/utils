@@ -5,7 +5,8 @@
 # Usage: db-exec (opt) (sql)
 . func.getpar
 opt-i(){ opt=-line; } #ini (a=b) style
-opt-c(){ opt="-csv -header"; } #csv with header
+opt-c(){ opt=-csv; } #csv
+opt-h(){ opt=-header; } #header
 _usage "(statement)"
 _exe_opt
 [[ "$VER" == *sql* ]] && opt+=" -echo"

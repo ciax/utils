@@ -23,7 +23,7 @@ from host
     inner join mfr on model.mfr=mfr.id
     inner join location on device.location=location.id
 where
-    host.hub in (
+    mac.hub in (
         select id from hub where subnet == '$1'
     )
 order by length(host.host_ip),host.host_ip

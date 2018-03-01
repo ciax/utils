@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar db-exec
-# Required tables: host
+# Required tables: mac hab
 # Description: show hosts which belong to same subnet
 . func.getpar
 opt-e(){ #exclude anonymous hosts
@@ -11,7 +11,7 @@ subnet="${1:-$(net-name)}"
 _exe_opt
 for net in $subnet; do
     db-exec <<EOF
-select id from host where hub in (
+select host from mac where hub in (
   select id from hub where subnet == '$net' $rstr
 )
 ;
