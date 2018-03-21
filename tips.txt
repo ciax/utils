@@ -9,6 +9,10 @@
    emacs: M-<(to top), C-' '(select), M->(to bottom), 'C-M-\' (indent)
     vi : 'gg'(to top), '='(indent), 'G'(to bottom)  
 
+# Screen command
+ Vertical split: C^a + | (v-line)
+ Next page: C^a + Tab
+
 # Command for USB
  lsusb
 
