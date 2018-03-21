@@ -1,3 +1,9 @@
+# rcfile priority (bash executes just one of them)
+ Invoked bash as a Login shell
+  .bash_profile || .bash_login || .profile (calls .bashrc)
+ Invoked bash as others 
+  .bashrc
+
 # Editor command key
 * indent all line
    emacs: M-<(to top), C-' '(select), M->(to bottom), 'C-M-\' (indent)
@@ -14,7 +20,14 @@
  hciconfig
  hcitool
 
-# Git remote branch removal
- git branch -d xxx
- git push origin :xxx
- 
+# Command for Git
+ To make new repository
+   git --bare init
+ To clone empty repository
+   git clone (dir)
+ To push to bare repository at first time
+   git push origin master
+ To remove remote branch
+   git branch -d xxx
+   git push origin :xxx
+

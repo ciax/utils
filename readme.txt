@@ -52,19 +52,3 @@ Copyright (c) 2014 Koji Omata (MIT License)
 
 ### Comment in generated text
  #file /*/*/filename         <--- file name for generated text
-
-############### General information ################
-
-### rcfile priority (bash executes just one of them)
- Invoked bash as a Login shell
-  .bash_profile || .bash_login || .profile (calls .bashrc)
- Invoked bash as others 
-  .bashrc
-
-### Git Tips
- To make new repository
-   git --bare init
- To clone empty repository
-   git clone (dir)
- To push to bare repository at first time
-   git push origin master
