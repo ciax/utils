@@ -17,7 +17,7 @@ Copyright (c) 2014 Koji Omata (MIT License)
    %sudo ALL=(ALL:ALL) NOPASSWD:ALL
  3. /etc/group
    add username to sudo group
- 4. Install ssh,git
+ 4. Install ssh,git,coreutils
  
 ### Setup at Home Dir
 > git clone https://git.hub/ciax/cfg.(proj).git
