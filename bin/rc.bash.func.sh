@@ -5,15 +5,14 @@ self_alias(){
     local head name par
     echo -n "Setting alias:"
     while read head al name par; do
-        cmd="$al $name='${head%:*}${par:+ $par}'"
+        cmd="$al $name='$head${par:+ $par}'"
         dup=$($al $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
         eval $cmd && echo -n " $name"
-    done < <(grep '^# *alias' ~/bin/* | tr '#' ' ')
+    done < <(cd ~/bin; ( grep '^# *alias' * ; grep -h '(){ *# *alias' *) |tr '(){:#' ' ')
     echo
 }
 # Edit this file and update alias/func
-alias ea='edit_alias'
-edit_alias(){
+edit_alias(){ #alias ea
     local file=~/utils/bin/rc.bash.alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
@@ -25,38 +24,32 @@ edit_alias(){
     self_alias
 }
 # Edit functions
-alias ef='edit_func'
-edit_func(){
+edit_func(){ #alias ef
     local file=~/utils/bin/rc.bash.func.sh
     emacs $file
     source $file
 }
 # File registration
-alias reg='register_all'
-register_all(){
+register_all(){ #alias reg
     file-register $*
     self_alias
 }
 # Grep alias/func
-alias ag='alias_grep'
-alias_grep(){
+alias_grep(){ #alias ag
     alias|grep -i ${1:-.}
     set|egrep -v '^_'|egrep "^[-_a-zA-Z]+ \(\)"|grep -i ${1:-.}
 }
 # Grep env/var
-alias eg='env_grep'
-env_grep(){
+env_grep(){ #alias eg
     (set;env)|egrep "^[-_a-zA-Z]+="|sort -u|grep -i ${1:-.}
 }
 # Grep process
-alias psg='ps_grep'
-ps_grep(){
+ps_grep(){ #alias psg
     local exp="^UID${1:+|$1}"
     ps -ef | grep -v "$$ .* grep" | egrep -i "$exp"
 }
 # Switch user (alternative to su)
-alias sb='switch_user'
-switch_user(){
+switch_user(){ #alias sb
     sudo -i ${1:+-u $1}
 }
 # Switch user by name (GID = 100)

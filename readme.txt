@@ -46,6 +46,7 @@ Copyright (c) 2014 Koji Omata (MIT License)
  # Required packages(DIST,..): * <--- Package list limited by distributions
  # Required scripts: *    <------- Script file list for dependency check
  #alias *                 <------- Alias name for the script file
+                          (can be placed after function definition for aliasing the function)
  #link  *                 <------- Symbolic link name for the script file
  #link(DIST,..) *         <------- Link if distribution matches
  #link(HOST,..) *         <------- Link if hostname matches
