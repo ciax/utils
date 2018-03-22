@@ -7,5 +7,5 @@
 . func.ssh
 _warn "Initializing SSH"
 [ "$1" = -r ] && rm -f $SEC $PUB
-_ssh-setup
+_ssh_setup
 ssh-config > $CFG

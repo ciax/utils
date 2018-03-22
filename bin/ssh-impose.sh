@@ -5,9 +5,9 @@
 . func.ssh
 _usage "[(user@)host(:port)] .."
 for url;do
-    _ssh-fetch $url
+    _ssh_fetch $url
 done
 _ssh-impose
 for url;do
-    _ssh-push $url
+    _ssh_push $url
 done
