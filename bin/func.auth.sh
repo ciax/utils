@@ -16,3 +16,4 @@ _auth(){ # Set $user and $password
     ast=${mid//?/*}
     _warn "Using Password (${password/$mid/$ast})"
 }
+_chkfunc $*
