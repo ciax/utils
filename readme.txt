@@ -42,7 +42,8 @@ Copyright (c) 2014 Koji Omata (MIT License)
   Work Dirs   :  ~/bin ~/.var ~/.trash
 
 ### Comment in script files
- # Required packages: *   <--- Package list that is required in the script file
+ # Description: *         <------- Shown in the Usage
+ # Required packages: *   <------- Package list that is required in the script file
  # Required packages(DIST,..): * <--- Package list limited by distributions
  # Required scripts: *    <------- Script file list for dependency check
  #alias *                 <------- Alias name for the script file

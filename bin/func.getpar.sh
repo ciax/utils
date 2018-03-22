@@ -107,6 +107,7 @@ _caseitem(){ # List of case desctiption
 _usage(){ # Check and show usage
     _exe_xopt
     _chk_all "$@" && return # because it includes '[]'
+    grep '^# *Description' $0 | sed 's/# *//' 1>&2
     _disp_usage "$1";shift
     for i;do echo $i;done | _colm 40 1>&2
     exit 1
