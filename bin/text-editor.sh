@@ -9,15 +9,14 @@ args=''
 cmd=$EDITOR
 for file;do
     if [ -s "$file" ];then
+        [ -h "$file" ] && file=$(readlink $file)
         user=$(stat -c %U $file)
         cp -pub $file ~/.trash/
         bkup-stash $file
         [ $LOGNAME != $user ] && cmd="sudo -u $user $cmd"
-    fi
-    if [[ "$file" =~ ^[0-9]+$ ]] ; then
-        args="+$file $args"
-    else
         args="$file $args"
+    elif [[ "$file" =~ ^[0-9]+$ ]] ; then
+        args="+$file $args"
     fi
 done
 $cmd $args
