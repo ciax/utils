@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required packages: nmap
-# Required scripts: func.getpar func.temp db-exec
+# Required scripts: func.getpar func.file db-exec
 # Required tables: host hub subnet
 # Description: show network tree
 . func.getpar

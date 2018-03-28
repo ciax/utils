@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: makes temporaly files
-# Usage: _temp [varname1] [varname2] ..
-#link overwrite
+# Description: file handling library
 type _temp >/dev/null 2>&1 && return
 source func.msg
 mkdir -p ~/.trash

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description: Listing from script files
 type _list_csv >/dev/null 2>&1 && return
-. func.temp
+. func.file
 #type -t _list_csv >/dev/null 2>&1 && return
 shopt -s nullglob extglob
 _list_csv(){ # Connect each line with ',' to csv line (a,b,c..) from <stdin>
