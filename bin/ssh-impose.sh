@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar func.ssh
-# Desctiption: impose self trust to the object host (push pub-key anonymously)
+# Description: impose self trust to the object host (push pub-key anonymously)
 . func.getpar
 . func.ssh
 _usage "[(user@)host(:port)] .."

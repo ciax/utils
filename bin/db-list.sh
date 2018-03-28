@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required scripts: func.getpar db-tables db-exec
 # Required tables: *
-# Desctiption: show table list or table entry
+# Description: show table list or table entry
 . func.getpar
 _usage "[table] (field(=cond))" $(db-tables)
 tbl=$1;shift

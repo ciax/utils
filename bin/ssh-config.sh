@@ -4,7 +4,7 @@
 # Description: generate ~/.ssh/config
 . func.getpar
 # Set to $HOME/.ssh
-xopt-s(){ $0 | cfg-install; }
+xopt-s(){ $0 | text-install; }
 _usage
 site(){
     eval "$(db-trace $1 ssh)"

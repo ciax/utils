@@ -1,5 +1,5 @@
 #!/bin/bash
-# Desctiption: makes temporaly files
+# Description: makes temporaly files
 # Usage: _temp [varname1] [varname2] ..
 #link overwrite
 type _temp >/dev/null 2>&1 && return

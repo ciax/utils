@@ -2,7 +2,7 @@
 # Required packages: wget
 # Required scripts: func.getpar db-exec
 # Required tables: gdocs gsheet
-# Desctiption: get db from gdocs and split into db-files
+# Description: get db from gdocs and split into db-files
 #  split downloaded-db files into db files in the cfg directorys that are categoryzed by project
 #  Downloaded-DB format(tsv): (%proj) !id (!another key) field1 field2...
 #  Config Dir: ~/cfg.(project)/db

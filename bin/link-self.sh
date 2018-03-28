@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required scripts: func.link func.temp
 # Description: make links to the specific dirs categorized by file type 
-# Desctiption: Files in cfg.*/ utils/ and current dirs will be classified into 'bin','db' ..
+# Description: Files in cfg.*/ utils/ and current dirs will be classified into 'bin','db' ..
 # (Ubuntu need to install realpath)
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 #alias slink

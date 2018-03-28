@@ -1,5 +1,5 @@
 #!/bin/bash
-# Desctiption: overwrite config file from stdin
+# Description: overwrite config file as comment directive from stdin
 source func.getpar
 if [ ! -t 0 ] ; then
     _temp srcfile

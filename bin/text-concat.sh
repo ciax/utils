@@ -2,7 +2,7 @@
 # Required scripts: func.getpar
 # Description: Remove comment lines in original file and append new line which is listed in STDIN
 #              No overwrite if the line exists in original file.
-# Usage: cfg-concat < listfile
+# Usage: text-concat < listfile
 #alias cfgedit
 . func.getpar
 _usage "<input>"

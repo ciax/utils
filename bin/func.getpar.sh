@@ -90,7 +90,7 @@ _caseitem(){ # List of case desctiption
     done
 }
 # Usage: _usage [par_txt] (arg list)
-# Desctiption
+# Description
 #   1. Execute xopt-?() and exit as an exclusive function if exist.
 #   2. Check the single options that provided as opt-?() or xopt-?() functions.
 #   3. Check the number of arguments (ARGC >= The count of '[' in parlist)

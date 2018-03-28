@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required packages: openssh-server
 # Required scripts: ssh-config
-# Desctiption: setup ssh files 
+# Description: setup ssh files 
 # Usage: ${0##*/} (-r:remove keys)
 . func.getpar
 . func.ssh
