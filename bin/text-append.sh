@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: Append STDIN to an original file which is described as a comment in it.
+# Description: Append STDIN to an original file in a hash directive (#file)
 #              No overwrite if the line exists in original file.
 # Usage: text-append < file
 # Example: cfg-hosts | text-append (STDIN indludes output file name "#file /etc/hosts")
