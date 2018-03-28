@@ -14,9 +14,11 @@ for file;do
         cp -pub $file ~/.trash/
         bkup-stash $file
         [ $LOGNAME != $user ] && cmd="sudo -u $user $cmd"
-        args="$file $args"
-    elif [[ "$file" =~ ^[0-9]+$ ]] ; then
+    fi
+    if [[ "$file" =~ ^[0-9]+$ ]] ; then
         args="+$file $args"
+    else
+        args="$file $args"
     fi
 done
 $cmd $args
