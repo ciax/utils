@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Desctiption: pick up the table names from file name(db-*.tsv)
+# Description: pick up the table names from file name(db-*.tsv)
 . func.getpar
 tblcore(){
     local r=${1#*-}

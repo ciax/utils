@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Desctiption: show tables of the dependency ends in db-*.tsv
+# Description: show tables of the dependency ends in db-*.tsv
 . func.getpar
 tblcore(){
     local r=${1#*-}
