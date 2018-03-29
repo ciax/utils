@@ -28,6 +28,7 @@ _fuser(){ # Show file/parent dir's owner [path]
 _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>, return 1 if no changes
     local dstfile=$1 srcfile=$2 user dir
     [ "$dstfile" ] || _abort "No dst_file"
+    [ -s $srcfile ] || _abort "Input file is empty"
     if [ ! -t 0 ] ; then
         _temp srcfile
         cat > $srcfile
@@ -53,6 +54,7 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>, return 
 _overwrite_s(){ # Overwrite for system file
     local dstfile=$1 srcfile=$2 user dir
     [ "$dstfile" ] || _abort "No output file specified"
+    [ -s $srcfile ] || _abort "Input file is empty"
     if [ ! -e $dstfile ] ; then
         dir=$(dirname $dstfile)
         user=$(_fuser $dir)
@@ -82,4 +84,18 @@ _cutout(){ # split file by expression (matched -> stdout, unmatched -> file) [ex
     egrep "$exp" $file
     _overwrite $file < $remain
 }
+
+_insert(){ # comment out and insert line after the original line [file] [exp] (par)
+    local dstfile=$1;shift
+    local line="$1 $2 #inserted_by_user"
+    if grep -q "$line" $dstfile; then
+        _warn "Already exist"
+    else
+        _temp tmpfile
+        local ln=$(grep -n -m1 "^#$1" $dstfile|cut -d: -f1)
+        sed -e "${ln}a $line" $dstfile > $tmpfile
+        _overwrite_s $dstfile $tmpfile
+    fi
+}
+
 _chkfunc $*
