@@ -14,6 +14,7 @@ alias kilg='sudo killall -i -I -r'
 alias bogo='grep bogomips /proc/cpuinfo'
 alias fmj='python -m json.tool'
 alias fmx='xmllint --format'
+alias reload='. ~/.bashrc'
 
 # For GIT
 alias gia='git add . */'
