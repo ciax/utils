@@ -6,4 +6,4 @@ chkcmd(){
 chkcmd emacs && export EDITOR='emacs -nw'
 chkcmd most && export PAGER='most'
 chkcmd emacs && export MOST_EDITOR='emacs %s -g %d'
-checmd less && export LESSCHARSET=utf-8
+chkcmd less && export LESSCHARSET=utf-8
