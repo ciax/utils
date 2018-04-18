@@ -7,4 +7,4 @@
 passfile="$HOME/.ssh/gpgpass"
 salt="--passphrase-file $passfile"
 _usage "<file>"
-cat $*|gpg -c --force-mdc $salt|base64 -w0
+gpg -c --force-mdc --batch $salt -o - | base64 -w0
