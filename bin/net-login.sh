@@ -31,7 +31,7 @@ if [ "$host" ]; then
     _msg "$uri"
     ssh $batch $ssharg $rcmd && exit
     _temp expfile
-    if [[ "$password" == jA0EA* ]]; then
+    if [[ "$password" == jA0E* ]]; then
         password=$(crypt-de <<< "$password")
         mid=${password:1:-1}
         ast=${mid//?/*}
