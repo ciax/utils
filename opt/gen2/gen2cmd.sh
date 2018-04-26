@@ -50,7 +50,7 @@ case "$1" in
     jup) mkcmd -b "932004";;
     jdw) mkcmd -b "932005";;
     jstop) mkcmd "932006";;
-    setinst) mkcmd "1320070001";;
+    setinst) mkcmd "13200700${2:-01}";;
     '')
         echo "Usage: gen2cmd (-b) [osscmd|rawcmd]"
         echo "    login,logout,init,tsconly,tscpri"
