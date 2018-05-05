@@ -20,6 +20,10 @@ eval "$(db-trace $id host)"
 eval "$(db-trace $auth auth)"
 crypt-init
 [ "$1" ] && rcmd="$*"
+if [ "$resolv" = 'ddns' ] ; then
+    eval "$(db-trace $id ddns)"
+    host="${ip:-$fdqn}"
+fi
 if [ "$host" ]; then
     # For SSH password login
     _warn "Found in DB"
