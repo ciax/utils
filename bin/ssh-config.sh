@@ -22,10 +22,15 @@ site(){
     echo -e "\tHostName ${name:-$host}"
     echo -e "\tUser $user"
     [ "$port" ] && echo -e "\tPort $port"
+    if [ "$forward" ]; then
+        echo -e "\tLocalForward $forward"
+        echo -e "\tGatewayPorts yes"
+    fi
 }
 
 echo "#file $HOME/.ssh/config"
-echo "StrictHostKeyChecking no"
 for sid in $(db-list ssh);do
     (site $sid)
 done
+echo "# General Setting"
+echo "StrictHostKeyChecking no"
