@@ -5,6 +5,7 @@
 # Description: show network tree
 . func.getpar
 
+# Highlight upper hub connection when at least one host alive
 open_super(){
     connect[$1]=true
     local up="${super[$1]}"
@@ -32,6 +33,7 @@ get_hosts(){
             ${cmd:-true} && open_super $self_host:
         done < <(db-exec "select host from mac where hub == '$sup';")
     done
+    [ "$cmd" ] && echo # return after progress dot
 }
 
 show_tree(){
@@ -84,22 +86,36 @@ chk_host(){
 
 chk_mac(){
     [[ $(hostname) =~ $self_host ]] && return
+    echo -n '.'
     local mac=$(search-mac $self_host)
-    [ "$mac" ] && [[ $mac =~ $exp ]]
+    [ "$mac" ] || return
+    [[ $mac =~ ^($exp)$ ]] || return
+    exp=${exp/$mac/}
+}
+
+show_rest(){
+    for i in $exp; do
+        [ "$i" ] || continue
+        echo -n '   |-'$C4
+        arp | grep -i $i| cut -d' ' -f 1
+        echo -n $C0
+    done
 }
 
 # Options
-opt-p(){ echo "Checking ";nl=$'\n';cmd="chk_host"; } #ping check
+opt-p(){ echo "Checking ";cmd="chk_host"; } #ping check
 xopt-l(){ #check local net
     eval $(info-net)
     echo "NET=$cidr"
-    exp="^($(sudo nmap -n -sn $cidr | grep MAC | cut -d ' ' -f 3 | tr '\n' '|'))$"
+    echo "Checking "
+    exp="$(sudo nmap -n -sn $cidr | grep MAC | cut -d ' ' -f 3 | tr '\n' '|')"
     cmd="chk_mac"
     local mynet=$(net-name)
     IFS='|'
     get_hubs $mynet
     get_hosts
     top_tree $mynet
+    show_rest
 }
 
 ### main ###
@@ -115,7 +131,6 @@ for i;do
     get_hubs $i
 done
 get_hosts
-echo -n "$nl"
 for i;do
     top_tree $i
 done
