@@ -10,7 +10,11 @@ id=$1;shift
 sshlist=$(egrep -A2 "^Host $id$" ~/.ssh/config)
 if [ "$sshlist" ] && [[ ! $sshlist =~ Proxy ]]; then
     _warn "Found in sshconfig"
-    _msg $(egrep -A3 "Host $id$" ~/.ssh/config|grep -v "Host ")
+    while read a b;do
+        [[ $a =~ Host ]] && ! [[ $b =~ $id ]] && break 
+        _item "$a,$b\n"
+    done < <(egrep -A5 "Host $id$" ~/.ssh/config)
+    echo
     ssh $id
     exit
 fi
