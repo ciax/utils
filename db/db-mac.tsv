@@ -1,1 +1,1 @@
-!id	*device	if	*hub	*host	description	GL/IG
+!id	*device	if	*hub	port	*host	description	GL/IG
