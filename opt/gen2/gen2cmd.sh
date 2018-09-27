@@ -1,20 +1,21 @@
 #!/bin/bash
-case `uname` in
-    SunOS)
-        OSS_SYSTEM=/app/OSS/GLOBAL_DEBUG/OSS_SYSTEM
-        OSSL_LOG=/app/oss_data/OBS_NFS
-        OSS_CMDPATH=/app/LOAD/DEBUG
-        OSS_OBS_HOST=cxws
-        PATH=$OSS_SYSTEM:$OSS_CMDPATH:$PATH
-        cmd="OSST_ciaxTSCcommand"
-        ;;
-    Linux)
-        PYTHONPATH=~/gen2/share/Git/python
-        [ -d "$PYTHONPATH" ] || { echo "NO OSS files"; exit; }
-        cmd="$PYTHONPATH/Gen2/client/g2cmd.py"
-        ;;
-esac
-TIMEOUT=10;
+chkenv(){
+    case `uname` in
+        SunOS)
+            OSS_SYSTEM=/app/OSS/GLOBAL_DEBUG/OSS_SYSTEM
+            OSSL_LOG=/app/oss_data/OBS_NFS
+            OSS_CMDPATH=/app/LOAD/DEBUG
+            OSS_OBS_HOST=cxws
+            PATH=$OSS_SYSTEM:$OSS_CMDPATH:$PATH
+            cmd="OSST_ciaxTSCcommand"
+            ;;
+        Linux)
+            PYTHONPATH=~/gen2/share/Git/python
+            [ -d "$PYTHONPATH" ] || { echo "NO OSS files"; exit; }
+            cmd="$PYTHONPATH/Gen2/client/g2cmd.py"
+            ;;
+    esac
+}
 mkcmd(){ # (-b) [timeout] [commands]
     if [ "$1" = -b ] ; then
         shift
@@ -30,7 +31,12 @@ mkcmd(){ # (-b) [timeout] [commands]
     esac
     echo $cmd >&2
 }
-case "$1" in
+TIMEOUT=10;
+#chkenv
+id="$1"
+shift
+num=$(printf %02d ${1:-1})
+case "$id" in
     login) mkcmd "1A1901ciax%%%%%%%%%%%%%%%% CIAX%%%%%%%%%%%% dummyunit dummyMenu dummyMessage";;
     logout) mkcmd "1A1902";;
     init)  mkcmd "1A1011";;
@@ -50,7 +56,7 @@ case "$1" in
     jup) mkcmd -b "932004";;
     jdw) mkcmd -b "932005";;
     jstop) mkcmd "932006";;
-    setinst) mkcmd "13200700${2:-01}";;
+    setinst) mkcmd "13200700$num";;
     '')
         echo "Usage: gen2cmd (-b) [osscmd|rawcmd]"
         echo "    login,logout,init,tsconly,tscpri"
@@ -62,4 +68,4 @@ case "$1" in
         exit;;
     *) mkcmd $*;;
 esac
-exelog $cmd
+#exelog $cmd
