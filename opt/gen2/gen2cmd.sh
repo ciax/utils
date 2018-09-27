@@ -20,7 +20,7 @@ mkcmd(){ # (-b) [timeout] [commands]
     if [ "$1" = -b ] ; then
         shift
         TIMEOUT=180
-        cmd="-b"
+        cmd="$cmd -b"
     fi
     args="'EXEC TSC NATIVE CMD=\"$*\"'"
     case `uname` in
@@ -33,39 +33,8 @@ mkcmd(){ # (-b) [timeout] [commands]
 }
 TIMEOUT=10;
 chkenv
-id="$1"
-shift
-num=$(printf %02d ${1:-1})
-case "$id" in
-    login) mkcmd "1A1901ciax%%%%%%%%%%%%%%%% CIAX%%%%%%%%%%%% dummyunit dummyMenu dummyMessage";;
-    logout) mkcmd "1A1902";;
-    init)  mkcmd "1A1011";;
-    tsconly) mkcmd "1A1008TSCONLY";;
-    tscpri) mkcmd "1A1008TSCPRI%";;
-    ron) mkcmd "904013";;
-    roff) mkcmd "904014";;
-    jon) mkcmd "132001ON%";;
-    joff) mkcmd "132001OFF";;
-    jres) mkcmd "132008";;
-    rhook) mkcmd -b "132004";;
-    runhk) mkcmd -b "132005";;
-    rstop) mkcmd "104011";;
-    ajup) mkcmd -b "932001";;
-    ajdw) mkcmd -b "932002";;
-    ajstop) mkcmd "932003";;
-    jup) mkcmd -b "932004";;
-    jdw) mkcmd -b "932005";;
-    jstop) mkcmd "932006";;
-    setinst) mkcmd "13200700$num";;
-    '')
-        echo "Usage: gen2cmd (-b) [osscmd|rawcmd]"
-        echo "    login,logout,init,tsconly,tscpri"
-        echo "    ron,roff,jon,joff,jres"
-        echo "    rhook,runhk,rstop"
-        echo "    ajup,ajdw,ajstop"
-        echo "    jup [n],jdw [n],jstop [n]"
-        echo "    setinst [n]"
-        exit;;
-    *) mkcmd $*;;
-esac
+# Accept StdInput
+tty -s || { read arg;set - $arg; }
+[ "$1" ] || { echo "Usage: gen2cmd (-b) [rawcmd] | < input" >&2;exit; }
+mkcmd $*
 exelog $cmd
