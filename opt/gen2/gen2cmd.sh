@@ -32,7 +32,7 @@ mkcmd(){ # (-b) [timeout] [commands]
     echo $cmd >&2
 }
 TIMEOUT=10;
-#chkenv
+chkenv
 id="$1"
 shift
 num=$(printf %02d ${1:-1})
@@ -68,4 +68,4 @@ case "$id" in
         exit;;
     *) mkcmd $*;;
 esac
-#exelog $cmd
+exelog $cmd
