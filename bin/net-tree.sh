@@ -14,6 +14,7 @@ open_super(){
 
 get_hubs(){
     while read self_hub sup po desc; do
+        [ "$self_hub" ] || continue
         sup="${sup:-$1}"
         sub[$sup]+="|$self_hub" # add itself to parent var
         super[$self_hub]="$sup"
