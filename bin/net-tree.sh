@@ -37,10 +37,12 @@ get_hosts(){
 }
 
 show_tree(){
+    [ "$1" ] || return
     [ "${#2}" -gt  100 ] && _abort "Infinite Loop Error"
     last="${sub[$1]##*|}"
     local p ind="$2   "
     for i in ${sub[$1]#*|};do
+        [ "$i" ] || continue
         echo -n "${ind}|"
         p="${port[$i]}"
         case "$p" in
@@ -60,11 +62,8 @@ show_tree(){
         fi
         echo "${title[$i]}"$C0
         # Recursive call
-        if [ "$i" = "$last" ];then
-            show_tree $i "$ind "
-        else
-            show_tree $i "$ind|"
-        fi
+        [ "$i" = "$last" ] && sep=" " || sep="|"
+        show_tree $i "$ind$sep "
     done
 }
 
