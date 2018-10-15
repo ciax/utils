@@ -1,1 +1,1 @@
-!id	*device	from	super*hub	port	*subnet	description
+!id	*device	uplink	super*hub	port	*subnet	description
