@@ -5,7 +5,7 @@
 # Required tables: login(user,password,host,rcmd)
 # Description: login command
 . func.getpar
-_usage "[host] (command)"
+_usage "[host] (command)" $(db-list ssh)
 id=$1;shift
 sshlist=$(egrep -A2 "^Host $id$" ~/.ssh/config)
 if [ "$sshlist" ] && [[ ! $sshlist =~ Proxy ]]; then
