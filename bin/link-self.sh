@@ -11,10 +11,12 @@ _warn "File Self Registering"
 _temp linklist
 egrep -Hr "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
 while read spath dst;do
+    echo -n '.'
     src=${spath%:*}
     if [[ $src =~ \.(sh|pl|py|rb|awk|exp|js)$ ]]; then
         dst=~/bin/$(basename $dst)
     fi
     _mklink $src $dst
 done < $linklist
+echo
 _showlink
