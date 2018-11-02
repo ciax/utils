@@ -3,6 +3,7 @@
 # Required tables: host(host_ip),domain(name),subnet(network)
 # Description: generate hosts file
 # Usage: cfg-hosts > /etc/hosts
+#alias hosts
 . func.getpar
 opt-a(){ #Show all list
     where="host.host_ip != ''"
