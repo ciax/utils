@@ -11,3 +11,5 @@ for i in ~/utils ${*:-~/cfg.*};do
     dir="$dir $PWD"
     popd >/dev/null
 done
+cd ~/bin
+file-clean
