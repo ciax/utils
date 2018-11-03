@@ -1,7 +1,7 @@
 #!/bin/bash
 #alias vpng
 # Required packages(Debian,Raspbian): openvpn
-# Required scripts: func.getpar func.proc show-syslog
+# Required scripts: func.getpar func.proc sys-logview
 # Description: client for netgear router openvpn
 . func.getpar
 . func.proc
