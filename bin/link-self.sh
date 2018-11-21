@@ -9,6 +9,7 @@
 . func.file
 _warn "File Self Registering"
 _temp linklist
+_warn 'grep cfg.*, utils for link'
 egrep -Hr "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
 while read spath dst;do
     echo -n '.'
