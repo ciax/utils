@@ -9,20 +9,10 @@
 # Appstore (Darwin)
 case `uname` in
     Linux)
-        set - $(< /etc/issue)
-        case "$*" in
-            *bian*)
-                echo "debian-${3%.*}";;
-            Ubuntu*)
-                echo "ubuntu-${2%.*}";;
-            CentOS*)
-                echo "centos-${3%.*}";;
-            White*)
-                echo "redhat-${6%.*}";;
-            *QNAP*)
-                echo "qnap";;
-            *);;
-        esac;;
+        eval $(< /etc/os-release)
+        name=${NAME% *}
+        ver=${VERSION% *}
+        echo "${name,,}-${ver%.*}";;
     SunOS)
         ver=$(uname -r)
         echo "sunos-${ver%.*}";;
