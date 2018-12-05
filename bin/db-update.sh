@@ -32,5 +32,4 @@ fi
 set - $(table-ends)
 _warn "Database update for $*"
 sql-make $* gdocs|db-exec
-sys-hosts -s
 ssh-config -s
