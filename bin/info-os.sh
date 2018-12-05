@@ -4,8 +4,8 @@
 case $(uname) in
     Linux)
         echo -n "Linux/"
-        exp="Debian|Raspbian|Ubuntu|CentOS|QNAP"
-        egrep -ho "$exp" /etc/*{release,issue}* /proc/version|head -1
+        eval $(< /etc/os-release)
+        echo ${NAME% *}
         ;;
     *)
         uname
