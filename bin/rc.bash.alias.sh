@@ -31,7 +31,5 @@ alias gip='git remote prune origin'
 
 # For package admin
 alias pks='pkg search'
-alias pki='pkg install'
-alias pku='pkg upd'
 alias pkw='pkg where'
 alias pkf='pkg files'

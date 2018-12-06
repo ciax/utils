@@ -2,8 +2,10 @@
 # Scripts which needs sudo
 sys-hosts -s
 
-# alias
+#### Aalias ####
 alias kilg='sudo killall -i -I -r'
+alias pki='pkg install'
+alias pku='pkg upd'
 
 #### User switching ####
 
