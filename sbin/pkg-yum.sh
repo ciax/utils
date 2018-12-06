@@ -26,8 +26,7 @@ case "$cmd" in
         _sudy -i yum remove --purge $*;;
     *)
         info-yum $cmd $* || {
-            _caseitem | _colm 1>&2
-            exit 1
+            _caseitem | _colm | _abort
         }
     ;;
 esac

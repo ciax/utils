@@ -20,7 +20,7 @@ _overwrite(){ # Overwrite if these are different. [dst_file] <src_file>, return 
     local dstfile=$1 srcfile=$2 user dir
     [ "$dstfile" ] || _abort "No dst_file"
     [ -s $srcfile ] || _abort "Input file is empty"
-    if [ ! -t 0 ] ; then
+    if [ ! -t 0 ] ; then # For stdin
         _temp srcfile
         cat > $srcfile
     elif [ ! "$srcfile" ] ; then

@@ -45,8 +45,7 @@ case "$cmd" in
         gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | _sudy -i apt-key add -;;
     *)
         info-apt $cmd $* || {
-            _caseitem | _colm 1>&2
-            exit 1
+            _caseitem | _colm | _abort
         }
         ;;
 esac
