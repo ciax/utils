@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: sqlite3 curl
+# Required packages(Debian,Raspbian,Ubuntu): sqlite3 curl
 # Required scripts: info-date conv-cookie
 # Get KML by Firefox (Need firefox)
 # Darwin is Mac OS-X
