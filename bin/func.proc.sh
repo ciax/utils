@@ -14,7 +14,7 @@ _no_proc(){ # True if no procs
 }
 _wait_kill(){ # ll proc with counter [proc name]
     _no_proc $1 && return
-    sudo killall $1
+    killall $1
     _retry _no_proc $1 && echo "$1 was killed"
 }
 _get_if(){ # True if interface exists. $INTERFACE will be set
