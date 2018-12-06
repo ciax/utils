@@ -61,9 +61,9 @@ _chkfunc(){ # Show function list in self file
     fi
 }
 # SUDOR?
-_sudo(){
+_sudy(){ # sudo with check
     which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
-    grep -q "^(sudo|wheel):.*[,:]$LOGNAME" /etc/group || _abort "No sudo permission"
+    egrep -q "^(sudo|wheel):.*[,:]$LOGNAME" /etc/group || _abort "No sudo permission"
     echo $PASSWORD | sudo -S $*
 }
 _chkfunc $*

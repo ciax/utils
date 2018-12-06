@@ -10,39 +10,39 @@ which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
-        _sudo -i apt-get install -y $(show-required packages)
+        _sudy -i apt-get install -y $(show-required packages)
         ;;
     clean) #clean up pakcages
-        _sudo -i apt-get autoremove -y
-        _sudo -i apt-get remove -y --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
+        _sudy -i apt-get autoremove -y
+        _sudy -i apt-get remove -y --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         ;;
     upd) #update db
-        _sudo -i apt-get update
+        _sudy -i apt-get update
         ;;
     upg) #upgrade packages
-        _sudo screen apt-get upgrade -y
+        _sudy screen apt-get upgrade -y
         ;;
     dist) #upgrade distribution
-        _sudo screen apt-get dist-upgrade -y
+        _sudy screen apt-get dist-upgrade -y
         ;;
     develop) #install gcc and linux-headers for vmware
-        _sudo apt-get install gcc linux-headers-$(uname -r) || _abort "Error $?"
+        _sudy apt-get install gcc linux-headers-$(uname -r) || _abort "Error $?"
         echo Install success. $?
         ;;
     install) #install packages
         _usage "[$cmd] [packages]"
-        _sudo -i apt-get install -y $* || _abort "Error $?"
+        _sudy -i apt-get install -y $* || _abort "Error $?"
         echo Install success. $?
         ;;
     remove) #remove packages
         _usage "[$cmd] [package]"
-        _sudo -i apt-get remove -y --purge $*;;
+        _sudy -i apt-get remove -y --purge $*;;
     config) #configure package
         _usage "[$cmd] [package]"
-        _sudo -i dpkg-reconfigure $1;;
+        _sudy -i dpkg-reconfigure $1;;
     gpg) #set gpg for sources
         _usage "[$cmd] [key]"
-        gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | _sudo -i apt-key add -;;
+        gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | _sudy -i apt-key add -;;
     *)
         info-apt $cmd $* || {
             _caseitem | _colm 1>&2
