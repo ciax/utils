@@ -49,4 +49,3 @@ ps_grep(){ #alias psg
     ps -ef | grep -v "$$ .* grep" | egrep -i "$exp"
 }
 self_alias >/dev/null
-user_alias >/dev/null

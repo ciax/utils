@@ -18,3 +18,4 @@ user_alias(){
         alias :$i="sudo -iu $i"
     done
 }
+user_alias >/dev/null
