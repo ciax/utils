@@ -5,6 +5,7 @@
 # Usage: text-concat < listfile
 #alias cfgedit
 . func.getpar
+. func.sudo
 _usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#/" )

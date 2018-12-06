@@ -6,6 +6,7 @@
 # Example: cfg-hosts | text-append (STDIN indludes output file name "#file /etc/hosts")
 #alias append
 . func.getpar
+. func.sudo
 _usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#file" )
