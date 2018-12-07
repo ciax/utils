@@ -9,12 +9,12 @@
 _usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#file" )
-orgfile=${rem#* }
-[ "$orgfile" ] || _abort "No output file name"
-cat $orgfile > $outfile
+dstfile=${rem#* }
+[ "$dstfile" ] || _abort "No output file name"
+cat $dstfile > $outfile
 while read line; do
     [ "$line" ] || continue
-    egrep -q "$line" $orgfile && continue
+    egrep -q "$line" $dstfile && continue
     echo "$line" >> $outfile
 done < <(egrep -v "^#" $infile)
-_overwrite_s $orgfile $outfile
+_overwrite_s $dstfile $outfile

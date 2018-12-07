@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: Remove comment lines in original file and append new line which is listed in STDIN like '#/dir/file'
+# Description: Remove comment lines in original file and append new line which is included in STDIN like '#/dir/file'
 #              No overwrite if the line exists in original file.
 # Usage: text-concat < listfile
 #alias cfgedit
