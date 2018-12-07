@@ -8,6 +8,7 @@
 opt-a(){ #Show all list
     where="host.host_ip != ''"
 }
+xopt-s(){ $0 | text-update; }
 _usage "(subnet)" $(db-list subnet)
 _exe_opt
 [ "$where" ] || {
