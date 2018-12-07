@@ -26,11 +26,11 @@ _overwrite(){ # Overwrite for system file
     if [ ! -e $dstfile ] ; then
         dir=$(dirname $dstfile)
         user=$(_fuser $dir)
-        sudo -u $user mkdir -p "$dir"
-        sudo mv $srcfile $dstfile
-        sudo chown $user $dstfile
+        _sudy -u $user mkdir -p "$dir"
+        _sudy mv $srcfile $dstfile
+        _sudy chown $user $dstfile
         _warn "$dstfile is created"
-    elif sudo cmp -s $srcfile $dstfile ; then
+    elif _sudy cmp -s $srcfile $dstfile ; then
         rm -f $srcfile
         _warn "No changes on $dstfile"
         return 1
@@ -38,9 +38,9 @@ _overwrite(){ # Overwrite for system file
         user=$(_fuser $dstfile)
         _verbose "file diff" && diff $dstfile $srcfile 1>&2
         chmod --reference=$dstfile $srcfile
-        sudo mv -b $dstfile ~/.trash/ || _warn "Failed backup $dstfile"
-        sudo mv $srcfile $dstfile
-        sudo chown $user $dstfile
+        _sudy mv -b $dstfile ~/.trash/ || _warn "Failed backup $dstfile"
+        _sudy mv $srcfile $dstfile
+        _sudy chown $user $dstfile
         _warn "$dstfile is modified"
     fi
 }
@@ -54,7 +54,7 @@ _insert(){ # comment out and insert line after the original line [file] [exp] (p
         _temp tmpfile
         local ln=$(grep -n -m1 "^#$1" $dstfile|cut -d: -f1)
         sed -e "${ln}a $line" $dstfile > $tmpfile
-        _overwrite_s $dstfile $tmpfile
+        _overwrite $dstfile $tmpfile
     fi
 }
 _chkfunc $*
