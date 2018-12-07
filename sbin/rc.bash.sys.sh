@@ -15,8 +15,7 @@ switch_user(){ #alias sb
 }
 # Switch user by name (GID = 100)
 user_alias(){
-    for l in $(cut -d: -f1,4 /etc/passwd|grep ':100$'); do
-        i=${l%:*}
+    for i in $(cd ~/..;echo *); do
         alias :$i="sudo -iu $i"
     done
 }
