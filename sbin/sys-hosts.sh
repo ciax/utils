@@ -2,7 +2,7 @@
 # Required scripts: func.getpar db-list db-exec
 # Required tables: host(host_ip),domain(name),subnet(network)
 # Description: generate hosts file
-# Usage: cfg-hosts > /etc/hosts
+# Usage: cfg-hosts | text-install
 #alias hosts
 . func.getpar
 opt-a(){ #Show all list

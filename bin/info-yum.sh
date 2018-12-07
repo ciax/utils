@@ -1,6 +1,6 @@
 #!/bin/bash
-# Required scripts: func.getpar show-required
-# Description: Debian package utils
+# Required scripts: func.getpar
+# Description: RedHat package info
 . func.getpar
 which yum >/dev/null || _abort "This might not RedHat"
 cmd="$1";shift

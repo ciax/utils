@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required packages(Debian,Raspbian,Ubuntu): apt-file
-# Required scripts: func.getpar show-required
-# Description: Debian package utils
+# Required scripts: func.getpar
+# Description: Debian package info
 . func.getpar
 which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
