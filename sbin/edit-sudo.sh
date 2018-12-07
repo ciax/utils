@@ -1,7 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
 # Description: edit file as its owner
-. func.getopts
 . func.sudo
 _usage "[file] .."
 cmd=$EDITOR

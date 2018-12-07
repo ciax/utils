@@ -3,7 +3,6 @@
 # Required packages(Debian,Raspbian,Ubuntu): wakeonlan ethtool
 # Required scripts: func.getpar search-mac
 # Description: make network devices wake up
-. func.getpar
 . func.sudo
 xopt-s(){ # set wakeon lan feature to localhost
     if _sudy ethtool eth0 | grep -q 'Wake-on: d' ; then

@@ -5,7 +5,6 @@
 # Required packages(Debian,Raspbian,Ubuntu): deborphan apt-file screen
 # Required scripts: func.getpar show-required
 # Description: Debian package utils
-. func.getpar
 . func.sudo
 # _sudy accepts $PASSWORD authentification
 which apt-get >/dev/null || _abort "This might not Debian"

@@ -2,7 +2,6 @@
 #link(CentOS) pkg
 # Required scripts: func.getpar show-required
 # Description: Debian package utils
-. func.getpar
 . func.sudo
 which yum >/dev/null || _abort "This might not RedHat"
 cmd="$1";shift
