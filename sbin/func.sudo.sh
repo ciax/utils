@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: using sudo library
+type _sudy >/dev/null 2>&1 && return
 source func.file
 # SUDOR?
 _sudy(){ # sudo with check

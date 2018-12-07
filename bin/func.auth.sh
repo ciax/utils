@@ -2,6 +2,7 @@
 # Required scripts: func.getpar db-trace crypt-de
 # Required tables: auth
 # Description: Get auth info
+type _auth >/dev/null 2>&1 && return
 . func.msg
 _show_pw(){
     [[ "$password" == jA0EA* ]] && crypt-de || cat

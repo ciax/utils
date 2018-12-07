@@ -5,6 +5,7 @@
 #  set option functions [opt-?() or xopt-?()],
 #  _usage()
 #  _exe_opt()
+type _usage >/dev/null 2>&1 && return
 . func.list
 # Option Handling
 _exe_xopt(){ # Exclusive option handling

@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: control process/interface
+type _wait_if >/dev/null 2>&1 && return
 . func.msg
 _retry(){ # Retry func until success with counter (<20) [func name]
     for (( i=0; i < 20; i++));do

@@ -1,6 +1,7 @@
 #!/bin/bash
 # Description: move to subdirs recursively except symlinks then execute command there
 #              Use $sep for csv description (ex. list+=$sep$str)
+type _subdirs >/dev/null 2>&1 && return
 . func.msg
 _defsep=,
 _topdir="$PWD/"
