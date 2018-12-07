@@ -73,4 +73,10 @@ _setcmd(){
         break
     done
 }
+_import(){
+    for func;do
+        type $func >/dev/null 2>&1 || continue
+        source $func
+    done
+}
 _chkfunc $*

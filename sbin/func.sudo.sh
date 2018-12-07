@@ -1,7 +1,6 @@
 #!/bin/bash
 # Description: using sudo library
 type _sudy >/dev/null 2>&1 && return
-source func.getpar
 # SUDOR?
 _sudy(){ # sudo with check
     which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
@@ -19,7 +18,8 @@ _fuser(){ # Show file/parent dir's owner [path]
     done && echo $(stat -c %U $dir)
 }
 # The command of 'install' will force to change the permittion of dst file
-_overwrite_s(){ # Overwrite for system file
+# Override func.file#_overwrite()
+_overwrite(){ # Overwrite for system file
     local dstfile=$1 srcfile=$2 user dir
     [ "$dstfile" ] || _abort "No output file specified"
     [ -s $srcfile ] || _abort "Input file is empty"

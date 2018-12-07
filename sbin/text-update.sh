@@ -1,6 +1,7 @@
 #!/bin/bash
 # Description: overwrite the file in a hash directive (#file) by stdin
-. func.sudo
+. func.getpar
+_import func.sudo
 _usage "<input>"
 _temp srcfile
 while read line; do
@@ -10,5 +11,5 @@ while read line; do
         echo "$line" >> $srcfile
     fi
 done
-_overwrite_s $dstfile $srcfile
+_overwrite $dstfile $srcfile
 

@@ -5,7 +5,8 @@
 # Usage: text-append < file
 # Example: cfg-hosts | text-append (STDIN indludes output file name "#file /etc/hosts")
 #alias append
-. func.sudo
+. func.getpar
+_import func.sudo
 _usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#file" )
@@ -17,4 +18,4 @@ while read line; do
     egrep -q "$line" $dstfile && continue
     echo "$line" >> $outfile
 done < <(egrep -v "^#" $infile)
-_overwrite_s $dstfile $outfile
+_overwrite $dstfile $outfile

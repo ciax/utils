@@ -4,7 +4,8 @@
 #              No overwrite if the line exists in original file.
 # Usage: text-concat < listfile
 #alias cfgedit
-. func.sudo
+. func.getpar
+_import func.sudo
 _usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#/" )
@@ -20,4 +21,4 @@ while read line; do
     fi
 done < $dstfile
 grep -v "^#/" $infile >> $outfile
-_overwrite_s $dstfile $outfile
+_overwrite $dstfile $outfile
