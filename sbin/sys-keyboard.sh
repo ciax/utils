@@ -1,2 +1,3 @@
 #!/bin/bash
-sudo dpkg-reconfigure keyboard-configuration
+. func.sudo
+_sudy dpkg-reconfigure keyboard-configuration
