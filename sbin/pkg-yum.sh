@@ -10,8 +10,6 @@ case "$cmd" in
         sudo -i yum install $(show-required packages);;
     upd) #update and upgrade packages
         sudo -i yum update ;;
-    list) #list installed packages
-        rpm -qa ;;
     develop) #package for development (gcc,headers)
         sudo -i yum install gcc || _abort "Error $?"
         echo Install success. $?
