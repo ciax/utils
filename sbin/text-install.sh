@@ -1,7 +1,6 @@
 #!/bin/bash
 # Description: overwrite the file in a hash directive (#file) by stdin
-source func.getpar
-source func.sudo
+. func.sudo
 if [ ! -t 0 ] ; then
     _temp srcfile
     while read line; do

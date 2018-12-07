@@ -5,7 +5,6 @@
 # Usage: text-append < file
 # Example: cfg-hosts | text-append (STDIN indludes output file name "#file /etc/hosts")
 #alias append
-. func.getpar
 . func.sudo
 _usage "<input>"
 _temp infile outfile
@@ -18,10 +17,4 @@ while read line; do
     egrep -q "$line" $orgfile && continue
     echo "$line" >> $outfile
 done < <(egrep -v "^#" $infile)
-if cmp -s $outfile $orgfile ; then
-    _msg "No changes on $orgfile"
-else
-    user=$(_fuser $orgfile)
-    sudo install -o $user $outfile $orgfile
-    _msg "Add to $orgfile"
-fi
+_overwrite_s $orgfile $outfile

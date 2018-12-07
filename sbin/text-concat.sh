@@ -1,16 +1,15 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: Remove comment lines in original file and append new line which is listed in STDIN
+# Description: Remove comment lines in original file and append new line which is listed in STDIN like '#/dir/file'
 #              No overwrite if the line exists in original file.
 # Usage: text-concat < listfile
 #alias cfgedit
-. func.getpar
 . func.sudo
 _usage "<input>"
 _temp infile outfile
 rem=$( tee $infile | grep "^#/" )
-file=${rem#*#}
-[ "$file" ] || _abort "No output file name"
+dstfile=${rem#*#}
+[ "$dstfile" ] || _abort "No output file name"
 while read line; do
     [ "$line" ] || continue
     set - $line
@@ -19,12 +18,6 @@ while read line; do
     else
         echo "$line" >> $outfile
     fi
-done < $file
+done < $dstfile
 grep -v "^#/" $infile >> $outfile
-if cmp -s $outfile $file ; then
-    user=$(_fuser $file)
-    sudo install -o $user $outfile $file
-    _msg "$file is modified"
-else
-    _msg "No changes on $file"
-fi
+_overwrite_s $dstfile $outfile
