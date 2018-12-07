@@ -65,4 +65,12 @@ _chkfunc(){ # Show function list in self file
         fi
     fi
 }
+# Other Useful func
+_setcmd(){
+    for cmd;do
+        type $cmd >/dev/null 2>&1 || continue
+        echo $cmd
+        break
+    done
+}
 _chkfunc $*

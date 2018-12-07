@@ -49,6 +49,4 @@ _cutout(){ # split file by expression (matched -> stdout, unmatched -> file) [ex
     egrep "$exp" $file
     _overwrite $file < $remain
 }
-
-
 _chkfunc $*

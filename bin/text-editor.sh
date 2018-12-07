@@ -6,7 +6,6 @@
 . func.getpar
 _usage "[file] (line) .."
 args=''
-type edit-sudo && cmd="edit-sudo" || cmd=$EDITOR
 for file;do
     if [ -s "$file" ];then
         [ -h "$file" ] && file=$(readlink $file)
@@ -19,5 +18,4 @@ for file;do
         args="$file $args"
     fi
 done
-$cmd $args
-echo "$cmd $args"
+$(_setcmd edit-sudo "$EDITOR") $args
