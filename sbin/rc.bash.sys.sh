@@ -1,6 +1,6 @@
 #!/bin/bash
 # Scripts which needs sudo
-sys-hosts -s
+cfg-hosts -s
 
 #### Aalias ####
 alias kilg='sudo killall -i -I -r'
