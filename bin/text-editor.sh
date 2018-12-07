@@ -6,11 +6,10 @@
 . func.getpar
 _usage "[file] (line) .."
 args=''
-cmd=$EDITOR
+type edit-sudo && cmd="edit-sudo" || cmd=$EDITOR
 for file;do
     if [ -s "$file" ];then
         [ -h "$file" ] && file=$(readlink $file)
-        user=$(stat -c %U $file)
         cp -pub $file ~/.trash/
         bkup-stash $file
     fi

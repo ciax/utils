@@ -6,7 +6,7 @@ source func.getpar
 _sudy(){ # sudo with check
     which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
     egrep -q "^(sudo|wheel):.*[,:]$LOGNAME" /etc/group || _abort "No sudo permission"
-    echo $PASSWORD | sudo -S $*
+    [ "$PASSWORD" ] && echo $PASSWORD | sudo -S $* || sudo $*
 }
 
 ### Config file handlint ###
