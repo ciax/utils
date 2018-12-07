@@ -1,5 +1,6 @@
 #!/bin/bash
-# Required packages: libxml2-utils closure-linter
+# Required packages(Debian,Raspbian,Ubuntu): libxml2-utils closure-linter
+# Required packages(CentOS): libxml2
 # Required scripts: func.getpar bkup-stash
 # Description: Overwrite if these are different.
 #alias fm
