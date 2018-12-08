@@ -16,6 +16,7 @@ echo "OLDSTR=$oldstr, NEWSTR=$newstr"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
     _msg "#### File:[$orgfile] ####"
+    [ -h $orgfile ] && orgfile=$(realpath $orgfile)
     if [ "$newstr" ] && grep "$newstr" "$orgfile" ; then
         _al "might conflict with ($oldstr -> $newstr)!"
     else
@@ -39,6 +40,7 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     _overwrite "$orgfile" "$outtmp"
 done
 [ "$ext" ] || exit
+cd $(dirname $(realpath $oldstr))
 oldfn="$oldstr.$ext"
 newfn="$newstr.$ext"
 if [ -e "$oldfn" ] ; then
