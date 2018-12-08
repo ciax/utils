@@ -44,8 +44,7 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
         _verbose "file diff" && diff $org_file $tmp_file 1>&2
         chmod --reference=$org_file $tmp_file
         cp -b $org_file ~/.trash/ || _warn "Failed backup $org_file"
-# ----- need fix owner change issue -----
-        _delegate mv $tmp_file $org_file
+        _delegate cp $tmp_file $org_file
         _warn "$org_file is modified"
     fi
 }
