@@ -10,7 +10,6 @@ _sudy(){ # sudo with check
 }
 
 _delegate(){
-    _warn "Doing as $user $*"
     _sudy -u $user $*
 }
 _chkfunc $*
