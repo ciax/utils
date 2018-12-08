@@ -33,9 +33,10 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
     [ "$org_file" ] || _abort "No org_file"
     [ "$tmp_file" ] || _temp tmp_file
     __input_tmp "$tmp_file"
+    [ -h "$org_file" ] && org_file="$(realpath $org_file)"
+    [ "$org_file" = "$(realpath $tmp_file)" ] && _abort "Same file"
     user=$(_fuser $org_file)
     __prepare_org "$org_file"
-    [ "$(realpath $org_file)" = "$(realpath $tmp_file)" ] && _abort "Same file"
     if cmp -s  $tmp_file $org_file ; then
         rm -f $tmp_file
         _warn "No changes on $org_file"
