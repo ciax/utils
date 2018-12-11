@@ -10,6 +10,10 @@ _sudy(){ # sudo with check
 }
 
 _delegate(){
-    _sudy -u $user $*
+    if [ "$LOGNAME" = "$user" ]; then
+        $*
+    else
+        _sudy -u $user $*
+    fi
 }
 _chkfunc $*
