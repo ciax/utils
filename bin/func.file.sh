@@ -33,9 +33,9 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
     [ "$org_file" ] || _abort "No org_file"
     [ "$tmp_file" ] || {
         _temp tmp_file
-        [ ! -t 0 ] && cat > $temp_file || _abort "No input"
+        [ ! -t 0 ] && cat > $tmp_file || _abort "No input"
     }
-    [ -s $temp_file ] || _abort "Input file is empty"
+    [ -s $tmp_file ] || _abort "Input file is empty"
     [ -h "$org_file" ] && org_file="$(realpath $org_file)"
     [ "$org_file" = "$(realpath $tmp_file)" ] && _abort "Same file"
     user=$(_fuser $org_file)
