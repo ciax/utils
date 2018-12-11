@@ -11,5 +11,6 @@ while read line; do
         echo "$line" >> $srcfile
     fi
 done
+[ "$dstfile" ] || _abort "No output file name"
 _overwrite $dstfile $srcfile
 

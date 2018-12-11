@@ -31,8 +31,11 @@ _delegate(){ # do something as a user
 _overwrite(){ # overwrite if different  [org_file] <tmp_file>
     local org_file=$1 tmp_file=$2
     [ "$org_file" ] || _abort "No org_file"
-    [ "$tmp_file" ] || _temp tmp_file
-    __input_tmp "$tmp_file"
+    [ "$tmp_file" ] || {
+        _temp tmp_file
+        [ ! -t 0 ] && cat > $temp_file || _abort "No input"
+    }
+    [ -s $temp_file ] || _abort "Input file is empty"
     [ -h "$org_file" ] && org_file="$(realpath $org_file)"
     [ "$org_file" = "$(realpath $tmp_file)" ] && _abort "Same file"
     user=$(_fuser $org_file)
@@ -49,20 +52,12 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
         _warn "$org_file is modified"
     fi
 }
-# __input_tmp [tempfile]
-__input_tmp(){
-    [ -e "$1" ] || _abort "No tmp_file"
-    if [ ! -t 0 ] ; then # For stdin
-        cat > $1
-    elif [ ! -s $1 ] ; then
-        _abort "Input file is empty"
-    fi
-}
 # __prepare_org [filepath]  : make file if not exist
 __prepare_org(){
      [ -e $1 ]  && return
-     _delegate mkdir -p "$(dirname $1)"
-     _delegate touch $1
+     local dir="$(dirname $1)"
+     [ -d "$dir" ] || _delegate mkdir -p "$dir"
+     _delegate touch "$1"
      _warn "$1 is created"
 }
 
