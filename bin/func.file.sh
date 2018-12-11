@@ -52,8 +52,8 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
 # __input_tmp [tempfile]
 __input_tmp(){
     [ -e "$1" ] || _abort "No tmp_file"
-    if [ -t 0 ] ; then # For stdin
-        tee > $1
+    if [ ! -t 0 ] ; then # For stdin
+        cat > $1
     elif [ ! -s $1 ] ; then
         _abort "Input file is empty"
     fi
