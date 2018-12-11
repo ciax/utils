@@ -8,4 +8,5 @@ while [[ "$1" == -* ]]; do
 done
 reg="$1";shift
 [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-egrep -rn $opt --exclude-dir=.git "$reg"|egrep -v '^.+:[0-9]+: *#'|egrep --color $opt "$reg"
+# Exclude ^# line (actual line format:  filename:num:contents)
+egrep -rn $opt --exclude-dir=.git "$reg" $*|egrep -v '^.+:[0-9]+: *#'|egrep --color $opt "$reg"
