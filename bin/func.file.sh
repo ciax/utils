@@ -49,7 +49,7 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
         chmod --reference=$org_file $tmp_file
         cp -b $org_file ~/.trash/ || _warn "Failed backup $org_file"
         _delegate cp $tmp_file $org_file
-        rm $tmp_file
+        > $tmp_file # make it empty
         _warn "$org_file is modified"
     fi
 }
