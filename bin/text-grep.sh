@@ -8,5 +8,9 @@ while [[ "$1" == -* ]]; do
 done
 reg="$1";shift
 [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-# Exclude ^# line (actual line format:  filename:num:contents)
-egrep -rn $opt --exclude-dir=.git "$reg" $*|egrep -v '^.+:[0-9]+: *#'|egrep --color $opt "$reg"
+# Exclude ^# line (actual line format:  filename:num:content
+head='^.+-[0-9]+-'
+egrep -rn --exclude-dir=.git -m 1 -B 9999 __FILE__ $* |
+    egrep -v "$head *#" |
+    egrep "$head.*$reg" |
+    egrep --color $opt "$reg"
