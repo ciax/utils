@@ -12,8 +12,6 @@ select
   'dhcp-host='||mac.id||','||host.id
 from host
   inner join mac on mac.host=host.id
-where host.hub in (
-  select id from hub where subnet == '$net'
-)
+where subnet == '$net'
 ;
 EOF
