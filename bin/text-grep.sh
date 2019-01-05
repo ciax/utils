@@ -20,5 +20,5 @@ head='^.+[-:][0-9]+[-:]'
 rm_below $*|
     # Exclude ^# line (actual line format:  filename:num:content
     egrep -v "$head *#" |
-    egrep "$head.*$reg" |
+    egrep $opt "$head.*$reg" |
     egrep --color $opt "$reg"
