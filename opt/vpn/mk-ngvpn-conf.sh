@@ -13,7 +13,7 @@ while read a val; do
         key) key=$val;;
         *) echo "$a $val" >> $out
     esac
-done < $tmp/*.conf
+done < $tmp/*.ovpn
 
 directive(){
     echo '<ca>'
