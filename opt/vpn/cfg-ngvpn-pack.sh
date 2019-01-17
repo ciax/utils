@@ -1,12 +1,7 @@
 #!/bin/bash
 declare -A pk
 while read a b; do
-    if [[ $a =~ ^(ca|cert|key) ]] ; then
-        pk[$a]="$b"
-        echo "$a [INLINE]"
-    else
-        echo "$a $b" 
-    fi
+    [[ $a =~ ^(ca|cert|key) ]] && pk[$a]="$b" || echo "$a $b" 
 done
 for i in ${!pk[@]}; do
     echo "<$i>"
