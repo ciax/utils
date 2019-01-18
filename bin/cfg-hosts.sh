@@ -35,5 +35,12 @@ order by subnet.network,
       host.host_ip
 ;
 EOF
-db-exec 'select ip,id,fdqn from ddns;' | while read ip id fdqn; do [ "$ip" ] || continue; echo "$ip    $id    $fdqn";done
+# FDQN alias
+declare -A host
+while read id fdqn; do
+    ip=$(host $fdqn) || continue
+    ip=$(echo $ip|egrep -o '([0-9]+\.?){4}')
+    [ "$ip" ] || continue
+    echo "$ip  $id    $fdqn"
+done < <(db-exec 'select id,fdqn from ddns;')
 
