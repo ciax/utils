@@ -36,7 +36,7 @@ mkdir -p $dldir
 while read line;do
     read sheet gid <<< "${line//|/ }"
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
-    _warn "Retrieving $sheet($url)"
+    _warn "Retriving $C1$sheet$C0($url)"
     wget -q --progress=dot -O $dlfile "$url" || continue
     grep "'" $dlfile && { _alert "Field includes ' -> reject"; continue; }
     nkf -d --in-place $dlfile

@@ -42,7 +42,7 @@ _overwrite(){ # overwrite if different  [org_file] <tmp_file>
     __prepare_org "$org_file"
     if cmp -s  $tmp_file $org_file ; then
         rm -f $tmp_file
-        _warn "No changes on $org_file"
+        _msg "No changes on $org_file"
         return 1
     else
         _verbose "file diff" && diff $org_file $tmp_file 1>&2
