@@ -1,9 +1,9 @@
 #!/bin/bash
 # VPN disconnect after logout
-vpn -d >/dev/null 2>&1
+vpn -d
 # UPDATE after logout
-git-push >/dev/null 2>&1 &
+git-push
 # Update ssh config
-ssh-config -s >/dev/null 2>&1 &
+ssh-config -s
 # Update file-register
-file-register >/dev/null 2>&1 &
+file-register
