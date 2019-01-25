@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description: push to git repositories
 . func.msg
-for i in ~/*/.git;do
+for i in ~/{cfg*,utils}/.git;do
     pushd $i >/dev/null
     cd ..
     _warn "Git push for $PWD"
