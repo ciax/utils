@@ -4,7 +4,10 @@
 . file-clean ~/bin
 . func.link
 _warn "File Registering to $HOME/bin"
-for i in ${*:-~/utils/bin};do
+sbin=~/utils/sbin
+bin=~/utils/bin
+ls -al ~/bin|grep -q $sbin && bin=$sbin\ $bin
+for i in ${*:-$bin};do
     if [ -d "$i" ]; then
         pushd $i >/dev/null
         _warn "  Registering ($PWD)"

@@ -1,7 +1,5 @@
 #!/bin/bash
 # Scripts which needs sudo
-cfg-hosts -s
-
 #### Aalias ####
 alias kilg='sudo killall -i -I -r'
 alias pki='pkg install'
