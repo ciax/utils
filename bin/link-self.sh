@@ -1,7 +1,7 @@
 #!/bin/bash
 # Required scripts: func.link func.file
-# Description: make links to the specific dirs categorized by file type 
-# Description: Files in cfg.*/ utils/ and current dirs will be classified into 'bin','db' ..
+# Description: make links of another name to the specific dirs categorized by file type
+# Description: Files in ~/bin and current dirs will be classified into 'bin','db' ..
 # (Ubuntu need to install realpath)
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
 #alias slink
@@ -10,10 +10,10 @@
 _warn "File Self Registering"
 _temp linklist
 _warn 'grep cfg.*, utils for link'
-egrep -Hr "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/{cfg.*,utils} $*|sort -u > $linklist
+egrep -H "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/bin/* $*|sort -u > $linklist
 while read spath dst;do
     echo -n '.'
-    src=${spath%:*}
+    src=$(realpath ${spath%:*})
     if [[ $src =~ \.(sh|pl|py|rb|awk|exp|js)$ ]]; then
         dst=~/bin/$(basename $dst)
     fi

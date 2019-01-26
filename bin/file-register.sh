@@ -5,9 +5,13 @@
 . func.link
 _warn "File Registering to $HOME/bin"
 sbin=~/utils/sbin
-bin=~/utils/bin
-ls -al ~/bin|grep -q $sbin && bin=$sbin\ $bin
-for i in ${*:-$bin};do
+def=$(
+    for i in $0 ~/bin/*; do
+        dirname $(realpath $i)
+    done | sort -u
+   )
+
+for i in ${*:-$def};do
     if [ -d "$i" ]; then
         pushd $i >/dev/null
         _warn "  Registering ($PWD)"
