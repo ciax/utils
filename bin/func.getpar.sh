@@ -41,28 +41,28 @@ _chk_opt(){ # Check options
     done
 }
 _chk_argc(){ # Check the argument count
-    local reqp="$1"
-    local reqc="$(IFS=[;set - $reqp;echo $(($#-1)))"
     [[ "$reqp" =~ '<' ]] && [ -t 0 ] && reqc=$(($reqc+1))
     [ "$ARGC" -ge "$reqc" ] || { _alert "Short Argument"; return 1; }
+}
+_match_arg(){
+    local arg=$1 ex; shift
+    for ex; do
+        [ "$arg" = "$ex" ] && return
+    done
+    _alert "Invalid argument ($arg)"
+    return 1
 }
 _chk_argv(){ # Check the argument value
     [ "$1" ] || return 0
     local _i
-    for _i in ${ARGV[*]} ;do
-        local ng=1 ex
-        for ex; do
-            [ $_i = $ex ] && unset ng
-        done
-        if [ "$ng" ]; then
-            _alert "Invalid argument ($_i)"
-            return 1
-        fi
+    for ((_i=0; _i < $reqc; _i++)) ;do
+        _match_arg ${ARGV[$_i]} $* || return 1
     done
 }
 _chk_all(){ # Check all argument
     local reqp=$1;shift
-    _ver_func && _chk_opt && _chk_argc "$reqp" && _chk_argv $* && return
+    local reqc="$(IFS=[;set - $reqp;echo $(($#-1)))"
+    _ver_func && _chk_opt && _chk_argc && _chk_argv $* && return
 }
 # Option List
 _optlist(){ # Pack of option letters of opt-?() functions
@@ -108,6 +108,7 @@ _caseitem(){ # List of case desctiption
 _usage(){ # Check and show usage
     _exe_xopt
     _chk_all "$@" && return # because it includes '[]'
+    # Display usage
     grep '^# *Description' $0 | sed 's/# *//' 1>&2
     _disp_usage "$1";shift
     for i;do echo $i;done | _colm 40 1>&2
