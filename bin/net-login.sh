@@ -34,7 +34,7 @@ by_config(){
         _item "$a,$b\n"
     done < <(egrep -A5 "Host $id$" ~/.ssh/config)
     echo
-    ssh $id $rcmd
+    ssh $id $command
     exit
 }
 by_db(){
@@ -46,17 +46,20 @@ by_db(){
         host="${ip:-$fdqn}"
     fi
     [ "$host" ] || return
+    rcmd+=";$command"
     mk_ssharg
     by_pubkey
     by_password
 }
 by_pubkey(){
+    _warn "Try pubkey_auth"
     local batch="-o BatchMode=yes"
-    [ "$VER" ] && echo "ssh $batch $ssharg $rcmd"
-    ssh $batch $ssharg $rcmd && exit
+    echo "ssh $batch $ssharg '$rcmd'"
+    ssh $batch $ssharg "$rcmd" && exit
 }
 # For SSH password login
 by_password(){
+    _warn "Try password_auth"
     decrypt_pw
     _temp expfile
     echo "set timeout 10" > $expfile
@@ -71,13 +74,13 @@ by_password(){
 by_trust(){
     dst=$(cut -d' ' -f3 ~/.ssh/authorized_keys|tr , $'\n'|grep "@$id$") || return
     _warn "Found in Authrizedkeys [$dst]"
-    ssh $dst $rcmd
+    ssh $dst $command
     exit
 }
 # For host which has specific login command file
 by_script(){
     type "login-$id" || return
-    login-$id $rcmd
+    login-$id $command
     exit
 }
 by_telnet(){
@@ -87,7 +90,7 @@ by_telnet(){
 
 _usage "[host] (command)" $(db-list ssh)
 id=$1;shift
-rcmd=$*
+command=$*
 by_config
 by_db
 by_trust
