@@ -10,7 +10,7 @@ mk_ssharg(){
     local sshopt="-o StrictHostKeyChecking=no -t"
     local dst="${user:+$user@}$host"
     _warn "Found in DB [$dst]"
-    [ "$port" ] && { sshopt="$sshopt -p $port"; dst="$dst:$port"; }
+    [ "$port" ] && { sshopt="$sshopt -p $port"; dst="$dst"; }
     ssharg="$sshopt $dst"
 }
 decrypt_pw(){
@@ -40,13 +40,14 @@ by_config(){
 by_db(){
     eval "$(db-trace $id ssh)"
     eval "$(db-trace $id host)"
-    eval "$(db-trace $auth auth)"
     if [ "$resolv" = 'ddns' ] ; then
         eval "$(db-trace $id ddns)"
         host="${ip:-$fdqn}"
     fi
     [ "$host" ] || return
-    rcmd+=";$command"
+    [ "$command" ] && rcmd+=";$command"
+    # $id will be changed due to getting auth
+    eval "$(db-trace $auth auth)"
     mk_ssharg
     by_pubkey
     by_password
