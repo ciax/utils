@@ -5,16 +5,15 @@
 list(){
     egrep -$1 $SEP $target
 }
-split(){
-    egrep -Hnm 1 -${1:0:1} 9999 $SEP $inc | egrep -v "$head#" |
-        search > $temp && {
-        echo "-------- $1 [$SEP] --------"
-        form < $temp
-    }
-    rm $temp
-}
 search(){
     egrep $opt "$head.*$reg"
+}
+whole(){
+    egrep -Hnv '^ *#' $exc | search
+}
+part(){
+    egrep -Hnm 1 -$1 9999 $SEP $inc |
+        egrep -v "$head#" | search
 }
 form(){
     sed -E "s/$head/\1:\2:\t/"|
@@ -35,6 +34,12 @@ SEP=${SEP:-__FILE__}
 target=${*:-'-r --exclude-dir=.git'}
 temp=~/.var/.gtemp.txt
 # File list that excludes $SEP
-exc=$(list L) && egrep -Hnv '^ *#' $exc | search | form
+exc=$(list L) && whole > $temp
 # File list that includes $SEP
-inc=$(list l) && { split Before; split After; }
+inc=$(list l) && {
+    part B >> $temp
+    form < $temp
+    part A > $temp && echo "-------- After [$SEP] --------"
+}
+form < $temp
+rm $temp
