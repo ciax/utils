@@ -1,6 +1,5 @@
 #!/bin/bash
-# Description: show script dependency tree
-#  '*' prefixed file -> independent file;
+# Description: show script dependency tree ('*'=independent)
 . func.getpar
 core(){
     base="${1##*/}"
@@ -48,7 +47,8 @@ show_tree(){
     done
 }
 ### main ###
-_usage "<dep list>"
+_usage "(top) < dep_list"
+start=$1;shift
 declare -A sub0
 declare -A sub
 declare -A super
@@ -56,12 +56,11 @@ declare -A depth
 index=' '
 deps=' '
 make_list
-for top in $index;do
+for top in ${start:-$index};do
     dep_dig "$top"
 done
 dep_stack
-echo $C5"* = independent"$C0
-for top in $index;do
+for top in ${start:-$index};do
     if [ "${sub0[$top]}" ] ; then
         echo $C3"$top"$C0
     else
