@@ -1,24 +1,33 @@
 #!/bin/bash
 # Description: grep recursive and show before and after in splited by separator
 #alias gr
-# Remove lines below specified word per file
+. func.file
 list(){
-    egrep -$1 $SEP $target
+    egrep -$1 "$SEP" $target
+}
+output(){
+        sort < $temp | expand -t 24 | egrep --color $opt "$reg"
+        rm $temp
 }
 search(){
-    egrep $opt "$head.*$reg"
+    egrep $opt "$head.*$reg" | sed -E "s/$head */\1\t/"
 }
-whole(){
-    egrep -Hnv '^ *#' $exc | search
+whole_search(){
+    # note that grep -L returns 0 when there are matched files regardless output
+    local exc=$(list L)
+    [ "$exc" ] || return
+    egrep -Hnv '^ *#' $exc | search > $temp
 }
 part(){
-    egrep -Hnm 1 -$1 9999 $SEP $inc |
-        egrep -v "$head#" | search
+    egrep -Hnm 1 -$1 9999 "$SEP" $inc |
+        sed -E "s/^(.+)[-:]([0-9]+)[-:]/\1:\2:/"|
+        egrep -v "$head#" | search >> $temp
 }
-form(){
-    sed -E "s/$head/\1:\2:\t/"|
-        sort | expand -t 24 |
-        egrep --color $opt "$reg"
+part_search(){
+    local inc=$(list l) || return
+    part B
+    output
+    part A && echo "-------- After [$SEP] --------"
 }
 # Main
 [ "$1" ] || { echo "Usage:(SEP=?) text-grep (option) [regexp] (files...)"; exit 1; }
@@ -29,17 +38,10 @@ done
 reg="$1";shift
 # Ignore case unless $reg contains upper case
 [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-head='^(.+)[-:]([0-9]+)[-:] *'
-SEP=${SEP:-__FILE__}
+head='^(.+:[0-9]+:)'
+SEP="${SEP:-__FILE__}"
 target=${*:-'-r --exclude-dir=.git'}
-temp=~/.var/.gtemp.txt
-# File list that excludes $SEP
-exc=$(list L) && whole > $temp
-# File list that includes $SEP
-inc=$(list l) && {
-    part B >> $temp
-    form < $temp
-    part A > $temp && echo "-------- After [$SEP] --------"
-}
-form < $temp
-rm $temp
+_temp temp
+whole_search
+part_search
+output
