@@ -5,6 +5,7 @@ core(){
     base="${1##*/}"
     echo "${base%.*}"
 }
+# Get data from STDIN
 make_list(){
     while read shared user; do
         [[ "$index" =~ " $shared " ]] || index+="$shared "
@@ -15,14 +16,16 @@ make_list(){
     done
 }
 dep_dig(){
-    [[ "$deps" =~ " $1 " ]] && _abort "Cyclic depencency detected $deps vs $1" || deps+="$1 "
-    [ "${2:-0}" -gt  50 ] && _abort "Infinite Loop Error $1"
-    for sb in ${sub0[$1]};do
-        [ "${depth[$sb]:-0}" -le ${2:-0} ] || continue
-        depth[$sb]=$2
-        super[$sb]=$1
+    local f=$1 n=${2:-0}
+    [[ "$deps" =~ " $f " ]] && _abort "Cyclic depencency detected $deps vs $f" || deps+="$f "
+    [ $n -gt  50 ] && _abort "Infinite Loop Error $f"
+    [ ${rank[$top]:-0} -lt $n ] && rank[$top]=$n
+    for sb in ${sub0[$f]};do
+        [ ${depth[$sb]:-0} -le $n ] || continue
+        depth[$sb]=$n
+        super[$sb]=$f
         index=${index// $sb / }
-        dep_dig "$sb" $(($2+1))
+        dep_dig "$sb" $(($n+1))
     done
     deps="${deps%$1*}"
 }
@@ -53,6 +56,7 @@ declare -A sub0
 declare -A sub
 declare -A super
 declare -A depth
+declare -A rank
 index=' '
 deps=' '
 make_list
@@ -62,7 +66,8 @@ done
 dep_stack
 for top in ${start:-$index};do
     if [ "${sub0[$top]}" ] ; then
-        echo $C3"$top"$C0
+        n=${rank[$top]}
+        echo $C3"$top${n:+($n)}"$C0
     else
         echo $C5"*$top"$C0
     fi
