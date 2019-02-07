@@ -10,24 +10,25 @@ output(){
         rm $temp
 }
 search(){
-    egrep $opt "$head.*$reg" | sed -E "s/$head/\1\t/"
+    egrep $opt "$head.*$reg" | sed -E "s/$head/\1\t/" >> $temp
 }
 whole_search(){
     # note that grep -L returns 0 when there are matched files regardless output
     local exc=$(list L)
     [ "$exc" ] || return
-    egrep -Hnv '^ *#' $exc | search > $temp
+    egrep -Hnv '^ *#' $exc | search
 }
 part(){
     egrep -Hnm 1 -$1 9999 "$SEP" $inc |
         sed -E "s/^(.+)[-:]([0-9]+)[-:]/\1:\2:/"|
-        egrep -v "$head#" | search >> $temp
+        egrep -v "$head#" | search
 }
 part_search(){
     local inc=$(list l) || return
     part B
     output
-    part A && echo "-------- After [$SEP] --------"
+    part A
+    [ -s $temp ] && echo "-------- After [$SEP] --------"
 }
 # Main
 [ "$1" ] || { echo "Usage:(SEP=?) text-grep (option) [regexp] (files...)"; exit 1; }
