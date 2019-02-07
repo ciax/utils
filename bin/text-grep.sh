@@ -10,7 +10,7 @@ output(){
         rm $temp
 }
 search(){
-    egrep $opt "$head.*$reg" | sed -E "s/$head */\1\t/"
+    egrep $opt "$head.*$reg" | sed -E "s/$head/\1\t/"
 }
 whole_search(){
     # note that grep -L returns 0 when there are matched files regardless output
@@ -38,7 +38,7 @@ done
 reg="$1";shift
 # Ignore case unless $reg contains upper case
 [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-head='^(.+:[0-9]+:)'
+head='^(.+:[0-9]+:) *'
 SEP="${SEP:-__FILE__}"
 target=${*:-'-r --exclude-dir=.git'}
 _temp temp
