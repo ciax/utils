@@ -17,13 +17,15 @@ _exe_xopt(){ # Exclusive option handling
         fi
     done
 }
+# put _exe_opt somewhere with appropriate option (ex. _exe_opt x) to be done opt-?.
+# no option -> exec all the rest of opt-? funcsl.
 _exe_opt(){ # Option handling, don't forget to execute after _usage
-    local _executed=1
-    for i in ${OPT[*]};do
-        type -t "opt${i%%=*}" &>/dev/null && opt${i//=/ }
-        _executed=0
+    for i in ${*:-${OPT[*]}};do
+        if type -t "opt${i%%=*}" &>/dev/null; then
+            eval "opt${i//=/ }"
+            unset OPT[$i]
+        fi
     done
-    return $_executed
 }
 _ver_func(){ # Verify function
     if egrep -q "^opt-.\(\)\{" $0 && ! egrep -q "_exe_opt" $0; then
@@ -100,7 +102,7 @@ _caseitem(){ # List of case desctiption
 #   6. Option function name will be followed by a comment to show description.
 # Parameter Text format:
 #   option is automatically printed as "(-xy..)"
-#   option with parameter => -x=par
+#   option with parameter => -x=par (par will be the  parameter of opt-x )
 #   mandatory parameters => enclosed by "[]"
 #   file name replaceable with stdin => enclosed by "<>"
 #   optional parameters => enclosed by "()"
@@ -121,8 +123,6 @@ _disp_usage(){
     shift
     for i in "${OPTDEF[@]}";do echo "$i";done | _colm 1>&2
 }
-
-
 _chkfunc $*
 # Option Parser
 declare -a ARGV
