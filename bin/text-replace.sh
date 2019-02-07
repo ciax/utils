@@ -3,15 +3,23 @@
 # Description: replace string in files
 #alias rep
 . func.getpar
-_usage "[oldstr] [newstr] (ext)
-\tENV{files} for target
-\tENV{ex} for exclude line
-\t(ext) includes {git mv old.ext new.ext}"
+opt-e(){ # =[ext] file extension for rename {git mv old.ext new.ext}
+    [ "$1" ] || return
+    oldfn="$oldstr.$1"
+    newfn="$newstr.$1"
+    cd $(dirname $(realpath $oldfn))
+    file-rename $oldfn $newfn && file-register $newfn
+}
+opt-x(){ # =[regexp] for exclude line
+    ex=$1;
+}
+_usage "[oldstr] [newstr] (files)"
 . func.query
 _temp outtmp
-oldstr="$1"
-newstr="$2"
-ext="$3"
+oldstr="$1";shift
+newstr="$1";shift
+files="$*"
+_exe_opt x
 echo "OLDSTR=$oldstr, NEWSTR=$newstr"
 for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     [[ $orgfile == *~ ]] && continue
@@ -39,18 +47,4 @@ for orgfile in $(grep --exclude-dir=.git -RIl "$oldstr" ${files:-.}); do
     done < <(cat "$orgfile";tail -c1 "$orgfile"|grep -q . && echo)
     _overwrite "$orgfile" "$outtmp"
 done
-[ "$ext" ] || exit
-cd $(dirname $(realpath $oldstr))
-oldfn="$oldstr.$ext"
-newfn="$newstr.$ext"
-if [ -e "$oldfn" ] ; then
-    _msg "#### Rename:[$oldfn] ####"
-    if [ -e "$newfn" ] ; then
-        _al "newfn aleady exists"
-    else
-        _al "rename $oldfn -> $newfn?"
-        _query && git mv $oldfn $newfn
-    fi
-fi
-file-register .
-
+_exe_opt
