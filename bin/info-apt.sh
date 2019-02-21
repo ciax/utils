@@ -21,7 +21,7 @@ case "$cmd" in
         apt-file search "bin/$1 ";;
     search) #search package
         _usage "[$cmd] [pattern]"
-        apt-cache search $1;;
+        apt-cache search $1|grep --color=auto $1;;
     files) #show package contents
         _usage "[$cmd] [package]"
         dpkg -L "$1";;

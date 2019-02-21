@@ -7,8 +7,8 @@ opt-e(){ # =[ext] file extension for rename {git mv old.ext new.ext}
     [ "$1" ] || return
     oldfn="$oldstr.$1"
     newfn="$newstr.$1"
-    cd $(dirname $(realpath $oldfn))
-    file-rename $oldfn $newfn && file-register $newfn
+    cd $(dirname $(realpath $oldstr))
+    file-rename $oldfn $newfn && file-register .
 }
 opt-x(){ # =[regexp] for exclude line
     ex=$1;
