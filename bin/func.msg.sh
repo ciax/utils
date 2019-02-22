@@ -66,9 +66,11 @@ _chkfunc(){ # Show function list in self file
     fi
 }
 # Other Useful func
+# Find command from list
 _setcmd(){
     for cmd;do
-        type $cmd >/dev/null 2>&1 || continue
+        # cmd could contain options
+        type ${cmd% *} >/dev/null 2>&1 || continue
         echo $cmd
         break
     done
