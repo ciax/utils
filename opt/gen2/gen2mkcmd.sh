@@ -30,9 +30,9 @@ case "$id" in
     ajup) echo "-b 932001";;
     ajdw) echo "-b 932002";;
     ajstop) echo "932003";;
-    jup) echo "-b 932004";;
-    jdw) echo "-b 932005";;
-    jstop) echo "932006";;
+    jup) echo "-b 932004$num";;
+    jdw) echo "-b 932005$num";;
+    jstop) echo "932006$num";;
     setinst) echo "13200700$num";;
     *) usage;;
 esac
