@@ -2,7 +2,6 @@
 # Description: query function
 type _query >/dev/null 2>&1 && return
 . func.msg
-ALL=
 TTY=$(tty)
 _al(){ # Alert
     echo -e "\t"$C1"$*"$C0
