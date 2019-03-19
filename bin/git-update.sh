@@ -2,9 +2,8 @@
 # Required scripts: link-self
 # Description: update git repositories
 . func.msg
-echo "args $*"
-for i in ~/utils ${*:-~/cfg.*};do
-    pushd $i >/dev/null
+for i in ~/*/.git/COMMIT_EDITMSG;do
+    pushd ${i%/.git*} >/dev/null
     _warn "Git update for $PWD"
     git remote update -p origin
     git pull
