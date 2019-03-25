@@ -2,7 +2,7 @@
 # Display Message Module
 type _msg >/dev/null 2>&1 && return
 shopt -s nullglob extglob
-# Coloring for Console
+### Coloring for Console ###
 #  ESC[(A);(B)(C)m # A: 0=dark 1=light # B: 3=FG 4=BG # C: 1=R 2=G 4=B
 #  environment variable "C?","D?" are provided
 if [ -t 2 ] ; then
@@ -46,7 +46,7 @@ _verbose(){ # Show msg when func name is set to VER
 }
 _chkfunc(){ # Show function list in self file
     # Execute last one
-    [ $0 == ${BASH_SOURCE[1]} ] || return
+    _chkown || return
     local self="${0##*/}" i v
     echo $self
     # If this is symlinked to func name without '_', executed as func
@@ -65,7 +65,16 @@ _chkfunc(){ # Show function list in self file
         fi
     fi
 }
-# Other Useful func
+### Other Useful func ###
+
+# Check if file is not sourced
+_chkown(){
+    [ $0 == ${BASH_SOURCE[1]} ]
+}
+# Exit with code for file (included or individual)
+_fexit(){
+    _chkown && exit $1 || return $1
+}
 # Find command from list
 _setcmd(){
     for cmd;do

@@ -34,6 +34,6 @@ case "$cmd" in
     *)
         _disp_usage "[command]"
         _caseitem | _colm 1>&2
-        exit 1
+        _fexit 2
         ;;
 esac

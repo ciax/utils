@@ -45,8 +45,9 @@ case "$cmd" in
         _usage "[$cmd] [key]"
         gpg --keyserver pgpkeys.mit.edu --recv-keys $1 && gpg --armor --export $1 | _sudy -i apt-key add -;;
     *)
-        info-apt $cmd $* || {
+        . info-apt $cmd $*
+        if [ $? = 2 ] ; then
             _caseitem | _colm | _abort
-        }
+        fi
         ;;
 esac
