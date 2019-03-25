@@ -38,6 +38,15 @@ for file ;do
             # Overwrites by itself
             fixjsstyle $file
             ;;
+        sh)
+            echo "Bash Processing"
+            #http://d.hatena.ne.jp/n9d/20090117/1232182669
+            echo "function a(){">$temp
+            cat $file >>$temp
+            echo -e " }\n declare -f a">>$temp
+            chmod +x $temp
+            $temp|sed '1,2d;$d;s/....//'
+            ;;
         *);;
     esac
 done
