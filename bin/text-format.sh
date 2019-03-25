@@ -18,7 +18,7 @@ _temp temp
 for file ;do
     ext=${file#*.}
     case $ext in
-        xml)
+        xml|xsd)
             echo "XML Processing"
             xmllint --format $file > $temp
             safe_ow $temp $file
