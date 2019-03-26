@@ -12,9 +12,12 @@ case `uname` in
         eval $(< /etc/os-release)
         name=${NAME% *}
         ver=${VERSION% *}
-        echo "${name,,}-${ver%.*}";;
+        echo "${name,,}-${ver%.*}"
+    ;;
     SunOS)
         ver=$(uname -r)
-        echo "sunos-${ver%.*}";;
-    *);;
+        echo "sunos-${ver%.*}"
+    ;;
+    *)
+    ;;
 esac

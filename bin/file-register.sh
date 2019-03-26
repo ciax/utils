@@ -9,7 +9,7 @@ def=$(
     for i in $0 ~/bin/*; do
         dirname $(realpath $i)
     done | sort -u
-   )
+)
 
 for i in ${*:-$def};do
     if [ -d "$i" ]; then

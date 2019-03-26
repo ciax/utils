@@ -16,11 +16,9 @@ dir=$(cd $(dirname $1);pwd -P)
 name=$(basename $1)
 base64=$(gzip -c $1|base64 -w0)
 dist=$(info-dist)
-stat -c "%a %Y %U" $1 | {
-    read mode date owner
-    bkup-exec <<EOF
+read mode date owner < <(stat -c "%a %Y %U" $1)
+bkup-exec <<EOF
 insert or ignore into content values('$fid','$mode','$date','$base64');
 insert or ignore into list values('$fid','$host','$dist','$owner','$name','$dir');
 EOF
-    echo "$fid"
-}
+echo "$fid"

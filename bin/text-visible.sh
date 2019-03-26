@@ -20,6 +20,6 @@ for c in $(od -v -A n -t x1 $*) ; do
         unset nl
     else
         echo -en "\x$c"
-   fi
+    fi
 done
 echo

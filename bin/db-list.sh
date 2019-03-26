@@ -12,14 +12,14 @@ case "$1" in
     *=*)
         whr="where ${1%=*} = '${1#*=}'"
         db-exec "select id from $tbl $whr;"|grep .|sort -u
-        ;;
+    ;;
     '')
         cat $_tmp_tbl
-        ;;
+    ;;
     *)
         {
             db-exec "select $1 from $tbl;" ||\
-                db-exec "pragma table_info($tbl);"
+            db-exec "pragma table_info($tbl);"
         } | grep .| sort -u
-        ;;
+    ;;
 esac

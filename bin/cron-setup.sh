@@ -1,13 +1,13 @@
 #!/bin/bash
 # Required scripts: func.getpar
 # Description: Print crontab setting for cfg.*/etc/cron.period.$HOSTNAME
-#              Option (-t) gives two minutes later crontab for testing. 
+#              Option (-t) gives two minutes later crontab for testing.
 # Usage: cron-setup (-t) [hourly|daily|weekly]
 . func.getpar
 opt-t(){ # Test mode (exec two munites later)
     m=$(( $(date +%M) + 2 ))
     df='*'
-} 
+}
 list=""
 m=$(date +%S)
 _exe_opt

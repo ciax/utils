@@ -49,11 +49,14 @@ show_tree(){
         case "$p" in
             opt)
                 c='='
-                echo -n $C3;;
+                echo -n $C3
+            ;;
             e*)
-                echo -n "${p#e}";;
+                echo -n "${p#e}"
+            ;;
             *)
-                c='-';;
+                c='-'
+            ;;
         esac
         if [ "${connect[$i]}" ] ; then
             echo -n "$c$c$c"

@@ -16,7 +16,7 @@ _exe_opt
         subnet="$subnet and host.subnet != '$net'"
     done
     where="host.resolv == 'hosts' or (host.resolv =='dns'$subnet)"
-}       
+}
 echo "#file /etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"

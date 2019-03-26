@@ -6,8 +6,8 @@ case $(uname) in
         echo -n "Linux/"
         eval $(< /etc/os-release)
         echo ${NAME% *}
-        ;;
+    ;;
     *)
         uname
-        ;;
+    ;;
 esac

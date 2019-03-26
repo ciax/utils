@@ -29,15 +29,15 @@ schema(){
             !*)
                 local field=${col#!}
                 pkeys="${pkeys:+$pkeys,}$field"
-                ;;
+            ;;
             *"*"*)
                 # Add to Refence key list
                 local ref=${col#*\*}
                 local field=${col%\**}
                 field=${field:-$ref}
                 # ref -> rtable, rkey
-                local rtable="${ref%:*}";rtable=${rtable:-$field} 
-                if [[ $ref =~ ':' ]]; then 
+                local rtable="${ref%:*}";rtable=${rtable:-$field}
+                if [[ $ref =~ ':' ]]; then
                     local rkey="${ref#*:}"
                 else
                     local rkey="id"
@@ -47,10 +47,10 @@ schema(){
                     reftbl="$reftbl $rfile"
                     schema $rfile
                 done
-                ;;
+            ;;
             *)
                 local field=$col
-                ;;
+            ;;
         esac
         create="$create'$field',"
     done < $tmpline

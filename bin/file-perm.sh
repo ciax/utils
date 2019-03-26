@@ -12,5 +12,5 @@ for i in **/*.*;do
     else
         chmod 644 "$i"
     fi
-done 
-for i in **/*.{sh,rb,py,pl,exp};do chmod 755 $i;done 
+done
+for i in **/*.{sh,rb,py,pl,exp};do chmod 755 $i;done

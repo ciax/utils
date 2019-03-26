@@ -31,7 +31,7 @@ _temp hlist hosts
 while read ip type mac other ; do
     host=${hos[$mac]}
     echo "Find $ip for $host ($mac)" 1>&2
-    echo "$ip    $host" >> $hlist 
+    echo "$ip    $host" >> $hlist
 done < <(egrep -i "($mreg)" $alist)
 # /etc/hosts rewreite
 [ "$hset" ] || exit

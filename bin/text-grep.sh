@@ -6,8 +6,8 @@ list(){
     egrep -$1 "$SEP" $target
 }
 output(){
-        sort < $temp | expand -t 24 | egrep --color $opt "$reg"
-        rm $temp
+    sort < $temp | expand -t 24 | egrep --color $opt "$reg"
+    rm $temp
 }
 search(){
     egrep $opt "$head.*$reg" | sed -E "s/$head/\1\t/" >> $temp
@@ -20,8 +20,8 @@ whole_search(){
 }
 part(){
     egrep -Hnm 1 -$1 9999 "$SEP" $inc |
-        sed -E "s/^(.+)[-:]([0-9]+)[-:]/\1:\2:/"|
-        egrep -v "$head#" | search
+    sed -E "s/^(.+)[-:]([0-9]+)[-:]/\1:\2:/"|
+    egrep -v "$head#" | search
 }
 part_search(){
     local inc=$(list l) || return

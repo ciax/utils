@@ -13,6 +13,7 @@ xopt-b(){ #bare output
 [ "$(bkup-exec .tables)" ] || bkup-init
 _usage
 _exe_opt
-_list | { IFS=\|; while read d n c;do
+IFS=\|
+while read d n c;do
     echo "$n   [$d]   ($c)"
-done }
+done < <(_list)
