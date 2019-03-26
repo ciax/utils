@@ -2,11 +2,14 @@
 # Required commands: ip netstat
 # Recommended app: ipcalc
 shopt -s nullglob
-while read h x t x i x; do
-    if [ "$h" = default -a ! "$netif" ] ; then
+while read h x t x i x
+do
+    if [ "$h" = default -a ! "$netif" ]
+    then
         gw=$t
         netif=$i
-    elif [ "$t" = "$netif" -a ! "$cidr" ] ; then
+    elif [ "$t" = "$netif" -a ! "$cidr" ]
+    then
         cidr=$h
     fi
 done < <(ip route)

@@ -4,9 +4,11 @@
 # Description: restore backup file
 . func.getpar
 _usage "[file]"
-if [ -e "$1~" ]; then
+if [ -e "$1~" ]
+then
     mv "$1~" $1
-elif [ -e ~/.trash/$1 ]; then
+elif [ -e ~/.trash/$1 ]
+then
     mv ~/.trash/$1 $1
 else
     exit

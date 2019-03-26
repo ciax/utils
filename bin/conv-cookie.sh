@@ -4,6 +4,6 @@
 sqlite3 $1 <<EOF
 .mode tabs
 select host, case when host glob '.*' then 'TRUE' else 'FALSE' end,
-path, case when isSecure then 'TRUE' else 'FALSE' end, 
+path, case when isSecure then 'TRUE' else 'FALSE' end,
 expiry, name, value from moz_cookies;
 EOF

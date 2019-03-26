@@ -5,14 +5,20 @@
 conv_duration(){ # print 20XX-XX-XX startsec endsec
     local date=$1
     case "$1" in
-        ''|0) date=$(date +%m/%d);;
-        -*) date=$(date +%m/%d);dif="$1";;
-        */*) date=$1;;
-        *) date="$(date +%m)/$1";;
+        ''|0) date=$(date +%m/%d)
+        ;;
+        -*) date=$(date +%m/%d);dif="$1"
+        ;;
+        */*) date=$1
+        ;;
+        *) date="$(date +%m)/$1"
+        ;;
     esac
     case $(uname) in
-        Linux) setopt="-d \"$date${dif:+ $1day}\"";;
-        Darwin) setopt="-j $(printf %02d%02d0000 ${date//// })${dif:+ -v$1d}";;
+        Linux) setopt="-d \"$date${dif:+ $1day}\""
+        ;;
+        Darwin) setopt="-j $(printf %02d%02d0000 ${date//// })${dif:+ -v$1d}"
+        ;;
     esac
     year=$(eval "date $setopt +%Y")
     month=$(eval "date $setopt +%-m")

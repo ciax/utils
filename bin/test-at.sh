@@ -9,7 +9,7 @@ _temp temp
 tty=$(tty)
 cat <<EOF > $temp
 #!/bin/sh
-$* > at.out 2>&1 
+$* > at.out 2>&1
 rm -f $temp
 echo 'done' > $tty
 EOF

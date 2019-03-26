@@ -28,7 +28,7 @@ class BeautifyBash:
 
   def __init__(self):
     self.tab_str = ' '
-    self.tab_size = 2
+    self.tab_size = 4
 
   def read_file(self,fp):
     with open(fp) as f:

@@ -30,7 +30,7 @@ by_config(){
     _warn "Found in sshconfig"
     while read a b;do
         # Remove following entry
-        [[ $a =~ Host ]] && ! [[ $b =~ $id ]] && break 
+        [[ $a =~ Host ]] && ! [[ $b =~ $id ]] && break
         _item "$a,$b\n"
     done < <(egrep -A5 "Host $id$" ~/.ssh/config)
     echo
