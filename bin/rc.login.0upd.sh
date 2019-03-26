@@ -1,6 +1,6 @@
 #!/bin/bash
 # UPDATE before login
-git-update -b
-db-update -b
+git-update
+db-update
 
 
