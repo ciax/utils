@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.link file-clean link-self
+# Required scripts: func.link file-clean file-link
 # Description: Script file registration to ~/bin
 . file-clean ~/bin
 . func.link
@@ -22,4 +22,4 @@ for i in ${*:-$def};do
     fi
 done
 _showlink
-link-self
+file-link

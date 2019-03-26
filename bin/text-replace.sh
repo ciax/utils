@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: func.getpar func.query link-self file-clean
+# Required scripts: func.getpar func.query file-link file-clean
 # Description: replace string in files
 #alias rep
 . func.getpar

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required scripts: link-self
+# Required scripts: file-link
 # Description: update git repositories
 . func.getpar
 xopt-b(){ main > /dev/null 2>&1 & }

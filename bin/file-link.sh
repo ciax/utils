@@ -4,7 +4,7 @@
 # Description: Files in ~/bin and current dirs will be classified into 'bin','db' ..
 # (Ubuntu need to install realpath)
 # "Usage: ${0##*/} [DIR..] | [SRC..]"
-#alias slink
+#alias flink
 . func.link
 . func.file
 _warn "File Self Registering"
