@@ -7,10 +7,11 @@
 #     In the multiple key, null value is matched as a default value;
 . func.getpar
 cond(){
-    for i;do
-        if [[ $i =~ = ]]; then
-            read fld val <<< "${i//=/,}"
-            echo -n "${con}($fld is null or $fld == '$val')"
+    for i
+    do
+        if [[ $i =~ = ]];then
+            set - "${i//=/ }"
+            echo -n "${con}($1 is null or $1 == '$2')"
         else
             echo -n "${con}id == '$i'"
         fi
@@ -22,11 +23,12 @@ traceback(){
     local key=$1;shift
     local tbl=$1;shift
     local sql="from $tbl where $(IFS=,;cond $key)"
-    for tbl; do
+    for tbl
+    do
         sql="from $tbl where id == (select $tbl $sql)"
     done
     sql='select * '$sql';'
-    while read key eq val;do
+    while read key eq val; do
         [ "$val" ] && echo "$key='$val'"
     done < <(db-exec -i "$sql")
 }

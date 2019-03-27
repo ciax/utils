@@ -25,7 +25,6 @@ split_sheet(){
         fi
     done
 }
-
 _usage "[db]"
 _temp dlfile dbfile
 site="https://docs.google.com/spreadsheets/d/"
@@ -34,11 +33,12 @@ key=$(db-exec "select key from gdocs where id == '$1';")
 dldir=~/.var/cache/download
 mkdir -p $dldir
 while read line;do
-    read sheet gid <<< "${line//|/ }"
+    sheet="${line%|*}"
+    gid="${line#*|}"
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
     _warn "Retriving $C1$sheet$C0($url)"
     wget -q --progress=dot -O $dlfile "$url" || continue
-    grep "'" $dlfile && { _alert "Field includes ' -> reject"; continue; }
+    grep "'" $dlfile && { _alert "Field includes apostrophe -> reject"; continue; }
     nkf -d --in-place $dlfile
     split_sheet $sheet
     cp $dlfile $dldir/$sheet.tsv

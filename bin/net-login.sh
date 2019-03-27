@@ -16,7 +16,7 @@ mk_ssharg(){
 decrypt_pw(){
     [[ "$password" == jA0E* ]] || return
     crypt-init
-    password=$(crypt-de <<< "$password")
+    password=$(echo "$password" | crypt-de)
     # Mask like 'x***y'
     local mid=${password:1:-1}
     local ast=${mid//?/*}
@@ -28,7 +28,8 @@ by_config(){
     [ "$sshlist" ] || return
     [[ $sshlist =~ Proxy ]] && return
     _warn "Found in sshconfig"
-    while read a b;do
+    while read a b
+    do
         # Remove following entry
         [[ $a =~ Host ]] && ! [[ $b =~ $id ]] && break
         _item "$a,$b\n"
@@ -40,7 +41,8 @@ by_config(){
 by_db(){
     eval "$(db-trace $id ssh)"
     eval "$(db-trace $id host)"
-    if [ "$resolv" = 'ddns' ] ; then
+    if [ "$resolv" = 'ddns' ]
+    then
         eval "$(db-trace $id ddns)"
         host="${ip:-$fdqn}"
     fi
@@ -90,7 +92,8 @@ by_telnet(){
 }
 
 _usage "[host] (command)" $(db-list ssh)
-id=$1;shift
+id=$1
+shift
 command=$*
 by_config
 by_db
