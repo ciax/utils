@@ -21,6 +21,9 @@ _msg(){ # Print message to stderr
     echo -e "$C0$*$C0" | _indent
 }
 _title(){ # Print title to stderr
+    echo -e "$C6$*$C0" | _indent
+}
+_comp(){ # Print completed to stderr
     echo -e "$C2$*$C0" | _indent
 }
 _warn(){ # Print warning to stderr

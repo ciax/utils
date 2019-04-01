@@ -23,7 +23,7 @@ main(){
     if [ ! "$get" ] ; then
         ct=$(latest-tsv)
         if [ "$dt" -gt "$ct" ]; then
-            _warn "DB is up to date"
+            _comp "DB is up to date"
             return
         else
             _warn "DB($(date -d@$dt)) is older than TSV($(date -d@$ct))"

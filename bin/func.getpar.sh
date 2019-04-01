@@ -117,7 +117,7 @@ _usage(){ # Check and show usage
     exit 1
 }
 _disp_usage(){
-    echo -en "Usage: $C3${0##*/}$C0" 1>&2
+    echo -en "Usage: $C2${0##*/}$C0" 1>&2
     _optlist
     echo -e " $1" 1>&2
     shift
