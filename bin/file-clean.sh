@@ -40,4 +40,4 @@ for i in ${*:-.};do
         _warn "Under another user's dir"
     fi
 done
-_warn "File Cleaning ($_dirlist)"
+_title "File Cleaning ($_dirlist)"

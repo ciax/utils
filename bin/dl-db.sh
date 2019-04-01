@@ -36,7 +36,7 @@ while read line;do
     sheet="${line%|*}"
     gid="${line#*|}"
     url="$site$key/export?format=tsv&id=$key&gid=$gid"
-    _warn "Retriving $C1$sheet$C0($url)"
+    _title "Retriving $C1$sheet$C0($url)"
     wget -q --progress=dot -O $dlfile "$url" || continue
     grep "'" $dlfile && { _alert "Field includes apostrophe -> reject"; continue; }
     nkf -d --in-place $dlfile
