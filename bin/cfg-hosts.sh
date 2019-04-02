@@ -21,12 +21,18 @@ echo "#file /etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"
 IFS='|'
-db-exec <<EOF | while read a b c sub ip host domain; do [ "$ip" ] &&  echo "$a.$b.$(($c+$sub)).$ip    $host   $host.$domain";done
+while read a b c sub ip host domain another; do
+    [ "$ip" ] || continue
+    echo -en "$a.$b.$(($c+$sub)).$ip\t$host.$domain\t$host"
+    [ "$another" -a "$host" != "$another" ] && echo -e "\t$another" || echo
+done < <(
+    db-exec <<EOF
 select
-    replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name
+    replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name,ssh.id
 from host
     inner join subnet on host.subnet=subnet.id
     inner join domain on subnet.domain=domain.id
+    left outer join ssh on host.id=ssh.host
 where
     $where
 order by subnet.network,
@@ -35,12 +41,13 @@ order by subnet.network,
       host.host_ip
 ;
 EOF
+)
 # FDQN alias
 declare -A host
 while read id fdqn; do
     ip=$(host $fdqn) || continue
     ip=$(echo $ip|egrep -o '([0-9]+\.?){4}')
     [ "$ip" ] || continue
-    echo "$ip  $id    $fdqn"
+    echo -e "$ip\t$fdqn\t$id"
 done < <(db-exec 'select id,fdqn from ddns;')
 
