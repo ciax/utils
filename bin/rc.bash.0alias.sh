@@ -27,9 +27,13 @@ alias girr='git reset --hard HEAD~;git log -1|cat'
 alias gis='git branch -a;git log -1|cat;git status'
 alias giu='git checkout'
 # Update remote repo list
-alias gip='git remote prune origin'
+alias gip='git remote prune origin;git remote show orogin'
 
 # For package admin
 alias pks='pkg search'
 alias pkw='pkg where'
 alias pkf='pkg files'
+
+# File Rename
+alias renrb='text-replace -e=rb'
+alias rensh='text-replace -e=sh'
