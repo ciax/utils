@@ -1,25 +1,23 @@
 #!/bin/bash
 # Description: move to subdirs recursively except symlinks then execute command there
-#              Use $sep for csv description (ex. list+=$sep$str)
+#     _exdir=: excluding dirs
+#    _dirlist: csv list of dir
+#
 type _subdirs >/dev/null 2>&1 && return
 . func.msg
-_defsep=,
 _topdir="$PWD/"
-#_dirlist=
-#_exdir=
 _subdirs(){ # Scan SubDir and Exec Cmd there
-    local cmd="${1:-pwd -P}"
-    local sep=$2
+    local cmd="${*:-pwd -P}"
     eval "$cmd"
     local dir="${PWD#*$_topdir}"
-    _dirlist+="$sep${dir/$HOME/~}"
-    local i
+    _dirlist+=",${dir/$HOME/~}"
     shopt -s nullglob
+    local i
     for i in */ ;do
         [ -h "${i%/}" ] && continue
         [ "$_exdir" ] && [[ "${i%/}" =~ "$_exdir" ]] && continue
         pushd "$i" >/dev/null
-        _subdirs "$cmd" "$_defsep"
+        _subdirs "$cmd"
         popd >/dev/null
     done
 }
