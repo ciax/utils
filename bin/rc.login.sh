@@ -2,9 +2,10 @@
 # $0 will be -bash at login
 shopt -s nullglob
 dorc(){
-    date
-    for i in ~/bin/rc.login.*;do
-        source $i
+    local i log=~/.var/log/rc.$1.log 2>&1
+    date > $log
+    for i in ~/bin/rc.$1.*;do
+        nohup $i >> $log &
     done
 }
-dorc > ~/.var/log/rc.login.log
+dorc login
