@@ -8,7 +8,7 @@ main(){
         pushd ${i%/.git*} >/dev/null
         _warn "Git update for $PWD"
         git remote update -p origin
-        git pull
+        git-pull
         dir="$dir $PWD"
         popd >/dev/null
     done
