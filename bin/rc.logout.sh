@@ -2,10 +2,10 @@
 # $0 will be -bash at login
 shopt -s nullglob
 dorc(){
-    local i log=~/.var/log/rc.$1.log 2>&1
+    local i log=~/.var/log/rc.$1.log
     date > $log
     for i in ~/bin/rc.$1.*;do
-        nohup $i >> $log &
+        nohup $i >> $log  2>&1 &
     done
 }
 dorc logout

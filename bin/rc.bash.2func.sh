@@ -48,4 +48,13 @@ ps_grep(){ #alias psg
     local exp="^UID${1:+|$1}"
     ps -ef | grep -v "$$ .* grep" | egrep -i "$exp"
 }
+# Shape up PATH like env
+uniqenv(){
+    local i j list
+    for i; do
+        # dir name can contain '()' in windows system
+        list="$(IFS=:; for j in ${!i}; do echo $j;done|awk -v ORS=: '!x[$0]++')"
+        eval "$i='${list%:}'"
+    done
+}
 self_alias >/dev/null
