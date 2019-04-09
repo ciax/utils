@@ -5,19 +5,22 @@
 #
 type _subdirs >/dev/null 2>&1 && return
 . func.msg
-_topdir="$PWD/"
-_subdirs(){ # Scan SubDir and Exec Cmd there
+shopt -s nullglob
+_do_here(){
     local cmd="${*:-pwd -P}"
     eval "$cmd"
-    local dir="${PWD#*$_topdir}"
+    local dir="$(pwd -P)"
     _dirlist+="${_dirlist:+,}~${dir#$HOME}"
-    shopt -s nullglob
+}
+# Scan SubDir and Exec Cmd there
+_subdirs(){
+    _do_here "$*"
     local i
     for i in */ ;do
         [ -h "${i%/}" ] && continue
         [ "$_exdir" ] && [[ "${i%/}" =~ "$_exdir" ]] && continue
         pushd "$i" >/dev/null
-        _subdirs "$cmd"
+        _subdirs "$*"
         popd >/dev/null
     done
 }

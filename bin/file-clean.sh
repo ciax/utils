@@ -1,8 +1,12 @@
 #!/bin/bash
-# Required scripts: func.msg func.dirs
+# Required scripts: func.getpar func.dirs
 # Description: File clean up (remove backup,unlinked files)
 #alias clr
+. func.getpar
 . func.dirs
+opt-r(){
+    clrcmd='_subdirs'
+}
 _chkdir(){
     [ -h "$1" ] && return 1
     [ -d "$1" ] && return
@@ -31,13 +35,15 @@ _clrdir(){
         _nolink * .*
     fi
 }
+clrcmd=_do_here
+_exe_opt
 for i in ${*:-.} ~/bin;do
-    if [[ $PWD =~ $HOME/ ]] ; then
+    if [[ $PWD =~ $HOME ]] ; then
         pushd $i >/dev/null
-        _subdirs _clrdir
+        $clrcmd _clrdir
         popd >/dev/null
     else
         _warn "Under another user's dir"
     fi
 done
-_title "File Cleaning ($_dirlist)"
+[ "$_dirlist" ] && _title "File Cleaning ($_dirlist)"
