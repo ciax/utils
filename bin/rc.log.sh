@@ -4,6 +4,6 @@
 #link rc.logout
 shopt -s nullglob
 date
-for i in ~/bin/rc.${0##*/}.*;do
+for i in $0.*;do
     source $i
 done
