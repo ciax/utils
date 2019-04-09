@@ -10,6 +10,6 @@ cd ~/utils/bin
 . func.link.sh
 _setup_link
 . rc.bash
-link-self
+file-link
 bashrc-setup
 echo "You need [pkg init] and [db-update -f]"
