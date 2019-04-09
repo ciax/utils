@@ -5,9 +5,7 @@ xopt-b(){ main $* > /dev/null 2>&1 & }
 main(){
     cd ${1:-.}
     git fetch
-    crnt=$(git branch --contains|cut -d' ' -f2)
-    others="$(git branch|grep -v '*')"
-    for i in $others $crnt; do
+    for i in $(git branch|sort|tr -d '*'); do
         git checkout $i
         git pull
     done
