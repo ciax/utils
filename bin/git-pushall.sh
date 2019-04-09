@@ -1,8 +1,8 @@
 #!/bin/bash
-# Description: push to git repositories
+# Description: push to all the git repositories
 . func.msg
-for i in ~/*/.git/COMMIT_EDITMSG;do
-    pushd ${i%/.git*} >/dev/null
+for i in $(git-dirs);do
+    pushd $i >/dev/null
     _warn "Git push for $PWD"
     git config credential.helper store
     git-push
