@@ -6,4 +6,4 @@ date > $log
 for i in ~/bin/rc.log$1.*;do
     source $i
 done >> $log  2>&1
-cat $log
+
