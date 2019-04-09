@@ -1,10 +1,7 @@
 #!/bin/bash
 # Description: setup rc files
-setup(){
-    local file=~/.$1;shift
-    [ -e $file ] || touch $file
-    head=$1;shift
-    local line="$head ~/bin/rc.$* #initrc"
+update(){
+    file="$1";line="$2"
     # Case of no update
     grep -q "$line" "$file" && return
     # Case of update
@@ -15,10 +12,18 @@ setup(){
     echo "$line" >> "$file"
     echo "Update ${file##*/}"
 }
+setrc(){
+    local file=~/.$1;shift
+    [ -e $file ] || touch $file
+    local line="$1 ~/bin/rc."
+    shift
+    line+="$* #initrc"
+    update "$file" "$line"
+}
 
+setrc bashrc source bash
 for profile in bash_profile bash_login profile;do
     [ -e ~/.$profile ] && break
 done
-setup bashrc . bash
-setup $profile nohup log in '&'
-setup bash_logout nohup log out '&'
+setrc $profile nohup login '> ~/.var/log/rc.login.log &'
+setrc bash_logout nohup logout '> ~/.var/log/rc.logout.log &'

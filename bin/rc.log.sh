@@ -1,9 +1,9 @@
 #!/bin/bash
 # Log (in/out) boot strap
+#link rc.login
+#link rc.logout
 shopt -s nullglob
-log=~/.var/log/rc.log$1.log
-date > $log
-for i in ~/bin/rc.log$1.*;do
+date
+for i in ~/bin/rc.${0##*/}.*;do
     source $i
-done >> $log  2>&1
-
+done
