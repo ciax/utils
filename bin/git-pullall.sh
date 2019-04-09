@@ -9,5 +9,4 @@ for i in $(git-dirs);do
     git-pull
     popd >/dev/null
 done
-cd ~/bin
 file-clean
