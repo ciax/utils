@@ -27,3 +27,4 @@ for profile in bash_profile bash_login profile;do
 done
 setrc $profile nohup login '> ~/.var/log/rc.login.log &'
 setrc bash_logout nohup logout '> ~/.var/log/rc.logout.log &'
+file-register
