@@ -1,4 +1,4 @@
 #!/bin/bash
-git-push
+git-pushall
 ssh-config -s
 file-register

@@ -1,6 +1,6 @@
 #!/bin/bash
 # UPDATE before login
-git-update
+git-pullall
 db-update
 
 
