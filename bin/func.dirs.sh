@@ -10,7 +10,7 @@ _subdirs(){ # Scan SubDir and Exec Cmd there
     local cmd="${*:-pwd -P}"
     eval "$cmd"
     local dir="${PWD#*$_topdir}"
-    _dirlist+=",${dir/$HOME/~}"
+    _dirlist+="${_dirlist:+,}~${dir#$HOME}"
     shopt -s nullglob
     local i
     for i in */ ;do

@@ -31,7 +31,7 @@ _clrdir(){
         _nolink * .*
     fi
 }
-for i in ${*:-.};do
+for i in ${*:-.} ~/bin;do
     if [[ $PWD =~ $HOME/ ]] ; then
         pushd $i >/dev/null
         _subdirs _clrdir
