@@ -12,6 +12,7 @@ branches(){
 }
 cmd=${0##*-}
 git fetch -a
+git remote prune origin
 crnt=$(git branch|grep '*'|tr -d ' *')
 for i in $(branches $crnt); do
     git checkout $i
