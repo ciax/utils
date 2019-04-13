@@ -25,6 +25,6 @@ setrc bashrc source bash
 for profile in bash_profile bash_login profile;do
     [ -e ~/.$profile ] && break
 done
-setrc $profile nohup login '> ~/.var/log/rc.login.log &'
+setrc $profile nohup login '> ~/.var/log/rc.login.log 2>/dev/null &'
 setrc bash_logout nohup logout '> ~/.var/log/rc.logout.log &'
 file-register
