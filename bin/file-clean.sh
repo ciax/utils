@@ -37,7 +37,8 @@ _clrdir(){
 }
 clrcmd=_do_here
 _exe_opt
-for i in ${*:-.} ~/bin;do
+[ $PWD = ~/bin ] || def=~bin
+for i in ${*:-.} $def;do
     if [[ $PWD =~ $HOME ]] ; then
         pushd $i >/dev/null
         $clrcmd _clrdir
@@ -46,4 +47,7 @@ for i in ${*:-.} ~/bin;do
         _warn "Under another user's dir"
     fi
 done
-[ "$_dirlist" ] && _title "File Cleaning ($_dirlist)"
+[ "$_dirlist" ] && {
+    _title "File Cleaning"
+    _msg "  ($_dirlist)"
+}

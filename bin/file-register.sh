@@ -1,13 +1,13 @@
 #!/bin/bash
 # Required scripts: func.link file-clean file-link
-# Description: Script file registration to ~/bin
-. file-clean ~/bin
+# Description: Script file symlink to ~/bin
+. file-clean
 . func.link
-_warn "File Registering to $HOME/bin"
+_title "File SymLink to ~/bin"
 for i in ${*:-~/utils/bin};do
     if [ -d "$i" ]; then
         pushd $i >/dev/null
-        _warn "  Registering ($PWD)"
+        _msg "  Registering ($PWD)"
         _subdirs _setup_link
         popd >/dev/null
     else

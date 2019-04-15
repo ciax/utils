@@ -7,9 +7,9 @@
 #alias flink
 . func.link
 . func.file
-_warn "File Self Registering"
+_title "File Self Registering"
 _temp linklist
-_warn 'grep cfg.*, utils for link'
+_msg '  grep cfg.*, utils for link'
 egrep -H "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/bin/* $*|sort -u > $linklist
 while read spath dst;do
     echo -n '.'
