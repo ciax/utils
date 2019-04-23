@@ -5,7 +5,7 @@
 # Usage: ${0##*/} (-r:remove keys)
 . func.getpar
 . func.ssh
-_warn "Initializing SSH"
+_title "Initializing SSH"
 [ "$1" = -r ] && rm -f $SEC $PUB
 _ssh_setup
 ssh-config > $CFG

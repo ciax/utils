@@ -4,7 +4,7 @@
 . func.msg
 for i in $(git-dirs);do
     pushd $i >/dev/null
-    _warn "Git pull for $PWD"
+    _title "Git pull for $PWD"
     git remote update -p origin
     git-pull
     popd >/dev/null

@@ -3,7 +3,7 @@
 . func.msg
 for i in $(git-dirs);do
     pushd $i >/dev/null
-    _warn "Git push for $PWD"
+    _title "Git push for $PWD"
     git config credential.helper store
     git-push
     popd >/dev/null

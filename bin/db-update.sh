@@ -30,7 +30,7 @@ main(){
         fi
     fi
     set - $(table-ends)
-    _warn "Database update for $*"
+    _title "Database update for $*"
     sql-make $* gdocs|db-exec
     ssh-config -s
 }
