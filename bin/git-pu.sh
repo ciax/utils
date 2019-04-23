@@ -3,9 +3,8 @@
 #link git-pull
 #link git-push
 cmd=${0##*-}
-git fetch -a
-git remote prune origin
 crnt=$(git branch|grep '*'|tr -d ' *')
+echo "Current Branch [$crnt]"
 for i in $(git branch -a|tr -d ' *'|cut -d/ -f3|sort|uniq -d); do
     git checkout $i
     git $cmd
