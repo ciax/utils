@@ -31,7 +31,7 @@ if [ "$fid" ] ; then
     sub_fid="select fid from list where $limit"
     total=$(bkup-exec "select count(id) from content where id in ($sub_fid);")
     date=$(bkup-exec "select date from content where id == '$fid';")
-    _warn "Recall OK($rank/$total) [$(date --date=@$date)]"
+    _comp "Recall OK($rank/$total) [$(date --date=@$date)]"
 else
     _abort "No such file stored"
 fi

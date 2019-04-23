@@ -3,7 +3,7 @@
 # Description: unify the file permittion under the current/sub dir
 #alias rwx
 . func.msg
-_warn "Set File Permissions"
+_title "Set File Permissions"
 shopt -s globstar
 for i in **/;do chmod 755 $i;done
 for i in **/*.*;do

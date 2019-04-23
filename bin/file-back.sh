@@ -13,4 +13,4 @@ then
 else
     exit
 fi
-_warn "File $1 restored"
+_comp "File $1 restored"

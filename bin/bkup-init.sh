@@ -12,4 +12,4 @@ drop table if exists list;
 create table content (id primary key,mode,date,base64);
 create table list (fid,host,dist,owner,name,dir,primary key(fid,host,dist));
 EOF
-_warn "Bkup DB initialized"
+_comp "Bkup DB initialized"
