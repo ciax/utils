@@ -9,7 +9,7 @@ xopt-d(){ #disconnect
     act=$(ifconfig|grep ^tun) || return
     set - $act
     sudo iptables -t nat -D POSTROUTING -o $1 -j MASQUERADE
-    _wait_kill openvpn
+    sudo killall openvpn
 }
 exe_vpn(){
     set - ~/cfg.*/ngvpn/$sel.conf
