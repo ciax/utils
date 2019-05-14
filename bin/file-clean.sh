@@ -37,7 +37,7 @@ _clrdir(){
 }
 clrcmd=_do_here
 _exe_opt
-[ $PWD = ~/bin ] || def=~bin
+[ $PWD = ~/bin ] || def=~/bin
 for i in ${*:-.} $def;do
     if [[ $PWD =~ $HOME ]] ; then
         pushd $i >/dev/null
