@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: merge other branchies to HEAD
-for i in $(git branch|grep -v '*'); do
-    git merge $i
+others="$(git branch|grep -v '*')"
+for i in ${*:-$others}; do
+    git merge origin/$i
 done
