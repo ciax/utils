@@ -6,9 +6,6 @@ addpath(){
         pushd $i >/dev/null 2>&1 && PATH=$PATH:$PWD && popd >/dev/null
     done
 }
-chkcmd(){
-    type $1 >/dev/null 2>&1
-}
 # Description: setenv for login
 umask 022
 complete -r
