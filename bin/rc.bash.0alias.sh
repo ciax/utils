@@ -15,9 +15,11 @@ alias grep='grep --color=auto'
 alias v='ls -l'
 alias r='rubocop -a'
 alias bogo='grep bogomips /proc/cpuinfo'
+alias dum='du -csxm */'
 alias fmj='python -m json.tool'
 alias fmx='xmllint --format'
 alias reload='. ~/.bashrc'
+
 
 # For GIT
 chkcmd git && {
