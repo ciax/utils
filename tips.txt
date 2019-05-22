@@ -34,4 +34,6 @@
  To remove remote branch
    git branch -d xxx
    git push origin :xxx
+ To set credential
+   git config credential.helper store
 
