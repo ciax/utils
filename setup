@@ -7,6 +7,7 @@ for dir in bin  .trash .var/cache .var/log; do
 done
 PATH=$HOME/bin:$PATH
 cd ~/utils/bin
+git config credential.helper store
 . func.link.sh
 _setup_link
 . rc.bash
