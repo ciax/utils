@@ -13,7 +13,7 @@ self_alias(){
 }
 # Edit this file and update alias/func
 edit_alias(){ #alias ea
-    local file=~/utils/bin/rc.bash.alias.sh
+    local file=~/utils/bin/rc.bash.?alias.sh
     pushd ~/utils/bin >/dev/null
     unalias $(egrep '^alias' $file|cut -d ' ' -f2|cut -d '=' -f1|tr '\n' ' ')
     unset -f $(egrep '^[a-z]+' $file|cut -d '(' -f1|tr '\n' ' ')
@@ -25,7 +25,7 @@ edit_alias(){ #alias ea
 }
 # Edit functions
 edit_func(){ #alias ef
-    local file=~/utils/bin/rc.bash.func.sh
+    local file=~/utils/bin/rc.bash.?func.sh
     emacs $file
     source $file
 }
