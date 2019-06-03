@@ -13,4 +13,5 @@ _setup_link
 . rc.bash
 file-link
 bashrc-setup
+git config --global credential.helper store
 echo "You need [pkg init] and [db-update -f]"
