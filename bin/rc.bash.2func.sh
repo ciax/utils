@@ -57,4 +57,8 @@ uniqenv(){
         eval "$i='${list%:}'"
     done
 }
+dep(){
+    dep-$1 | dep-tree
+}
+
 self_alias >/dev/null
