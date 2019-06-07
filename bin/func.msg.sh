@@ -33,11 +33,7 @@ _alert(){ # Print alert to stderr
     echo -e "$C1$*$C0" | _indent
 }
 _abort(){ # Abort with message
-    if [ -t 0 ] ; then
-        _alert "$*"
-    else # accepts stdin
-        cat 1>&2
-    fi
+    _alert "$*"
     exit 1
 }
 _item(){ # Show Items [caption,description,caption-length]
