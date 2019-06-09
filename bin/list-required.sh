@@ -3,6 +3,7 @@
 # Required scripts: func.getpar
 # Description: show required something in comments
 # Format: "# Required [type]s: item1 item2 ...
+#alias req
 . func.getpar
 _usage "[type]" $( egrep -oh "^# *Required [^:(]+" *|cut -d' ' -f 3|sort -u)
 while read line;do

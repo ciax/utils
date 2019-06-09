@@ -3,7 +3,7 @@
 #link(Ubuntu) pkg
 #link(Raspbian) pkg
 # Required packages(Debian,Raspbian,Ubuntu): deborphan apt-file screen
-# Required scripts: func.getpar show-required
+# Required scripts: func.getpar list-required
 # Description: Debian package utils
 . func.sudo
 # _sudy accepts $PASSWORD authentification
@@ -11,7 +11,7 @@ which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
-        _sudy -i apt-get install -y $(show-required packages)
+        _sudy -i apt-get install -y $(list-required packages)
         ;;
     clean) #clean up pakcages
         _sudy -i apt-get autoremove -y

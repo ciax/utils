@@ -1,13 +1,13 @@
 #!/bin/bash
 #link(CentOS) pkg
-# Required scripts: func.getpar show-required
+# Required scripts: func.getpar list-required
 # Description: Debian package utils
 . func.sudo
 which yum >/dev/null || _abort "This might not RedHat"
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
-        _sudy -i yum install $(show-required packages);;
+        _sudy -i yum install $(list-required packages);;
     upd) #update and upgrade packages
         _sudy -i yum update ;;
     develop) #package for development (gcc,headers)

@@ -1,7 +1,7 @@
 #!/bin/bash
 #link(QNAP) pkg
 # Required packages(QNAP): man emacs22 sudo grep sqlite
-# Required scripts: func.getpar show-required
+# Required scripts: func.getpar list-required
 # Description: Package utils for Optware (Qnap)
 # Setup QNAP
 # *Web setting
@@ -19,7 +19,7 @@ which sudo >/dev/null || _abort "Need 'sudo' installed or to be root"
 cmd="$1";shift
 case "$cmd" in
     init) #install required packages
-        sudo -i ipkg install $(show-required packages);;
+        sudo -i ipkg install $(list-required packages);;
     upd) #update and upgrade packages
         sudo -i ipkg update ;;
     list) #list installed packages
