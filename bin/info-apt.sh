@@ -6,6 +6,11 @@
 which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
 case "$cmd" in
+    required) #list required packages
+        for i in $(list-required packages); do
+            apt-cache search "^$i$" || echo "No such apackage $i"
+        done
+        ;;
     list) #list installed packages
         dpkg --get-selections '*'
     ;;
