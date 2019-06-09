@@ -85,7 +85,7 @@ _caselist(){ # List of case option
 }
 _caseitem(){ # List of case desctiption
     local line arg
-    egrep '^ +[a-z]+\)' $0 |\
+    egrep '^ +[a-z]+\)' ${BASH_SOURCE[*]} |\
     while read line;do
         arg="${line%%)*}"
         echo -n "${arg#* }"
