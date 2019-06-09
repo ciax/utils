@@ -10,7 +10,7 @@
 _title "File Self Registering"
 _temp linklist
 _msg '  grep cfg.*, utils for link'
-egrep -H "^[#;]link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/bin/* $*|sort -u > $linklist
+egrep -H "^[#;] *link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ~/bin/* $*|sort -u > $linklist
 while read spath dst;do
     echo -n '.'
     src=$(realpath ${spath%:*})
