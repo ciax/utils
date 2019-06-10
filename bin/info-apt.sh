@@ -7,7 +7,13 @@ which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
 case "$cmd" in
     required) #list required packages
-	apt-cache pkgnames | fgrep -xf <(list-required packages) | sort
+        _temp org res;
+	list-required packages | sort > $org;
+	apt-cache pkgnames | fgrep -xf $org | sort | tee $res;
+	if ! cmp -s $org $res; then
+	    echo "==== Not exist ====";
+	    sort $org $res | uniq -u;
+	fi
         ;;
     list) #list installed packages
         dpkg --get-selections '*'
