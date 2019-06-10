@@ -3,20 +3,29 @@
 # Required scripts: func.getpar
 # Description: Debian package info
 . func.getpar
+pkg-required(){
+    list-required packages
+}
+pkg-all(){
+    apt-cache pkgnames | sort
+}
+pkg-installed(){
+    dpkg --get-selections | cut -f1 | sort
+}
 which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
 case "$cmd" in
     required) #list required packages
-        _temp org res;
-	list-required packages | sort > $org;
-	apt-cache pkgnames | fgrep -xf $org | sort | tee $res;
-	if ! cmp -s $org $res; then
-	    echo "==== Not exist ====";
-	    sort $org $res | uniq -u;
-	fi
+        _temp org res ins;
+	pkg-required > $org;
+	pkg-all | fgrep -xf $org > $res;
+	pkg-installed | fgrep -xf $res > $ins
+	[ -s $ins ] && echo "==== Installed ====" && cat $ins
+	! cmp -s $res $ins && echo "==== Not Installed ====" && sort $res $ins | uniq -u
+	! cmp -s $org $res && echo "==== Not Exist ====" && sort $org $res | uniq -u;
         ;;
     list) #list installed packages
-        dpkg --get-selections '*'
+       pkg-installed
     ;;
     tasks) #list tasks
         tasksel --list-tasks
