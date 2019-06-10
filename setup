@@ -16,4 +16,7 @@ bashrc-setup
 # Git setting
 git config --global push.default matching
 git config --global credential.helper store
+for n in name email; do
+    git config user.$n || git config --global user.$n "$USER@$HOSTNAME"
+done
 echo "You need [pkg init] and [db-update -f]"
