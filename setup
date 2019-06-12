@@ -22,5 +22,6 @@ done
 pkg(){
     echo "You need register /sbin first"
     file-register ~/utils/sbin
+    unset pkg
 }
 echo "You need [pkg init] and [db-update -f]"
