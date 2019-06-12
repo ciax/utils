@@ -19,4 +19,8 @@ git config --global credential.helper store
 for n in name email; do
     git config user.$n || git config --global user.$n "$USER@$HOSTNAME"
 done
+pkg(){
+    echo "You need register /sbin first"
+    file-register ~/utils/sbin
+}
 echo "You need [pkg init] and [db-update -f]"
