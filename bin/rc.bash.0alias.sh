@@ -28,7 +28,6 @@ chkcmd git && {
     alias gic='git commit -v'
     alias gid='git diff --color=always'
     alias gil='git log --abbrev=4 --abbrev-commit --decorate --stat --graph --color'
-    alias gim='git-merge'
     alias gir='git checkout -f'
     alias girr='git reset --hard HEAD~;git log -1|cat'
     alias gis='git branch -a;git log -1|cat;git status'
