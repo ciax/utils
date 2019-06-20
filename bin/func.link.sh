@@ -42,10 +42,11 @@ _mklink(){ # Make links with abspath
         fi
     fi
     local dir=$(_absdir $dst)
-    ln -sf $src $dst && _addlink $dir $(basename $dst)
+    [[ $dir =~ $HOME ]] || SUDO=sudo
+    $SUDO ln -sf $src $dst && { _addlink $dir $(basename $dst); }
 }
 _addlink(){
-    eval "LINKS${1//[\/.]/_}+=' $2'"
+    eval "LINKS${1%%[\/.]*}+=' $2'"
     #LINKS[$1]+=" $2" # For Bash 4 or later
 }
 _showlink(){ # Show links created
