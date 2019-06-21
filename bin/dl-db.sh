@@ -25,6 +25,31 @@ split_sheet(){
         fi
     done
 }
+retrive(){
+    while read line;do
+        sheet="${line%|*}"
+        gid="${line#*|}"
+        url="$site$key/export?format=tsv&id=$key&gid=$gid"
+        _title "Retriving $C1$sheet"
+        _msg "($url)"
+        wget -q --progress=dot -O $dlfile "$url" || continue
+        grep "'" $dlfile && { _alert "Field includes apostrophe -> reject"; continue; }
+        nkf -d --in-place $dlfile
+        split_sheet $sheet
+        cp $dlfile $dldir/$sheet.tsv
+    done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
+}
+post_process(){
+    cd
+    dbd=$(echo ~/cfg.*/db ~/utils/db)
+    file-clean $dbd
+    for d in $dbd;do
+        cd $d
+        _title "Git Commit/Push for $d"
+        git commit *.tsv -m "expand gsheet and update db"
+        git push
+    done
+}
 _usage "[db]"
 _temp dlfile dbfile
 site="https://docs.google.com/spreadsheets/d/"
@@ -32,22 +57,6 @@ key=$(db-exec "select key from gdocs where id == '$1';")
 [ "$key" ] || _abort "No gdocs key in db"
 dldir=~/.var/cache/download
 mkdir -p $dldir
-while read line;do
-    sheet="${line%|*}"
-    gid="${line#*|}"
-    url="$site$key/export?format=tsv&id=$key&gid=$gid"
-    _title "Retriving $C1$sheet"
-    _msg "($url)"
-    wget -q --progress=dot -O $dlfile "$url" || continue
-    grep "'" $dlfile && { _alert "Field includes apostrophe -> reject"; continue; }
-    nkf -d --in-place $dlfile
-    split_sheet $sheet
-    cp $dlfile $dldir/$sheet.tsv
-done < <(db-exec "select id,gid from gsheet where gdocs = '$1';")
+retrive "$1"
 db-update
-for d in ~/cfg.*/db ~/utils/db;do
-    cd $d
-    file-clean
-    git commit *.tsv -m "expand gsheet and update db"
-    git push
-done
+post_process
