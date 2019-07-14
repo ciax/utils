@@ -19,7 +19,11 @@ alias dum='du -csxh */'
 alias fmj='python -m json.tool'
 alias fmx='xmllint --format'
 alias reload='. ~/.bashrc'
-
+# For pager
+chkcmd ranger && {
+    alias log='ranger ~/.var/log'
+    alias json='ranger ~/.var/json'
+}
 
 # For GIT
 chkcmd git && {
