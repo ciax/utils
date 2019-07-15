@@ -34,7 +34,7 @@ chkcmd git && {
     alias gil='git log --abbrev=4 --abbrev-commit --decorate --stat --graph --color'
     alias gir='git checkout -f'
     alias girr='git reset --hard HEAD~;git log -1|cat'
-    alias gis='git branch -a;git log -1|cat;git status'
+    alias gis='git -P branch -a;git -P log -1;git status'
     alias giu='git checkout'
     # Update remote repo list
     alias gip='git remote prune origin;git remote show origin'
