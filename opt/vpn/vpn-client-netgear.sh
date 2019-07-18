@@ -14,7 +14,7 @@ xopt-d(){ #disconnect
 exe_vpn(){
     set - ~/cfg.*/ngvpn/$sel.conf
     cd ${1%/*}
-    sudo openvpn --daemon --config $sel.conf --pull 2>/dev/null|tee -a ~/.var/ngvpn-$sel.log || return 1
+    sudo openvpn --daemon --config $sel.conf --pull --log $log || return 1
     if _wait_if tun ; then
         export TUNGW=${IFADDR%.*}.1
         sudo iptables -t nat -A POSTROUTING -o $INTERFACE -j MASQUERADE
@@ -26,4 +26,5 @@ exe_vpn(){
 _usage "[vpnhost]" $( _basename_list ~/cfg.*/ngvpn/*.conf)
 sel=$1
 xopt-d
-exe_vpn
+log=~/.var/log/ngvpn-$sel.log
+exe_vpn || cat $log
