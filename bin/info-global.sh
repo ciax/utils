@@ -1,4 +1,7 @@
 #!/bin/bash
 # Show Global IP
 # Required packages: curl
-curl inet-ip.info
+date=$(date)
+host=$(hostname)
+gip=$(curl -s inet-ip.info)
+echo "$date $host $gip"
