@@ -39,7 +39,7 @@ done
 reg="$1";shift
 # Ignore case unless $reg contains upper case
 [[ "$reg" =~ [A-Z] ]] || opt="$opt -i"
-head='^(.+:[0-9]+:) *'
+head='^([^:]+:[0-9]+:) *'
 SEP="${SEP:-__FILE__}"
 target=${*:-'-r --exclude-dir=.git'}
 _temp temp
