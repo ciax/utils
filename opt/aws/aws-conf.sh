@@ -11,7 +11,7 @@ showres(){
     echo "Elapsed:$2"
 }
 . aws-opt
-opt="--vault-name $VAULT --account-id $ACCOUNT"
+opt="--no-cli-pager --account-id $ACCOUNT --vault-name $VAULT"
 jobjson="job_id.json"
 resjson="response.json"
 outjson="output.json"

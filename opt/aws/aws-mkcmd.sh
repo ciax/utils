@@ -21,7 +21,7 @@ case "$1" in
     ;;
     #delete archive
     -d)
-	      arc="--archive-id $2"
+	      arc="--archive-id \"$2\""
 	      cmd="delete-archive $opt $arc"
     ;;
 esac
