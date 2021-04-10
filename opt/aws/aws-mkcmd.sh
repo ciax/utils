@@ -1,27 +1,34 @@
 #!/bin/bash
 # Required packages: jq
+getjob(){
+    [ -e $jobfile ] || { echo "No jobfile"; exit; }
+    job="--job-id $(jq .jobId $jobfile)"
+}
 . aws-opt
-[ "$1" ] || { echo "Usage:aws-mkcmd (-rqgd)"; exit; }
+[ "$1" ] || { echo "Usage:aws-mkcmd (-rqg) (-d [archive-id])"; exit; }
 opt="--vault-name $VAULT --account-id $ACCOUNT"
+jobfile="job_id.json"
 case "$1" in
     #retrival
     -r)
-	cmd="initiate-job $opt --job-parameters '"
-	cmd+='{"Type":"inventory-retrieval"}'
-	cmd+="'"
+	      cmd="initiate-job $opt --job-parameters '"
+	      cmd+='{"Type":"inventory-retrieval"}'
+	      cmd+="' > $jobfile"
     ;;
     #query job
     -q)
-	cmd="describe-job $opt $job"
+        getjob
+	      cmd="describe-job $opt $job"
     ;;
     #get data
     -g)
-	cmd="get-job-output $opt $job output.json"
+        getjob
+	      cmd="get-job-output $opt $job output.json"
     ;;
     #delete archive
     -d)
-	arc="--archive-id $id"
-	cmd="delete-archive $opt $arc"
+	      arc="--archive-id $2"
+	      cmd="delete-archive $opt $arc"
     ;;
 esac
 echo "aws glacier $cmd"
