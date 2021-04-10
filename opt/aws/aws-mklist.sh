@@ -4,6 +4,7 @@
 case "$1" in
     -a)
         [ -e $outjson ] || { echo "No input file($outjson)"; exit; }
+        [ -e $arclist ] && mv -b $arclist $arclist.old
         jq -r .ArchiveList[].ArchiveId $outjson > $arclist
         ;;
     -d)
