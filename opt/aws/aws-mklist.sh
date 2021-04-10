@@ -1,30 +1,25 @@
 #!/bin/bash
 [ "$1" ] || { echo "Usage:aws-mklist (-ad)"; exit; }
-ofile="output.json"
-afile=".archive_list.txt"
-dfile=".delete_list.txt"
-dres=".deleted.txt"
-rres=".remained.txt"
-tmp=".temp.txt"
+. aws-conf
 case "$1" in
     -a)
-        [ -e $ofile ] || { echo "No input file($ofile)"; exit; }
-        jq -r .ArchiveList[].ArchiveId $ofile > $afile
+        [ -e $outjson ] || { echo "No input file($outjson)"; exit; }
+        jq -r .ArchiveList[].ArchiveId $outjson > $arclist
         ;;
     -d)
-        if [ -e $dfile ] ; then
-            if [ -e $dres ] ; then
-                sort $dfile $dres | uniq -u > $tmp
-                mv $tmp $dfile
+        if [ -e $dellist ] ; then
+            if [ -e $dellog ] ; then
+                sort $dellist $dellog | uniq -u > $tmp
+                mv $tmp $dellist
             fi
-        elif [ -e $afile ] ; then
-            if [ -e $dres ]; then
-                sort $afile $dres | uniq -u > $dfile
+        elif [ -e $arclist ] ; then
+            if [ -e $dellog ]; then
+                sort $arclist $dellog | uniq -u > $dellist
             else
-                sort -u $afile > $dfile
+                sort -u $arclist > $dellist
             fi
         else
-            echo "No input file($afile)"
+            echo "No input file($arclist)"
         fi
         ;;
 esac
