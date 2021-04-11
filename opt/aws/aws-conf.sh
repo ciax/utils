@@ -8,7 +8,8 @@ showres(){
     [ -e $resjson ] || { echo "No response file"; exit; }
     set - $(jq '.StatusCode, .CreationDate' $resjson)
     echo "Status:$1"
-    echo "Elapsed:$2"
+    period=$(( $(date -d "$2" +%s) - (date +%s) ))
+    echo "Elapsed:$(date -d @$period)"
 }
 . aws-opt
 opt="--no-cli-pager --account-id $ACCOUNT --vault-name $VAULT"
