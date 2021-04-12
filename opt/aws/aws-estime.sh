@@ -10,18 +10,28 @@ last=$(stat -c %Z $dellog)
 (( elapsed=last-start ))
 allsize=$(stat -c %s $dellist)
 delsize=$(stat -c %s $dellog)
-rate=$(echo "scale=5; $delsize/$elapsed" | bc)
-remain=$(echo "scale=0; ($allsize - $delsize)/$rate" | bc)
+((allfiles=allsize/139))
+((delfiles=delsize/139))
+ptime=$(echo "scale=5; $elapsed/$delfiles" | bc)
+remain=$(printf "%.0f" $(echo "($allfiles-$delfiles)*$ptime"|bc))
 (( finish=last+remain ))
-echo -n "Start time: "
+
+# Display
+echo -n " Start time   : "
 date -ud @$start
-echo -n "Last updated: "
+echo -n " Last updated : "
 date -ud @$last
-echo -n "Elapsed time: "
+echo -n " Elapsed time : "
 elap $elapsed
-echo "Processing rate(byte/s): $rate"
-echo -n "Estimated remaining time: "
+echo
+# For comma separated number
+LC_NUMERIC=en_US.utf8
+printf " Total Files   : %'d\n" $allfiles
+printf " Deleted Files : %'d\n" $delfiles
+echo " Processing time(sec/file): $ptime"
+echo
+echo -n " Estimated remaining time : "
 elap $remain
-echo -n "Estimated date of finish: "
+echo -n " Estimated date of finish : "
 date -ud @$finish
 
