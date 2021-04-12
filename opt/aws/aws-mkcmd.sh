@@ -5,9 +5,8 @@
 case "$1" in
     #retrival
     -r)
-	      cmd="initiate-job $opt --job-parameters '"
-	      cmd+='{"Type":"inventory-retrieval"}'
-	      cmd+="'"
+	      cmd="initiate-job $opt --job-parameters "
+	      cmd+="'{\"Type\":\"inventory-retrieval\"}'"
     ;;
     #query job
     -q)

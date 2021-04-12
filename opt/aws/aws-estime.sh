@@ -1,10 +1,6 @@
 #!/bin/bash
 #[ "$1" ] || { echo "Usage:aws-esttime -(se)"; exit; }
 . aws-conf
-elap(){
-    set - $(date -ud @$1 +"%j %R:%S")
-    echo "$(( $1 -1 ))day $2"
-}
 start=$(stat -c %Z $dellist)
 last=$(stat -c %Z $dellog)
 (( elapsed=last-start ))

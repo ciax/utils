@@ -4,22 +4,22 @@
 case "$1" in
     #retrival
     -r)
-	      $(aws-mkcmd -r) > $jobjson
+	      eval $(aws-mkcmd -r) > $jobjson
         ;;
     #query job
     -q)
-        $(aws-mkcmd -q) > $resjson
+        eval $(aws-mkcmd -q) > $resjson
         showres
         ;;
     #get data
     -g)
-        $(aws-mkcmd -g)
+        eval $(aws-mkcmd -g)
         ;;
     #delete archive
     -d)
         touch $dellist
         while read line; do
-            if $(aws-mkcmd -d "$line") ; then
+            if eval $(aws-mkcmd -d "$line") ; then
                 echo "$line" >> $dellog
                 echo "deleted $line"
             else
