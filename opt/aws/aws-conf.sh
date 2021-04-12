@@ -26,3 +26,4 @@ dellist=".delete_list.txt"
 dellog=".deleted.txt"
 remlog=".remained.txt"
 tmp=".temp.txt"
+cd ~/awstmp || exit
