@@ -11,10 +11,11 @@ getjob(){
 }
 showres(){
     [ -e $resjson ] || { echo "No response file"; exit; }
-    set - $(jq -r '.StatusCode, .CreationDate' $resjson)
+    set - $(jq -r '.StatusCode, .CreationDate, .CompletionDate' $resjson)
     echo "Status : $1"
     echo -n "Elapsed : "
-    elap $(( $(date +%s) - $(date -d "$2" +%s)  ))
+    [ "$3" ] && last="-d $3"
+    elap $(( $(date $last +%s) - $(date -d "$2" +%s)  ))
 }
 . aws-opt
 opt="--account-id $ACCOUNT --vault-name $VAULT"

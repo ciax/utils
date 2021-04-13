@@ -20,8 +20,8 @@ case "$1" in
     ;;
     #delete archive
     -d)
-	      arc="--archive-id \"$2\""
-	      cmd="delete-archive $opt $arc"
+        arc=${2-$(head -1 $dellist)}
+	      cmd="delete-archive $opt --archive-id \" $arc\""
     ;;
 esac
 echo "aws glacier $cmd"

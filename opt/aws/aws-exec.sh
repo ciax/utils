@@ -19,11 +19,12 @@ case "$1" in
     -d)
         touch $dellist
         while read line; do
-            if eval $(aws-mkcmd -d "$line") ; then
+            if eval $(aws-mkcmd -d $line) ; then
                 echo "$line" >> $dellog
                 echo "deleted $line"
             else
                 echo "failed $line"
+                break
             fi 
         done < $dellist
         ;;
