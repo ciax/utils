@@ -21,7 +21,7 @@ newlog(){
     cat $dellog >> $delarc
     : > $dellog
 }
-. aws-opt.ini
+. ~/.aws/aws-opt.ini
 opt="--account-id $ACCOUNT --vault-name $VAULT"
 jobjson="job_id.json"
 resjson="response.json"
