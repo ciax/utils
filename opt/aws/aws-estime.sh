@@ -1,5 +1,5 @@
 #!/bin/bash
-#[ "$1" ] || { echo "Usage:aws-esttime -(se)"; exit; }
+#Required packages: bc
 . aws-conf
 start=$(stat -c %Z $delarc)
 last=$(stat -c %Z $dellog)
@@ -14,9 +14,9 @@ remain=$(printf "%.0f" $(echo "($allfiles-$delfiles)*$ptime"|bc))
 
 # Display
 echo -n " Start time   : "
-date -ud @$start
+date -d @$start
 echo -n " Last updated : "
-date -ud @$last
+date -d @$last
 echo -n " Elapsed time : "
 elap $elapsed
 echo
@@ -29,5 +29,5 @@ echo
 echo -n " Estimated remaining time : "
 elap $remain
 echo -n " Estimated date of finish : "
-date -ud @$finish
+date -d @$finish
 
