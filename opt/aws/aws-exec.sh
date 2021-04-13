@@ -9,7 +9,7 @@ case "$1" in
     #query job
     -q)
         eval $(aws-mkcmd -q) > $resjson
-        showres
+        aws-showres
         ;;
     #get data
     -g)

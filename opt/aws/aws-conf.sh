@@ -9,14 +9,6 @@ getjob(){
     [ -e $jobjson ] || { echo "No job-id file($jobjson)"; exit; }
     job="--job-id $(jq .jobId $jobjson)"
 }
-showres(){
-    [ -e $resjson ] || { echo "No response file"; exit; }
-    set - $(jq -r '.StatusCode, .CreationDate, .CompletionDate' $resjson)
-    echo "Status : $1"
-    echo -n "Elapsed : "
-    [ "$3" ] && last="-d $3"
-    elap $(( $(date $last +%s) - $(date -d "$2" +%s)  ))
-}
 newlog(){
     cat $dellog >> $delarc
     : > $dellog
