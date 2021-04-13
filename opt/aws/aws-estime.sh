@@ -1,5 +1,6 @@
 #!/bin/bash
 #Required packages: bc
+#alias estime
 . aws-conf
 start=$(stat -c %Z $delarc)
 last=$(stat -c %Z $dellog)
