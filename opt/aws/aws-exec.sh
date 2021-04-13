@@ -17,7 +17,7 @@ case "$1" in
         ;;
     #delete archive
     -d)
-        touch $dellist
+        newlog
         while read line; do
             if eval $(aws-mkcmd -d $line) ; then
                 echo "$line" >> $dellog

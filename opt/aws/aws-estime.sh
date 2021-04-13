@@ -1,7 +1,7 @@
 #!/bin/bash
 #[ "$1" ] || { echo "Usage:aws-esttime -(se)"; exit; }
 . aws-conf
-start=$(stat -c %Z $dellist)
+start=$(stat -c %Z $delarc)
 last=$(stat -c %Z $dellog)
 (( elapsed=last-start ))
 allsize=$(stat -c %s $dellist)
