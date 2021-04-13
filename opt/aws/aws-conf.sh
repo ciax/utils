@@ -17,7 +17,7 @@ showres(){
     [ "$3" ] && last="-d $3"
     elap $(( $(date $last +%s) - $(date -d "$2" +%s)  ))
 }
-. aws-opt
+. aws-opt.ini
 opt="--account-id $ACCOUNT --vault-name $VAULT"
 jobjson="job_id.json"
 resjson="response.json"
