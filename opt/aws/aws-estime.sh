@@ -2,6 +2,7 @@
 #Required packages: bc
 #alias estime
 . aws-conf
+now=$(date +%s)
 start=$(stat -c %Z $delarc)
 last=$(stat -c %Z $dellog)
 (( elapsed=last-start ))
@@ -12,8 +13,11 @@ delsize=$(stat -c %s $dellog)
 ptime=$(echo "scale=5; $elapsed/$delfiles" | bc)
 remain=$(printf "%.0f" $(echo "($allfiles-$delfiles)*$ptime"|bc))
 (( finish=last+remain ))
-
-# Display
+# Status
+echo -n " Status : "
+(( now > last + 5 )) && echo "Stopping" || echo "Running" 
+echo
+# Time Info
 echo -n " Start time   : "
 date -d @$start
 echo -n " Last updated : "
@@ -23,10 +27,12 @@ elap $elapsed
 echo
 # For comma separated number
 LC_NUMERIC=en_US.utf8
+# File processing info
 printf " Total Files   : %'d\n" $allfiles
 printf " Deleted Files : %'d\n" $delfiles
 echo " Processing time(sec/file): $ptime"
 echo
+# Time estimation
 echo -n " Estimated remaining time : "
 elap $remain
 echo -n " Estimated date of finish : "
