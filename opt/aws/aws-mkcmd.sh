@@ -2,6 +2,10 @@
 # Required packages: jq
 [ "$1" ] || { echo "Usage:aws-mkcmd (-rqg) (-d [archive-id])"; exit; }
 . aws-conf
+getjob(){
+    [ -e $jobjson ] || { echo "No job-id file($jobjson)"; exit; }
+    job="--job-id $(jq .jobId $jobjson)"
+}
 case "$1" in
     #retrival
     -r)
