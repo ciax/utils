@@ -1,22 +1,18 @@
 #!/bin/bash
-[ "$1" ] || { echo "Usage:aws-exec -(rqgd)" ; exit; }
 . aws-conf
+[ "$1" ] || usage
 case "$1" in
-    #retrival
-    -r)
+    -r)#retrival
 	      eval $(aws-mkcmd -r) > $jobjson
         ;;
-    #query job
-    -q)
+    -q)#query job
         eval $(aws-mkcmd -q) > $resjson
         aws-showres
         ;;
-    #get data
-    -g)
+    -g)#get data
         eval $(aws-mkcmd -g)
         ;;
-    #delete archive
-    -d)
+    -d)#delete archive
         newlog
         while read line; do
             if eval $(aws-mkcmd -d $line) ; then

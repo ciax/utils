@@ -1,5 +1,11 @@
 #!/bin/bash
 # Required packages: jq
+usage(){
+    local opt=$(egrep -o '^ +\-([a-z])' $0 | tr -d ' \-\n')
+    echo "Usage: ${0##*/} -($opt) $*"
+    egrep '^ +\-' $0 | tr -s ')#' :
+    exit 1
+}
 elap(){
     set - $(date -ud @$1 +"%j %R:%S")
     [ $1 -gt 1 ] && echo -n "$(( $1 -1 ))day "

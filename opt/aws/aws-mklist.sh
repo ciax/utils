@@ -1,13 +1,13 @@
 #!/bin/bash
-[ "$1" ] || { echo "Usage:aws-mklist (-ad)"; exit; }
 . aws-conf
+[ "$1" ] || usage
 case "$1" in
-    -a)
+    -a)#archive
         [ -e $outjson ] || { echo "No input file($outjson)"; exit; }
         [ -e $arclist ] && mv -b $arclist $arclist.old
         jq -r .ArchiveList[].ArchiveId $outjson > $arclist
         ;;
-    -d)
+    -d)#delete
         if [ -e $dellist ] ; then
             if [ -e $dellog ] ; then
                 sort $dellist $dellog | uniq -u > $tmp
