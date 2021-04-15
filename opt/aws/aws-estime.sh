@@ -3,8 +3,8 @@
 #alias estime
 . aws-conf
 now=$(date +%s)
-start=$(stat -c %Z $delarc)
-last=$(stat -c %Z $dellog)
+start=$(stat -c %Y $delarc)
+last=$(stat -c %Y $dellog)
 (( elapsed=last-start ))
 allsize=$(stat -c %s $dellist)
 delsize=$(stat -c %s $dellog)
