@@ -11,11 +11,6 @@ elap(){
     [ $1 -gt 1 ] && echo -n "$(( $1 -1 ))day "
     echo $2
 }
-newlog(){
-    touch $delarc
-    cat $dellog >> $delarc
-    : > $dellog
-}
 . ~/.aws/aws-opt.ini
 opt="--account-id $ACCOUNT --vault-name $VAULT"
 jobjson="job_id.json"

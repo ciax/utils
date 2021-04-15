@@ -1,5 +1,12 @@
 #!/bin/bash
 . aws-conf
+newlog(){
+    touch $delarc
+    if [ -e $dellog ] ; then
+        cat $dellog >> $delarc
+    fi
+    : > $dellog
+}
 [ "$1" ] || usage
 case "$1" in
     -r)#retrival
