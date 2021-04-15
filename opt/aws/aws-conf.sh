@@ -12,6 +12,7 @@ elap(){
     echo $2
 }
 newlog(){
+    touch $delarc
     cat $dellog >> $delarc
     : > $dellog
 }
