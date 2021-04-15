@@ -1,12 +1,5 @@
 #!/bin/bash
 . aws-conf
-newlog(){
-    touch $delarc
-    if [ -e $dellog ] ; then
-        cat $dellog >> $delarc
-    fi
-    : > $dellog
-}
 [ "$1" ] || usage
 case "$1" in
     -r)#retrival
@@ -20,7 +13,7 @@ case "$1" in
         eval $(aws-mkcmd -g)
         ;;
     -d)#delete archive
-        newlog
+        touch $delarc
         while read line; do
             if eval $(aws-mkcmd -d $line) ; then
                 echo "$line" >> $dellog

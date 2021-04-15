@@ -1,6 +1,13 @@
 #!/bin/bash
 . aws-conf
 [ "$1" ] || usage
+subtract(){
+    [ -e $dellog ] || return
+    sort $dellist $dellog | uniq -u > $tmp
+    mv $tmp $dellist
+    cat $dellog >> $delarc
+    : > $dellog
+}
 case "$1" in
     -a)#archive
         [ -e $outjson ] || { echo "No input file($outjson)"; exit; }
@@ -9,16 +16,10 @@ case "$1" in
         ;;
     -d)#delete
         if [ -e $dellist ] ; then
-            if [ -e $dellog ] ; then
-                sort $dellist $dellog | uniq -u > $tmp
-                mv $tmp $dellist
-            fi
+            subtract
         elif [ -e $arclist ] ; then
-            if [ -e $dellog ]; then
-                sort $arclist $dellog | uniq -u > $dellist
-            else
-                sort -u $arclist > $dellist
-            fi
+            cp $arclist $dellist
+            subtract
         else
             echo "No input file($arclist)"
         fi
