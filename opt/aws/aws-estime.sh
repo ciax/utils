@@ -10,6 +10,7 @@ allsize=$(stat -c %s $dellist)
 delsize=$(stat -c %s $dellog)
 ((allfiles=allsize/139))
 ((delfiles=delsize/139))
+((percent=delfiles*100/allfiles))
 ptime=$(echo "scale=5; $elapsed/$delfiles" | bc)
 remain=$(printf "%.0f" $(echo "($allfiles-$delfiles)*$ptime"|bc))
 (( finish=last+remain ))
@@ -30,6 +31,7 @@ LC_NUMERIC=en_US.utf8
 # File processing info
 printf " Total Files   : %'d\n" $allfiles
 printf " Deleted Files : %'d\n" $delfiles
+printf " Percentage    : %'d%%\n" $percent
 echo " Processing time(sec/file): $ptime"
 echo
 # Time estimation
