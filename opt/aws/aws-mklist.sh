@@ -15,7 +15,7 @@ case "$1" in
         jq -r .ArchiveList[].ArchiveId $outjson > $arclist
         ;;
     -d)#delete
-        if [ -e $dellist ] ; then
+        if [ -s $dellist ] ; then
             subtract
         elif [ -e $arclist ] ; then
             cp $arclist $dellist
