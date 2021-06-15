@@ -51,3 +51,4 @@ while read id fdqn; do
     echo -e "$ip\t$fdqn\t$id"
 done < <(db-exec 'select id,fdqn from ddns;')
 
+cat ~/cfg.*/etc/ipv6.*.txt
