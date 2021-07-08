@@ -41,7 +41,7 @@ myaddr(){
 }
 getpeer(){
     peer=$host.peer
-    touch ~/cfg.*/etc/$peer
+    touch ~/cfg.def/etc/$peer
     ln -sf ~/cfg.*/etc/*.peer .
     prpeer > $peer
     rm $peer
