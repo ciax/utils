@@ -43,10 +43,8 @@ order by subnet.network,
 EOF
 )
 # FDQN alias
-declare -A host
 while read id fdqn; do
-    ip=$(host $fdqn) || continue
-    ip=$(echo $ip|egrep -o '([0-9]+\.?){4}')
-    [ "$ip" ] || continue
+    ip=$(host $fdqn)
+    ip=$(echo ${ip##* }|egrep '^([0-9]+\.?){4}$') || continue
     echo -e "$ip\t$fdqn\t$id"
 done < <(db-exec 'select id,fdqn from ddns;')
