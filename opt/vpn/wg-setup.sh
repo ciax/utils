@@ -1,6 +1,6 @@
 #!/bin/bash
 #alias mkwg
-# Required packages: wireguard
+# Required packages: wireguard qrencode
 # Required scripts: func.getpar
 # Description: setting nat table
 #
