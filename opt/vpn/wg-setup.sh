@@ -15,8 +15,9 @@ xopt-c(){ #Generate client QR code
     privkey=privkey.cli
     mkprv
     setnet
-    prcliif
-    prclipeer > ~/cfg.def/etc/$host.cli.peer
+    prclif
+    prclpeer > ~/cfg.def/etc/client.peer
+    cat ~/cfg.def/etc/$host.peer
 }
 # Subroutines
 prnat(){
@@ -43,13 +44,13 @@ setnet(){
     host=$(hostname)
 }
 # Printing Interface Part
-prcliif(){
+prclif(){
     echo "[Interface]"
     echo "PrivateKey = $(< $privkey)"
     echo "Address = 10.0.0.100/24"
     echo "DNS = 8.8.8.8"
 }
-prsrvif(){
+prsvif(){
     echo "[Interface]"
     echo "PrivateKey = $(< $privkey)"
     echo "Address = $myaddr/24"
@@ -58,13 +59,12 @@ prsrvif(){
     echo "PostDown = $(prnat D)"
 }
 # Printing Peer Part
-prclipeer(){
+prclpeer(){
     echo "[Peer]"
     echo "PublicKey = $pubkey"
-    echo "AllowedIPs = 0.0.0.0/0"
-    echo "EndPoint = [$ipv6]:51820"
+    echo "AllowedIPs = 10.0.0.100/24"
 }
-prsrvpeer(){
+prsvpeer(){
     echo "[Peer]"
     echo "PublicKey = $pubkey"
     echo "AllowedIPs = $myaddr/32, $cidr"
@@ -72,13 +72,13 @@ prsrvpeer(){
 }
 setpeer(){
     peer=$1.peer
-    prsrvpeer > ~/cfg.def/etc/$peer
+    prsvpeer > ~/cfg.def/etc/$peer
     ln -sf ~/cfg.*/etc/*.peer .
     rm $peer
 }
 prsvcfg(){
     echo "#file /etc/wireguard/wg0.conf"
-    prsrvif
+    prsvif
     echo
     [ "$(echo *.peer)" ] && cat *.peer
 }
