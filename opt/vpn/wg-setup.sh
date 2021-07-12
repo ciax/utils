@@ -11,13 +11,9 @@ xopt-s(){ #Write to /etc/wireguard/wg0.conf"
     sudo sysctl -w net.ipv4.ip_forward=1
 }
 xopt-c(){ #Generate client QR code
-    svpvkey=$privkey
-    privkey=privkey.cli
-    mkprv
-    setnet
-    prclif
+    mkprv privkey.cli
     prclpeer > ~/cfg.def/etc/client.peer
-    cat ~/cfg.def/etc/$host.peer
+    prclcfg | qrencode -t ansiutf8
 }
 # Subroutines
 prnat(){
@@ -25,23 +21,22 @@ prnat(){
 }
 # Shared Procedures
 mkprv(){
-    mkdir -p -m 700 ~/.wg
-    cd ~/.wg
-    [ "$privkey" ] || { echo "No prv file setting"; return; }
+    [ "$1" ] || { echo "No prv file setting"; return; }
+    privkey=$1
     if [ ! -e $privkey ]; then
 	wg genkey > $privkey
 	chmod 600 $privkey
 	echo "$privkey was generated"
     fi
     pubkey=$(wg pubkey < $privkey)
+    host=$(hostname)
 }
-setnet(){
+tunnet(){
     eval $(info-net)
     IFS=.
     set - $subnet
     IFS=
     myaddr="10.0.0.1$3"
-    host=$(hostname)
 }
 # Printing Interface Part
 prclif(){
@@ -70,21 +65,21 @@ prsvpeer(){
     echo "AllowedIPs = $myaddr/32, $cidr"
     echo "EndPoint = [$ipv6]:51820"
 }
-setpeer(){
-    peer=$1.peer
-    prsvpeer > ~/cfg.def/etc/$peer
-    ln -sf ~/cfg.*/etc/*.peer .
-    rm $peer
-}
 prsvcfg(){
+    ln -sf ~/cfg.*/etc/*.peer .
+    rm $host.peer
     echo "#file /etc/wireguard/wg0.conf"
     prsvif
-    echo
     [ "$(echo *.peer)" ] && cat *.peer
 }
+prclcfg(){
+    prclif
+    cat ~/cfg.def/etc/$host.peer
+}
+mkdir -p -m 700 ~/.wg
+cd ~/.wg
 _usage
-privkey=privkey
-mkprv
-setnet
-setpeer $host
+mkprv privkey
+tunnet
+prsvpeer > ~/cfg.def/etc/$host.peer
 prsvcfg
