@@ -71,7 +71,6 @@ _chkfunc(){ # Show function list in self file
 
 # Check if file is not sourced
 _chkown(){
-echo ${BASH_SOURCE[@]}
     [ $0 == ${BASH_SOURCE[2]} ]
 }
 # Exit with code for file (included or individual)
