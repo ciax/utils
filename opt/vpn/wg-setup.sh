@@ -13,7 +13,7 @@ xopt-s(){ #Write to /etc/wireguard/wg0.conf"
 xopt-c(){ #Generate client
     mkprv privkey.cli
     myaddr=10.0.0.100
-    prclpeer > ~/cfg.def/etc/client.peer
+    prclpeer > ~/cfg.def/etc/wg0.client.peer
     prclcfg
 }
 xopt-q(){ #Generate client QR code
@@ -22,7 +22,7 @@ xopt-q(){ #Generate client QR code
 server(){
     mkprv privkey
     tunnet
-    prsvpeer > ~/cfg.def/etc/$host.peer
+    prsvpeer > ~/cfg.def/etc/wg0.$host.peer
     prsvcfg
 }
 
@@ -69,7 +69,7 @@ prsvpeer(){
 }
 prsvcfg(){
     ln -sf ~/cfg.*/etc/*.peer .
-    rm $host.peer
+    rm wg0.$host.peer
     echo "#file /etc/wireguard/wg0.conf"
     prif
     echo "ListenPort = 51820"
@@ -80,7 +80,7 @@ prsvcfg(){
 prclcfg(){
     prif
     echo "DNS = 8.8.8.8"
-    cat ~/cfg.def/etc/$host.peer
+    cat ~/cfg.def/etc/wg0.$host.peer
 }
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
