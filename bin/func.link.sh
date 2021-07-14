@@ -3,7 +3,7 @@
 # if dst file exists -> dst=regular file:>fail , dst=org link:>skip
 # Create or Overwrite unexist link
 type _mklink >/dev/null 2>&1 && return
-. ~/utils/bin/func.msg.sh
+source ~/utils/bin/func.msg.sh
 # declare -gA LINKS # for Bash 4 or later
 _absdir(){ # Show Abs Dir
     local dir="${1%/*}"

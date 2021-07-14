@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description: file handling library
 type _temp >/dev/null 2>&1 && return
-source func.msg
+. func.msg
 mkdir -p ~/.trash
 TEMPLIST=''
 _temp(){ # Make temp file [name] ..
