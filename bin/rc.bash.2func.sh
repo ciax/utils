@@ -57,6 +57,9 @@ uniqenv(){
         eval "$i='${list%:}'"
     done
 }
+cd_link(){ #alias cdl
+    pushd $(dirname $(readlink $1))
+}
 dep(){
     dep-$1 | dep-tree
 }
