@@ -66,32 +66,31 @@ prv6peer(){
 }
 # Making Config Files
 mkclcfg(){ #Generate client
-    mkkeys privkey
-    prsvpeer > ~/cfg.def/etc/wg0.server.peer
     mkkeys privkey.cli
     tunaddr=10.0.0.100
-    prclpeer > ~/cfg.def/etc/wg0.client.peer
+    prclpeer > wg0.client.peer
 }
 mkv6cfg(){
     mkkeys privkey
     tunnet
     prv6peer > ~/cfg.def/etc/wg0.$hostname.peer
+    prsvpeer > server.peer
 }
 # Printing Config Files
 prv6cfg(){
-    ln -sf ~/cfg.*/etc/*.peer .
-    rm wg0.{$hostname,server}.peer
+    ln -sf ~/cfg.*/etc/wg0.*.peer .
+    rm wg0.$hostname.peer
     echo "#file /etc/wireguard/wg0.conf"
     prif
     echo "ListenPort = 51820"
     echo "PostUp = $(prnat A)"
     echo "PostDown = $(prnat D)"
-    [ "$(echo *.peer)" ] && cat *.peer
+    [ "$(echo wg0.*.peer)" ] && cat wg0.*.peer
 }
 prclcfg(){
     prif
     echo "DNS = 8.8.8.8"
-    cat ~/cfg.def/etc/wg0.server.peer
+    cat server.peer
 }
 # Main
 mkdir -p -m 700 ~/.wg
