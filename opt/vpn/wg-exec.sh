@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias xwg
+#alias wgx
 # Required packages: wireguard
 # Required scripts: func.getpar
 # Description: execute wireguard
