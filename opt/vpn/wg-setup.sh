@@ -11,11 +11,11 @@ xopt-s(){ #Write to /etc/wireguard/wg0.conf"
     sudo sysctl -w net.ipv4.ip_forward=1
 }
 xopt-c(){ #Generate client
-    mkclcfg
+    mkclcfg $*
     prclcfg
 }
 xopt-q(){ #Generate client QR code
-    xopt-c | qrencode -t ansiutf8
+    xopt-c $* | qrencode -t ansiutf8
 }
 # Subroutines
 prnat(){
@@ -66,9 +66,10 @@ prv6peer(){
 }
 # Making Config Files
 mkclcfg(){ #Generate client
-    mkkeys privkey.cli
-    tunaddr=10.0.0.100
-    prclpeer > wg0.client.peer
+    num=${1:-0}
+    mkkeys privkey$num.cli
+    tunaddr=10.0.1.1$num
+    prclpeer > wg0.client$num.peer
 }
 mkv6cfg(){
     mkkeys privkey
@@ -95,6 +96,6 @@ prclcfg(){
 # Main
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
-_usage
+_usage "(c=client num)"
 mkv6cfg
 prv6cfg
