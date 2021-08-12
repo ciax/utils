@@ -4,17 +4,24 @@
 # Required scripts: func.getpar
 # Description: setting nat table
 #
+# Internal IP Assignment
+#  Server: 10.0.(subnet).254
+#  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
 # Options
-xopt-s(){ #Write to /etc/wireguard/wg0.conf"
-    $0 | text-update
-    sudo sysctl -w net.ipv4.ip_forward=1
+xopt-p(){ #Print Server Config
+    mkv6cfg
+    prv6cfg
 }
-xopt-c(){ #Generate client
+xopt-c(){ #Pring Client Config
     mkclcfg $*
     prclcfg
 }
-xopt-q(){ #Generate client QR code
+xopt-s(){ #Write to /etc/wireguard/wg0.conf"
+    xopt-p | text-update
+    sudo sysctl -w net.ipv4.ip_forward=1
+}
+xopt-q(){ #Print Client QR code
     xopt-c $* | qrencode -t ansiutf8
 }
 # Subroutines
@@ -31,19 +38,20 @@ mkkeys(){
 	echo "$privkey was generated"
     fi
     pubkey=$(wg pubkey < $privkey)
-    eval $(info-net)
 }
-tunnet(){
+getnet(){
+    id=$1
+    eval $(info-net)
     IFS=.
     set - $subnet
     IFS=
-    tunaddr="10.0.0.1$3"
+    tunaddr="10.0.$3.$id"
 }
 # Printing Common Part
 prif(){
     echo "[Interface]"
     echo "PrivateKey = $(< $privkey)"
-    echo "Address = $tunaddr/24"
+    echo "Address = $tunaddr/16"
 }
 prpeer(){
     echo "[Peer]"
@@ -66,14 +74,14 @@ prv6peer(){
 }
 # Making Config Files
 mkclcfg(){ #Generate client
-    num=${1:-0}
+    num=${1:-1}
     mkkeys privkey$num.cli
-    tunaddr=10.0.1.1$num
+    getnet $num
     prclpeer > wg0.client$num.peer
 }
 mkv6cfg(){
     mkkeys privkey
-    tunnet
+    getnet 254
     prv6peer > ~/cfg.def/etc/wg0.$hostname.peer
     prsvpeer > server.peer
 }
@@ -96,6 +104,4 @@ prclcfg(){
 # Main
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
-_usage "(c=client num)"
-mkv6cfg
-prv6cfg
+_usage "[opt] (c=client num)"
