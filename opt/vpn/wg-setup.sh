@@ -19,7 +19,6 @@ xopt-c(){ #Pring Client Config
 }
 xopt-s(){ #Write to /etc/wireguard/wg0.conf"
     xopt-p | text-update
-    sudo sysctl -w net.ipv4.ip_forward=1
 }
 xopt-q(){ #Print Client QR code
     xopt-c $* | qrencode -t ansiutf8
