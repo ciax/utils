@@ -14,14 +14,16 @@ xopt-p(){ #Print Server Config
     prv6cfg
 }
 xopt-c(){ #Pring Client Config
-    mkclcfg $*
+    num=${1:-1}
+    mkclcfg $num
     prclcfg
 }
 xopt-s(){ #Write to /etc/wireguard/wg0.conf"
     xopt-p | text-update
 }
 xopt-q(){ #Print Client QR code
-    xopt-c $* | qrencode -t ansiutf8
+    num=${1:-1}
+    xopt-c $num | qrencode -o ~/.var/wg/wg$num.png
 }
 # Subroutines
 prnat(){
@@ -73,7 +75,6 @@ prv6peer(){
 }
 # Making Config Files
 mkclcfg(){ #Generate client
-    num=${1:-1}
     mkkeys privkey$num.cli
     getnet $num
     prclpeer > wg0.client$num.peer
@@ -101,6 +102,7 @@ prclcfg(){
     cat server.peer
 }
 # Main
+mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
 _usage "[opt] (c=client num)"
