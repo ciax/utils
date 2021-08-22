@@ -13,7 +13,7 @@ do
         cidr=$h
     fi
 done < <(ip route)
-eval $(ifconfig eth0|egrep -v 'link'|sed -e 's/  /\n/g'|egrep '^(i|n|br|ether)'|tr ' ' =)
+eval $(ifconfig $netif|egrep -v 'link'|sed -e 's/  /\n/g'|egrep '^(i|n|br|ether)'|tr ' ' =)
 echo "netif=$netif"
 echo "hostip=$inet"
 echo "subnet=${cidr%/*}"
