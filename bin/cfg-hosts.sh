@@ -51,9 +51,4 @@ while read id fdqn; do
     echo -e "$ip\t$fdqn\t$id"
 done < <(db-exec 'select id,fdqn from ddns;')
 # Global IP
-for f in ~/cfg.*/etc/global.*.txt; do 
-cat $f
-    while read id host x; do
-        echo "$id $host"
-    done < $f
-done
+cut -d ' ' -f 1,2 ~/cfg.def/etc/global.*.txt
