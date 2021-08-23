@@ -4,4 +4,4 @@
 date=$(date)
 host=$(hostname)
 gip=$(curl -s inet-ip.info)
-echo "$date $host $gip"
+echo "$gip $host $date"
