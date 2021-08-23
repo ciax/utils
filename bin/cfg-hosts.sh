@@ -50,3 +50,10 @@ while read id fdqn; do
     ip=$(echo ${ip##* }|egrep '^([0-9]+\.?){4}$') || continue
     echo -e "$ip\t$fdqn\t$id"
 done < <(db-exec 'select id,fdqn from ddns;')
+# Global IP
+for f in ~/cfg.*/etc/global.*.txt; do 
+cat $f
+    while read id host x; do
+        echo "$id $host"
+    done < $f
+done
