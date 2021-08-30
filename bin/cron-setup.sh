@@ -12,6 +12,9 @@ list=""
 m=$(date +%S)
 _exe_opt
 _temp crontab
+if [ -e ~/bin/cron-reboot ]; then
+    echo "@reboot $HOME/bin/cron-reboot" >> $crontab
+fi
 for per in hourly daily weekly $1; do
     [ -e ~/bin/cron.$per.$HOSTNAME ] || continue
     case $per in
