@@ -16,7 +16,7 @@ if [ -e ~/bin/cron-reboot ]; then
     echo "@reboot $HOME/bin/cron-reboot" >> $crontab
 fi
 for per in hourly daily weekly $1; do
-    [ -e ~/bin/cron.$per.$HOSTNAME ] || continue
+    [ -e ~/bin/cron.$per ] || continue
     case $per in
         hourly);;
         daily) h=${df:-3};;

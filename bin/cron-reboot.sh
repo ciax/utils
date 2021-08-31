@@ -1,5 +1,6 @@
 #!/bin/bash
 # Description: execute scripts at reboot
+#link cron.daily
 per=$1
 PATH=~/bin:$PATH
 file=mynet.$HOSTNAME.txt

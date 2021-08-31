@@ -13,6 +13,7 @@ do
         cidr=$h
     fi
 done < <(ip route)
+echo "time=$(date +%F_%R)"
 eval $(ifconfig $netif|egrep -v 'link'|sed -e 's/  /\n/g'|egrep '^(i|n|br|ether)'|tr ' ' =)
 echo "netif=$netif"
 echo "hostip=$inet"
