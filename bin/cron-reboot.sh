@@ -11,6 +11,7 @@ set >> $log
 echo "## Env ##" >> $log
 env >> $log
 echo "## Exec ##" >> $log
+update
 cd ~/cfg.def/etc
 info-net | tee $file >> $log
 git add $file
