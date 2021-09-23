@@ -27,5 +27,5 @@ for per in hourly daily weekly $1; do
 done
 [ -s $crontab ] || exit
 echo 'MAILTO=""'
-echo "PATH=$HOME/bin:/usr/bin:/bin"
+echo "PATH=$HOME/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 cat $crontab
