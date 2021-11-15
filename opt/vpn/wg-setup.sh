@@ -13,7 +13,7 @@ xopt-p(){ #Print Server Config
     mkv6cfg
     prv6cfg
 }
-xopt-c(){ #Pring Client Config
+xopt-c(){ #Print Client Config
     num=${1:-1}
     mkclcfg $num
     prclcfg
@@ -21,7 +21,7 @@ xopt-c(){ #Pring Client Config
 xopt-s(){ #Write to /etc/wireguard/wg0.conf"
     xopt-p | text-update
 }
-xopt-q(){ #Print Client QR code
+xopt-q(){ #Write Client QR code to http://localhost/wg/wg?.png
     num=${1:-1}
     xopt-c $num | qrencode -o ~/.var/wg/wg$num.png
 }
@@ -105,4 +105,4 @@ prclcfg(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
-_usage "[opt] (c=client num)"
+_usage "[opt] (c,q=client num)"
