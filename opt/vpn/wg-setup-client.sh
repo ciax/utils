@@ -9,7 +9,7 @@
 #  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
 # Options
-opt-s(){
+opt-s(){ # Write to /etc
     prcfg ${ARGV[1]}| text-update
 }
 # Subroutines
