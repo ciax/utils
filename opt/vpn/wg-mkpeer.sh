@@ -25,19 +25,19 @@ mkkeys(){
     pubkey=$(wg pubkey < $privkey)
 }
 getnet(){
-    id=$1
     eval $(info-net)
     IFS=.
     set - $subnet
     IFS=
-    tunaddr="10.0.$3.$id"
+    tunaddr="10.0.$3.254"
+    [ "$ipv6" ] && dstaddr="[$ipv6]" || dstaddr="$global"
 }
 # Printing SV Peers
 prpeer(){
     echo "[Peer]"
     echo "PublicKey = $pubkey"
     echo "AllowedIPs = $tunaddr/32, $cidr"
-    echo "EndPoint = $address:51820"
+    echo "EndPoint = $dstaddr:51820"
 }
 # Making Working Directory
 mkdir -p ~/.var/wg
@@ -45,7 +45,6 @@ mkdir -p -m 700 ~/.wg
 cd ~/.wg
 # Making Config Files
 mkkeys privkey
-getnet 254
-[ "$ipv6" ] && address="[$ipv6]" || address="$global"
+getnet
 prpeer
 _exe_opt
