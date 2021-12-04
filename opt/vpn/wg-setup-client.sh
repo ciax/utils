@@ -13,6 +13,9 @@ opt-s(){ # Write to /etc
     prcfg ${ARGV[1]}| text-update
 }
 # Subroutines
+list_peer(){
+    ls ~/cfg.*/etc/wg0.*.peer|grep -v $HOSTNAME|cut -d. -f3|sort -u|tr $'\n' ' '
+}
 prnat(){
     echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $netif -j MASQUERADE"
 }
@@ -41,16 +44,17 @@ prcfg(){
     echo "PostUp = $(prnat A)"
     echo "PostDown = $(prnat D)"
     grep -v AllowedIPs $dst
-    allow="$(grep AllowedIPs $dst)"; rm $dst
-    while read a ; do
-	allow="$allow, $a"
-    done < <(cat wg0.*.peer | grep AllowedIPs| cut -d, -f2)
+    allow="$(grep AllowedIPs $dst|cut -d, -f1)"
+    IFS=' '
+    for i in $(list_peer); do
+	allow+=", $(grep AllowedIPs wg0.$i.peer | cut -d, -f2)"
+    done
     echo $allow
 }
 # Main
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
-_usage "[server]"
+_usage "[server]" $(list_peer)
 prcfg $1
 _exe_opt
