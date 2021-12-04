@@ -11,6 +11,7 @@
 # Options
 opt-q(){ #Write Client QR code to http://localhost/wg/wg?.png
     prcfg | qrencode -o ~/.var/wg/wg$num.png
+    prcfg | qrencode -t UTF8
 }
 # Shared Procedures
 mkkeys(){
