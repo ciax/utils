@@ -12,7 +12,6 @@
 opt-s(){
     prcfg | text-update
 }
-_usage
 # Subroutines
 prnat(){
     echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $netif -j MASQUERADE"
@@ -34,7 +33,7 @@ prif(){
 # Making Config Files
 prcfg(){
     ln -sf ~/cfg.*/etc/wg0.*.peer .
-    rm wg0.$(hostname).peer
+    rm wg0.$HOSTNAME.peer
     echo "#file /etc/wireguard/wg0.conf"
     getnet
     prif
@@ -47,5 +46,6 @@ prcfg(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
+_usage
 prcfg
 _exe_opt

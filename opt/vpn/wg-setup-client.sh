@@ -34,7 +34,7 @@ prif(){
 prcfg(){
     dst=wg0.$1.peer
     ln -sf ~/cfg.*/etc/wg0.*.peer .
-    rm wg0.$(hostname).peer
+    rm wg0.$HOSTNAME.peer
     echo "#file /etc/wireguard/wg0.conf"
     getnet
     prif

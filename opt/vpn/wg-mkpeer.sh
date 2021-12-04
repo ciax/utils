@@ -10,9 +10,8 @@
 . func.getpar
 opt-s(){ # Save to Config Dir
     echo "Printed out to cfg dir"
-    prpeer > ~/cfg.def/etc/wg0.$hostname.peer
+    prpeer > ~/cfg.def/etc/wg0.$HOSTNAME.peer
 }
-_usage
 # Shared Procedures
 mkkeys(){
     [ "$1" ] || { echo "No prv file setting"; return; }
@@ -43,6 +42,7 @@ prpeer(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
+_usage
 # Making Config Files
 mkkeys privkey
 getnet
