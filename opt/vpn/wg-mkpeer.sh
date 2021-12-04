@@ -8,11 +8,11 @@
 #  Server: 10.0.(subnet).254
 #  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
-_usage
 opt-s(){
     echo "Printed out to cfg dir"
     prpeer > ~/cfg.def/etc/wg0.$hostname.peer
 }
+_usage
 # Shared Procedures
 mkkeys(){
     [ "$1" ] || { echo "No prv file setting"; return; }
