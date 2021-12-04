@@ -10,7 +10,7 @@
 . func.getpar
 # Options
 opt-s(){
-    prcfg | text-update
+    prcfg ${ARGV[1]}| text-update
 }
 _usage
 # Subroutines
