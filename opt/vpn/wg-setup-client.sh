@@ -41,9 +41,12 @@ prcfg(){
     prif
     echo "PostUp = $(prnat A)"
     echo "PostDown = $(prnat D)"
-    cat $dst
-    rm $dst
-    cat wg0.*.peer | grep -v EndPoint
+    grep -v AllowedIPs $dst
+    allow="$(grep AllowedIPs $dst)"; rm $dst
+    while read a ; do
+	allow="$allow, $a"
+    done < <(cat wg0.*.peer | grep AllowedIPs| cut -d, -f2)
+    echo $allow
 }
 # Main
 mkdir -p ~/.var/wg

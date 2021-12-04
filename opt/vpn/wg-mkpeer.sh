@@ -36,8 +36,8 @@ getnet(){
 prpeer(){
     echo "[Peer]"
     echo "PublicKey = $pubkey"
-    echo "AllowedIPs = $tunaddr/32, $cidr"
     echo "EndPoint = $dstaddr:51820"
+    echo "AllowedIPs = $tunaddr/32, $cidr"
 }
 # Making Working Directory
 mkdir -p ~/.var/wg
