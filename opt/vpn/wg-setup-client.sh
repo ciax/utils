@@ -12,7 +12,6 @@
 opt-s(){
     prcfg ${ARGV[1]}| text-update
 }
-_usage
 # Subroutines
 prnat(){
     echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $netif -j MASQUERADE"
