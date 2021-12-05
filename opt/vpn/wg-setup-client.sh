@@ -9,8 +9,8 @@
 #  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
 # Options
-opt-s(){ # Write to /etc
-    prcfg ${ARGV[1]}| text-update
+xopt-s(){ # Write to /etc
+    prcfg $server| text-update
 }
 # Subroutines
 list_peer(){
@@ -55,6 +55,7 @@ prcfg(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
+server=$1
 _usage "[server]" $(list_peer)
-prcfg $1
-_exe_opt
+prcfg $server
+
