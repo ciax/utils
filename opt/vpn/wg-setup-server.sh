@@ -29,6 +29,9 @@ prif(){
     echo "[Interface]"
     echo "PrivateKey = $(< privkey)"
     echo "Address = $tunaddr/16"
+    echo "PostUp = $(prnat A)"
+    echo "PostDown = $(prnat D)"
+    echo "ListenPort = 51820"
 }
 # Making Config Files
 prcfg(){
@@ -37,9 +40,6 @@ prcfg(){
     echo "#file /etc/wireguard/wg0.conf"
     getnet
     prif
-    echo "ListenPort = 51820"
-    echo "PostUp = $(prnat A)"
-    echo "PostDown = $(prnat D)"
     [ "$(echo wg0.*.peer)" ] && { cat wg0.*.peer| grep -v EndPoint; }
 }
 # Main

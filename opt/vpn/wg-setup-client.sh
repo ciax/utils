@@ -10,7 +10,7 @@
 . func.getpar
 # Options
 xopt-s(){ # Write to /etc
-    prcfg $server| text-update
+    prcfg $servers| text-update
 }
 # Subroutines
 list_peer(){
@@ -32,6 +32,8 @@ prif(){
     echo "[Interface]"
     echo "PrivateKey = $(< privkey)"
     echo "Address = $tunaddr/16"
+    echo "PostUp = $(prnat A)"
+    echo "PostDown = $(prnat D)"
 }
 # Making Config Files
 prcfg(){
@@ -41,8 +43,6 @@ prcfg(){
     echo "#file /etc/wireguard/wg0.conf"
     getnet
     prif
-    echo "PostUp = $(prnat A)"
-    echo "PostDown = $(prnat D)"
     grep -v AllowedIPs $dst
     allow="$(grep AllowedIPs $dst|cut -d, -f1)"
     IFS=' '
@@ -55,7 +55,6 @@ prcfg(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
-server=$1
+servers="$*"
 _usage "[server]" $(list_peer)
-prcfg $server
-
+prcfg $servers
