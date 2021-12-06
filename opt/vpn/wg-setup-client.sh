@@ -34,14 +34,7 @@ prif(){
     echo "ListenPort = 51820"
 }
 # Making Config Files
-prcfg(){
-    # sorting
-    ln -sf ~/cfg.*/etc/wg0.*.peer .
-    rm wg0.$HOSTNAME.peer
-    # printing
-    echo "#file /etc/wireguard/wg0.conf"
-    getnet
-    prif
+prpeers(){
     for i ;do
 	file=wg0.$i.peer
 	[ -e $file ] || continue
@@ -54,8 +47,18 @@ prcfg(){
 	echo
     fi
 } 
+prcfg(){
+    # sorting
+    ln -sf ~/cfg.*/etc/wg0.*.peer .
+    rm wg0.$HOSTNAME.peer
+    # printing
+    echo "#file /etc/wireguard/wg0.conf"
+    getnet
+    prif
+    prpeers $*
+}
 # Main
-mkdir -p ~/.var/wg
+mkdir -p ~/.var/wg/client
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
 servers="$*"

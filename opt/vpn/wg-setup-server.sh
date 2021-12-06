@@ -34,7 +34,7 @@ prif(){
     echo "ListenPort = 51820"
 }
 # Making Config Files
-prpeer(){
+prpeers(){
     [ "$(echo wg0.*.peer)" ] && { cat wg0.*.peer| grep -v EndPoint; }
 }
 prcfg(){
@@ -43,9 +43,9 @@ prcfg(){
     echo "#file /etc/wireguard/wg0.conf"
     getnet
     prif
-    prpeer
+    prpeers
     cd client
-    prpeer
+    prpeers
 }
 # Main
 mkdir -p ~/.var/wg/client
