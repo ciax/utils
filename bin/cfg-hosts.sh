@@ -52,3 +52,5 @@ while read id fdqn; do
 done < <(db-exec 'select id,fdqn from ddns;')
 # Global IP
 cut -d ' ' -f 1,2 ~/cfg.def/etc/global.*.txt
+# Global IPv6 : add '-6' to hostname
+sed -e 's/$/-6/' ~/cfg.def/etc/ipv6.*.txt
