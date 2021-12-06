@@ -60,8 +60,9 @@ prcfg(){
 # Main
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
-cd ~/.wg
-_usage "[client number]"
+mkdir -p client
+cd ~/.wg/client
+_usage - "[client#(1-253)]" {1..253}
 num=${1:-1}
 mkcfg $num
 prcfg

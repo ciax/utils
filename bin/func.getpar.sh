@@ -92,7 +92,7 @@ _caseitem(){ # List of case desctiption
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
     done
 }
-# Usage: _usage [par_txt] (arg list)
+# Usage: _usage (-) [par_txt] (arg list)
 # Description
 #   1. Execute xopt-?() and exit as an exclusive function if exist.
 #   2. Check the single options that provided as opt-?() or xopt-?() functions.
@@ -106,15 +106,19 @@ _caseitem(){ # List of case desctiption
 #   mandatory parameters => enclosed by "[]"
 #   file name replaceable with stdin => enclosed by "<>"
 #   optional parameters => enclosed by "()"
-# -n: No display valid pars and return only 
+# -: Suppress the valid par list and return only 
 _usage(){ # Check and show usage
     _exe_xopt
+    [ "$1" = "-" ] && shift || local show=1
     _chk_all "$@" && return # because it includes '[]'
     # Display usage
     grep '^# *Description' $0 | sed 's/# *//' 1>&2
     _disp_usage "$1";shift
-    for i;do echo $i;done | _colm 40 1>&2
+    if [ "$show" ] ; then
+	for i;do echo $i;done | _colm 40 1>&2
+    fi
     exit 1
+	
 }
 _disp_usage(){
     echo -en "Usage: $C2${0##*/}$C0" 1>&2
