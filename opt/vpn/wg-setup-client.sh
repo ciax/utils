@@ -46,7 +46,7 @@ prcfg(){
 	[ -e $file ] || continue
 	cat $file; rm $file
     done | head -c -1
-    if [ wg0.*.peer ]; then
+    if [ "$(echo wg0.*.peer)" ]; then
 	allow=$(grep AllowedIPs wg0.*.peer | cut -d, -f2 | tr $'\n' , )
 	echo ",${allow%,}"
     else
