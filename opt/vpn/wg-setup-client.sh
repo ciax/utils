@@ -31,6 +31,7 @@ prif(){
     echo "Address = $tunaddr/16"
     echo "PostUp = $(prnat A)"
     echo "PostDown = $(prnat D)"
+    echo "ListenPort = 51820"
 }
 # Making Config Files
 prcfg(){
