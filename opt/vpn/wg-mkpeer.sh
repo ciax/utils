@@ -8,9 +8,13 @@
 #  Server: 10.0.(subnet).254
 #  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
+opt-6(){ # Set IPv6 to EndPoint
+    [ "$ipv6" ] && dstaddr="[$ipv6]"
+}
 opt-s(){ # Save to Config Dir
     echo "Printed out to cfg dir"
     prpeer > ~/cfg.def/etc/wg0.$HOSTNAME.peer
+    exit
 }
 # Shared Procedures
 mkkeys(){
@@ -29,7 +33,7 @@ getnet(){
     set - $subnet
     IFS=
     tunaddr="10.0.$3.254"
-    [ "$ipv6" ] && dstaddr="[$ipv6]" || dstaddr="$global"
+    dstaddr="$global"
 }
 # Printing SV Peers
 prpeer(){
@@ -46,5 +50,5 @@ _usage
 # Making Config Files
 mkkeys privkey
 getnet
-prpeer
 _exe_opt
+prpeer
