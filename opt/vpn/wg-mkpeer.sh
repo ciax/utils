@@ -29,10 +29,8 @@ mkkeys(){
 }
 getnet(){
     eval $(info-net)
-    IFS=.
-    set - $subnet
-    IFS=
-    tunaddr="10.0.$3.254"
+    sub=$(( (${subnet//./+}) % 128))
+    tunaddr="10.0.$sub.254"
     dstaddr="$global"
 }
 # Printing SV Peers
