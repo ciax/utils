@@ -44,8 +44,10 @@ prcfg(){
     getnet
     prif
     prpeers
-    cd client
-    prpeers
+    if [ -d client ]; then
+	cd client
+	prpeers
+    fi
 }
 # Main
 mkdir -p ~/.var/wg/client
