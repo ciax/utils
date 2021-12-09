@@ -41,6 +41,7 @@ getinfo(){
 }
 prpar(){
     echo "#file $HOME/etc/wg_peer.$HOSTNAME.txt"
+    echo "wg_if=$itf"
     echo "wg_host=$HOSTNAME"
     echo "wg_pub=$pubkey"
     echo "wg_tun=$tunaddr"

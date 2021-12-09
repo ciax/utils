@@ -14,7 +14,7 @@ xopt-s(){ # Write to /etc
 }
 # Subroutines
 prnat(){
-    echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $netif -j MASQUERADE"
+    echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $wg_if -j MASQUERADE"
 }
 # Printing Common Part
 prif(){
