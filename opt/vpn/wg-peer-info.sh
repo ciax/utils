@@ -27,16 +27,17 @@ mkkeys(){
     pubkey=$(wg pubkey < $privkey)
 }
 getinfo(){
-    set - $(ip -br addr|grep UP)
+    set - $(ip -br -4 addr|grep UP)
     itf=$1
     loa=${3%/*}
     lom=${3#*/}
     los=${3%.*}
-    v6a=${4%/*}
-    v6m=${4#/*}
     v4a="$(curl -s inet-ip.info)"
     sub=$(( (${los//./+}) % 128))
     tunaddr="10.0.$sub.254"
+    set - $(ip -br -6 addr|grep UP)
+    v6a=${3%/*}
+    v6m=${3#/*}
 }
 prpar(){
     echo "#file $HOME/etc/wg_peer.$HOSTNAME.txt"
