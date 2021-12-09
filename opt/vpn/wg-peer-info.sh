@@ -10,6 +10,10 @@
 . func.getpar
 xopt-s(){ # Save to Config Dir
     $0 | text-update
+    cd ~/etc
+    git add wg_peer.$HOSTNAME.txt
+    git commit -m 'Update wg peer info'
+    git push
 }
 # Shared Procedures
 mkkeys(){
