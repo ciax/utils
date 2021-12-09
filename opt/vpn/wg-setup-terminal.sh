@@ -26,11 +26,6 @@ mkkeys(){
 }
 getnet(){
     id=$1
-    eval $(info-net)
-    IFS=.
-    set - $subnet
-    IFS=
-    tunaddr="10.0.$3.$id"
 }
 # Printing Common Part
 prif(){
@@ -47,14 +42,16 @@ prpeer(){
 # Making Config Files
 mkcfg(){ #Generate client
     mkkeys privkey$num.cli
-    getnet $num
+    tunaddr="${wg_tun%.*}.$num"
     prpeer > wg0.client$num.peer
 }
 # Printing Config Files
 prcfg(){
     prif
     echo "DNS = 8.8.8.8"
-    grep -v AllowedIPs ~/etc/wg0.$hostname.peer
+    echo "[Peer]"
+    echo "PublicKey = $wg_pub"
+    echo "EndPoint = $wg_ipv4:51820"
     echo "AllowedIPs = 0.0.0.0/0"
 }
 # Main
@@ -63,6 +60,7 @@ mkdir -p -m 700 ~/.wg
 cd ~/.wg/client
 _usage - "[client#(1-253)]" {1..253}
 num=${1:-1}
+. ~/etc/wg_peer.$HOSTNAME.txt
 mkcfg $num
 prcfg
 _exe_opt
