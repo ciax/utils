@@ -25,16 +25,20 @@ prif(){
     echo "PostDown = $(prnat D)"
     echo "ListenPort = 51820"
 }
-prpeers(){
+prpeer(){
+    echo "[Peer]"
+    echo "PublicKey = $wg_pub"
+    echo "AllowedIPs = $wg_tun/32, $wg_sub"
+}
+
+listpeers(){
     for i in wg_peer.*.txt; do
 	. $i
-	echo "[Peer]"
-	echo "PublicKey = $wg_pub"
-	echo "AllowedIPs = $wg_tun/32, $wg_sub"
+	prpeer
     done
 }
 # Making Config Files
-prcl(){
+listcl(){
     [ -d client ] || return
     cd client
     [ "$(echo wg0.*.peer)" ] &&  { cat wg0.*.peer| grep -v EndPoint; }
@@ -45,8 +49,8 @@ prcfg(){
     rm wg_peer.$HOSTNAME.txt
     echo "#file /etc/wireguard/wg0.conf"
     prif
-    prpeers
-    prcl
+    listpeers
+    listcl
 }
 # Main
 mkdir -p ~/.var/wg/client

@@ -16,44 +16,45 @@ xopt-s(){ # Write to /etc
 prnat(){
     echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $netif -j MASQUERADE"
 }
-# Shared Procedures
-getnet(){
-    eval $(info-net)
-    IFS=.
-    set - $subnet
-    IFS=
-    tunaddr="10.0.$3.254"
-}
 # Printing Common Part
 prif(){
     echo "[Interface]"
     echo "PrivateKey = $(< privkey)"
-    echo "Address = $tunaddr/16"
+    echo "Address = $wg_tun/16"
     echo "PostUp = $(prnat A)"
     echo "PostDown = $(prnat D)"
-    echo "ListenPort = 51820"
+    echo -n "ListenPort = 51820"
+}
+prpeer(){
+    echo "[Peer]"
+    echo "PublicKey = $wg_pub"
+    echo "EndPoint = $wg_ipv4:51820"
+    echo -n "AllowedIPs = $wg_tun/32, $wg_sub"
+}
+setpar(){
+    local file=wg_peer.$1.txt
+    [ -e $file ] || return
+    . $file
+    rm $file
 }
 # Making Config Files
 prpeers(){
     for i ;do
-	file=wg0.$i.peer
-	[ -e $file ] || continue
-	cat $file; rm $file
-    done | head -c -1
-    if [ "$(echo wg0.*.peer)" ]; then
-	allow=$(grep AllowedIPs wg0.*.peer | cut -d, -f2 | tr $'\n' , )
-	echo ",${allow%,}"
-    else
 	echo
-    fi
+	setpar $i && prpeer
+    done
+    for i in wg_peer.*.txt; do
+	. $i
+	echo -n ", $wg_sub"
+    done
+    echo
 } 
 prcfg(){
     # sorting
-    ln -sf ~/cfg.*/etc/wg0.*.peer .
-    rm wg0.$HOSTNAME.peer
+    ln -sf ~/cfg.*/etc/wg_peer.*.txt .
+    setpar $HOSTNAME
     # printing
     echo "#file /etc/wireguard/wg0.conf"
-    getnet
     prif
     prpeers $*
 }
