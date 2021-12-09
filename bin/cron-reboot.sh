@@ -13,7 +13,7 @@ env >> $log
 echo "## Exec ##" >> $log
 git-pullall
 db-update
-cd ~/cfg.def/etc
+cd ~/etc
 info-net | tee $file >> $log
 git add $file
 git commit $file -m "Network interface was updated.($HOSTNAME)"

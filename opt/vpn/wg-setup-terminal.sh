@@ -54,7 +54,7 @@ mkcfg(){ #Generate client
 prcfg(){
     prif
     echo "DNS = 8.8.8.8"
-    grep -v AllowedIPs ~/cfg.def/etc/wg0.$hostname.peer
+    grep -v AllowedIPs ~/etc/wg0.$hostname.peer
     echo "AllowedIPs = 0.0.0.0/0"
 }
 # Main

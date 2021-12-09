@@ -13,7 +13,7 @@ opt-6(){ # Set IPv6 to EndPoint
 }
 opt-s(){ # Save to Config Dir
     echo "Printed out to cfg dir"
-    prpeer > ~/cfg.def/etc/wg0.$HOSTNAME.peer
+    prpeer > ~/etc/wg0.$HOSTNAME.peer
     exit
 }
 # Shared Procedures

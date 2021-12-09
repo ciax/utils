@@ -35,7 +35,7 @@ getinfo(){
     tunaddr="10.0.$sub.254"
 }
 prpar(){
-    echo "#file $HOME/cfg.def/etc/wg_peer.$HOSTNAME.txt"
+    echo "#file $HOME/etc/wg_peer.$HOSTNAME.txt"
     echo "wg_host=$HOSTNAME"
     echo "wg_pub=$pubkey"
     echo "wg_tun=$tunaddr"
