@@ -48,6 +48,7 @@ prpar(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
+ln -sf ~/utils/opt/vpn .
 _usage
 # Making Config Files
 mkkeys privkey
