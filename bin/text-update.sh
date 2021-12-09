@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: overwrite the file in a hash directive (#file) by stdin
-#  *** Never use '~/' for home. Use $HOME instead. ***
+#  *** Specify Absolute Directory. Never use '~/' for home. Use $HOME instead. ***
 . func.getpar
 _import func.sudo
 _usage "<input>"
