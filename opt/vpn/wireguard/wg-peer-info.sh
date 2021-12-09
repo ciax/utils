@@ -54,7 +54,7 @@ prpar(){
 mkdir -p ~/.var/wg
 mkdir -p -m 700 ~/.wg
 cd ~/.wg
-ln -sf ~/utils/opt/vpn .
+ln -sf ~/utils/opt/vpn/wireguard bin
 _usage
 # Making Config Files
 mkkeys privkey
