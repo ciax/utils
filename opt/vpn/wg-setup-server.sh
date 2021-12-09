@@ -16,38 +16,37 @@ opt-s(){ # Write to /etc
 prnat(){
     echo "iptables -$1 FORWARD -i wg0 -j ACCEPT; iptables -t nat -$1 POSTROUTING -o $netif -j MASQUERADE"
 }
-# Shared Procedures
-getnet(){
-    eval $(info-net)
-    IFS=.
-    set - $subnet
-    IFS=
-    tunaddr="10.0.$3.254"
-}
 # Printing Common Part
 prif(){
     echo "[Interface]"
     echo "PrivateKey = $(< privkey)"
-    echo "Address = $tunaddr/16"
+    echo "Address = $wg_tun/16"
     echo "PostUp = $(prnat A)"
     echo "PostDown = $(prnat D)"
     echo "ListenPort = 51820"
 }
-# Making Config Files
 prpeers(){
-    [ "$(echo wg0.*.peer)" ] && { cat wg0.*.peer| grep -v EndPoint; }
+    for i in wg_peer.*.txt; do
+	. $i
+	echo "[Peer]"
+	echo "PublicKey = $wg_pub"
+	echo "AllowedIPs = $wg_tun/32, $wg_sub"
+    done
+}
+# Making Config Files
+prcl(){
+    [ -d client ] || return
+    cd client
+    [ "$(echo wg0.*.peer)" ] &&  { cat wg0.*.peer| grep -v EndPoint; }
 }
 prcfg(){
-    ln -sf ~/cfg.*/etc/wg0.*.peer .
-    rm wg0.$HOSTNAME.peer
+    ln -sf ~/cfg.*/etc/wg_peer.*.txt .
+    . wg_peer.$HOSTNAME.txt
+    rm wg_peer.$HOSTNAME.txt
     echo "#file /etc/wireguard/wg0.conf"
-    getnet
     prif
     prpeers
-    if [ -d client ]; then
-	cd client
-	prpeers
-    fi
+    prcl
 }
 # Main
 mkdir -p ~/.var/wg/client
