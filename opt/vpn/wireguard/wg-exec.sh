@@ -1,5 +1,8 @@
 #!/bin/bash
-#alias wgx
+#alias wgs stat
+#alias wgc conf
+#alias wgu up
+#alias wgd dw
 # Required packages: wireguard
 # Required scripts: func.getpar
 # Description: execute wireguard
@@ -15,6 +18,8 @@ case "$1" in
         sudo wg-quick up wg0;;
     dw) #Linc Down
         sudo wg-quick down wg0;;
+    conf) #Show config
+        sudo cat /etc/wireguard/wg0.conf;;
     stat) #Show status
         sudo wg show;;
     *);;
