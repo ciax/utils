@@ -4,7 +4,7 @@
 # Required scripts: func.getpar
 # Description: Making Client Peer Config
 #
-# Internal IP Assignment
+# Tunnel IP Assignment
 #  Server: 10.0.(subnet).254
 #  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
@@ -38,7 +38,7 @@ setpar(){
     rm $file
 }
 # Making Config Files
-prpeers(){
+listpeers(){
     for i ;do
 	echo
 	setpar $i && prpeer
@@ -49,6 +49,11 @@ prpeers(){
     done
     echo
 } 
+listcl(){
+    [ -d client ] || return
+    cd client
+    [ "$(echo wg0.*.peer)" ] &&  { cat wg0.*.peer| grep -v EndPoint; }
+}
 prcfg(){
     # sorting
     ln -sf ~/cfg.*/etc/wg_peer.*.txt .
@@ -56,7 +61,8 @@ prcfg(){
     # printing
     echo "#file /etc/wireguard/wg0.conf"
     prif
-    prpeers $*
+    listpeers $*
+    listcl
 }
 # Main
 mkdir -p ~/.var/wg/client
