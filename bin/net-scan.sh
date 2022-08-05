@@ -18,9 +18,6 @@ opt-s(){ #Syn Scan
 opt-a(){ #Ack Scan
     opt="-PA"
 }
-opt-d(){ #Device name from DB
-    x=1
-}
 _view(){
     local id description
     eval $(db-trace $1 mac device model | grep -v "/")
