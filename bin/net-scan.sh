@@ -25,5 +25,4 @@ eval "$(info-net)"
 _msg "Scannig network ($cidr)"
 nmap -n -sn $opt $cidr > /dev/null 2>&1
 arp -n|grep -v incomplete | tee $alist
-
-
+_msg "$alist was updated"
