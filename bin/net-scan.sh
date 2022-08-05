@@ -24,5 +24,5 @@ _exe_opt
 eval "$(info-net)"
 _msg "Scannig network ($cidr)"
 nmap -n -sn $opt $cidr > /dev/null 2>&1
-arp -n|grep -v incomplete | tee $alist
+arp -n|grep ether | while read a b c d; do  echo "$c $a";done | sort | tee $alist
 _msg "$alist was updated"
