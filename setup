@@ -8,6 +8,7 @@ done
 PATH=$HOME/bin:$PATH
 cd ~/utils/bin
 git config credential.helper store
+git config pull.rebase false
 . func.link.sh
 _setup_link
 . rc.bash
