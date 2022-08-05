@@ -18,11 +18,22 @@ opt-s(){ #Syn Scan
 opt-a(){ #Ack Scan
     opt="-PA"
 }
+opt-d(){ #Device name from DB
+    x=1
+}
+_view(){
+    local id description
+    eval $(db-trace $1 mac device model | grep -v "/")
+    echo -e "$1\t$2\t$id\t$description"
+}
 alist=~/.var/cache/arplist.txt
+settmp=~/.var/temp.txt
 _usage
 _exe_opt
 eval "$(info-net)"
 _msg "Scannig network ($cidr)"
 nmap -n -sn $opt $cidr > /dev/null 2>&1
-arp -n|grep ether | while read a b c d; do  echo "$c $a";done | sort | tee $alist
+arp -n|grep ether | while read a b c d; do
+    _view ${c^^} $a
+done | sort | tee $alist
 _msg "$alist was updated"
