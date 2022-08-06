@@ -21,7 +21,7 @@ opt-a(){ #Ack Scan
 _view(){
     local id description
     eval $(db-trace $1 mac device model | grep -v "/")
-    echo -e "$1\t$2\t$id\t$description"
+    echo -e "$1\t$2\t$brand $m_n\t$description"
 }
 alist=~/.var/cache/arplist.txt
 settmp=~/.var/temp.txt
