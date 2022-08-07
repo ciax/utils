@@ -19,7 +19,7 @@ opt-a(){ #Ack Scan
     opt="-PA"
 }
 _view(){
-    local id description
+    local brand m_n description
     eval $(db-trace $1 mac device model | grep -v "/")
     echo -e "$1\t$2\t$brand $m_n\t\t$description"
 }
