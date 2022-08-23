@@ -144,13 +144,20 @@ _ssh-opt(){
 _ssh_fetch(){ # Fetch remote auth key [user@host:port]
     _ssh-opt $1 || return 1
     _warn "Host $rhost${port:+:$port}"
-    # Get files from remote
     cd $SSHVAR
+    # Push pubkey to prevent the multiple password input
     ssh $sshopt $rhost "cat >> ~/.ssh/$ATH" < $PUB
+    # Get files from remote
     scp $sshopt $rhost:.ssh/$ATH .
     scp $sshopt $rhost:.ssh/$INV .
     [ -s $ATH ] && mv $ATH $ATH.$rhost
     [ -s $INV ] && mv $INV $INV.$rhost
+    # Get github credentials
+    gcre="~/.git-credentials"
+    _temp tcre
+    cp $gcre $tcre
+    ssh $sshopt $rhost "cat $gcre" >> $tcre 
+    sort -u $tcre | _overwrite $gcre
 }
 #link ssh_push
 _ssh_push(){ # Push auth key to remote [user@host:port]
