@@ -153,7 +153,8 @@ _ssh_fetch(){ # Fetch remote auth key [user@host:port]
     [ -s $ATH ] && mv $ATH $ATH.$rhost
     [ -s $INV ] && mv $INV $INV.$rhost
     # Get github credentials
-    gcre="~/.git-credentials"
+    cd
+    gcre=".git-credentials"
     _temp tcre
     cp $gcre $tcre
     ssh $sshopt $rhost "cat $gcre" >> $tcre 
