@@ -11,7 +11,7 @@ CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
 LINV=~/.ssh/$INV
 SSHVAR=~/.var/cache/ssh
-ME=$(logname)@$(hostname)
+ME=$USER@$(hostname)
 ### For remote operation ###
 mkdir -p $SSHVAR/accept
 mkdir -p $SSHVAR/impose
@@ -146,6 +146,7 @@ _ssh_fetch(){ # Fetch remote auth key [user@host:port]
     _warn "Host $rhost${port:+:$port}"
     # Get files from remote
     cd $SSHVAR
+    ssh $sshopt $rhost "cat >> ~/.ssh/$ATH" < $PUB
     scp $sshopt $rhost:.ssh/$ATH .
     scp $sshopt $rhost:.ssh/$INV .
     [ -s $ATH ] && mv $ATH $ATH.$rhost
