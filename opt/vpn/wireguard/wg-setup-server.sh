@@ -53,8 +53,8 @@ prcfg(){
     listcl
 }
 # Main
-mkdir -p ~/.var/wg/client
 mkdir -p -m 700 ~/.wg
+mkdir -p ~/.wg/client
 cd ~/.wg
 _usage
 prcfg

@@ -55,8 +55,8 @@ prcfg(){
     echo "AllowedIPs = 0.0.0.0/0"
 }
 # Main
-mkdir -p ~/.var/wg/client
 mkdir -p -m 700 ~/.wg
+mkdir -p ~/.wg/client
 cd ~/.wg/client
 _usage - "[client#(1-253)]" {1..253}
 num=${1:-1}
