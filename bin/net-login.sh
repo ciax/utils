@@ -26,7 +26,7 @@ decrypt_pw(){
 by_config(){
     local sshlist=$(egrep -A2 "^Host $id$" ~/.ssh/config)
     [ "$sshlist" ] || return
-    [[ $sshlist =~ Proxy ]] && return
+#    [[ $sshlist =~ Proxy ]] && return
     _warn "Found in sshconfig"
     while read a b
     do
