@@ -45,15 +45,17 @@ order by subnet.network,
 ;
 EOF
 )
-# FDQN alias
+echo "# FDQN alias"
 while read id fdqn; do
+    [ "$fdqn" ] || continue
     ip=$(host $fdqn)
     ip=$(echo ${ip##* }|egrep '^([0-9]+\.?){4}$') || continue
     echo -e "$ip\t$fdqn\t$id"
 done < <(db-exec 'select id,fdqn from ddns;')
-# Global IP
+echo "# Global IP"
 txt=~/etc/global.*.txt
 [ "$(eval echo $txt)" ] && cut -d ' ' -f 1,2 $txt
+echo "# Global IPv6"
 # Global IPv6 : add '-6' to hostname
 txt=~/etc/ipv6.*.txt
 [ "$(eval echo $txt)" ] && sed -e 's/$/-6/' $txt 
