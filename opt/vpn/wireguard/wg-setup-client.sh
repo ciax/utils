@@ -69,6 +69,6 @@ mkdir -p -m 700 ~/.wg
 mkdir -p ~/.wg/client
 cd ~/.wg
 servers="$*"
-list_peer="$(ls ~/cfg.*/etc/wg0.*.peer|grep -v $HOSTNAME|cut -d. -f3|sort -u)"
+list_peer="$(ls ~/cfg.*/etc/wg_peer.*.txt|grep -v $HOSTNAME|cut -d. -f3|sort -u)"
 _usage "[servers]" $list_peer
 prcfg $servers
