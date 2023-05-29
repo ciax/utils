@@ -9,7 +9,7 @@
 #  Client: 10.0.(server subnet).n (n=1..253)
 . func.getpar
 # Options
-opt-s(){ # Write to /etc
+xopt-s(){ # Write to /etc
     prcfg | text-update
 }
 # Subroutines
@@ -58,4 +58,3 @@ mkdir -p ~/.wg/client
 cd ~/.wg
 _usage
 prcfg
-_exe_opt
