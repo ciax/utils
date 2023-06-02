@@ -40,3 +40,6 @@
 # Samba(3.0) Setting
 User register: pdbedit -a %U
 Config: read only = no
+
+# Apache User Dir Export
+ $HOME parmittion should be at least 711 (700 is NG)
