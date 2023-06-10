@@ -26,16 +26,14 @@ echo "127.0.0.1       localhost.localdomain   localhost"
 IFS='|'
 while read a b c sub ip host domain another; do
     [ "$ip" ] || continue
-    echo -en "$a.$b.$(($c+$sub)).$ip\t$host.$domain\t$host"
-    [ "$another" -a "$host" != "$another" ] && echo -e "\t$another" || echo
+    echo -e "$a.$b.$(($c+$sub)).$ip\t$host.$domain\t$host"
 done < <(
     db-exec <<EOF
 select
-    replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name,ssh.id
+    replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name
 from host
     inner join subnet on host.subnet=subnet.id
     inner join domain on subnet.domain=domain.id
-    left outer join ssh on host.id=ssh.host
 where
     $where
 order by subnet.network,
