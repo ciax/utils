@@ -1,6 +1,6 @@
 #!/bin/bash
 # Required scripts: func.getpar
-# Description: Print crontab setting for cfg.*/etc/cron.period.$HOSTNAME
+# Description: Print crontab setting for cfg.*/etc/cron.(interval).$HOSTNAME
 #              Option (-t) gives two minutes later crontab for testing.
 # Usage: cron-setup (-t) [hourly|daily|weekly]
 . func.getpar
@@ -16,7 +16,7 @@ if [ -e ~/bin/cron-reboot ]; then
     echo "@reboot $HOME/bin/cron-reboot" >> $crontab
 fi
 for per in hourly daily weekly $1; do
-    [ -e ~/bin/cron.$per ] || continue
+    [ -e ~/bin/cron.$per ] || [ -e ~/bin/cron.$per.$HOSTNAME ] || continue
     case $per in
         hourly);;
         daily) h=${df:-3};;

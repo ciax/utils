@@ -1,16 +1,19 @@
 #!/bin/bash
-# Description: execute scripts which is listed in cfg.*/etc/cron.period.$HOSTNAME
+# Description: execute scripts which is listed in bin/cron.(interval).$HOSTNAME
 [ "$1" ] || { echo "Usage: cron-exec [hourly|daily|weekly|etc.]"; exit; }
 per=$1
 PATH=~/bin:$PATH
-log=~/.var/log/cron.$per.log
+# Recording Environment
+log=~/.var/log/cron.env.log
 echo "###### $(date) ######">$log
 echo "## Set ##" >> $log
 set >> $log
 echo "## Env ##" >> $log
 env >> $log
-echo "## Exec ##" >> $log
-for n in $per $per.$HOSTNAME; do
-    type -t cron.$n >/dev/null 2>&1 || continue
-    cron.$n >> $log 2>&1
+# Recording Execution Log
+log=~/.var/log/cron.$per.log
+echo -e "\n\n###### $(date) ######">>$log
+for n in ~/bin/cron.$per ~/bin/cron.$per.$HOSTNAME; do
+    type -t $n >/dev/null 2>&1 || continue
+    $n >> $log 2>&1
 done
