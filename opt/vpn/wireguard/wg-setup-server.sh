@@ -44,7 +44,7 @@ listcl(){
     [ "$(echo wg0.*.peer)" ] &&  { cat wg0.*.peer| grep -v EndPoint; }
 }
 prcfg(){
-    ln -sf ~/cfg.*/etc/wg_peer.*.txt .
+    ln -sf ~/cfg.*/etc/wg_peer.$HOSTNAME.txt .
     . wg_peer.$HOSTNAME.txt
     rm wg_peer.$HOSTNAME.txt
     echo "#file /etc/wireguard/wg0.conf"
