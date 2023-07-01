@@ -6,16 +6,27 @@
 . func.getpar
 _usage "[file] (line) .."
 args=''
-for file;do
-    if [ -s "$file" ];then
-        [ -h "$file" ] && file=$(readlink $file)
-        cp -pub $file ~/.trash/
-        bkup-stash $file
+getfile(){
+    if [ -h "$1" ]; then
+	file=$(readlink $1)
+    else
+	file="$1"
     fi
+    cp -pub $file ~/.trash/
+    bkup-stash $file
+}
+
+for file;do
     if [[ "$file" =~ ^[0-9]+$ ]] ; then
         args="+$file $args"
-    else
-        args="$file $args"
+	continue
     fi
+    if [ -s "$file" ];then
+	getfile "$file"
+    elif res=$(type -P "$file"); then
+	getfile "$res"
+    fi
+    args="$file $args"
 done
+alias
 $(_setcmd edit-sudo "$EDITOR") $args
