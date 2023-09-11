@@ -8,7 +8,8 @@
 # Basic function
 mk_ssharg(){
     local sshopt="-o StrictHostKeyChecking=no -t"
-    local dst="${user:+$user@}$host"
+    local ip=$(info-host $host)
+    local dst="${user:+$user@}$ip"
     _warn "Found in DB [$dst]"
     [ "$port" ] && { sshopt="$sshopt -p $port"; dst="$dst"; }
     ssharg="$sshopt $dst"
