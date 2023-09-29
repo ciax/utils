@@ -30,6 +30,7 @@ site(){
     fi
 }
 
+_title 'Generationg ssh config'
 echo "#file $HOME/.ssh/config"
 for sid in $(db-list ssh);do
     (site $sid)

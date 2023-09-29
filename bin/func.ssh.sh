@@ -10,6 +10,7 @@ PUB=~/.ssh/id_rsa.pub
 CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
 LINV=~/.ssh/$INV
+ETC=~/etc/ssh
 SSHVAR=~/.var/cache/ssh
 ME=$USER@$(hostname)
 ### For remote operation ###
@@ -119,6 +120,7 @@ _ssh_setup(){ # Setup ssh
     [ -e $PUB ] || ssh-keygen -y -f $SEC > $PUB
     [ -e $LINV ] || touch $LINV
     [ -e $LATH ] || cp $PUB $LATH
+    [ -e $ETC ] && cp $PUB $ETC/$USER.$HOSTNAME.pub
     grep -q "$(< $PUB)" $LATH || grep . $PUB >> $LATH
 }
 
