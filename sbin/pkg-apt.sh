@@ -10,6 +10,9 @@
 which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
 case "$cmd" in
+    attach) #attach screen to the background pkg process 
+	_sudy screen -D -R
+	;;
     init) #install required packages
         _sudy -i apt-get install -y $(list-required packages)
         ;;
