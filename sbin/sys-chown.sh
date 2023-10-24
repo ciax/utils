@@ -6,8 +6,11 @@
 _warn "Uniform The Owner"
 for dir in ${*:-.}; do
     [ -d "$dir" ] || continue
+    pwd=$(cd $dir;pwd -P)
+    # Avoid to change perm in system dir
+    [[ $pwd =~ ^/(usr)*/sbin ]] && continue
     ug=$(stat -c "%U:%G" $dir)
-    echo "`cd $dir;pwd -P`($ug)"
+    echo "$pwd($ug)"
     _sudy chown -R $ug $dir
 done
 
