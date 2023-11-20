@@ -1,5 +1,5 @@
 #!/bin/bash
-# Required packages: host
+# Required packages: bind9-host
 # Required scripts: func.getpar db-list db-exec
 # Required tables: host(host_ip),domain(name),subnet(network)
 # Description: generate hosts file
