@@ -8,4 +8,5 @@
 _title "Initializing SSH"
 [ "$1" = -r ] && rm -f $SEC $PUB
 _ssh_setup
+ssh-reg
 ssh-config > $CFG
