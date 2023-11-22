@@ -25,4 +25,5 @@ pkg(){
     file-register ~/utils/sbin
     unset pkg
 }
-echo "You need [pkg init] and [db-update -f]"
+db-update -f
+echo "You need [pkg init]"
