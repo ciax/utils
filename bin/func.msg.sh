@@ -52,12 +52,12 @@ _chkfunc(){ # Show function list in self file
     local self="${0##*/}" i v
     echo $self
     # If this is symlinked to func name without '_', executed as func
-    if [[ $(type _$self 2>&1) =~ function ]] ; then
+    if [[ $(type -t _$self 2>&1) =~ function ]] ; then
         _$self $*
     else
         INDENT=$'\t'
         local cmd="$1";shift
-        if [[ $(type "_$cmd" 2>&1) =~ function ]] ; then
+        if [[ $(type -t "_$cmd" 2>&1) =~ function ]] ; then
             _$cmd $*
         else
             # function list
