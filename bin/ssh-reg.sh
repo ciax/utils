@@ -12,3 +12,7 @@ cd ~/etc/ssh || exit
 cp $PUB $USER.$HOSTNAME.pub
 git add .
 git commit -m "Update: ssh pubkey;" && git push
+# Additional
+egrep -h '^ssh-rsa ' *.pub >> $LATH
+_ssh_auth_trim
+cut -d' ' -f 1,2 $LATH > $LATH.pub
