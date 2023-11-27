@@ -2,6 +2,7 @@
 # Required scripts: ac.getpar db-exec net-name db-trace
 # Required tables: ssh(host,user,auth,port,proxy)
 # Description: generate ~/.ssh/config
+#   For multiple forwarding on gsheet cell: "port adr:port,port adr:prt,..."
 . func.getpar
 # Set to $HOME/.ssh
 xopt-s(){ #Write to ~/.ssh/config
@@ -25,7 +26,9 @@ site(){
     echo -e "\tUser $user"
     [ "$port" ] && echo -e "\tPort $port"
     if [ "$forward" ]; then
-        echo -e "\tLocalForward $forward"
+	fw="\tLocalForward "
+	echo -en "$fw"
+	echo "$forward" | sed -e "s/,/\n$fw/g"
         echo -e "\tGatewayPorts yes"
     fi
 }
