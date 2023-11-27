@@ -31,6 +31,7 @@ site(){
 	echo "$forward" | sed -e "s/,/\n$fw/g"
         echo -e "\tGatewayPorts yes"
     fi
+    echo
 }
 
 _title 'Generationg ssh config'
