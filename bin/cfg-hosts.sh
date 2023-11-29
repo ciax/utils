@@ -12,37 +12,40 @@ opt-a(){ #Show all list
 xopt-s(){ #Write to /etc/hosts
     $0 | text-update
 }
-_usage "(subnet)" $(db-list subnet)
-_exe_opt
-[ "$where" ] || {
+query(){
+    db-exec <<-EOF
+    select
+      replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name
+    from host
+      inner join subnet on host.subnet=subnet.id
+      inner join domain on subnet.domain=domain.id
+   where
+     $1
+   order by subnet.network,
+     subnet.sub_ip,
+     length(host.host_ip),
+     host.host_ip
+   ;
+	EOF
+}
+restrict(){
     for net in ${1:-$(net-name)}; do
         subnet="$subnet and host.subnet != '$net'"
     done
     where="host.resolv == 'hosts' or (host.resolv =='dns'$subnet)"
 }
+_usage "(subnet)" $(db-list subnet)
+_exe_opt
+[ "$where" ] || restrict
 echo "#file /etc/hosts"
 echo "127.0.1.1       $(hostname)"
 echo "127.0.0.1       localhost.localdomain   localhost"
 IFS='|'
 while read a b c sub ip host domain another; do
     [ "$ip" ] || continue
-    echo -e "$a.$b.$(($c+$sub)).$ip\t$host.$domain\t$host"
-done < <(
-    db-exec <<EOF
-select
-    replace(subnet.network,'.','|'),subnet.sub_ip,host.host_ip,host.id,domain.name
-from host
-    inner join subnet on host.subnet=subnet.id
-    inner join domain on subnet.domain=domain.id
-where
-    $where
-order by subnet.network,
-      subnet.sub_ip,
-      length(host.host_ip),
-      host.host_ip
-;
-EOF
-)
+    echo -e "$a.$b.$(($c+${sub:-0})).$ip\t$host.$domain\t$host"
+done < <(query "$where")
+
 echo "# FDQN alias"
 while read id fdqn; do
     [ "$fdqn" ] || continue
