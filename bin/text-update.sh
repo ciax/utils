@@ -7,7 +7,7 @@ _usage "<input>"
 _temp srcfile
 while read line; do
     if [[ $line =~ ^#file ]] ; then
-        dstfile=${line#* }
+        dstfile=$(eval echo ${line#* })
     else
         echo "$line" >> $srcfile
     fi
