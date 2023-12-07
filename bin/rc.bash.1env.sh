@@ -8,7 +8,6 @@ addpath(){
 }
 # Description: setenv for login
 umask 022
-complete -r
 # Set environment for login
 # Remove duplicated env var
 addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin}
