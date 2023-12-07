@@ -1,6 +1,6 @@
 #!/bin/bash
 shopt -s nullglob
-# Recommended packages(Debian): byobu ranger most rclone
+# Recommended packages(Debian): byobu ranger most rclone bash-completion
 # Boot strap
 for i in ~/bin/rc.bash.*;do . $i;done
 uniqenv PATH RUBYLIB

@@ -2,7 +2,7 @@
 # Required commands: sed
 # Required scripts: func.getpar
 # Description: show required something in comments
-# Format: "# Required [type]s: item1 item2 ...
+# Format: "# Required(Recommended) [type]s: item1 item2 ...
 #alias req
 . func.getpar
 _usage "[type]" $( egrep -oh "^# *Required [^:(]+" ~/bin/* | cut -d' ' -f 3 | sort -u)
