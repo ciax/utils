@@ -3,7 +3,7 @@
 [ "$1" ] || { echo "Usage: cron-exec [hourly|daily|weekly|etc.]"; exit; }
 per=$1
 PATH=~/bin:$PATH
-source ~/.bashrc
+source ~/bin/rc.bash
 # Recording Environment
 log=~/.var/log/cron.env.log
 echo "###### $(date) ######">$log
