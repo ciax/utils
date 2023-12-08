@@ -28,3 +28,5 @@ chkcmd emacs && export EDITOR='emacs -nw'
 chkcmd most && export PAGER='most'
 chkcmd emacs && export MOST_EDITOR='emacs %s -g %d'
 chkcmd less && export LESSCHARSET=utf-8
+export VISUAL=$PAGER # For ranger
+export GIT_EDITOR=$EDITOR # For Git
