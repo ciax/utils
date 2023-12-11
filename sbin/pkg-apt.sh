@@ -9,7 +9,8 @@
 # _sudy accepts $PASSWORD authentification
 which apt-get >/dev/null || _abort "This might not Debian"
 cmd="$1";shift
-temp=~/.var/temp
+err=~/.var/apt.err
+gpg=~/.var/temp.gpg
 case "$cmd" in
     attach) #attach screen to the background pkg process 
 	_sudy screen -D -R
@@ -22,14 +23,16 @@ case "$cmd" in
         _sudy -i apt-get remove -y --purge `deborphan` `dpkg --get-selections '*'|grep deinstall|cut -f1`
         ;;
     upd) #update db
-        _sudy -i apt-get update 2> $temp
+        _sudy -i apt-get update 2> $err
 	# in case of PGP error
-	if [ -s $temp ]; then
-	    set - $(egrep -o 'GPG.+' $temp | cut -d: -f3,5|cut -d' ' -f2,5)
-	    gpg --export $2 > $temp
-	    _sudy -i mv $temp /etc/apt/trusted.gpg.d/$1.gpg
-	else
-	    rm $temp
+	if [ -s $err ]; then
+	    cd /etc/apt/trusted.gpg.d/
+	    while read dist key; do
+		echo "$dist,$key"
+		gpg --keyserver keyserver.ubuntu.com --recv-keys $key && gpg --export $key > $gpg
+		_sudy -i mv $gpg $dist.gpg
+	    done < <(egrep -o 'GPG.+' $err | cut -d: -f3,5|cut -d' ' -f2,5| tr -d '/')
+	    sys-chown
 	fi
         ;;
     upg) #upgrade packages
@@ -57,7 +60,7 @@ case "$cmd" in
 	;;
     gpg) #set gpg for sources
         _usage "[$cmd] [key]"
-        gpg --keyserver keyserver.ubuntu.com --recv-keys $1 && gpg --armor --export $1| _sudy -i apt-key add -
+        gpg --keyserver keyserver.ubuntu.com --recv-keys $1 && gpg --armor --export $1
 	;;
     *)
         . info-apt $cmd $*
