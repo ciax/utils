@@ -5,4 +5,5 @@
    %sudo ALL=(ALL:ALL) NOPASSWD:ALL
  3. /etc/group
    add username to sudo group with comma separator
- 4. Install ssh,git,coreutils
+ 4. Re-login
+ 5. Install ssh,git,coreutils
