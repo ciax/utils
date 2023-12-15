@@ -9,7 +9,6 @@ unalias -a
 alias update='git-pullall;db-update'
 alias updev='dl-db device;cfg-hosts -s;ssh-config -s'
 alias updb='git-pullall;dl-db device;cfg-hosts -s;ssh-config -s'
-alias m='most'
 alias mroe='more'
 alias ls='ls -AF --color'
 alias grep='grep --color=auto'

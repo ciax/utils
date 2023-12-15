@@ -25,8 +25,9 @@ export VERSION_CONTROL=t
 
 # Editor Setting
 chkcmd emacs && export EDITOR='emacs -nw'
-chkcmd most && export PAGER='most'
+chkcmd most && export PAGER='most' || export PAGER='vim -M'
 chkcmd emacs && export MOST_EDITOR='emacs %s -g %d'
 chkcmd less && export LESSCHARSET=utf-8
 export VISUAL='vim' # For ranger
 export GIT_EDITOR=$EDITOR # For Git
+alias m=$PAGER
