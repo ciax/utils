@@ -222,10 +222,10 @@ _ssh_validate(){ # Check remote availability [site]
             -o "StrictHostKeyChecking=no"\
             $i :
         then
-            echo -n '*' 1>&2
+            _progress '*'
             echo $i
         else
-            echo -n '.' 1>&2
+            _progress
         fi
     done
     echo  1>&2

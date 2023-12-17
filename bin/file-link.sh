@@ -12,7 +12,7 @@ _temp linklist
 _msg '  grep cfg.*, utils for link'
 egrep -H "^[#;] *link(\((.+,)*($DIST|$HOSTNAME)(,.+)*\)|) " ${*:-~/bin/*} $*|sort -u > $linklist
 while read spath dst;do
-    echo -n '.'
+    _progress
     src=$(realpath ${spath%:*})
     if [[ $src =~ \.(sh|pl|py|rb|awk|exp|js)$ ]]; then
         dst=~/bin/$(basename $dst)

@@ -46,6 +46,9 @@ _item(){ # Show Items [caption,description,caption-length]
 _verbose(){ # Show msg when func name is set to VER
     [ "$VER" ] && [[ "${FUNCNAME[*]}" =~ $VER ]] && _msg "$*"
 }
+_progress(){ # Show progress bar
+    echo -n "${1:-.}" 1>&2
+}
 _chkfunc(){ # Show function list in self file
     # Execute last one
     _chkown || return

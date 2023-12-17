@@ -5,5 +5,6 @@
 shopt -s nullglob
 date
 for i in $0.*;do
-    source $i
+   echo "$i"
+   source $i
 done
