@@ -24,10 +24,18 @@ export DIST=${i#*/}
 export VERSION_CONTROL=t
 
 # Editor Setting
-chkcmd emacs && export EDITOR='emacs -nw'
-chkcmd most && export PAGER='most' || export PAGER='vim -M'
-chkcmd emacs && export MOST_EDITOR='emacs %s -g %d'
 chkcmd less && export LESSCHARSET=utf-8
-export VISUAL='vim' # For ranger
+if chkcmd emacs; then
+    export EDITOR='emacs -nw'
+    export MOST_EDITOR='emacs %s -g %d'
+fi
+if chkcmd most; then
+    export PAGER='most'
+elif chkcmd vim; then
+    export PAGER='vim -M'
+    export VISUAL='vim' # For ranger
+else
+    export PAGER='more'
+fi
 export GIT_EDITOR=$EDITOR # For Git
 alias m=$PAGER
