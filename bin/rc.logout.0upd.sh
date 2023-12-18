@@ -2,5 +2,5 @@
 git-pushall
 db-update
 ssh-config -s
-hosts -s
+cfg-hosts -s
 file-register
