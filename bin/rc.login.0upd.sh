@@ -3,6 +3,6 @@
 git-pullall
 db-update
 file-register
-hosts -s
+cfg-hosts -s
 ssh-config -s
 
