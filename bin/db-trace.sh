@@ -30,7 +30,7 @@ traceback(){
     sql='select * '$sql';'
     while read key eq val; do
         [ "$val" ] && echo "$key='$val'"
-    done < <(db-exec -i "$sql")
+    done < <(db-exec -i "$sql") | tr -d $'\r'
 }
 _usage "[(id=)val | key=val,key=val..] [table1] (table2..)"
 traceback $*

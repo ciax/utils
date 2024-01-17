@@ -15,7 +15,7 @@ site(){
     [ "$password" -a ! "$proxy" ] && return
     eval "$(db-trace $host host)"
     echo "Host $1"
-    [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $proxy"
+    [ "$proxy" ] && echo -e "\tProxyCommand ssh -W %h:%p $(search-ip $proxy)"
     if [ "$resolv" = "ddns" ]; then
         eval "$(db-trace $host ddns)"
         name=${fdqn:-$ip}
