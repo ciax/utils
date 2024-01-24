@@ -12,7 +12,7 @@ do
     then
         cidr=$h
     fi
-done < <(ip route)
+done < <(ip route|grep -v 169.254)
 echo "time=$(date +%F_%R)"
 eval $(ifconfig $netif|egrep -v 'link'|sed -e 's/  /\n/g'|egrep '^(i|n|br|ether)'|tr ' ' =)
 echo "netif=$netif"
