@@ -27,12 +27,12 @@ split_sheet(){
 }
 retrive(){
     while read line;do
-        sheet="${line%|*}"
-        gid="${line#*|}"
-        url="$site$key/export?format=tsv&id=$key&gid=$gid"
+        local sheet="${line%|*}"
+        local gid="${line#*|}"
+        local url="$site$key/export?format=tsv&gid=$gid"
         _title "Retriving $C1$sheet"
         _msg "($url)"
-        wget -q --progress=dot -O $dlfile "$url" || continue
+        wget -q --progress=dot -O $dlfile "$url" || { _alert "Failed to retrive $sheet"; continue; }
         grep "'" $dlfile && { _alert "Field includes apostrophe -> reject"; continue; }
         nkf -d --in-place $dlfile
         split_sheet $sheet

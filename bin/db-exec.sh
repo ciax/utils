@@ -12,4 +12,4 @@ _usage "(statement)"
 _exe_opt
 [[ "$VER" == *sql* ]] && opt+=" -echo"
 db=~/.var/cache/db-device.sq3
-sqlite3 $opt $db ${1:+"$1"}
+sqlite3 $opt $db ${1:+"$1"} | tr -d $'\r'
