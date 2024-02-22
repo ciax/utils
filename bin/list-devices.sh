@@ -12,7 +12,7 @@ select
     mac.id,
     category.description,
     mfr.description,
-    model."p/n",
+    model."p_n",
     location.description,
     host.description
 from host
