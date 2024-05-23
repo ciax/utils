@@ -9,6 +9,14 @@ xopt-s(){ #Write to ~/.ssh/config
     $0 | text-update
 }
 _usage
+forward(){
+    local IFS=:
+    set - $1
+    case $1 in
+	L) echo -e "\tLocalForward $2 $3:$4";;
+	R) echo -e "\tRemoteForward $2 $3:$4";;
+    esac
+}
 site(){
     eval "$(db-trace $1 ssh)"
     eval "$(db-trace $auth auth)"
@@ -26,9 +34,10 @@ site(){
     echo -e "\tUser $user"
     [ "$port" ] && echo -e "\tPort $port"
     if [ "$forward" ]; then
-	fw="\tLocalForward "
-	echo -en "$fw"
-	echo "$forward" | sed -e "s/,/\n$fw/g"
+	local IFS=,
+	for i in $forward; do
+	    forward $i
+	done
         echo -e "\tGatewayPorts yes"
     fi
     echo
