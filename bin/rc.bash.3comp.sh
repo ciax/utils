@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-pushd ~/bin
-for i in *; do
-    read a < <(egrep -o '^ +[a-z]+\) *#' $i|tr -d ")#\n")
-    [ "$a" ] && complete -W "$a" $i
-done
-popd
+set_comp(){
+    cd ~/bin
+    declare -A cmp
+    while read a b c; do
+	cmp[$a]="${cmp[$a]} $b"
+    done < <(egrep -o '^ +[a-z]+\) *#' *|tr -d ")#:" )
+    for i in ${!cmp[@]}; do
+	complete -W "${cmp[$i]}" $i
+    done
+    cd
+}
+set_comp
