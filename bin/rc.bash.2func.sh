@@ -9,10 +9,10 @@ self_alias(){
         dup=$($al $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
         eval $cmd && echo -n " $name"
     done < <(cd ~/bin; ( grep '^# *alias' * ; grep -h '(){ *# *alias' *) |tr '(){:#' ' ')
-    # An alias with "-e" appended to its own name to provide editing functionality
+    # An alias with "," appended to its own name to provide editing functionality
     pushd ~/bin
     for i in * ;do
-	alias $i-e="text-editor $i"
+	alias $i,="text-editor $i"
     done
     popd
     echo
