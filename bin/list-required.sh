@@ -2,7 +2,8 @@
 # Required commands: sed
 # Required scripts: func.getpar
 # Description: show required something in comments
-# Format: "# Required(Recommended) [type]s: item1 item2 ...
+# Format: "# Required(Dist,Dist,...) [type]s: item1 item2 ...
+#   Item lists are restricted to the distributions in brackets that follow behind.
 #alias req
 . func.getpar
 _usage "[type]" $( egrep -oh "^# *Required [^:(]+" ~/bin/* | cut -d' ' -f 3 | sort -u)
