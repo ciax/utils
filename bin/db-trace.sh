@@ -9,9 +9,10 @@
 cond(){
     for i
     do
-        if [[ $i =~ = ]];then
-            set - "${i//=/ }"
-            echo -n "${con}($1 is null or $1 == '$2')"
+        if [[ $i =~ = ]]
+	then
+	    local a=${i%=*}
+            echo -n "${con}($a is null or $a == '${i#*=}')"
         else
             echo -n "${con}id == '$i'"
         fi
@@ -28,7 +29,8 @@ traceback(){
         sql="from $tbl where id == (select $tbl $sql)"
     done
     sql='select * '$sql';'
-    while read key eq val; do
+    while read key eq val
+    do
         [ "$val" ] && echo "$key='$val'"
     done < <(db-exec -i "$sql") | tr -d $'\r'
 }
