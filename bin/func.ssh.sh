@@ -5,7 +5,7 @@ type _setp >/dev/null 2>&1 && return
 . func.list
 ATH=authorized_keys
 INV=invalid_keys
-SEC=~/.ssh/id_rsa
+PRV=~/.ssh/id_rsa
 PUB=~/.ssh/id_rsa.pub
 CFG=~/.ssh/config
 LATH=~/.ssh/$ATH
@@ -116,8 +116,8 @@ _ssh_file_perm(){ # Set ssh related file permission
 }
 _ssh_setup(){ # Setup ssh
     type ssh > /dev/null || _abort "No ssh installed"
-    [ -e $SEC ] || ssh-keygen
-    [ -e $PUB ] || ssh-keygen -y -f $SEC > $PUB
+    [ -e $PRV ] || ssh-keygen
+    [ -e $PUB ] || ssh-keygen -y -f $PRV > $PUB
     [ -e $LINV ] || touch $LINV
     [ -e $LATH ] || cp $PUB $LATH
     [ -e $ETC ] && cp $PUB $ETC/$USER.$HOSTNAME.pub

@@ -6,7 +6,7 @@
 . func.getpar
 . func.ssh
 _title "Initializing SSH"
-[ "$1" = -r ] && rm -f $SEC $PUB
+[ "$1" = -r ] && rm -f $PRV $PUB
 _ssh_setup
 ssh-reg
 ssh-config > $CFG
