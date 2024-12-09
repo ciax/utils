@@ -31,9 +31,9 @@ if chkcmd emacs; then
 fi
 if chkcmd most; then
     export PAGER='most'
-elif chkcmd vim; then
-    export PAGER='vim -M'
-    export VISUAL='vim' # For ranger
+#elif chkcmd vim; then
+#    export PAGER='vim -M'
+#    export VISUAL='vim' # For ranger
 else
     export PAGER='more'
 fi
