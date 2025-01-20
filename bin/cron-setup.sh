@@ -1,11 +1,13 @@
 #!/bin/bash
 # Required scripts: func.getpar
 # Description: Print crontab setting for cfg.*/etc/cron.(interval).$HOSTNAME
-#              Option (-t) gives two minutes later crontab for testing.
+#              Option (-t) gives one minutes later crontab for testing.
 # Usage: cron-setup (-t) [hourly|daily|weekly]
+# Specific schedule can be described in the cron file
+#   Format: #crontab:0 0 0 0 0
 . func.getpar
 opt-t(){ # Test mode (exec two munites later)
-    m=$(( $(date +%M) + 2 ))
+    m=$(( $(date +%M) + 1 ))
     df='*'
 }
 list=""
@@ -17,13 +19,14 @@ if [ -e ~/bin/cron-reboot ]; then
 fi
 for per in hourly daily weekly $1; do
     [ -e ~/bin/cron.$per ] || [ -e ~/bin/cron.$per.$HOSTNAME ] || continue
+    sch="$(grep crontab ~/bin/cron.$per*|cut -d: -f2)"
     case $per in
-        hourly);;
-        daily) h=${df:-3};;
-        weekly) h=${df:-4};w=${df:-0};;
-        *);;
+        hourly) def="$m * * * *";;
+        daily) def="$m 3 * * *";;
+        weekly) def="$m 4 * * 0";;
+        *) def="* * * * *";;
     esac
-    echo "$m ${h:-*} * * ${w:-*} $HOME/bin/cron-exec $per" >> $crontab
+    echo "${sch:-$def} $HOME/bin/cron-exec $per" >> $crontab
 done
 [ -s $crontab ] || exit
 echo 'MAILTO=""'
