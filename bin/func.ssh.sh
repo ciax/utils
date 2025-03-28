@@ -60,7 +60,7 @@ _ssh_auth_to_invalid(){ # Register marked line in [authorized_keys] to [invalid_
         while read line;do
             md5sum <<< ${line#*#} | cut -c-32
         done >> $tinv
-    sort -u $tinv | _overwrite $inv 
+    [ -s $tinv ] && sort -u $tinv | _overwrite $inv 
     grep -v "^#" $ath | _overwrite $ath && _comp "authorized_keys was updated (rm marked line)"
 }
 #link ssh_auth_by_invalid
