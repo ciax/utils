@@ -5,8 +5,12 @@ self_alias(){
     local head name par
     echo -n "Setting alias:"
     while read head al name par; do
-        cmd="$al $name='$head${par:+ $par}'"
-        dup=$($al $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
+	if [[ "$par" =~ '$0' ]]; then
+	    cmd="$al $name='${par//\$0/$head}'"
+	else
+	    cmd="$al $name='$head${par:+ $par}'"
+	fi
+	dup=$($al $name > /dev/null 2>&1) || [ "$dup" == "$cmd" ] && continue
         eval $cmd && echo -n " $name"
     done < <(cd ~/bin; ( grep '^# *alias' * ; grep -h '(){ *# *alias' *) |tr '(){:#' ' ')
     # An alias with "," appended to its own name to provide editing functionality
