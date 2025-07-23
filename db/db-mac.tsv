@@ -1,1 +1,1 @@
-!id	*device	if	*hub	port	*host	active	description	firstday	!subnet
+!id	*device	if	*hub	port	*host	status	description	firstday	!subnet
