@@ -15,7 +15,7 @@ xopt-l(){ # list tables
     _sudy iptables -t nat -L PREROUTING -n -v
     _sudy iptables -t nat -L POSTROUTING -n -v
 }
-_usage "[ip] [port]  (localport)"
+_usage "[ip] (port)  (localport)"
 
 prexe(){
     echo "$*"
