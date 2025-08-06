@@ -22,4 +22,4 @@ _exe_opt
 IFS='|'
 while read a b others; do
     echo -e "$a.$b"
-done < <(query "$1")
+done < <(query "$1")|grep .
