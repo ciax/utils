@@ -12,13 +12,22 @@ xopt-c(){ # clear setting
     _sudy iptables -t nat -F
 }
 xopt-l(){ # list tables
-    _sudy iptables -t nat -vL
+    _sudy iptables -t nat -L PREROUTING -n -v
+    _sudy iptables -t nat -L POSTROUTING -n -v
 }
-_usage "[port] [dstip] (dstport)"
+_usage "[ip] [port]  (localport)"
 
-pf1="iptables -t nat -A PREROUTING -i eth0 -p tcp --dport $1 -j DNAT --to-destination $2:${3:-$1}"
+prexe(){
+    echo "$*"
+    _sudy "$*"
+}
+
+ip=$(info-host $1)
+ip=${ip:-$1}
+lp=$2
+dp=${3:-$lp}
+
+pf1="iptables -t nat -A PREROUTING -i eth0 -p tcp --dport $lp -j DNAT --to-destination $ip:$dp"
 pf2="iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
 
-_sudy $pf1
-_sudy $pf2
-_sudy iptables -t nat -L
+prexe $pf1 && prexe $pf2 && xopt-l
