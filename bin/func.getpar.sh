@@ -92,7 +92,7 @@ _caseitem(){ # List of case desctiption
         [[ "$line" =~ '#' ]] && echo ",${line#*#}" || echo
     done
 }
-# Usage: _usage (-) [par_txt] (arg list)
+# Usage: _usage (-) "[par_txt] [*] <*> ..." "(arg list)"
 # Description
 #   1. Execute xopt-?() and exit as an exclusive function if exist.
 #   2. Check the single options that provided as opt-?() or xopt-?() functions.
