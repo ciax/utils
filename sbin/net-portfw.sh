@@ -24,7 +24,7 @@ prexe(){
 
 ip=$(info-host $1)
 ip=${ip:-$1}
-lp=$2
+lp=${2:-80}
 dp=${3:-$lp}
 
 pf1="iptables -t nat -A PREROUTING -i eth0 -p tcp --dport $lp -j DNAT --to-destination $ip:$dp"
