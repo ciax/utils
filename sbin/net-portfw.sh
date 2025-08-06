@@ -22,6 +22,10 @@ prexe(){
     _sudy "$*"
 }
 
+ip_fwd(){
+    grep -q 1 /proc/sys/net/ipv4/ip_forward || _sudy sysctl -w net.ipv4.ip_forward=1
+}
+
 lp=$2
 set - ${1//:/ }
 sip=$(info-host $1||echo $1)
@@ -31,5 +35,5 @@ lp=${lp:-$dp}
 pf1="iptables -t nat -A PREROUTING -i eth0 -p tcp --dport $lp -j DNAT --to-destination $sip:$dp"
 pf2="iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
 
-prexe $pf1 && prexe $pf2 && xopt-l
-grep -q 1 /proc/sys/net/ipv4/ip_forward || sudo sysctl -w net.ipv4.ip_forward=1
+prexe $pf1 && prexe $pf2 && ip_fwd && xopt-l
+
