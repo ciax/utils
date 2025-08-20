@@ -1,5 +1,5 @@
 #!/bin/bash
-#alias nat
+#alias vpnat
 # Required scripts: func.getpar
 # Description: setting nat table
 . func.getpar
