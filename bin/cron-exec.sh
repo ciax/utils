@@ -1,6 +1,6 @@
 #!/bin/bash
 # Description: execute scripts which is listed in bin/cron.(interval).$HOSTNAME
-[ "$1" ] || { echo "Usage: cron-exec [hourly|daily|weekly|etc.]"; exit; }
+[ "$1" ] || { echo "Usage: cron-exec [hourly|daily|weekly|reboot|etc.]"; exit; }
 per=$1
 PATH=~/bin:$PATH
 source ~/bin/rc.bash

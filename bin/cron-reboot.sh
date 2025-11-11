@@ -13,3 +13,4 @@ info-net | tee $file >> $log
 git add $file
 git commit $file -m "Network interface was updated.($HOSTNAME)"
 git push
+cron-exec reboot
