@@ -19,7 +19,7 @@ if [ -e ~/bin/cron-reboot ]; then
 fi
 for per in hourly daily weekly $1; do
     [ -e ~/bin/cron.$per ] || [ -e ~/bin/cron.$per.$HOSTNAME ] || continue
-    sch="$(grep crontab ~/bin/cron.$per*|cut -d: -f2)"
+    sch="$(grep crontab ~/bin/cron.$per*|cut -d: -f3)"
     case $per in
         hourly) def="$m * * * *";;
         daily) def="$m 3 * * *";;
