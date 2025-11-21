@@ -19,10 +19,11 @@ if [ -e ~/bin/cron-reboot ]; then
 fi
 for per in hourly daily weekly $1; do
     [ -e ~/bin/cron.$per ] || [ -e ~/bin/cron.$per.$HOSTNAME ] || continue
+    #Override schedule by comment in the file
     sch="$(grep crontab ~/bin/cron.$per*|cut -d: -f3)"
     case $per in
         hourly) def="$m * * * *";;
-        daily) def="$m 3 * * *";;
+        daily) def="$m 17 * * *";;
         weekly) def="$m 4 * * 0";;
         *) def="* * * * *";;
     esac
