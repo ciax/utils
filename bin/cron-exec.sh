@@ -12,9 +12,10 @@ set >> $log
 echo "## Env ##" >> $log
 env >> $log
 # Recording Execution Log
-log=~/.var/log/cron.$per.log
-echo -e "\n\n###### $(date) ######">>$log
+log=~/.var/log/cron.$per
+cat $log.log >> $log.$(date +%Y).log
+echo -e "\n\n###### $(date) ######">$log.log
 for n in ~/bin/cron.$per ~/bin/cron.$per.$HOSTNAME; do
     type -t $n >/dev/null 2>&1 || continue
-    $n >> $log 2>&1
+    $n >> $log.log 2>&1
 done
