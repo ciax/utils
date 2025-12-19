@@ -24,7 +24,7 @@ for per in hourly daily weekly $1; do
     case $per in
         hourly) def="$m * * * *";;
         daily) def="$m 17 * * *";;
-        weekly) def="$m 5 * * 0";;
+        weekly) def="$m 5 * * 1";;
         *) def="* * * * *";;
     esac
     echo "${sch:-$def} $HOME/bin/cron-exec $per" >> $crontab
