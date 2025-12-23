@@ -10,7 +10,7 @@ opt-a(){ #Show all list
     where="host.host_ip != ''"
 }
 xopt-s(){ #Write to /etc/hosts
-    $0 | text-update
+    $0 | tee ~/etc/hosts | text-update
 }
 query(){
     db-exec <<-EOF
