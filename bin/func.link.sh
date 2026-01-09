@@ -66,10 +66,17 @@ _linkbin(){ # Scripts register to ~/bin
     [ -d "$1" -o ! -e "$1" -o -h "$1" -o ! -x "$1" ] && return
     _mklink "$(pwd -P)/$1" "$HOME/bin/${1%.*}"
 }
-_setup_link(){ # Scripts register to ~/bin
+_setup_link(){ # Scripts register to ~/bin, Html register to ~/public_html
     local i
     for i in *.sh *.pl *.py *.rb *.awk *.exp *.js; do
         _linkbin $i
     done
+    for i in *.html; do
+	_linkhtml $i
+    done
+}
+_linkhtml(){ # Html register to ~/public_html
+    [ -d "$1" -o -h "$1" ] && return
+    _mklink "$(pwd -P)/$1" "$HOME/public_html/$1"
 }
 _chkfunc $*
