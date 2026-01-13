@@ -60,4 +60,4 @@ Copyright (c) 2014 Koji Omata (MIT License)
  Separated by '_': For use only with renamed symbolic links as a delimiter.
    - Parameter list
    - Bash function name
- 
+   - Python script name 
