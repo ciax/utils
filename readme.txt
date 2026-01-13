@@ -56,5 +56,6 @@ Copyright (c) 2014 Koji Omata (MIT License)
  #file /*/*/filename         <--- file name for generated text
 
 ### Command file name
- Separated by '-': For a hierarchical classification
- Separated by '_': For a delimiter of parameters
+ Separated by '-': Delimiter for a hierarchical classification
+ Separated by '_': For use only with renamed symbolic links. (Parameter or word delimiter)
+ 
