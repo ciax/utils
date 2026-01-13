@@ -54,3 +54,7 @@ Copyright (c) 2014 Koji Omata (MIT License)
 
 ### Comment in generated text
  #file /*/*/filename         <--- file name for generated text
+
+### Command file name
+ Separated by '-': For a hierarchical classification
+ Separated by '_': For a delimiter of parameters

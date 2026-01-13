@@ -4,7 +4,7 @@
 . file-clean
 . func.link
 _title "File SymLink to ~/bin"
-for i in ${*:-~/utils/bin};do
+for i in ${*:-.};do
     if [ -d "$i" ]; then
         pushd $i >/dev/null
         _msg "  Registering ($PWD)"
