@@ -57,5 +57,7 @@ Copyright (c) 2014 Koji Omata (MIT License)
 
 ### Command file name
  Separated by '-': Delimiter for a hierarchical classification
- Separated by '_': For use only with renamed symbolic links. (Parameter or word delimiter)
+ Separated by '_': For use only with renamed symbolic links as a delimiter.
+   - Parameter list
+   - Bash function name
  
