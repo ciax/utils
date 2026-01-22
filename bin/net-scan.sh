@@ -28,8 +28,8 @@ settmp=~/.var/temp.txt
 _usage
 _exe_opt
 eval "$(info-net)"
-_msg "Scannig network ($cidr)"
-nmap -n -sn $opt $cidr > /dev/null 2>&1
+_msg "Scannig network ($subnet)"
+nmap -n -sn $opt $subnet > /dev/null 2>&1
 arp -n|grep ether | while read a b c d; do
     _view ${c^^} $a
 done | sort | tee $alist

@@ -109,9 +109,9 @@ show_rest(){
 opt-p(){ echo "Checking ";cmd="chk_host"; } #ping check
 xopt-l(){ #check local net
     eval $(info-net)
-    echo "NET=$cidr"
+    echo "NET=$subnet"
     echo "Checking "
-    exp="$(sudo nmap -n -sn $cidr | grep MAC | cut -d ' ' -f 3 | tr '\n' '|')"
+    exp="$(sudo nmap -n -sn $subnet | grep MAC | cut -d ' ' -f 3 | tr '\n' '|')"
     cmd="chk_mac"
     local mynet=$(net-name)
     IFS='|'

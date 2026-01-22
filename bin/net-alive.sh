@@ -39,7 +39,7 @@ xopt-l(){ # check local net
         else
             echo "$mac ($device)"
         fi
-    done < <(sudo nmap -n -sn $cidr | grep MAC | cut -d ' ' -f 3)
+    done < <(sudo nmap -n -sn $subnet | grep MAC | cut -d ' ' -f 3)
 }
 
 ### main ###
