@@ -51,7 +51,7 @@ alias_grep(){ #alias ag
 }
 # Grep env/var
 env_grep(){ #alias eg
-    (set;env)|egrep "^[-_a-zA-Z]+="|sort -u|grep -i ${1:-.}
+    env|egrep "^[-_a-zA-Z]+="|sort -u|grep -i ${1:-.}
 }
 # Grep process
 ps_grep(){ #alias psg
