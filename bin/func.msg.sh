@@ -49,7 +49,13 @@ _verbose(){ # Show msg when func name is set to VER
 _progress(){ # Show progress bar
     echo -n "${1:-.}" 1>&2
 }
-_chkfunc(){ # Show function list in self file
+_funclist(){ # Show function list in self file
+    INDENT=$'\t'
+    while IFS='(#' read cap _ desc;do
+        _item "${cap#_},$desc\n" | _indent
+    done < <(grep "^_[-a-z_]\+(.*#" $0)
+}
+_chkfunc(){ # Exec function in self file
     # Execute last one
     _chkown || return
     local self="${0##*/}" i v
@@ -58,15 +64,11 @@ _chkfunc(){ # Show function list in self file
     if [[ $(type -t _$self 2>&1) =~ function ]] ; then
         _$self $*
     else
-        INDENT=$'\t'
         local cmd="$1";shift
         if [[ $(type -t "_$cmd" 2>&1) =~ function ]] ; then
             _$cmd $*
         else
-            # function list
-            while IFS='(#' read cap _ desc;do
-                _item "${cap#_},$desc\n" | _indent
-            done < <(grep "^_[-a-z_]\+(.*#" $0)
+	    _funclist
         fi
     fi
 }
