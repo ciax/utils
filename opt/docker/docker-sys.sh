@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: システム全体のDocker管理用
-#Required Packages: docker
+#Required Packages: debocker
 #alias ds
 show_help() {
     echo "Docker System Management"
