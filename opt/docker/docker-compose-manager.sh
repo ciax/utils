@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: docker management
-#alias dm
+#alias dcm
 # --- 設定 ---
 COMPOSE_FILE="docker-compose.yml"
 EDITOR=${EDITOR:-vi}

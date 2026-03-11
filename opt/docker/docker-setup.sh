@@ -1,4 +1,5 @@
 #!/bin/bash
+# Docker installer by official site
 
 # エラーが発生したら即終了
 set -e

@@ -1,7 +1,7 @@
 #!/bin/bash
 #Description: システム全体のDocker管理用
-#Required Packages: debocker
-#alias ds
+#Required packages: docker-ce-cli
+#alias dsm
 show_help() {
     echo "Docker System Management"
     echo "Usage: docker-sys [command]"
