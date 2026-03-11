@@ -2,6 +2,7 @@
 #Description: システム全体のDocker管理用
 #Required packages: docker-ce-cli
 #alias dsm
+#alias dps ps
 show_help() {
     echo "Docker System Management"
     echo "Usage: docker-sys [command]"
