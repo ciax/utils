@@ -7,7 +7,10 @@
 . func.getpar
 # Basic function
 mk_ssharg(){
-    local sshopt="-o StrictHostKeyChecking=no -t"
+    local sshopt="-t"
+    for opt in ${options//,/ } "StrictHostKeyChecking=no"; do
+	sshopt+=" -o $opt"
+    done
     local ip=$(info-host $host)
     local dst="${user:+$user@}$ip"
     _warn "Found in DB [$dst]"
