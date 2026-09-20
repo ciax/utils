@@ -2,7 +2,7 @@
 #link(Debian) pkg
 #link(Ubuntu) pkg
 #link(Raspbian) pkg
-# Required packages(Debian,Raspbian,Ubuntu): deborphan apt-file screen
+# Required packages(Debian,Raspbian,Ubuntu): apt-file screen
 # Required scripts: func.getpar list-required
 # Description: Debian package utils
 . func.sudo
