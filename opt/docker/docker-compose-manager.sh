@@ -2,7 +2,7 @@
 #Description: docker management
 #alias dcm
 # --- 設定 ---
-COMPOSE_FILE="compose.yml"
+COMPOSE_FILE="compose.yaml"
 EDITOR=${EDITOR:-vi}
 
 # --- 自己文書化ヘルプ表示 ---
