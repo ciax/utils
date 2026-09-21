@@ -1,5 +1,6 @@
 #!/bin/bash
 shopt -s nullglob
+
 # Recommended packages(Debian,Raspbian,Ubuntu): vim byobu ranger most rclone bash-completion python3-pip
 # Recommended packages(Debian,Ubuntu): cpuid msr-tools
 # Recommended packages(Ubuntu): linux-tools-common
