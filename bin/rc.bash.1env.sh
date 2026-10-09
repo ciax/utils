@@ -10,7 +10,7 @@ addpath(){
 umask 022
 # Set environment for login
 # Remove duplicated env var
-addpath {~,/opt,/usr{/local,},}/{lib,sbin,bin}
+addpath {~,/opt,/usr{/{.,}local,},}/{lib,sbin,bin}
 
 # PROMPT
 i="\[\033[01;31m\][$SHLVL]\[\033[00m\]"
