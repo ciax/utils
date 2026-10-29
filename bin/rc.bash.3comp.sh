@@ -27,4 +27,4 @@ set_default_comp(){
     complete -o bashdefault -o default -F _completion_loader -D
 }
 set_comp
-[ -f /etc/redhat-release] && set_default_comp
+[ -f /etc/redhat-release ] && set_default_comp
