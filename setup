@@ -6,7 +6,8 @@ for dir in bin  .trash .var/cache .var/log; do
     mkdir -p "$HOME/$dir"
 done
 PATH=$HOME/bin:$PATH
-cd ~/utils/bin
+[ -d $HOME/utils ] || ln -s ${0%/*} $HOME #For docker container
+cd $HOME/utils/bin
 git config credential.helper store
 git config pull.rebase false
 . func.link.sh
